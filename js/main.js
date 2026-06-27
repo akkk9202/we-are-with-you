@@ -1,8 +1,6 @@
-/* ============================================================
-   WE ARE WITH YOU — Main JS
-   ============================================================ */
+/* WE ARE WITH YOU — Main JS v2 */
 
-// ── Nav scroll effect ──
+// Nav scroll
 const nav = document.querySelector('.nav');
 if (nav) {
   const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 60);
@@ -10,49 +8,48 @@ if (nav) {
   onScroll();
 }
 
-// ── Mobile hamburger ──
+// Mobile hamburger
 const hamburger = document.querySelector('.nav__hamburger');
 const navLinks  = document.querySelector('.nav__links');
 if (hamburger && navLinks) {
   hamburger.addEventListener('click', () => {
-    const open = navLinks.style.display === 'flex';
-    navLinks.style.display = open ? 'none' : 'flex';
-    navLinks.style.flexDirection = 'column';
-    navLinks.style.position = 'absolute';
-    navLinks.style.top = '100%';
-    navLinks.style.left = '0';
-    navLinks.style.right = '0';
-    navLinks.style.background = 'var(--navy)';
-    navLinks.style.padding = '1.5rem 2rem';
-    navLinks.style.gap = '1.2rem';
-    if (open) navLinks.removeAttribute('style');
+    const open = navLinks.classList.contains('nav__links--open');
+    navLinks.classList.toggle('nav__links--open', !open);
+    if (!open) {
+      navLinks.style.cssText = `
+        display:flex; flex-direction:column; position:absolute;
+        top:100%; left:0; right:0; background:var(--navy);
+        padding:1.5rem 2rem; gap:1.2rem; z-index:200;
+        border-top:1px solid rgba(255,255,255,0.07);
+      `;
+      navLinks.querySelectorAll('.nav__dropdown').forEach(d => {
+        d.style.cssText = 'position:static; opacity:1; visibility:visible; transform:none; border:none; padding-left:1rem;';
+      });
+    } else {
+      navLinks.removeAttribute('style');
+      navLinks.querySelectorAll('.nav__dropdown').forEach(d => d.removeAttribute('style'));
+    }
   });
 }
 
-// ── Scroll reveal ──
+// Scroll reveal
 const revealEls = document.querySelectorAll('.reveal');
 if (revealEls.length) {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   revealEls.forEach(el => observer.observe(el));
 }
 
-// ── Active nav link ──
+// Active nav
 const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 document.querySelectorAll('.nav__links a').forEach(a => {
-  const href = a.getAttribute('href');
-  if (href === currentPage || (currentPage === '' && href === 'index.html')) {
-    a.classList.add('active');
-  }
+  if (a.getAttribute('href') === currentPage) a.classList.add('active');
 });
 
-// ── Contact form submission (demo) ──
+// Contact form
 const form = document.querySelector('.contact-form');
 if (form) {
   form.addEventListener('submit', e => {
@@ -70,7 +67,7 @@ if (form) {
   });
 }
 
-// ── Media gallery filter ──
+// Media filter
 const mediaCats = document.querySelectorAll('.media-cat');
 if (mediaCats.length) {
   mediaCats.forEach(cat => {
