@@ -145,14 +145,7 @@ p  { max-width: 68ch; }
   background-size: cover; background-position: center;
   opacity: 0.18;
 }
-.hero__vertical {
-  position: absolute; left: var(--space-md);
-  top: 50%; transform: translateY(-50%) rotate(-90deg);
-  transform-origin: center;
-  font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--gold); opacity: 0.7;
-  white-space: nowrap;
-}
+
 .hero__content {
   position: relative; z-index: 2;
   padding: var(--space-xl) var(--space-md);
@@ -502,13 +495,7 @@ p  { max-width: 68ch; }
   content: ''; position: absolute; bottom: 0; left: 0; right: 0;
   height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent);
 }
-.page-hero__vertical {
-  position: absolute; left: var(--space-md);
-  top: 50%; transform: translateY(-50%) rotate(-90deg);
-  transform-origin: center;
-  font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--gold); opacity: 0.5; white-space: nowrap;
-}
+
 .page-hero__eyebrow {
   font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em;
   text-transform: uppercase; color: var(--gold);
