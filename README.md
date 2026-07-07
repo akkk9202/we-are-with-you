@@ -27,3 +27,15 @@ python3 -m http.server 8000   # then open http://localhost:8000
 
 ## Deploy
 Push to `main` — GitHub Pages publishes automatically.
+
+## AI assistant setup files
+This repo also includes a few plain-text guide files for AI assistants (and humans) who help with the site. You don't need them for everyday editing, but they're worth knowing about:
+
+- **`CLAUDE.md`** — the main working guide an AI reads first.
+- **`context/`** — background: what the project is (`project.md`), how we write (`brand_voice.md`), and how the maintainer likes work done (`user_preferences.md`).
+- **`directives/`** — step-by-step workflows to follow: the pre-deploy security check, the GitHub workflow, and the website editing workflow.
+- **`skills/`** — reusable review methods for design, content, and security.
+
+Two things to remember before publishing:
+- **Run `directives/security_check_before_deploy.md` before every deploy.**
+- **Be careful with partner slugs** (`cancer-care`, `nicu`, `disability`, …) **and the redirect stub pages** (`gyco.html`, `voices-of-love.html`, …). Renaming or deleting them can break old links and printed QR codes.
