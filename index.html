@@ -9,6 +9,7 @@
   <meta property="og:description" content="A student-led platform bringing music, learning, encouragement, and human connection into real communities." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://akkk9202.github.io/we-are-with-you/" />
+  <meta property="og:image" content="https://akkk9202.github.io/we-are-with-you/assets/images/home-invitation.jpg" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -42,7 +43,12 @@
 <!-- 2 · WHY WE EXIST -->
 <section class="section">
   <div class="container two-col reveal">
-    <div class="frame">♩</div>
+    <!-- ── "Why we exist" image ─────────────────────────────
+         Rendered from SITE.home.invitation in js/config.js.
+         TODO: Replace with the final invitation image —
+         overwrite assets/images/home-invitation.jpg
+         (or point src in js/config.js somewhere else). -->
+    <figure class="invite-figure" data-home-invitation></figure>
     <div class="two-col__text">
       <div class="eyebrow">Why we exist</div>
       <h2>No one should feel alone in a difficult place</h2>
@@ -86,7 +92,13 @@
       </ul>
       <p style="margin-top:1.5rem;">Every partner receives a page that feels personal — while still belonging to the same WE ARE WITH YOU platform.</p>
     </div>
-    <div class="frame">♪</div>
+    <!-- ── Partner page carousel ────────────────────────────
+         Slides render from SITE.home.carousel in js/config.js —
+         one image at a time, arrows, dots, keyboard, swipe.
+         TODO: Replace the three carousel images — overwrite
+         assets/images/home-carousel-1.jpg / -2.jpg / -3.jpg
+         (or edit the src paths in js/config.js). -->
+    <div data-carousel="home" data-carousel-label="Examples of WE ARE WITH YOU partner pages"></div>
   </div>
 </section>
 
@@ -97,20 +109,25 @@
     <h2 class="reveal">The Circle of Love</h2>
     <p class="lead reveal" style="margin-top:1rem;">Encouragement does not stop with the person who receives it. It continues.</p>
 
+    <!-- Circle of Love — the viewBox is wider than the ring so the
+         LISTEN / SHARE / PARTICIPATE / REFLECT / CONTINUE labels can
+         never be cut off at any screen size. -->
     <div class="circle-figure reveal">
-      <svg viewBox="0 0 440 440" role="img" aria-label="The Circle of Love: Listen, Share, Participate, Reflect, Continue — a continuous cycle">
-        <circle cx="220" cy="220" r="150" fill="none" stroke="#C4A24E" stroke-width="1.4" opacity="0.85"/>
-        <circle cx="220" cy="220" r="150" fill="none" stroke="#3E6B8F" stroke-width="1" opacity="0.4" stroke-dasharray="4 8"/>
+      <svg viewBox="0 0 560 470" role="img" aria-label="The Circle of Love: Listen, Share, Participate, Reflect, Continue — a continuous cycle with WE ARE WITH YOU at the center. Even Here. Even Now. We Are With You.">
+        <circle cx="280" cy="245" r="150" fill="none" stroke="#C4A24E" stroke-width="1.4" opacity="0.85"/>
+        <circle cx="280" cy="245" r="150" fill="none" stroke="#3E6B8F" stroke-width="1" opacity="0.4" stroke-dasharray="4 8"/>
         <g font-family="Instrument Sans, sans-serif" font-size="14" font-weight="600" letter-spacing="2" fill="#D3B569" text-anchor="middle">
-          <circle cx="220" cy="70" r="4.5" fill="#C4A24E"/><text x="220" y="48">LISTEN</text>
-          <circle cx="362" cy="174" r="4.5" fill="#C4A24E"/><text x="392" y="168" text-anchor="start" transform="rotate(0)">SHARE</text>
-          <circle cx="308" cy="341" r="4.5" fill="#C4A24E"/><text x="322" y="372">PARTICIPATE</text>
-          <circle cx="132" cy="341" r="4.5" fill="#C4A24E"/><text x="110" y="372">REFLECT</text>
-          <circle cx="78" cy="174" r="4.5" fill="#C4A24E"/><text x="48" y="168" text-anchor="end">CONTINUE</text>
+          <circle cx="280" cy="95" r="4.5" fill="#C4A24E"/><text x="280" y="72">LISTEN</text>
+          <circle cx="422.7" cy="198.6" r="4.5" fill="#C4A24E"/><text x="438" y="204" text-anchor="start">SHARE</text>
+          <circle cx="368.2" cy="366.4" r="4.5" fill="#C4A24E"/><text x="374" y="400">PARTICIPATE</text>
+          <circle cx="191.8" cy="366.4" r="4.5" fill="#C4A24E"/><text x="186" y="400">REFLECT</text>
+          <circle cx="137.3" cy="198.6" r="4.5" fill="#C4A24E"/><text x="122" y="204" text-anchor="end">CONTINUE</text>
         </g>
-        <g font-family="Fraunces, serif" fill="#FAF8F3" text-anchor="middle">
-          <text x="220" y="212" font-size="21" font-style="italic">Even Here.</text>
-          <text x="220" y="240" font-size="21" font-style="italic">Even Now.</text>
+        <g text-anchor="middle">
+          <text x="280" y="222" font-family="Fraunces, serif" fill="#FAF8F3" font-size="21" font-style="italic">Even Here.</text>
+          <text x="280" y="251" font-family="Fraunces, serif" fill="#FAF8F3" font-size="21" font-style="italic">Even Now.</text>
+          <line x1="245" y1="268" x2="315" y2="268" stroke="#C4A24E" stroke-width="1" opacity="0.55"/>
+          <text x="280" y="294" font-family="Instrument Sans, sans-serif" fill="#D3B569" font-size="14" font-weight="600" letter-spacing="3">WE ARE WITH YOU</text>
         </g>
       </svg>
     </div>
@@ -136,14 +153,9 @@
       <div class="eyebrow">Program pathways</div>
       <h2>Where WE ARE WITH YOU happens</h2>
     </div>
-    <div class="cards cards--3">
-      <div class="card reveal reveal--d1"><span class="card__tag">Pathway</span><h3>Cancer Care</h3><p>For patients, families, caregivers, survivors, and healthcare staff — song requests, Voices of Love, teaching videos, Hope Capsule, and messages of encouragement.</p><a class="btn btn--ink btn--sm" href="partner.html?p=cancer-care">Open page</a></div>
-      <div class="card reveal reveal--d2"><span class="card__tag">Pathway</span><h3>Ronald McDonald House</h3><p>For children, parents, siblings, and families near hospitals — letters for kids and parents, happy music moments, family requests, and activities.</p><a class="btn btn--ink btn--sm" href="partner.html?p=ronald-mcdonald-house">Open page</a></div>
-      <div class="card reveal reveal--d3"><span class="card__tag">Pathway</span><h3>NICU</h3><p>For babies, parents, families, and care teams — letters for your baby, quiet music, stories of hope, and gentle family encouragement.</p><a class="btn btn--ink btn--sm" href="partner.html?p=nicu">Open page</a></div>
-      <div class="card reveal reveal--d1"><span class="card__tag">Pathway</span><h3>Senior Living</h3><p>For seniors, families, staff, and volunteers — familiar songs, memory-based music, student performances, and intergenerational connection.</p><a class="btn btn--ink btn--sm" href="partner.html?p=senior-living">Open page</a></div>
-      <div class="card reveal reveal--d2"><span class="card__tag">Pathway</span><h3>Schools &amp; Global Communities</h3><p>For students, teachers, and partner schools — English learning, music learning, story time, math activities, and teaching videos.</p><a class="btn btn--ink btn--sm" href="partner.html?p=schools-global">Open page</a></div>
-      <div class="card reveal reveal--d3"><span class="card__tag">Pathway</span><h3>Disability Community</h3><p>For individuals, families, educators, and support organizations — accessible music activities, adaptive participation, and inclusive projects.</p><a class="btn btn--ink btn--sm" href="partner.html?p=disability">Open page</a></div>
-    </div>
+    <!-- Pathway cards render from js/partners.js — edit names, order,
+         logos, and descriptions there and every page updates together. -->
+    <div class="cards cards--3" data-pathway-cards></div>
     <div class="center" style="margin-top:2.5rem;"><a href="programs.html" class="btn btn--gold reveal">View all programs</a></div>
   </div>
 </section>
@@ -180,8 +192,8 @@
     <p style="margin-top:1rem;color:var(--muted);">Behind WE ARE WITH YOU is a student community that learns through music, leadership, service, research, media, and education. Students don't only volunteer — they listen, design, teach, perform, record, reflect, build, and improve.</p>
     <p style="margin-top:1rem;color:var(--muted);">They learn in <strong>GYCO</strong>. They grow through <strong>NADO School</strong>. They bring what they learn into <strong>WE ARE WITH YOU</strong>.</p>
     <div class="cta-band"><div class="btn-row">
-      <a href="student-community.html" class="btn btn--ink">Student community</a>
-      <a href="learning.html" class="btn btn--ink">Learning</a>
+      <a href="student-community.html" class="btn btn--ink">GYCO</a>
+      <a href="learning.html" class="btn btn--ink">NADO School</a>
     </div></div>
   </div>
 </section>

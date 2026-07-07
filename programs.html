@@ -6,7 +6,7 @@
   <title>Programs — WE ARE WITH YOU</title>
   <meta name="description" content="WE ARE WITH YOU is a flexible platform for partner communities. Each partner receives a landing page connected to the same mission, designed around that community's needs." />
   <meta property="og:title" content="Programs — WE ARE WITH YOU" />
-  <meta property="og:description" content="One trusted structure that serves many different places: cancer care, Ronald McDonald House, NICU, senior living, schools, and disability communities." />
+  <meta property="og:description" content="One trusted structure that serves many different places: City of Hope Atlanta (CTCA), Ronald McDonald House, the Northside NICU, senior living, The America Wheat Mission (Milal), and schools worldwide." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://akkk9202.github.io/we-are-with-you/programs.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
@@ -54,14 +54,10 @@
       <div class="eyebrow">Partner communities</div>
       <h2>Choose a community</h2>
     </div>
-    <div class="cards cards--3">
-      <div class="card reveal reveal--d1"><h3>Cancer Care</h3><p>Music, messages, stories, and encouragement for patients, families, caregivers, survivors, and healthcare staff.</p><a class="btn btn--ink btn--sm" href="partner.html?p=cancer-care">Open page</a></div>
-      <div class="card reveal reveal--d2"><h3>Ronald McDonald House</h3><p>Music, letters, activities, and encouragement for children, parents, siblings, and families.</p><a class="btn btn--ink btn--sm" href="partner.html?p=ronald-mcdonald-house">Open page</a></div>
-      <div class="card reveal reveal--d3"><h3>NICU</h3><p>Gentle music, letters, stories, and encouragement for babies, parents, families, and care teams.</p><a class="btn btn--ink btn--sm" href="partner.html?p=nicu">Open page</a></div>
-      <div class="card reveal reveal--d1"><h3>Senior Living</h3><p>Music, memories, stories, and intergenerational connection.</p><a class="btn btn--ink btn--sm" href="partner.html?p=senior-living">Open page</a></div>
-      <div class="card reveal reveal--d2"><h3>Schools &amp; Global Communities</h3><p>Learning, music, stories, and encouragement for students, teachers, and partner schools.</p><a class="btn btn--ink btn--sm" href="partner.html?p=schools-global">Open page</a></div>
-      <div class="card reveal reveal--d3"><h3>Disability Community</h3><p>Music, participation, stories, and encouragement for individuals, families, educators, and support communities.</p><a class="btn btn--ink btn--sm" href="partner.html?p=disability">Open page</a></div>
-    </div>
+    <!-- Pathway cards render from js/partners.js — edit names, order,
+         logos, and descriptions there and every page updates together. -->
+    <div class="cards cards--3" data-pathway-cards></div>
+    
     <div class="card reveal" style="margin-top:1rem;flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
       <div><span class="card__tag">Future partners</span><h3 style="margin-top:0.3rem;">Your community could be next</h3></div>
       <a class="btn btn--gold btn--sm" data-form="partnerInquiry" href="contact.html">Start a partnership</a>

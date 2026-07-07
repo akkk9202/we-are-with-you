@@ -377,3 +377,241 @@ em { font-style: italic; }
   .reveal { opacity: 1; transform: none; transition: none; }
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* ════════════════════════════════════════════════════════════
+   v4 COMPONENTS — pathway logos, homepage invitation + carousel,
+   philosophy quote, NADO learning loop, featured press card
+   ════════════════════════════════════════════════════════════ */
+
+/* ── LOGO CHIPS (pathway cards + partner hero) ── */
+.logo-chip {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 100%; max-width: 210px; height: 64px;
+  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 0.55rem 0.9rem; overflow: hidden;
+}
+.logo-chip img { max-height: 100%; max-width: 100%; width: auto; height: auto; object-fit: contain; }
+.logo-chip__fallback {
+  display: none; font-family: var(--display); font-size: 1.25rem; font-weight: 500;
+  color: var(--blue); letter-spacing: 0.1em;
+}
+.logo-chip--missing { background: var(--mist); border-style: dashed; }
+.logo-chip--missing .logo-chip__fallback { display: block; }
+.card--pathway .logo-chip { align-self: flex-start; margin-bottom: 0.35rem; }
+.logo-chip--hero {
+  height: 88px; max-width: 250px; margin-bottom: 1.5rem;
+  border: none; box-shadow: 0 12px 32px rgba(0,0,0,0.28);
+}
+
+/* ── PAGE LOGO CARD (GYCO / NADO logo panels) ── */
+.logo-panel {
+  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: var(--space-lg) var(--space-md);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: var(--space-sm); text-align: center;
+  box-shadow: 0 16px 40px rgba(19,35,58,0.08);
+}
+.logo-panel img { max-width: min(320px, 80%); height: auto; }
+.logo-panel figcaption {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--muted);
+}
+
+/* ── HOMEPAGE INVITATION FIGURE ── */
+.invite-figure { margin: 0; width: 100%; max-width: 420px; justify-self: center; }
+.invite-figure img {
+  width: 100%; height: auto; background: var(--white);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: 0 20px 48px rgba(19,35,58,0.16);
+}
+
+/* ── CAROUSEL (one image at a time · arrows · dots) ── */
+.carousel { position: relative; width: 100%; max-width: 430px; justify-self: center; }
+.carousel__viewport {
+  overflow: hidden; background: var(--white);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: 0 20px 48px rgba(19,35,58,0.16);
+  touch-action: pan-y;
+}
+.carousel__track { display: flex; transition: transform 0.45s ease; }
+.carousel__slide { flex: 0 0 100%; margin: 0; display: flex; flex-direction: column; }
+.carousel__slide img {
+  width: 100%; aspect-ratio: 3 / 4; object-fit: contain;
+  background: var(--white); user-select: none;
+}
+.carousel__slide figcaption {
+  padding: 0.75rem 1rem; text-align: center;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--blue); background: var(--paper); border-top: 1px solid var(--line);
+}
+.carousel__arrow {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--ink); color: var(--paper); font-size: 1.5rem; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 20px rgba(19,35,58,0.32);
+  transition: background 0.2s, transform 0.2s;
+}
+.carousel__arrow:hover { background: var(--blue); }
+.carousel__arrow--prev { left: -21px; }
+.carousel__arrow--next { right: -21px; }
+.carousel__dots { display: flex; justify-content: center; gap: 0.35rem; margin-top: 0.9rem; }
+.carousel__dot {
+  width: 24px; height: 24px; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.carousel__dot::before {
+  content: ''; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--line); transition: background 0.2s, transform 0.2s;
+}
+.carousel__dot:hover::before { background: var(--blue); }
+.carousel__dot[aria-current="true"]::before { background: var(--gold); transform: scale(1.3); }
+.section--dark .carousel__dot::before { background: var(--line-d); }
+.section--dark .carousel__dot[aria-current="true"]::before { background: var(--gold); }
+
+/* ── CIRCLE OF LOVE — never clip the ring labels ── */
+.circle-figure svg { overflow: visible; }
+
+/* ── FOUR-UP CARDS (GYCO: Learn · Create · Serve · Lead) ── */
+.cards--4 { grid-template-columns: repeat(4, 1fr); }
+.card__list { display: grid; gap: 0.4rem; margin-top: 0.2rem; }
+.card__list li {
+  display: flex; gap: 0.6rem; align-items: flex-start;
+  font-size: 0.92rem; color: var(--muted);
+}
+.card__list li::before { content: '→'; color: var(--gold); flex-shrink: 0; }
+
+/* ── PHILOSOPHY QUOTE BLOCK ── */
+.quote-block {
+  position: relative; max-width: 640px; margin-inline: auto; text-align: center;
+  border: 1px solid rgba(196,162,78,0.45); border-radius: var(--radius);
+  background: rgba(196,162,78,0.06);
+  padding: calc(var(--space-lg) - 0.5rem) var(--space-md) var(--space-lg);
+  margin-top: var(--space-md);
+}
+.quote-block::before {
+  content: '“'; position: absolute; top: -36px; left: 50%; transform: translateX(-50%);
+  font-family: var(--display); font-size: 4.6rem; line-height: 1;
+  color: var(--gold); background: var(--ink); padding-inline: 1rem;
+}
+.quote-block p {
+  font-family: var(--display); font-style: italic;
+  font-size: clamp(1.3rem, 2.6vw, 1.75rem); line-height: 1.55;
+  max-width: none; color: inherit;
+}
+.quote-block p em { color: var(--gold-2); }
+
+/* ── NADO "I will…" LINES ── */
+.say-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-sm); margin-top: var(--space-md); }
+.say-grid p {
+  font-family: var(--display); font-style: italic; font-size: 1.15rem; max-width: none;
+  background: var(--white); border-left: 3px solid var(--gold);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 1.05rem 1.4rem; margin: 0;
+}
+.hangul-mark {
+  font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', var(--body);
+  font-weight: 600; font-size: clamp(4rem, 9vw, 6.5rem);
+  color: var(--blue); line-height: 1;
+}
+
+/* ── LEARNING LOOP (NADO School) ── */
+.loop {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-md); counter-reset: loopstep; margin-top: var(--space-md);
+}
+.loop__step {
+  position: relative; counter-increment: loopstep;
+  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 1.5rem 1.25rem;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+.loop__step:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(19,35,58,0.1); border-color: rgba(196,162,78,0.5); }
+.loop__step::before {
+  content: counter(loopstep, decimal-leading-zero);
+  display: block; margin-bottom: 0.7rem;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em; color: var(--gold);
+}
+.loop__step h3 { font-size: 1.12rem; margin-bottom: 0.35rem; }
+.loop__step p { font-size: 0.88rem; color: var(--muted); max-width: none; }
+.loop__step:not(:last-child)::after {
+  content: '→'; position: absolute; right: -1.6rem; top: 50%; transform: translateY(-50%);
+  color: var(--gold); font-size: 1.15rem;
+}
+.loop__step--again { border: 1px dashed var(--gold); background: rgba(196,162,78,0.05); }
+.loop__return {
+  text-align: center; margin-top: var(--space-sm); margin-inline: auto;
+  font-family: var(--display); font-style: italic; font-size: 0.98rem; color: var(--muted);
+}
+
+/* ── FEATURED PRESS CARD (Media page) ── */
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 0.32rem 0.85rem; border-radius: 100px;
+  font-size: 0.66rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  border: 1px solid var(--line); color: var(--muted); white-space: nowrap;
+}
+.chip--gold { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+.chip--blue { border-color: rgba(62,107,143,0.45); color: var(--blue); }
+
+.press-card {
+  display: grid; grid-template-columns: 5fr 7fr;
+  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
+  overflow: hidden; box-shadow: 0 18px 44px rgba(19,35,58,0.1);
+}
+.press-card__media {
+  position: relative; min-height: 320px;
+  background: linear-gradient(150deg, var(--ink-2), var(--ink));
+  display: flex; align-items: center; justify-content: center;
+}
+.press-card__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.press-card__media-fallback {
+  display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+  color: rgba(196,162,78,0.45); font-family: var(--display); font-size: 3rem; font-style: italic;
+}
+.press-card__media-fallback small {
+  font-family: var(--body); font-style: normal; font-size: 0.68rem;
+  font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(250,248,243,0.4);
+}
+.press-card__body { padding: var(--space-md); display: flex; flex-direction: column; gap: 0.65rem; }
+.press-card__labels { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.press-card__title { font-size: clamp(1.4rem, 2.4vw, 1.9rem); }
+.press-card__publisher {
+  font-size: 0.74rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--blue); max-width: none;
+}
+.press-card__desc { color: var(--muted); font-size: 1rem; max-width: none; }
+.press-card__langs {
+  font-family: var(--display); font-style: italic; font-size: 0.95rem; color: var(--gold);
+  max-width: none;
+}
+.press-card__actions { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 0.4rem; }
+
+/* ── v4 RESPONSIVE ── */
+@media (max-width: 1080px) {
+  .loop { grid-template-columns: repeat(3, 1fr); }
+  .loop__step:nth-child(3)::after { content: none; }
+}
+@media (max-width: 960px) {
+  .cards--4 { grid-template-columns: repeat(2, 1fr); }
+  .press-card { grid-template-columns: 1fr; }
+  .press-card__media { min-height: 240px; }
+  .invite-figure, .carousel { max-width: 460px; margin-inline: auto; }
+}
+@media (max-width: 780px) {
+  .loop { grid-template-columns: 1fr; }
+  .loop__step::after, .loop__step:nth-child(3)::after {
+    content: '↓'; right: auto; left: 50%; top: auto; bottom: -1.85rem;
+    transform: translateX(-50%);
+  }
+  .loop__step:last-child::after { content: none; }
+  .say-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .cards--4 { grid-template-columns: 1fr; }
+  .carousel__arrow { width: 38px; height: 38px; }
+  .carousel__arrow--prev { left: 8px; }
+  .carousel__arrow--next { right: 8px; }
+  .logo-chip--hero { height: 72px; max-width: 210px; }
+}
