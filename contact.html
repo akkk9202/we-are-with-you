@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact — WE ARE WITH YOU</title>
   <meta name="description" content="Reach the WE ARE WITH YOU team — requests, partnerships, applications, and support." />
@@ -72,8 +73,8 @@
   (function () {
     const ig = document.getElementById('contact-instagram');
     const yt = document.getElementById('contact-youtube');
-    if (SITE.instagram) { ig.hidden = false; ig.querySelector('a').href = SITE.instagram; }
-    if (SITE.youtube)   { yt.hidden = false; yt.querySelector('a').href = SITE.youtube; }
+    if (SITE.instagram) { ig.hidden = false; ig.querySelector('a').href = safeUrl(SITE.instagram); }
+    if (SITE.youtube)   { yt.hidden = false; yt.querySelector('a').href = safeUrl(SITE.youtube); }
     document.getElementById('contact-location').textContent = SITE.location;
   })();
 </script>

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Media — WE ARE WITH YOU</title>
   <meta name="description" content="Stories, features, and public recognition of our work — including bilingual press coverage of GYCO bringing live music to hospitals and senior communities across Georgia." />
@@ -114,9 +115,9 @@
   (function () {
     const row = document.getElementById('social-ctas');
     if (SITE.instagram) row.insertAdjacentHTML('afterbegin',
-      `<a class="btn btn--gold" href="${SITE.instagram}" target="_blank" rel="noopener">Follow on Instagram</a>`);
+      `<a class="btn btn--gold" href="${safeUrl(SITE.instagram)}" target="_blank" rel="noopener">Follow on Instagram</a>`);
     if (SITE.youtube) row.insertAdjacentHTML('beforeend',
-      `<a class="btn btn--ghost" href="${SITE.youtube}" target="_blank" rel="noopener">Watch on YouTube</a>`);
+      `<a class="btn btn--ghost" href="${safeUrl(SITE.youtube)}" target="_blank" rel="noopener">Watch on YouTube</a>`);
   })();
 </script>
 </body>

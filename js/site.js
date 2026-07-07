@@ -14,6 +14,13 @@ const ringMark = (size) => `
 
 /* ── SHARED HELPERS ── */
 
+/* Only allow safe link schemes for URLs coming from config.js so a
+   pasted "javascript:" (or a broken value) can never become a live
+   link. Permits http(s), mailto, root-relative, and local .html paths;
+   anything else falls back to "#". */
+const safeUrl = (u) =>
+  /^(https?:|mailto:|\/|#|[\w.-]+\.html)/i.test((u || '').trim()) ? u : '#';
+
 /* All pathways from js/partners.js, sorted by their `order` field. */
 const pathwayList = () => (typeof PARTNERS === 'undefined') ? [] :
   Object.entries(PARTNERS)
@@ -90,8 +97,8 @@ const logoChip = (p, extra = '') => `
   const partnerLinks = pathwayList()
     .map(p => `<li><a href="partner.html?p=${p.slug}">${p.name}</a></li>`).join('');
   const connect = [
-    SITE.instagram ? `<li><a href="${SITE.instagram}" target="_blank" rel="noopener">Instagram</a></li>` : '',
-    SITE.youtube ? `<li><a href="${SITE.youtube}" target="_blank" rel="noopener">YouTube</a></li>` : '',
+    SITE.instagram ? `<li><a href="${safeUrl(SITE.instagram)}" target="_blank" rel="noopener">Instagram</a></li>` : '',
+    SITE.youtube ? `<li><a href="${safeUrl(SITE.youtube)}" target="_blank" rel="noopener">YouTube</a></li>` : '',
     `<li><a href="contact.html">Email us</a></li>`,
   ].join('');
 
@@ -127,7 +134,7 @@ const logoChip = (p, extra = '') => `
   if (typeof SITE === 'undefined') return;
   document.querySelectorAll('[data-form]').forEach(el => {
     const url = SITE.forms[el.dataset.form];
-    el.setAttribute('href', url && !url.startsWith('REPLACE_ME') ? url : 'contact.html');
+    el.setAttribute('href', url && !url.startsWith('REPLACE_ME') ? safeUrl(url) : 'contact.html');
     if (url && !url.startsWith('REPLACE_ME')) { el.target = '_blank'; el.rel = 'noopener'; }
   });
   document.querySelectorAll('[data-email]').forEach(el => {
@@ -319,7 +326,7 @@ const logoChip = (p, extra = '') => `
   // re-wire form buttons created after initial pass
   document.querySelectorAll('#partner-root [data-form]').forEach(el => {
     const url = SITE.forms[el.dataset.form];
-    el.setAttribute('href', url && !url.startsWith('REPLACE_ME') ? url : 'contact.html');
+    el.setAttribute('href', url && !url.startsWith('REPLACE_ME') ? safeUrl(url) : 'contact.html');
     if (url && !url.startsWith('REPLACE_ME')) { el.target = '_blank'; el.rel = 'noopener'; }
   });
 })();
