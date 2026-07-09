@@ -128,7 +128,9 @@ for (const [slug, expectName, expectLogo] of [
   ok(d.title === `${expectName} — WE ARE WITH YOU`, `?p=${slug} → title "${expectName}"`);
   const heroLogo = d.querySelector('.page-hero .logo-chip img');
   ok(heroLogo && heroLogo.getAttribute('src') === expectLogo, `?p=${slug} hero shows logo ${expectLogo}`);
-  ok(d.querySelectorAll('#partner-root .card').length >= 5, `?p=${slug} renders its 5 program cards`);
+  ok(d.querySelectorAll('#partner-root .card').length >= 6, `?p=${slug} renders its 6 program cards`);
+  const firstCard = d.querySelector('#partner-root .card h3');
+  ok(firstCard && firstCard.textContent.trim() === 'One Message for You', `?p=${slug} first card is "One Message for You"`);
 }
 {
   const dom = loadPage('partner.html', 'https://x.test/partner.html?p=bogus');

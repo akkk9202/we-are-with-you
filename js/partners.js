@@ -33,6 +33,10 @@ const PARTNERS = {
     heroText: "Music, messages, stories, and encouragement for patients, families, caregivers, survivors, and healthcare staff.",
     about: "This page was created for the City of Hope Atlanta community — formerly Cancer Treatment Centers of America (CTCA). Through it, students and community partners share music, letters, teaching videos, stories, and activities designed for patients and the people beside them. It may be reached through QR codes, printed materials, digital links, events, and partner programs.",
     cards: [
+      /* Card #1 is always "One Message for You" — the signature program
+         every partner begins with. Only the subtitle text changes per
+         community. Keep it first on every partner. */
+      { title: "One Message for You", text: "Every visit begins with one message. Read a message of encouragement written for you — or share one for a patient, family member, caregiver, survivor, or staff member.", button: "Read & share a message", form: "letterSubmission" },
       { title: "Song Request", text: "Request a meaningful song for yourself, your family, a caregiver, a patient, or a loved one. GYCO students may prepare the song for a live or recorded performance when possible.", button: "Request a song", form: "songRequest" },
       { title: "Voices of Love", text: "Share the story, memory, or meaning behind a song. Patients, families, caregivers, survivors, and staff may share how music connects to their journey.", button: "Share your voice", form: "songRequest" },
       { title: "Taps of Love", text: "Watch short teaching videos created by students. Learn simple rhythms, music activities, breathing exercises, and creative ways to participate from wherever you are.", button: "Watch teaching videos", href: "learning.html" },
@@ -53,6 +57,7 @@ const PARTNERS = {
     heroText: "Music, letters, activities, and encouragement for children, parents, siblings, and families.",
     about: "This page was created for families staying near hospitals while a child receives care. Through it, students share letters, cheerful music, sing-alongs, and simple activities that families can enjoy together during long and uncertain days.",
     cards: [
+      { title: "One Message for You", text: "One kind message can brighten a long stay. Read a message written for your family — or share one for a child, parent, or sibling staying near the hospital.", button: "Read & share a message", form: "letterSubmission" },
       { title: "Letters for Kids", text: "Read kind messages written for children who may need encouragement, joy, or a reminder that people are thinking of them.", button: "Read letters", form: "letterSubmission" },
       { title: "Letters for Parents", text: "Messages of support for parents and caregivers walking through long, difficult, or uncertain days.", button: "Read parent letters", form: "letterSubmission" },
       { title: "Music for Happy Moments", text: "Enjoy cheerful music, sing-alongs, rhythm activities, and simple music moments created for families.", button: "Listen and join", href: "media.html" },
@@ -75,6 +80,7 @@ const PARTNERS = {
     heroText: "Gentle music, letters, stories, and encouragement for babies, parents, families, and care teams.",
     about: "This page was created for the neonatal intensive care community at Northside Hospital. Everything here is intentionally quiet: gentle music, letters of love, and stories of hope for parents spending long days and nights beside their child.",
     cards: [
+      { title: "One Message for You", text: "A gentle message for parents spending long days and nights beside their baby. Read one — or share one for another NICU family.", button: "Read & share a message", form: "letterSubmission" },
       { title: "Letter for Your Baby", text: "Write or read a letter filled with love, hope, and encouragement for a baby and family.", button: "Read letters", form: "letterSubmission" },
       { title: "Letters for Parents", text: "Messages created for parents spending long days and nights beside their child.", button: "Read parent messages", form: "letterSubmission" },
       { title: "Quiet Music", text: "Gentle music selected for calm, reflection, prayer, rest, and emotional support.", button: "Listen quietly", href: "media.html" },
@@ -96,6 +102,7 @@ const PARTNERS = {
     heroText: "Music, memories, stories, and intergenerational connection.",
     about: "This page was created for senior living communities — residents, families, staff, and the student volunteers who visit them. Familiar songs open conversations; memories become stories; generations meet through music.",
     cards: [
+      { title: "One Message for You", text: "One message can open a memory. Read a message of appreciation written for you — or share one for a resident, family member, staff member, or volunteer.", button: "Read & share a message", form: "letterSubmission" },
       { title: "Familiar Songs", text: "Enjoy songs that bring back memories, comfort, joy, and conversation.", button: "Listen", href: "media.html" },
       { title: "Music Requests", text: "Request a song that is meaningful to you, your family, or your community.", button: "Request a song", form: "songRequest" },
       { title: "Memory Stories", text: "Share a memory connected to a song, place, person, or life experience.", button: "Share a memory", form: "letterSubmission" },
@@ -118,6 +125,7 @@ const PARTNERS = {
     heroText: "Music, participation, stories, and encouragement for individuals, families, educators, and support communities.",
     about: "This page was created with The America Wheat Mission (Milal) — the Wheat Mission in Atlanta, a community serving people with disabilities and their families. Everything here is accessibility-first and flexible by design: rhythm, movement, listening, and participation that adapt to each person, family, classroom, or community space.",
     cards: [
+      { title: "One Message for You", text: "Every friendship begins with one message. Read a message of encouragement — or share one for an individual, family, educator, or support community.", button: "Read & share a message", form: "letterSubmission" },
       { title: "Accessible Music Activities", text: "Simple rhythm, movement, listening, and participation-based activities.", button: "Try an activity", form: "teachingVideoRequest" },
       { title: "Teaching Videos", text: "Short videos that introduce music in clear and flexible ways.", button: "Watch videos", form: "teachingVideoRequest" },
       { title: "Family Participation", text: "Activities that families can complete together at home, school, or community spaces.", button: "Join together", form: "teachingVideoRequest" },
@@ -139,6 +147,7 @@ const PARTNERS = {
     heroText: "Learning, music, stories, and encouragement for students, teachers, and partner schools.",
     about: "This page was created for local and global partner schools. Students help other students learn — through simple English lessons, beginner music, read-aloud stories, and practice activities that can travel anywhere a link or QR code can go.",
     cards: [
+      { title: "One Message for You", text: "Learning begins with encouragement. Read a message from a student like you — or send one to a classroom across the world.", button: "Read & share a message", form: "letterSubmission" },
       { title: "Learn English", text: "Simple English lessons, vocabulary videos, reading activities, and practice materials.", button: "Learn English", form: "teachingVideoRequest" },
       { title: "Learn Music", text: "Beginner music lessons, rhythm activities, singing, and instrument introductions.", button: "Learn music", form: "teachingVideoRequest" },
       { title: "Story Time", text: "Student-friendly stories, read-aloud videos, discussion questions, and creative activities.", button: "Story time", form: "teachingVideoRequest" },
