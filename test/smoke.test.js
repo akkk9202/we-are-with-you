@@ -138,6 +138,28 @@ for (const [slug, expectName, expectLogo] of [
   ok(d.querySelectorAll('#partner-root .card').length === 6, 'bad slug fallback lists all 6 pathways');
 }
 
+/* ── 3b. PROGRAM PAGES ── */
+console.log('\n[one-message-for-you.html]');
+{
+  const dom = loadPage('one-message-for-you.html', 'https://x.test/one-message-for-you.html');
+  const d = dom.window.document;
+  ok(d.title === 'One Message for You — WE ARE WITH YOU', 'OMFY page title');
+  ok(d.querySelector('.page-hero h1').textContent.includes('One Message'), 'OMFY hero renders');
+  const steps = [...d.querySelectorAll('.cards--3 .card h3')].map(h => h.textContent.trim());
+  ok(JSON.stringify(steps) === JSON.stringify(['Write One Message', 'Add Your Voice', 'Become Part of the Circle']), 'OMFY three join steps in order');
+  ok([...d.querySelectorAll('[data-form]')].every(a => a.getAttribute('href') === 'contact.html'), 'OMFY placeholder forms route to contact.html');
+}
+
+console.log('\n[hope-capsule.html]');
+{
+  const dom = loadPage('hope-capsule.html', 'https://x.test/hope-capsule.html');
+  const d = dom.window.document;
+  ok(d.title === 'Hope Capsule — WE ARE WITH YOU', 'Hope Capsule page title');
+  ok(d.querySelector('.page-hero h1').textContent.trim() === 'Hope Capsule', 'Hope Capsule hero renders');
+  const steps = [...d.querySelectorAll('.cards--3 .card h3')].map(h => h.textContent.trim());
+  ok(steps.length === 3 && steps[0] === 'Stories are gathered', 'Hope Capsule three creation steps');
+}
+
 /* ── 4. GYCO PAGE ── */
 console.log('\n[student-community.html]');
 {
