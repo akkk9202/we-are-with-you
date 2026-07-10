@@ -12,8 +12,8 @@ const SITE = {
   baseUrl: "https://akkk9202.github.io/we-are-with-you/",
 
   // ── Contact & social ─────────────────────────────────────
-  email: "REPLACE_ME@example.com",          // official email
-  instagram: "",                             // e.g. "https://instagram.com/yourhandle" (leave "" to hide)
+  email: "gyco23@gmail.com",                 // official email
+  instagram: "https://instagram.com/gyco_opus", // e.g. "https://instagram.com/yourhandle" (leave "" to hide)
   youtube: "",                               // e.g. "https://youtube.com/@yourchannel" (leave "" to hide)
   location: "Georgia, United States",
 
