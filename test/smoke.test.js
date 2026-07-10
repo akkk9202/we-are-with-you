@@ -12,7 +12,7 @@ const ok = (cond, msg) => {
   else { failed++; console.log('  ✗ FAIL:', msg); }
 };
 
-function loadPage(file, url) {
+function loadPage(file, url, lang) {
   const html = fs.readFileSync(path.join(ROOT, file), 'utf8');
   const dom = new JSDOM(html, { url, runScripts: 'outside-only' });
   const w = dom.window;
@@ -21,7 +21,8 @@ function loadPage(file, url) {
     constructor(cb) { this.cb = cb; }
     observe() {} unobserve() {} disconnect() {}
   };
-  const bundle = ['js/config.js', 'js/partners.js', 'js/site.js']
+  if (lang) w.localStorage.setItem('wawy-lang', lang);
+  const bundle = ['js/config.js', 'js/partners.js', 'js/i18n.js', 'js/site.js']
     .map(js => fs.readFileSync(path.join(ROOT, js), 'utf8')).join('\n;\n');
   w.eval(bundle);
   return dom;
@@ -234,6 +235,65 @@ console.log('\n[logo fallback]');
   ok(senior.classList.contains('logo-chip--missing') && !senior.querySelector('img'),
      'missing logo file → chip swaps to monogram fallback, card stays clean');
   ok(senior.querySelector('.logo-chip__fallback').textContent === 'SL', 'Senior Living monogram = "SL"');
+}
+
+/* ── 8. BILINGUAL (한국어) ── */
+console.log('\n[i18n — English default]');
+{
+  const dom = loadPage('index.html', 'https://x.test/index.html');
+  const d = dom.window.document;
+  ok(d.documentElement.lang === 'en', 'default stays English (html lang="en")');
+  ok(d.querySelector('.hero__title').textContent.includes('Welcome to'), 'hero stays English by default');
+  const btn = d.querySelector('.nav__lang-btn');
+  ok(!!btn && btn.textContent.trim() === '한국어', 'nav offers 한국어 toggle when in English');
+}
+
+console.log('\n[i18n — Korean]');
+{
+  const dom = loadPage('index.html', 'https://x.test/index.html', 'ko');
+  const d = dom.window.document;
+  ok(d.documentElement.lang === 'ko', 'html lang switches to ko');
+  ok(d.querySelector('.hero__title').textContent.includes('환영합니다'), 'hero title translated');
+  ok(d.querySelector('.nav__lang-btn').textContent.trim() === 'English', 'toggle offers English when in Korean');
+  ok(d.querySelector('.nav__cta').textContent.includes('문의하기'), 'nav Contact → 문의하기');
+  ok([...d.querySelectorAll('.footer__col h4')].some(h => h.textContent === '프로그램'), 'footer heading translated');
+  const card = d.querySelector('[data-pathway-cards] .card');
+  ok(card.querySelector('.btn').textContent === '페이지 열기', 'pathway card button → 페이지 열기');
+  ok(card.textContent.includes('환우'), 'pathway card text uses cardText_ko');
+  ok(d.body.textContent.includes('격려는 받은 사람에게서 멈추지 않습니다'), 'Circle of Love lead translated');
+}
+{
+  const dom = loadPage('partner.html', 'https://x.test/partner.html?p=nicu', 'ko');
+  const d = dom.window.document;
+  ok(d.querySelector('h1').textContent.includes('신생아 집중치료실'), 'NICU partner hero uses heroTitle_ko');
+  ok(d.body.textContent.includes('파트너 커뮤니티'), 'partner eyebrow translated');
+  ok(d.body.textContent.includes('지금 이곳에서도, 우리가 당신과 함께 있습니다'), 'NICU closing uses closing_ko');
+  ok(d.body.textContent.includes('Hope Capsule 열기'), 'card buttons translated');
+}
+{
+  const dom = loadPage('one-message-for-you.html', 'https://x.test/one-message-for-you.html', 'ko');
+  const d = dom.window.document;
+  ok(d.querySelector('h1').textContent.includes('하루를 바꿀 수 있습니다'), 'OMFY hero translated');
+  ok(d.body.textContent.includes('작은 격려란 없습니다'), 'OMFY closing quote translated');
+}
+{
+  const dom = loadPage('hope-capsule.html', 'https://x.test/hope-capsule.html', 'ko');
+  const d = dom.window.document;
+  ok(d.querySelector('h1').textContent.trim() === 'Hope Capsule', 'capsule brand name stays English');
+  ok(d.body.textContent.includes('희망이 필요한 순간'), 'capsule copy translated');
+}
+{
+  // integrity: every data-i18n key used in HTML exists in the KO dictionary
+  const dict = fs.readFileSync(path.join(ROOT, 'js/i18n.js'), 'utf8');
+  const missing = [];
+  ['index.html', 'one-message-for-you.html', 'hope-capsule.html'].forEach(f => {
+    const html = fs.readFileSync(path.join(ROOT, f), 'utf8');
+    (html.match(/data-i18n="([^"]+)"/g) || []).forEach(m => {
+      const key = m.slice(11, -1);
+      if (!dict.includes(`"${key}":`)) missing.push(`${f}:${key}`);
+    });
+  });
+  ok(missing.length === 0, `every data-i18n key has a Korean translation${missing.length ? ' — MISSING: ' + missing.join(', ') : ''}`);
 }
 
 console.log(`\n${passed} passed, ${failed} failed`);

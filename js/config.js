@@ -33,14 +33,14 @@ const SITE = {
   // The "Programs" dropdown builds itself from js/partners.js —
   // pathway names and order live there (name + order fields).
   nav: [
-    { label: "Home", href: "index.html" },
-    { label: "Programs", href: "programs.html", dropdown: "partners" },
+    { label: "Home", label_ko: "홈", href: "index.html" },
+    { label: "Programs", label_ko: "프로그램", href: "programs.html", dropdown: "partners" },
     { label: "GYCO", href: "student-community.html" },
     { label: "NADO School", href: "learning.html" },
-    { label: "Media", href: "media.html" },
-    { label: "Join Us", href: "join.html" },
-    { label: "About", href: "about.html" },
-    { label: "Contact", href: "contact.html", cta: true },
+    { label: "Media", label_ko: "미디어", href: "media.html" },
+    { label: "Join Us", label_ko: "함께하기", href: "join.html" },
+    { label: "About", label_ko: "소개", href: "about.html" },
+    { label: "Contact", label_ko: "문의하기", href: "contact.html", cta: true },
   ],
 
   // ── Homepage images ──────────────────────────────────────
@@ -115,4 +115,5 @@ const SITE = {
   ],
 
   footerNote: "A student-led platform bringing music, learning, encouragement, and human connection into real communities.",
+  footerNote_ko: "음악과 배움, 격려와 따뜻한 연결을 병원, 가족 공간, 시니어 커뮤니티, 학교, 그리고 세계 곳곳의 커뮤니티에 전하는 학생 주도 플랫폼입니다.",
 };

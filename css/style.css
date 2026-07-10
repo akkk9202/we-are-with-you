@@ -132,6 +132,16 @@ em { font-style: italic; }
 .nav__links > li > a.active { color: var(--white); box-shadow: 0 2px 0 var(--gold); }
 .nav__caret { font-size: 0.55rem; opacity: 0.6; }
 
+/* Language toggle (EN ↔ 한국어) */
+.nav__lang-btn {
+  background: none; cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.3); border-radius: 999px;
+  font-family: inherit; font-size: 0.74rem; font-weight: 600;
+  letter-spacing: 0.05em; color: rgba(255,255,255,0.78);
+  padding: 0.32rem 0.85rem; transition: color 0.2s, border-color 0.2s;
+}
+.nav__lang-btn:hover, .nav__lang-btn:focus-visible { color: var(--gold-2); border-color: var(--gold-2); }
+
 .nav__dropdown {
   position: absolute; top: calc(100% + 8px); left: -1rem;
   min-width: 230px; background: var(--ink);
