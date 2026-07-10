@@ -69,10 +69,10 @@ console.log('\n[index.html]');
 
   const car = d.querySelector('.carousel');
   ok(!!car, 'carousel hydrated in "One platform" section');
-  ok(car.querySelectorAll('.carousel__slide').length === 3, 'carousel has exactly 3 slides');
+  ok(car.querySelectorAll('.carousel__slide').length === 6, 'carousel has exactly 6 slides');
   ok(car.getAttribute('aria-roledescription') === 'carousel' && car.tabIndex === 0, 'carousel is keyboard-focusable with ARIA role');
   ok(car.querySelector('.carousel__arrow--prev') && car.querySelector('.carousel__arrow--next'), 'carousel has prev/next arrows');
-  ok(car.querySelectorAll('.carousel__dot').length === 3, 'carousel has 3 dot indicators');
+  ok(car.querySelectorAll('.carousel__dot').length === 6, 'carousel has 6 dot indicators');
   const track = car.querySelector('.carousel__track');
   ok(track.style.transform === 'translateX(-0%)', 'carousel starts on slide 1 (one image at a time)');
   car.querySelector('.carousel__arrow--next').dispatchEvent(new dom.window.Event('click', { bubbles: true }));

@@ -74,6 +74,21 @@ const SITE = {
         alt: "WE ARE WITH YOU flyer for the Northside NICU with QR codes for a letter for your baby, letters for parents, quiet music, and the Hope Capsule",
         caption: "Northside Intensive Care Unit (NICU)",
       },
+      {
+        src: "assets/images/home-carousel-4.jpg",
+        alt: "WE ARE WITH YOU flyer for The America Wheat Mission (Milal) with QR codes for a letter for a friend, letters for families, music together, song requests, and the Hope Capsule",
+        caption: "The America Wheat Mission (Milal)",
+      },
+      {
+        src: "assets/images/home-carousel-5.jpg",
+        alt: "WE ARE WITH YOU flyer for senior living communities with QR codes for letters for seniors, Secret Wisdom messages, music together, songs with memories, and the Hope Capsule",
+        caption: "Senior Living Communities",
+      },
+      {
+        src: "assets/images/home-carousel-6.jpg",
+        alt: "WE ARE WITH YOU flyer for MeSun Senior Living and Adoration Home Health with QR codes for letters, prayers, peaceful music, songs with memories, and the Hope Capsule",
+        caption: "MeSun Senior Living · Adoration Home Health",
+      },
     ],
   },
 
