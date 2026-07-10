@@ -93,10 +93,9 @@ const PARTNERS = {
   "senior-living": {
     order: 4,
     name: "Senior Living",
-    // TODO: Replace with the final Senior Living partner logo —
-    // add assets/logos/senior-living.png (a clean monogram shows until then).
+    // Swap in an updated logo anytime — assets/logos/senior-living.png
     logo: "assets/logos/senior-living.png",
-    logoAlt: "Senior Living partner logo",
+    logoAlt: "Adoration Home Health and MeSun Senior Living logos",
     cardText: "For seniors, families, staff, and volunteers — familiar songs, memory-based music, student performances, and intergenerational connection.",
     heroTitle: "WE ARE WITH YOU at Senior Living",
     heroText: "Music, memories, stories, and intergenerational connection.",
