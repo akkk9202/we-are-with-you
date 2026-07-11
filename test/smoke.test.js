@@ -12,7 +12,7 @@ const ok = (cond, msg) => {
   else { failed++; console.log('  ✗ FAIL:', msg); }
 };
 
-function loadPage(file, url, lang) {
+function loadPage(file, url) {
   const html = fs.readFileSync(path.join(ROOT, file), 'utf8');
   const dom = new JSDOM(html, { url, runScripts: 'outside-only' });
   const w = dom.window;
@@ -21,8 +21,7 @@ function loadPage(file, url, lang) {
     constructor(cb) { this.cb = cb; }
     observe() {} unobserve() {} disconnect() {}
   };
-  if (lang) w.localStorage.setItem('wawy-lang', lang);
-  const bundle = ['js/config.js', 'js/partners.js', 'js/i18n.js', 'js/site.js']
+  const bundle = ['js/config.js', 'js/partners.js', 'js/site.js']
     .map(js => fs.readFileSync(path.join(ROOT, js), 'utf8')).join('\n;\n');
   w.eval(bundle);
   return dom;
@@ -101,6 +100,20 @@ console.log('\n[index.html]');
   ok(footPrograms.textContent.includes('The America Wheat Mission (Milal)'), 'footer Programs column shows Milal name');
 
   ok(!d.body.textContent.includes('Disability Community'), 'no visible "Disability Community" label remains');
+
+  const audTags = [...d.querySelectorAll('[data-pathway-cards] .card--pathway .card__tag')].map(t => t.textContent.trim());
+  ok(JSON.stringify(audTags) === JSON.stringify(['For Cancer Patients', 'For Families', 'For Babies & Families', 'For Older Adults', 'For Individuals with Disabilities', 'For Students & Communities']), 'pathway cards show audience subtitles in order');
+  ok([...d.querySelectorAll('[data-pathway-cards] .btn')].every(b => b.textContent.trim() === 'Learn More'), 'pathway card buttons say "Learn More"');
+  ok(d.body.textContent.includes('Even Here. Even Now. WE ARE WITH YOU.'), 'pathways section states the shared mission line');
+
+  ok(d.body.textContent.includes('Students Created This.') && d.body.textContent.includes('And They Keep Growing It.'), 'students section: new heading');
+  ok(d.body.textContent.includes('learn by building projects that create real impact'), 'students section: GYCO body copy');
+  const studentCtas = [...d.querySelectorAll('.action-card .action-card__title')].map(t => t.textContent.trim());
+  ok(studentCtas.includes('Explore GYCO') && studentCtas.includes('Explore NADO School'), 'students section: two prominent CTA cards');
+
+  ok(d.body.textContent.includes('One Message Can Change a Moment.') && d.body.textContent.includes('One Community Can Change a Life.'), 'final CTA: new heading');
+  ok(studentCtas.includes('Partner With Us') && studentCtas.includes('Join the Circle'), 'final CTA: Partner With Us + Join the Circle cards');
+  ok([...d.querySelectorAll('.action-card')].filter(a => ['Partner With Us', 'Join the Circle'].includes(a.querySelector('.action-card__title').textContent.trim())).every(a => a.getAttribute('href') === 'join.html'), 'final CTA cards link to join.html');
   ok(!/Cancer Care(?!.*CTCA)/.test([...d.querySelectorAll('h3')].map(h => h.textContent).join('|')), 'no bare "Cancer Care" card heading remains');
 }
 
@@ -172,12 +185,19 @@ console.log('\n[student-community.html]');
   const series = [...d.querySelectorAll('#flagship .cards--4 .card h3')].map(h => h.textContent);
   ok(JSON.stringify(series) === JSON.stringify(['Taps of Love', 'Winds of Love', 'Voices of Love', 'Circle of Love']), 'flagship series: Taps / Winds / Voices / Circle of Love');
   ok(d.body.textContent.includes('first flagship initiative'), 'WE ARE WITH YOU framed as first flagship initiative');
-  const opus = [...d.querySelectorAll('#student-innovation .cards--3 .card h3')].map(h => h.textContent);
-  ok(JSON.stringify(opus) === JSON.stringify(['OPUS 2 | Student Innovation', 'OPUS 3 | Research & Innovation', 'OPUS 4 | Student Leadership', 'OPUS 5 | Global Collaboration', 'OPUS 6 | Student Media & Communications']), 'OPUS 2-6 headers: Innovation / Research / Leadership / Global / Media');
+  const opus = [...d.querySelectorAll('#student-innovation .card h3')].map(h => h.textContent);
+  ok(JSON.stringify(opus) === JSON.stringify(['OPUS 1 | WE ARE WITH YOU', 'OPUS 2 | NADO School', 'OPUS 3 | Student Research', 'OPUS 4 | Student Press', 'OPUS 5 | SHAN & ECHO', 'OPUS 6 | Creative Projects']), 'OPUS 1-6 cards: WAWY / NADO / Research / Press / SHAN & ECHO / Creative');
+  ok(d.body.textContent.includes('What is OPUS?') && d.body.textContent.includes('Every Great Work Begins with an Idea.'), '"What is OPUS?" intro precedes the OPUS cards');
   ok(d.querySelector('#flagship h2').textContent === 'OPUS 1 | WE ARE WITH YOU', 'OPUS 1 header on flagship section');
-  ok(d.body.textContent.includes('Student Correspondents'), 'OPUS 6 detail: Student Correspondents present');
-  const roles = ['Creator', 'Leader', 'Researcher', 'Collaborator'];
-  ok(roles.every(r => [...d.querySelectorAll('.circle-word')].some(w => w.textContent === r)), 'roles: Creator / Leader / Researcher / Collaborator');
+  const growth = [...d.querySelectorAll('#growth-loop .loop__step h3')].map(h => h.textContent);
+  ok(JSON.stringify(growth) === JSON.stringify(['Learn', 'Own', 'Offer', 'Progress', 'Learn Again']), 'GYCO Growth Loop: Learn / Own / Offer / Progress / Learn Again');
+  const journey = [...d.querySelectorAll('#student-journey .journey__node')].map(n => n.textContent.trim());
+  ok(JSON.stringify(journey) === JSON.stringify(['Idea', 'Project', 'Program', 'Community', 'Impact']), 'student journey: Idea → Project → Program → Community → Impact');
+  ok(d.body.textContent.includes('Our First Tool. Our Shared Gift.'), 'Music With Purpose section present');
+  ok(d.body.textContent.includes('It is the beginning of saying'), 'Music With Purpose closing statement present');
+  ok(![...d.querySelectorAll('.loop__step h3, .circle-word')].some(el => ['Create', 'Share', 'Grow'].includes(el.textContent.trim())), 'old Learn/Create/Share/Grow framework fully replaced');
+  const roles = ['Creators', 'Leaders', 'Researchers', 'Collaborators'];
+  ok(roles.every(r => [...d.querySelectorAll('.circle-word')].some(w => w.textContent === r)), 'roles: Creators / Leaders / Researchers / Collaborators');
   ok(d.body.textContent.includes('A WE begins with two people'), 'philosophy quote block present');
   ok(d.body.textContent.includes('discover their gifts'), '"discover their gifts" bridge line present');
   ok(d.querySelector('.logo-panel img[src="assets/logos/gyco.png"]'), 'GYCO logo displayed');
@@ -192,11 +212,25 @@ console.log('\n[learning.html]');
   ok(d.title.startsWith('NADO School'), 'title leads with NADO School');
   ok(d.querySelector('h1').textContent.trim() === 'Become a School.', 'hero: Become a School.');
   const steps = [...d.querySelectorAll('.loop .loop__step h3')].map(h => h.textContent);
-  ok(JSON.stringify(steps) === JSON.stringify(['Learn', 'Create', 'Share', 'Grow', 'Learn Again']), 'Learning Loop: 5 steps in order');
+  ok(JSON.stringify(steps) === JSON.stringify(['Learn', 'Own', 'Offer', 'Progress']), 'NADO Learning Loop: Learn / Own / Offer / Progress');
   ok(!!d.querySelector('#programs'), '#programs anchor preserved (beat-and-breeze/taps-of-love redirects still land)');
+  ok(!!d.querySelector('#loop') && !!d.querySelector('#passport'), '#loop and #passport anchors present (hero CTA + passport card land)');
+  const loopSvg = d.querySelector('#loop .circle-figure svg');
+  ok(loopSvg && ['LEARN', 'OWN', 'OFFER', 'PROGRESS'].every(w => loopSvg.textContent.includes(w)), 'Learning Loop rendered as a circular graphic with all four steps');
+  ok(loopSvg && loopSvg.textContent.includes('a new journey.'), 'loop graphic center: every ending becomes a new journey');
+  ok(d.querySelectorAll('.field-grid .field-tile').length === 8, 'Learning in Action: 8 field tiles (Music … Service)');
+  ok(d.body.textContent.includes('One Philosophy. Many Experiences.'), 'Where the Learning Happens heading present');
+  const feats = [...d.querySelectorAll('#programs .card h3')].map(h => h.textContent.replace(/\s+/g, ' ').trim());
+  ok(JSON.stringify(feats) === JSON.stringify(['Beat & Breeze', 'NADO Passport', 'Books & Resources', 'Videos & Stories']), 'four feature cards: Beat & Breeze / Passport / Books / Videos');
+  const impact = [...d.querySelectorAll('.journey .journey__node')].map(n => n.textContent.trim());
+  ok(JSON.stringify(impact) === JSON.stringify(['NADO School', 'GYCO', 'WE ARE WITH YOU']), 'From Philosophy to Impact: NADO School → GYCO → WE ARE WITH YOU');
+  ok(!!d.querySelector('.passport-panel svg') && d.body.textContent.includes('A Lifetime of Learning.'), 'NADO Passport section with mockup beside it');
   ok(d.body.textContent.includes('나도'), 'Korean 나도 explanation present');
-  ok(d.body.textContent.includes('I will learn, too'), 'four "I will…, too" declarations present');
-  ok(d.body.textContent.includes('It starts with "Nado."'), 'closing line present');
+  ok(d.body.textContent.includes('I will learn, too') && d.body.textContent.includes('I will contribute, too'), 'four "I will…, too" declarations present (incl. contribute)');
+  ok(d.body.textContent.includes('Every learning community begins when someone chooses to say'), '"Nado." choice statement present');
+  ok(d.body.textContent.includes('Your journey starts today') && d.body.textContent.includes('Become a School.'), 'final CTA: Your Journey Starts Today / Become a School.');
+  ok([...d.querySelectorAll('.btn')].some(b => b.textContent.trim() === 'Explore the Learning Journey' && b.getAttribute('href') === '#loop'), 'hero CTA "Explore the Learning Journey" targets the loop');
+  ok(![...d.querySelectorAll('.loop__step h3, .circle-word')].some(el => ['Create', 'Share', 'Grow'].includes(el.textContent.trim())), 'old Learn/Create/Share/Grow framework fully replaced');
   ok(d.querySelector('.logo-panel img[src="assets/logos/nado-school.png"]'), 'NADO School logo displayed');
 }
 
@@ -237,63 +271,60 @@ console.log('\n[logo fallback]');
   ok(senior.querySelector('.logo-chip__fallback').textContent === 'SL', 'Senior Living monogram = "SL"');
 }
 
-/* ── 8. BILINGUAL (한국어) ── */
-console.log('\n[i18n — English default]');
+/* ── 8. ABOUT PAGE (philosophy landing) ── */
+console.log('\n[about.html]');
 {
-  const dom = loadPage('index.html', 'https://x.test/index.html');
+  const dom = loadPage('about.html', 'https://x.test/about.html');
   const d = dom.window.document;
-  ok(d.documentElement.lang === 'en', 'default stays English (html lang="en")');
-  ok(d.querySelector('.hero__title').textContent.includes('Welcome to'), 'hero stays English by default');
-  const btn = d.querySelector('.nav__lang-btn');
-  ok(!!btn && btn.textContent.trim() === '한국어', 'nav offers 한국어 toggle when in English');
+  ok(d.title.includes('One Philosophy. One Loop. One Community.'), 'title carries the philosophy line');
+  const h1 = d.querySelector('h1').textContent;
+  ok(['One philosophy.', 'One Loop.', 'One Community.'].every(l => h1.includes(l)), 'hero: One philosophy. One Loop. One Community.');
+  ok(d.body.textContent.includes('Every WE begins with one NADO.'), 'hero kicker present');
+  ok(d.querySelector('.invite-figure img[src="assets/images/home-invitation.jpg"]'), 'invitation image is the hero visual');
+  ok([...d.querySelectorAll('.btn')].some(b => b.textContent.trim() === 'Enter WE ARE WITH YOU' && b.getAttribute('href') === 'index.html'), 'hero CTA: Enter WE ARE WITH YOU');
+
+  const merge = d.querySelector('.nado-we-figure svg');
+  ok(merge && merge.querySelectorAll('text').length === 3 && merge.textContent.includes('WE'), 'NADO + NADO → WE merge figure (two NADOs and one WE)');
+  ok(!!merge.closest('.reveal'), 'merge figure animates on scroll (inside a .reveal)');
+
+  const eco = d.querySelector('.eco-loop svg');
+  ok(!!eco, 'ecosystem loop diagram present');
+  ok(eco.textContent.includes('NADO + NADO') && eco.textContent.includes('WE'), 'loop center: NADO + NADO = WE');
+  ok(['NADO School', 'GYCO', 'WE ARE WITH YOU', 'New Experiences'].every(n => eco.textContent.includes(n)), 'loop connects all four stations');
+  ok(['LEARN', 'OFFER', 'LOOP'].every(n => eco.textContent.includes(n)), 'loop roles: LEARN / OFFER / LOOP');
+  ok(!!eco.querySelector('.orbit') && !!eco.querySelector('.dash-ring'), 'loop has continuous-motion elements (orbit dot + flowing dashes)');
+
+  const pillars = [...d.querySelectorAll('.pillar h3')].map(h => h.textContent.trim());
+  ok(JSON.stringify(pillars) === JSON.stringify(['NADO School', 'GYCO', 'WE ARE WITH YOU']), 'three expression explainers under the diagram');
+  const tri = [...d.querySelectorAll('.tri-circle h3')].map(h => h.textContent.trim());
+  ok(JSON.stringify(tri) === JSON.stringify(['NADO School', 'GYCO', 'WE ARE WITH YOU']), 'Different Purposes: three connected circles');
+
+  const closing = [...d.querySelectorAll('#closing-loop .journey__node')].map(n => n.textContent.trim());
+  ok(JSON.stringify(closing) === JSON.stringify(['NADO', 'GYCO', 'WE ARE WITH YOU', 'New Stories', 'NADO Again']), 'closing vertical flow: NADO → … → NADO Again');
+  ok(d.body.textContent.includes('Every ending becomes another beginning.'), 'ending statement present');
 }
 
-console.log('\n[i18n — Korean]');
+/* ── 9. REDIRECT STUBS + SLUG INTEGRITY ── */
+console.log('\n[redirect stubs & slugs]');
 {
-  const dom = loadPage('index.html', 'https://x.test/index.html', 'ko');
-  const d = dom.window.document;
-  ok(d.documentElement.lang === 'ko', 'html lang switches to ko');
-  ok(d.querySelector('.hero__title').textContent.includes('환영합니다'), 'hero title translated');
-  ok(d.querySelector('.nav__lang-btn').textContent.trim() === 'English', 'toggle offers English when in Korean');
-  ok(d.querySelector('.nav__cta').textContent.includes('문의하기'), 'nav Contact → 문의하기');
-  ok([...d.querySelectorAll('.footer__col h4')].some(h => h.textContent === '프로그램'), 'footer heading translated');
-  const card = d.querySelector('[data-pathway-cards] .card');
-  ok(card.querySelector('.btn').textContent === '페이지 열기', 'pathway card button → 페이지 열기');
-  ok(card.textContent.includes('환우'), 'pathway card text uses cardText_ko');
-  ok(d.body.textContent.includes('격려는 받은 사람에게서 멈추지 않습니다'), 'Circle of Love lead translated');
-}
-{
-  const dom = loadPage('partner.html', 'https://x.test/partner.html?p=nicu', 'ko');
-  const d = dom.window.document;
-  ok(d.querySelector('h1').textContent.includes('신생아 집중치료실'), 'NICU partner hero uses heroTitle_ko');
-  ok(d.body.textContent.includes('파트너 커뮤니티'), 'partner eyebrow translated');
-  ok(d.body.textContent.includes('지금 이곳에서도, 우리가 당신과 함께 있습니다'), 'NICU closing uses closing_ko');
-  ok(d.body.textContent.includes('Hope Capsule 열기'), 'card buttons translated');
-}
-{
-  const dom = loadPage('one-message-for-you.html', 'https://x.test/one-message-for-you.html', 'ko');
-  const d = dom.window.document;
-  ok(d.querySelector('h1').textContent.includes('하루를 바꿀 수 있습니다'), 'OMFY hero translated');
-  ok(d.body.textContent.includes('작은 격려란 없습니다'), 'OMFY closing quote translated');
-}
-{
-  const dom = loadPage('hope-capsule.html', 'https://x.test/hope-capsule.html', 'ko');
-  const d = dom.window.document;
-  ok(d.querySelector('h1').textContent.trim() === 'Hope Capsule', 'capsule brand name stays English');
-  ok(d.body.textContent.includes('희망이 필요한 순간'), 'capsule copy translated');
-}
-{
-  // integrity: every data-i18n key used in HTML exists in the KO dictionary
-  const dict = fs.readFileSync(path.join(ROOT, 'js/i18n.js'), 'utf8');
-  const missing = [];
-  ['index.html', 'one-message-for-you.html', 'hope-capsule.html'].forEach(f => {
-    const html = fs.readFileSync(path.join(ROOT, f), 'utf8');
-    (html.match(/data-i18n="([^"]+)"/g) || []).forEach(m => {
-      const key = m.slice(11, -1);
-      if (!dict.includes(`"${key}":`)) missing.push(`${f}:${key}`);
-    });
-  });
-  ok(missing.length === 0, `every data-i18n key has a Korean translation${missing.length ? ' — MISSING: ' + missing.join(', ') : ''}`);
+  const stubs = {
+    'gyco.html': 'student-community.html',
+    'about-gyco.html': 'about.html',
+    'beat-and-breeze.html': 'learning.html#programs',
+    'taps-of-love.html': 'learning.html#programs',
+    'voices-of-love.html': 'partner.html?p=cancer-care',
+    'we-are-with-you.html': 'programs.html',
+    'winds-of-love.html': 'media.html',
+  };
+  for (const [file, target] of Object.entries(stubs)) {
+    let html = '';
+    try { html = fs.readFileSync(path.join(ROOT, file), 'utf8'); } catch (e) {}
+    ok(html.includes('http-equiv="refresh"') && html.includes(target), `${file} stub intact → ${target}`);
+  }
+  const partnersSrc = fs.readFileSync(path.join(ROOT, 'js/partners.js'), 'utf8');
+  for (const slug of ['cancer-care', 'ronald-mcdonald-house', 'nicu', 'senior-living', 'disability', 'schools-global']) {
+    ok(partnersSrc.includes(`"${slug}"`), `partner slug "${slug}" unchanged (QR codes safe)`);
+  }
 }
 
 console.log(`\n${passed} passed, ${failed} failed`);

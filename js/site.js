@@ -14,14 +14,6 @@ const ringMark = (size) => `
 
 /* ── SHARED HELPERS ── */
 
-/* i18n helpers (js/i18n.js). tr() returns the Korean string for a
-   dictionary key when Korean is active, else the English fallback.
-   loc() returns obj.field_ko when Korean is active and it exists. */
-const hasI18n = typeof I18N !== 'undefined';
-const tr = (key, fallback) => (hasI18n && I18N.t(key)) || fallback;
-const loc = (obj, field) =>
-  (hasI18n && I18N.lang === 'ko' && obj[field + '_ko']) || obj[field];
-
 /* Only allow safe link schemes for URLs coming from config.js so a
    pasted "javascript:" (or a broken value) can never become a live
    link. Permits http(s), mailto, root-relative, and local .html paths;
@@ -69,19 +61,13 @@ const logoChip = (p, extra = '') => `
       const dd = items.map(d =>
         `<li><a href="${d.href}">${d.label}</a></li>`).join('');
       return `<li>
-        <a href="${item.href}" class="${isActive ? 'active' : ''}" aria-haspopup="true">${loc(item, 'label')} <span class="nav__caret">▾</span></a>
+        <a href="${item.href}" class="${isActive ? 'active' : ''}" aria-haspopup="true">${item.label} <span class="nav__caret">▾</span></a>
         <ul class="nav__dropdown">${dd}</ul>
       </li>`;
     }
     const cls = [item.cta ? 'btn btn--gold btn--sm nav__cta' : '', isActive && !item.cta ? 'active' : ''].join(' ').trim();
-    return `<li><a href="${item.href}" ${cls ? `class="${cls}"` : ''}>${loc(item, 'label')}</a></li>`;
+    return `<li><a href="${item.href}" ${cls ? `class="${cls}"` : ''}>${item.label}</a></li>`;
   }).join('');
-
-  /* Language toggle — English is the default; the button offers the
-     other language. Choice persists in localStorage via I18N. */
-  const langBtn = hasI18n ? `<li class="nav__lang">
-    <button type="button" class="nav__lang-btn" aria-label="${I18N.lang === 'ko' ? 'Switch to English' : '한국어로 보기'}">${I18N.lang === 'ko' ? 'English' : '한국어'}</button>
-  </li>` : '';
 
   mount.outerHTML = `
   <nav class="nav" aria-label="Main navigation">
@@ -89,13 +75,10 @@ const logoChip = (p, extra = '') => `
     <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
-    <ul class="nav__links">${links}${langBtn}</ul>
+    <ul class="nav__links">${links}</ul>
   </nav>`;
 
   const nav = document.querySelector('.nav');
-  const langToggle = nav.querySelector('.nav__lang-btn');
-  if (langToggle) langToggle.addEventListener('click', () =>
-    I18N.setLang(I18N.lang === 'ko' ? 'en' : 'ko'));
   const burger = nav.querySelector('.nav__hamburger');
   const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 50);
   window.addEventListener('scroll', onScroll, { passive: true });
@@ -116,7 +99,7 @@ const logoChip = (p, extra = '') => `
   const connect = [
     SITE.instagram ? `<li><a href="${safeUrl(SITE.instagram)}" target="_blank" rel="noopener">Instagram</a></li>` : '',
     SITE.youtube ? `<li><a href="${safeUrl(SITE.youtube)}" target="_blank" rel="noopener">YouTube</a></li>` : '',
-    `<li><a href="contact.html">${tr('footer.email', 'Email us')}</a></li>`,
+    `<li><a href="contact.html">Email us</a></li>`,
   ].join('');
 
   mount.outerHTML = `
@@ -124,17 +107,17 @@ const logoChip = (p, extra = '') => `
     <div class="footer__inner">
       <div class="footer__brand">
         <div class="footer__brand-name">${ringMark(20)} ${SITE.name}</div>
-        <p>${loc(SITE, 'footerNote')}</p>
+        <p>${SITE.footerNote}</p>
       </div>
-      <div class="footer__col"><h4>${tr('footer.programs', 'Programs')}</h4><ul>${partnerLinks}</ul></div>
-      <div class="footer__col"><h4>${tr('footer.platform', 'Platform')}</h4><ul>
+      <div class="footer__col"><h4>Programs</h4><ul>${partnerLinks}</ul></div>
+      <div class="footer__col"><h4>Platform</h4><ul>
         <li><a href="student-community.html">GYCO</a></li>
         <li><a href="learning.html">NADO School</a></li>
-        <li><a href="media.html">${tr('footer.media', 'Media')}</a></li>
-        <li><a href="join.html">${tr('footer.join', 'Join Us')}</a></li>
-        <li><a href="about.html">${tr('footer.about', 'About')}</a></li>
+        <li><a href="media.html">Media</a></li>
+        <li><a href="join.html">Join Us</a></li>
+        <li><a href="about.html">About</a></li>
       </ul></div>
-      <div class="footer__col"><h4>${tr('footer.connect', 'Connect')}</h4><ul>${connect}</ul></div>
+      <div class="footer__col"><h4>Connect</h4><ul>${connect}</ul></div>
     </div>
     <div class="footer__bottom">
       <p>© ${new Date().getFullYear()} ${SITE.org}. All rights reserved.</p>
@@ -174,10 +157,10 @@ const logoChip = (p, extra = '') => `
   const cards = pathwayList().map((p, i) => `
     <article class="card card--pathway reveal reveal--d${(i % 3) + 1}">
       ${logoChip(p)}
-      <span class="card__tag">${tr('partner.pathway', 'Pathway')}</span>
+      <span class="card__tag">${p.audience || 'Pathway'}</span>
       <h3>${p.name}</h3>
-      <p>${loc(p, 'cardText') || loc(p, 'heroText')}</p>
-      <a class="btn btn--ink btn--sm" href="partner.html?p=${p.slug}">${tr('partner.openPage', 'Open page')}</a>
+      <p>${p.cardText || p.heroText}</p>
+      <a class="btn btn--ink btn--sm" href="partner.html?p=${p.slug}">Learn More</a>
     </article>`).join('');
   mounts.forEach(m => { m.innerHTML = cards; });
 })();
@@ -293,52 +276,51 @@ const logoChip = (p, extra = '') => `
   if (!p) {
     root.innerHTML = `
     <section class="page-hero"><div class="container">
-      <div class="eyebrow">${tr('partner.notFoundEyebrow', 'Programs')}</div>
-      <h1>${tr('partner.notFoundTitle', 'Choose a community')}</h1>
-      <p class="page-hero__sub">${tr('partner.notFoundText', "This link didn't match a partner page. Pick one below.")}</p>
+      <div class="eyebrow">Programs</div>
+      <h1>Choose a community</h1>
+      <p class="page-hero__sub">This link didn't match a partner page. Pick one below.</p>
     </div></section>
     <section class="section"><div class="container"><div class="cards cards--3">
       ${pathwayList().map(pp => `
-        <div class="card">${logoChip(pp)}<h3>${pp.name}</h3><p>${loc(pp, 'heroText')}</p>
-        <a class="btn btn--ink btn--sm" href="partner.html?p=${pp.slug}">${tr('partner.openPage', 'Open page')}</a></div>`).join('')}
+        <div class="card">${logoChip(pp)}<h3>${pp.name}</h3><p>${pp.heroText}</p>
+        <a class="btn btn--ink btn--sm" href="partner.html?p=${pp.slug}">Open page</a></div>`).join('')}
     </div></div></section>`;
     return;
   }
 
   document.title = `${p.name} — WE ARE WITH YOU`;
-  const closing = loc(p, 'closing');
   const cards = p.cards.map((c, i) => `
     <div class="card reveal reveal--d${(i % 3) + 1}">
-      <h3>${loc(c, 'title')}</h3><p>${loc(c, 'text')}</p>
-      <a class="btn btn--ink btn--sm" ${c.form ? `data-form="${c.form}" href="contact.html"` : `href="${c.href}"`}>${loc(c, 'button')}</a>
+      <h3>${c.title}</h3><p>${c.text}</p>
+      <a class="btn btn--ink btn--sm" ${c.form ? `data-form="${c.form}" href="contact.html"` : `href="${c.href}"`}>${c.button}</a>
     </div>`).join('');
 
   root.innerHTML = `
   <section class="page-hero"><div class="container">
     ${p.logo ? logoChip(p, 'logo-chip--hero') : ''}
-    <div class="eyebrow">${tr('partner.eyebrow', 'WE ARE WITH YOU · Partner Community')}</div>
-    <h1>${loc(p, 'heroTitle')}</h1>
+    <div class="eyebrow">WE ARE WITH YOU · Partner Community</div>
+    <h1>${p.heroTitle}</h1>
     <div class="page-hero__kicker">${SITE.tagline}</div>
-    <p class="page-hero__sub">${loc(p, 'heroText')}</p>
+    <p class="page-hero__sub">${p.heroText}</p>
   </div></section>
 
   <section class="section"><div class="container">
-    <div class="section-head reveal"><div class="eyebrow">${tr('partner.aboutEyebrow', 'About this community')}</div>
-      <h2>${tr('partner.aboutTitle', 'Made for this place')}</h2><p>${loc(p, 'about')}</p></div>
+    <div class="section-head reveal"><div class="eyebrow">About this community</div>
+      <h2>Made for this place</h2><p>${p.about}</p></div>
     <div class="cards cards--3">${cards}</div>
   </div></section>
 
   <section class="section section--mist"><div class="container center measure reveal">
-    <div class="eyebrow eyebrow--center">${tr('partner.qrEyebrow', 'Scan. Open. Participate.')}</div>
-    <h2>${tr('partner.qrTitle', 'One QR code, straight to this page')}</h2>
-    <p style="color:var(--muted);margin-top:1rem;">${tr('partner.qrText', 'This page can be shared through QR codes on brochures, posters, cards, waiting rooms, program tables, newsletters, and digital messages — so visitors land exactly here in one tap.')}</p>
+    <div class="eyebrow eyebrow--center">Scan. Open. Participate.</div>
+    <h2>One QR code, straight to this page</h2>
+    <p style="color:var(--muted);margin-top:1rem;">This page can be shared through QR codes on brochures, posters, cards, waiting rooms, program tables, newsletters, and digital messages — so visitors land exactly here in one tap.</p>
   </section></div>
 
   <section class="section section--dark"><div class="container center reveal">
-    ${closing.map((line, i) => i === closing.length - 1
+    ${p.closing.map((line, i) => i === p.closing.length - 1
       ? `<h2 style="margin-top:1rem;"><em style="color:var(--gold-2)">${line}</em></h2>`
       : `<p class="lead" style="margin-inline:auto;">${line}</p>`).join('')}
-    <div style="margin-top:2.5rem;"><a class="btn btn--gold" href="contact.html">${tr('partner.connect', 'Connect with us')}</a></div>
+    <div style="margin-top:2.5rem;"><a class="btn btn--gold" href="contact.html">Connect with us</a></div>
   </div></section>`;
 
   // re-wire form buttons created after initial pass

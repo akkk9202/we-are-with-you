@@ -130,7 +130,7 @@ student-community.html    GYCO — More Than Music
 learning.html             NADO School — Become a School
 media.html                Featured press + galleries
 join.html                 Four join paths
-about.html                Ecosystem (WAWY / GYCO / NADO / NOS)
+about.html                Philosophy — One Loop (NADO + NADO = WE)
 contact.html              Contact info + form links
 404.html                  Not-found page
 css/style.css             All styling (tokens at top)

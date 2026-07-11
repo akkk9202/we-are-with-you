@@ -1,0 +1,1301 @@
+diff -ruN '--exclude=node_modules' '--exclude=package*.json' repo-pristine/EDITING-GUIDE.md repo/EDITING-GUIDE.md
+--- repo-pristine/EDITING-GUIDE.md	2026-07-11 10:59:49.363742044 +0000
++++ repo/EDITING-GUIDE.md	2026-07-11 11:15:03.835030608 +0000
+@@ -130,7 +130,7 @@
+ learning.html             NADO School — Become a School
+ media.html                Featured press + galleries
+ join.html                 Four join paths
+-about.html                Ecosystem (WAWY / GYCO / NADO / NOS)
++about.html                Philosophy — One Loop (NADO + NADO = WE)
+ contact.html              Contact info + form links
+ 404.html                  Not-found page
+ css/style.css             All styling (tokens at top)
+diff -ruN '--exclude=node_modules' '--exclude=package*.json' repo-pristine/about.html repo/about.html
+--- repo-pristine/about.html	2026-07-11 10:59:49.364161998 +0000
++++ repo/about.html	2026-07-11 11:07:08.287269986 +0000
+@@ -4,10 +4,10 @@
+   <meta charset="UTF-8" />
+   <meta name="referrer" content="strict-origin-when-cross-origin" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+-  <title>About — WE ARE WITH YOU</title>
+-  <meta name="description" content="WE ARE WITH YOU, GYCO, and NADO School are connected parts of one educational ecosystem. One philosophy, three connected roles." />
+-  <meta property="og:title" content="About — WE ARE WITH YOU" />
+-  <meta property="og:description" content="One philosophy. Three connected roles." />
++  <title>About — One Philosophy. One Loop. One Community. | WE ARE WITH YOU</title>
++  <meta name="description" content="NADO School, GYCO, and WE ARE WITH YOU are one continuous philosophy. Learning creates students. Students serve communities. Communities create new learners. Every WE begins with one NADO." />
++  <meta property="og:title" content="About — One Philosophy. One Loop. One Community." />
++  <meta property="og:description" content="Every WE begins with one NADO. Learning creates students. Students serve communities. Communities create new learners." />
+   <meta property="og:type" content="website" />
+   <meta property="og:url" content="https://akkk9202.github.io/we-are-with-you/about.html" />
+   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+@@ -19,84 +19,184 @@
+ 
+ <main id="main">
+ 
++<!-- 1 · HERO — the invitation -->
+ <section class="page-hero">
+-  <div class="container">
+-    <div class="eyebrow">About</div>
+-    <h1>One philosophy. Three connected roles.</h1>
+-    <p class="page-hero__sub">WE ARE WITH YOU, GYCO, and NADO School are connected parts of one educational ecosystem. Each has a clear role.</p>
++  <div class="container two-col" style="align-items:center;">
++    <div class="two-col__text">
++      <div class="eyebrow">You are invited</div>
++      <h1>One philosophy.<br>One Loop.<br>One Community.</h1>
++      <div class="page-hero__kicker" style="margin-top:0.8rem;">Every WE begins with one NADO.</div>
++      <div style="margin-top:2rem;"><a class="btn btn--gold" href="index.html">Enter WE ARE WITH YOU</a></div>
++    </div>
++    <!-- The invitation — swap assets/images/home-invitation.jpg anytime to update. -->
++    <figure class="invite-figure">
++      <img src="assets/images/home-invitation.jpg" alt="WE ARE WITH YOU invitation — you are invited to receive a message of hope. Even Here, Even Now." />
++    </figure>
+   </div>
+ </section>
+ 
+-<section class="section">
+-  <div class="container">
+-    <div class="pillars">
+-      <div class="pillar reveal reveal--d1">
+-        <h4 style="color:var(--blue);margin-bottom:0.5rem;">The front door</h4>
+-        <h3>WE ARE WITH YOU</h3>
+-        <p>The public-facing platform — and GYCO's first flagship initiative, created and grown by students — where hospitals, schools, senior communities, family organizations, and global partners connect with our work. Visitors first see the people we serve, the programs we create, and the hope we build together.</p>
+-      </div>
+-      <div class="pillar reveal reveal--d2">
+-        <h4 style="color:var(--blue);margin-bottom:0.5rem;">The student-led innovation community</h4>
+-        <h3>GYCO</h3>
+-        <p>Where students learn, create their own ideas, design projects, and carry them out with their communities — growing as creators, leaders, researchers, and collaborators. Music is the first tool that begins the change.</p>
+-      </div>
+-      <div class="pillar reveal reveal--d3">
+-        <h4 style="color:var(--blue);margin-bottom:0.5rem;">The learning system</h4>
+-        <h3>NADO School</h3>
+-        <p>The educational philosophy behind student growth. It helps students understand that everyone can learn, everyone can teach, and everyone has something to share. It turns experience into education.</p>
+-      </div>
++<!-- 2 · FROM NADO TO WE -->
++<section class="section" id="from-nado-to-we">
++  <div class="container center reveal">
++    <div class="eyebrow eyebrow--center">From NADO to WE</div>
++    <h2>Everything begins with one simple choice.</h2>
++    <p class="lead" style="margin-top:1rem;max-width:44ch;">NADO means, <em>"I choose to learn. I choose to participate."</em></p>
++
++    <!-- Two NADOs meet and become WE (animates on scroll). -->
++    <div class="nado-we-figure reveal">
++      <svg viewBox="0 0 600 340" role="img" aria-label="Two circles labeled NADO move together and overlap, forming WE. When one NADO meets another NADO, they become WE.">
++        <g class="nado-we__a">
++          <circle cx="252" cy="170" r="95" fill="none" stroke="#C4A24E" stroke-width="1.6"/>
++          <text x="214" y="176" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="19" fill="#13233A">NADO</text>
++        </g>
++        <g class="nado-we__b">
++          <circle cx="348" cy="170" r="95" fill="none" stroke="#3E6B8F" stroke-width="1.4"/>
++          <text x="386" y="176" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="19" fill="#13233A">NADO</text>
++        </g>
++        <text class="nado-we__we" x="300" y="181" text-anchor="middle" font-family="Fraunces, serif" font-size="34" fill="#C4A24E">WE</text>
++      </svg>
+     </div>
++
++    <p class="lead" style="max-width:40ch;">When one NADO meets another NADO, they become WE.</p>
++    <p class="statement" style="margin-top:var(--space-sm);">Every community begins this way.</p>
+   </div>
+ </section>
+ 
+-<section class="section section--dark">
+-  <div class="container center measure reveal">
+-    <div class="eyebrow eyebrow--center">The ecosystem</div>
+-    <h2>How everything connects</h2>
+-    <p class="lead" style="margin-top:1rem;">NADO School teaches the philosophy. GYCO is where students create ideas and lead. WE ARE WITH YOU is their first flagship initiative — bringing that learning into real communities.</p>
+-    <div class="circle-words" style="margin-top:2rem;">
+-      <span class="circle-word">Learn</span><span class="circle-word">Grow</span>
+-      <span class="circle-word">Serve</span><span class="circle-word">Share</span>
+-    </div>
+-    <div class="flow" style="margin-top:2.5rem;">
+-      <div class="flow__item">NADO School</div>
+-      <div class="flow__item">GYCO</div>
+-      <div class="flow__item">WE ARE WITH YOU</div>
+-      <div class="flow__item">Partner communities</div>
+-      <div class="flow__item">The Circle of Love</div>
++<!-- 3 · ONE LOOP. THREE EXPRESSIONS. -->
++<section class="section section--dark" id="one-loop">
++  <div class="container center">
++    <div class="eyebrow eyebrow--center reveal">One Loop. Three Expressions.</div>
++    <h2 class="reveal">Different expressions of the same philosophy</h2>
++    <p class="lead reveal" style="margin-top:1rem;max-width:52ch;">NADO School, GYCO, and WE ARE WITH YOU are not three separate organizations. They are one continuous loop.</p>
++
++    <!-- The ecosystem loop — rotates continuously (respects reduced motion). -->
++    <div class="eco-loop reveal">
++      <svg viewBox="0 0 760 580" role="img" aria-label="One continuous circular loop connecting NADO School (learn), GYCO (offer), WE ARE WITH YOU (loop), and new experiences that return to NADO School. In the center: NADO plus NADO equals WE.">
++        <circle cx="380" cy="290" r="170" fill="none" stroke="#C4A24E" stroke-width="1.4" opacity="0.85"/>
++        <circle class="dash-ring" cx="380" cy="290" r="170" fill="none" stroke="#3E6B8F" stroke-width="1.2" opacity="0.55" stroke-dasharray="4 8"/>
++        <g fill="#C4A24E">
++          <path d="M-6,-5 L8,0 L-6,5 Z" transform="translate(500.2,169.8) rotate(45)"/>
++          <path d="M-6,-5 L8,0 L-6,5 Z" transform="translate(500.2,410.2) rotate(135)"/>
++          <path d="M-6,-5 L8,0 L-6,5 Z" transform="translate(259.8,410.2) rotate(225)"/>
++          <path d="M-6,-5 L8,0 L-6,5 Z" transform="translate(259.8,169.8) rotate(315)"/>
++        </g>
++        <g class="orbit"><circle cx="380" cy="120" r="6" fill="#C4A24E"/></g>
++
++        <g text-anchor="middle">
++          <circle cx="380" cy="120" r="4.5" fill="#C4A24E"/>
++          <text x="380" y="52" font-family="Instrument Sans, sans-serif" font-size="13" font-weight="600" letter-spacing="3" fill="#D3B569">LEARN</text>
++          <text x="380" y="80" font-family="Fraunces, serif" font-size="23" fill="#FAF8F3">NADO School</text>
++          <text x="380" y="100" font-family="Instrument Sans, sans-serif" font-size="12" fill="rgba(250,248,243,0.6)">Educational philosophy</text>
++        </g>
++        <g text-anchor="start">
++          <circle cx="550" cy="290" r="4.5" fill="#C4A24E"/>
++          <text x="574" y="262" font-family="Instrument Sans, sans-serif" font-size="13" font-weight="600" letter-spacing="3" fill="#D3B569">LOOP</text>
++          <text x="574" y="290" font-family="Fraunces, serif" font-size="20" fill="#FAF8F3">WE ARE WITH YOU</text>
++          <text x="574" y="310" font-family="Instrument Sans, sans-serif" font-size="12" fill="rgba(250,248,243,0.6)">Community platform</text>
++        </g>
++        <g text-anchor="end">
++          <circle cx="210" cy="290" r="4.5" fill="#C4A24E"/>
++          <text x="186" y="262" font-family="Instrument Sans, sans-serif" font-size="13" font-weight="600" letter-spacing="3" fill="#D3B569">OFFER</text>
++          <text x="186" y="290" font-family="Fraunces, serif" font-size="20" fill="#FAF8F3">GYCO</text>
++          <text x="186" y="310" font-family="Instrument Sans, sans-serif" font-size="12" fill="rgba(250,248,243,0.6)">Student community</text>
++        </g>
++        <g text-anchor="middle">
++          <circle cx="380" cy="460" r="4.5" fill="#C4A24E"/>
++          <text x="380" y="498" font-family="Fraunces, serif" font-size="18" fill="#FAF8F3">New Experiences</text>
++          <text x="380" y="519" font-family="Instrument Sans, sans-serif" font-size="12" fill="rgba(250,248,243,0.6)">everything loops back to NADO School</text>
++        </g>
++
++        <g text-anchor="middle">
++          <text x="380" y="272" font-family="Fraunces, serif" font-style="italic" font-size="26" fill="#FAF8F3">NADO + NADO</text>
++          <line x1="330" y1="292" x2="430" y2="292" stroke="#C4A24E" stroke-width="1" opacity="0.55"/>
++          <text x="380" y="336" font-family="Fraunces, serif" font-size="42" fill="#D3B569">WE</text>
++        </g>
++      </svg>
++    </div>
++
++    <div class="journey journey--vertical reveal" style="margin-top:var(--space-md);">
++      <span class="journey__node">Learning</span>
++      <span class="journey__arrow" aria-hidden="true"></span>
++      <span class="journey__node">Action</span>
++      <span class="journey__arrow" aria-hidden="true"></span>
++      <span class="journey__node">Community</span>
++      <span class="journey__arrow" aria-hidden="true"></span>
++      <span class="journey__node">New learners</span>
++      <span class="journey__arrow" aria-hidden="true"></span>
++      <span class="journey__node journey__node--em">Learning again</span>
++    </div>
++    <p class="journey__caption reveal">Instead of ending, everything loops back to NADO School. This is one continuous loop.</p>
++
++    <div class="pillars reveal" style="margin-top:var(--space-lg);text-align:left;">
++      <div class="pillar">
++        <h4 style="color:var(--gold-2);margin-bottom:0.5rem;">Learn</h4>
++        <h3>NADO School</h3>
++        <p>Education begins with curiosity. A lifelong philosophy that encourages people to keep learning, growing, and becoming.</p>
++      </div>
++      <div class="pillar">
++        <h4 style="color:var(--gold-2);margin-bottom:0.5rem;">Offer</h4>
++        <h3>GYCO</h3>
++        <p>Students transform learning into action. They create, research, perform, teach, serve, and develop new ideas for real communities.</p>
++      </div>
++      <div class="pillar">
++        <h4 style="color:var(--gold-2);margin-bottom:0.5rem;">Loop</h4>
++        <h3>WE ARE WITH YOU</h3>
++        <p>Learning becomes encouragement. Communities receive hope, participate together, and create new stories that inspire the next generation.</p>
++      </div>
+     </div>
+   </div>
+ </section>
+ 
+-<section class="section section--mist">
+-  <div class="container two-col reveal">
+-    <div class="two-col__text">
+-      <div class="eyebrow">NOS</div>
+-      <h2>The operating system behind the platform</h2>
+-      <p>NOS helps organize and publish partner pages using a shared template. Each partner may have different colors, programs, language, QR codes, and content — but the structure stays connected.</p>
+-      <p>This allows WE ARE WITH YOU to grow without losing its identity.</p>
+-      <a class="btn btn--ink btn--sm" href="programs.html" style="align-self:flex-start;">See the platform</a>
+-    </div>
+-    <div class="card" style="gap:0;">
+-      <h4 style="color:var(--blue);margin-bottom:1rem;">What NOS prepares</h4>
+-      <div class="flow" style="max-width:none;">
+-        <div class="flow__item">Shared page template</div>
+-        <div class="flow__item">Partner colors &amp; language</div>
+-        <div class="flow__item">Program cards &amp; content</div>
+-        <div class="flow__item">QR codes that land in one tap</div>
++<!-- 4 · ONE LOOP. DIFFERENT PURPOSES. -->
++<section class="section section--mist" id="different-purposes">
++  <div class="container center reveal">
++    <div class="eyebrow eyebrow--center">One Loop. Different Purposes.</div>
++    <h2>Three roles. One shared philosophy.</h2>
++    <div class="tri-circles">
++      <div class="tri-circle">
++        <small>Educational foundation</small>
++        <h3>NADO School</h3>
++        <p>Where lifelong learning begins.</p>
++      </div>
++      <div class="tri-circle">
++        <small>Student innovation community</small>
++        <h3>GYCO</h3>
++        <p>Where students grow through real experiences.</p>
++      </div>
++      <div class="tri-circle">
++        <small>Community platform</small>
++        <h3>WE ARE WITH YOU</h3>
++        <p>Where learning becomes encouragement for others.</p>
+       </div>
+     </div>
++    <div class="btn-row" style="display:flex;gap:var(--space-sm);justify-content:center;flex-wrap:wrap;margin-top:var(--space-lg);">
++      <a class="btn btn--ink btn--sm" href="learning.html">Explore NADO School</a>
++      <a class="btn btn--ink btn--sm" href="student-community.html">Explore GYCO</a>
++      <a class="btn btn--ink btn--sm" href="programs.html">Explore WE ARE WITH YOU</a>
++    </div>
+   </div>
+ </section>
+ 
+-<section class="section cta-band">
++<!-- 5 · CLOSING LOOP -->
++<section class="section section--dark cta-band" id="closing-loop">
+   <div class="container reveal">
+-    <div class="eyebrow eyebrow--center">We begin with people</div>
+-    <h2>This is about growing together.</h2>
+-    <p class="lead" style="margin-inline:auto;max-width:56ch;">WE ARE WITH YOU is the front door. GYCO is the student community. NADO School is the learning system. NOS is the operating system. The Circle of Love is the movement that connects them all.</p>
++    <div class="eyebrow eyebrow--center">The loop continues</div>
++    <div class="journey journey--vertical" style="margin-top:var(--space-md);">
++      <a class="journey__node" href="learning.html">NADO</a>
++      <span class="journey__arrow" aria-hidden="true"></span>
++      <a class="journey__node" href="student-community.html">GYCO</a>
++      <span class="journey__arrow" aria-hidden="true"></span>
++      <a class="journey__node" href="index.html">WE ARE WITH YOU</a>
++      <span class="journey__arrow" aria-hidden="true"></span>
++      <span class="journey__node">New Stories</span>
++      <span class="journey__arrow" aria-hidden="true"></span>
++      <span class="journey__node journey__node--em">NADO Again</span>
++    </div>
++    <h2 style="margin-top:var(--space-lg);">Every ending becomes another beginning.</h2>
++    <p class="lead" style="margin-inline:auto;max-width:36ch;">One philosophy. One Loop. One Community.</p>
+     <div class="btn-row">
+       <a class="btn btn--gold" href="programs.html">Explore programs</a>
+-      <a class="btn btn--ink" href="contact.html">Contact us</a>
++      <a class="btn btn--ghost" href="contact.html">Contact us</a>
+     </div>
+   </div>
+ </section>
+diff -ruN '--exclude=node_modules' '--exclude=package*.json' repo-pristine/css/style.css repo/css/style.css
+--- repo-pristine/css/style.css	2026-07-11 10:59:49.401192034 +0000
++++ repo/css/style.css	2026-07-11 11:07:08.282173415 +0000
+@@ -615,3 +615,149 @@
+   .carousel__arrow--next { right: 8px; }
+   .logo-chip--hero { height: 72px; max-width: 210px; }
+ }
++
++/* ════════════════════════════════════════════════════════════
++   v5 COMPONENTS — Learn·Own·Offer·Progress loop, journey
++   progressions, ecosystem loop diagram, NADO+NADO=WE figure,
++   tri-circles, action cards, field tiles, passport mockup
++   ════════════════════════════════════════════════════════════ */
++
++/* ── BIG STATEMENT (highlighted key lines) ── */
++.statement {
++  font-family: var(--display); font-style: italic;
++  font-size: clamp(1.45rem, 3vw, 2.1rem); line-height: 1.4;
++  text-align: center; max-width: 26ch; margin-inline: auto;
++  color: var(--ink); text-wrap: balance;
++}
++.section--dark .statement { color: var(--paper); }
++.statement em { color: var(--gold); font-style: inherit; }
++.section--dark .statement em { color: var(--gold-2); }
++
++/* ── JOURNEY (progression: Idea → Project → …) ── */
++.journey {
++  display: flex; align-items: center; justify-content: center;
++  gap: 0.9rem; flex-wrap: wrap; margin-top: var(--space-md);
++}
++.journey__node {
++  padding: 0.8rem 1.6rem;
++  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
++  font-family: var(--display); font-size: 1.08rem;
++  transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
++}
++.journey__node:hover { transform: translateY(-2px); border-color: rgba(196,162,78,0.6); box-shadow: 0 10px 26px rgba(19,35,58,0.08); }
++a.journey__node { color: inherit; }
++.journey__node--em { border-color: var(--gold); background: rgba(196,162,78,0.07); }
++.journey__arrow { color: var(--gold); font-size: 1.1rem; user-select: none; }
++.journey__arrow::before { content: '→'; }
++.section--dark .journey__node { background: var(--ink-2); border-color: var(--line-d); color: var(--paper); }
++.section--dark .journey__node--em { border-color: var(--gold); background: rgba(196,162,78,0.12); }
++.journey--vertical { flex-direction: column; gap: 0.55rem; }
++.journey--vertical .journey__arrow::before { content: '↓'; }
++.journey__caption {
++  text-align: center; margin: var(--space-md) auto 0;
++  font-family: var(--display); font-style: italic; font-size: 1.1rem; color: var(--muted);
++}
++.section--dark .journey__caption { color: var(--muted-d); }
++@media (max-width: 640px) {
++  .journey:not(.journey--vertical) { flex-direction: column; gap: 0.55rem; }
++  .journey:not(.journey--vertical) .journey__arrow::before { content: '↓'; }
++}
++
++/* ── FIELD TILES (One Philosophy. Endless Possibilities.) ── */
++.field-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-sm); margin-top: var(--space-md); }
++.field-tile {
++  position: relative; text-align: center;
++  background: var(--white); border: 1px solid var(--line); border-top: 2px solid var(--gold);
++  border-radius: var(--radius); padding: 1.6rem 1rem 1.4rem;
++  font-family: var(--display); font-size: 1.22rem;
++  transition: transform 0.25s, box-shadow 0.25s;
++}
++.field-tile:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(19,35,58,0.1); }
++.field-tile::before {
++  content: ''; display: block; width: 7px; height: 7px; border-radius: 50%;
++  background: var(--gold); margin: 0 auto 0.7rem;
++}
++@media (max-width: 960px) { .field-grid { grid-template-columns: repeat(2, 1fr); } }
++@media (max-width: 480px) { .field-grid { grid-template-columns: 1fr; } }
++
++/* ── ACTION CARDS (prominent CTAs with descriptions) ── */
++.action-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-sm); margin-top: var(--space-md); }
++.action-card {
++  position: relative; display: flex; flex-direction: column; gap: 0.55rem;
++  text-align: left; background: var(--white); border: 1px solid var(--line);
++  border-radius: var(--radius); padding: var(--space-md);
++  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
++}
++.action-card:hover { transform: translateY(-3px); box-shadow: 0 16px 38px rgba(19,35,58,0.12); border-color: rgba(196,162,78,0.6); }
++.action-card__title { font-family: var(--display); font-size: 1.45rem; line-height: 1.2; }
++.action-card__desc { font-size: 0.95rem; color: var(--muted); max-width: none; }
++.action-card__go {
++  margin-top: auto; align-self: flex-end; color: var(--gold);
++  font-size: 1.25rem; transition: transform 0.25s;
++}
++.action-card:hover .action-card__go { transform: translateX(5px); }
++.section--dark .action-card { background: var(--ink-2); border-color: var(--line-d); }
++.section--dark .action-card__title { color: var(--paper); }
++.section--dark .action-card__desc { color: var(--muted-d); }
++@media (max-width: 780px) { .action-cards { grid-template-columns: 1fr; } }
++
++/* ── TRI-CIRCLES (one loop, different purposes) ── */
++.tri-circles { display: flex; justify-content: center; align-items: center; margin-top: var(--space-lg); }
++.tri-circle {
++  width: 240px; height: 240px; border-radius: 50%; flex-shrink: 0;
++  border: 1.5px solid var(--gold);
++  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.35rem;
++  text-align: center; padding: 1.6rem; background: rgba(250,248,243,0.82);
++}
++.tri-circle + .tri-circle { margin-left: -44px; }
++.tri-circle:nth-child(2) { border-color: var(--blue); position: relative; z-index: 1; }
++.tri-circle h3 { font-size: 1.12rem; }
++.tri-circle p { font-size: 0.82rem; color: var(--muted); max-width: 18ch; }
++.tri-circle small {
++  font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em;
++  text-transform: uppercase; color: var(--gold);
++}
++@media (max-width: 780px) {
++  .tri-circles { flex-direction: column; }
++  .tri-circle + .tri-circle { margin-left: 0; margin-top: -44px; }
++}
++
++/* ── ECOSYSTEM LOOP (about page centerpiece) ── */
++.eco-loop { display: flex; justify-content: center; margin-block: var(--space-md); }
++.eco-loop svg { width: min(680px, 94vw); height: auto; overflow: visible; }
++@media (prefers-reduced-motion: no-preference) {
++  .eco-loop .orbit { animation: eco-orbit 22s linear infinite; transform-origin: 380px 290px; }
++  .eco-loop .dash-ring { animation: eco-dash 60s linear infinite; }
++}
++@keyframes eco-orbit { to { transform: rotate(360deg); } }
++@keyframes eco-dash { to { stroke-dashoffset: -1068; } }
++
++/* ── NADO + NADO = WE (merge figure) ── */
++.nado-we-figure { display: flex; justify-content: center; margin-block: var(--space-md); }
++.nado-we-figure svg { width: min(560px, 92vw); height: auto; overflow: visible; }
++.nado-we__a, .nado-we__b { transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.25s; }
++.reveal .nado-we__a { transform: translateX(-92px); }
++.reveal .nado-we__b { transform: translateX(92px); }
++.reveal.visible .nado-we__a, .reveal.visible .nado-we__b { transform: translateX(0); }
++.nado-we__we { opacity: 0; transition: opacity 0.9s ease 1.5s; }
++.reveal.visible .nado-we__we { opacity: 1; }
++@media (prefers-reduced-motion: reduce) {
++  .reveal .nado-we__a, .reveal .nado-we__b { transform: none; }
++  .nado-we__we { opacity: 1; }
++}
++
++/* ── PASSPORT MOCKUP ── */
++.passport-panel { display: flex; justify-content: center; }
++.passport-panel svg {
++  width: min(300px, 72vw); height: auto;
++  filter: drop-shadow(0 24px 48px rgba(19,35,58,0.28));
++  transform: rotate(-3deg); transition: transform 0.35s;
++}
++.passport-panel:hover svg { transform: rotate(0deg); }
++
++/* ── LOOP, 4-step variant (Learn · Own · Offer · Progress) ── */
++.loop--4 { grid-template-columns: repeat(4, 1fr); }
++@media (max-width: 1080px) { .loop--4 { grid-template-columns: repeat(2, 1fr); }
++  .loop--4 .loop__step:nth-child(2)::after { content: none; } }
++@media (max-width: 780px) { .loop--4 { grid-template-columns: 1fr; }
++  .loop--4 .loop__step:nth-child(2)::after { content: '↓'; right: auto; left: 50%; top: auto; bottom: -1.85rem; transform: translateX(-50%); } }
+diff -ruN '--exclude=node_modules' '--exclude=package*.json' repo-pristine/index.html repo/index.html
+--- repo-pristine/index.html	2026-07-11 10:59:49.402269723 +0000
++++ repo/index.html	2026-07-11 11:05:11.424295693 +0000
+@@ -154,7 +154,8 @@
+   <div class="container">
+     <div class="section-head reveal">
+       <div class="eyebrow">Program pathways</div>
+-      <h2>Where WE ARE WITH YOU happens</h2>
++      <h2>Where WE ARE WITH YOU Happens</h2>
++      <p>WE ARE WITH YOU grows through partnerships with healthcare providers, family support organizations, schools, senior communities, disability organizations, and local community partners. Each partner has its own unique needs, but every page begins with the same mission: <strong>Even Here. Even Now. WE ARE WITH YOU.</strong></p>
+     </div>
+     <!-- Pathway cards render from js/partners.js — edit names, order,
+          logos, and descriptions there and every page updates together. -->
+@@ -207,28 +208,45 @@
+   </div>
+ </section>
+ 
+-<!-- 9 · STUDENTS BEHIND THE PLATFORM -->
++<!-- 9 · THE STUDENT COMMUNITY BEHIND THE PLATFORM -->
+ <section class="section">
+-  <div class="container center measure reveal">
+-    <div class="eyebrow eyebrow--center">Students behind the platform</div>
+-    <h2>Students created this — and they keep growing it</h2>
+-    <p style="margin-top:1rem;color:var(--muted);">Behind WE ARE WITH YOU is <strong>GYCO</strong>, a student-led innovation community. Students don't only volunteer — they discover what their communities need, propose new ideas, partner with organizations, and develop and run the programs themselves, growing as creators, leaders, researchers, and collaborators.</p>
+-    <p style="margin-top:1rem;color:var(--muted);">They learn and lead in <strong>GYCO</strong>. They grow through <strong>NADO School</strong>. And <strong>WE ARE WITH YOU</strong> is their first flagship initiative — with new ones still to come.</p>
+-    <div class="cta-band"><div class="btn-row">
+-      <a href="student-community.html" class="btn btn--ink">GYCO</a>
+-      <a href="learning.html" class="btn btn--ink">NADO School</a>
+-    </div></div>
++  <div class="container measure reveal" style="text-align:center;">
++    <div class="eyebrow eyebrow--center">The student community behind the platform</div>
++    <h2>Students Created This.<br>And They Keep Growing It.</h2>
++    <p style="margin-top:1rem;color:var(--muted);margin-inline:auto;">Behind WE ARE WITH YOU is <strong>GYCO</strong>, a student-led innovation community where students learn by building projects that create real impact. Students do more than volunteer. They identify community needs, design solutions, build partnerships, create educational resources, produce media, conduct research, and develop programs that continue to grow long after a single event.</p>
++    <p style="margin-top:1rem;color:var(--muted);margin-inline:auto;">GYCO is built on the educational philosophy of <strong>NADO School</strong>, where students learn, create, serve, reflect, and begin again through every experience. WE ARE WITH YOU is the first platform created through that journey. It is not the destination. It is the beginning of many student-led projects still to come.</p>
++    <div class="action-cards" style="text-align:left;">
++      <a class="action-card reveal reveal--d1" href="student-community.html">
++        <span class="action-card__title">Explore GYCO</span>
++        <span class="action-card__desc">Learn about our student-led innovation community, current initiatives, research, leadership opportunities, and community impact.</span>
++        <span class="action-card__go" aria-hidden="true">→</span>
++      </a>
++      <a class="action-card reveal reveal--d2" href="learning.html">
++        <span class="action-card__title">Explore NADO School</span>
++        <span class="action-card__desc">Discover the educational philosophy that teaches students to learn, create, serve, reflect, and share their knowledge with others.</span>
++        <span class="action-card__go" aria-hidden="true">→</span>
++      </a>
++    </div>
+   </div>
+ </section>
+ 
+-<!-- 10 · CLOSING -->
++<!-- 10 · FINAL CALL TO ACTION -->
+ <section class="section section--dark cta-band">
+   <div class="container reveal">
+-    <h2>Hope can begin with one message — one page, one song, one letter, one QR code.</h2>
+-    <p class="lead" style="margin-inline:auto;max-width:52ch;">A partner chooses a template. A student helps create the content. A community receives a page. Someone participates — and their story shapes the next circle. This is how WE ARE WITH YOU grows.</p>
+-    <div class="btn-row">
+-      <a href="join.html" class="btn btn--gold">Partner with us</a>
+-      <a href="join.html" class="btn btn--ghost">Join the circle</a>
++    <h2 style="max-width:26ch;">One Message Can Change a Moment.<br>One Community Can Change a Life.</h2>
++    <p class="lead" style="margin-inline:auto;max-width:44ch;">Students create the invitation.<br>Partners make it meaningful.<br>Communities keep it moving.</p>
++    <p class="lead" style="margin-inline:auto;max-width:44ch;margin-top:1rem;">That is how WE ARE WITH YOU continues to grow.</p>
++    <div class="action-cards" style="max-width:820px;margin-inline:auto;text-align:left;">
++      <a class="action-card reveal reveal--d1" href="join.html">
++        <span class="action-card__title">Partner With Us</span>
++        <span class="action-card__desc">For hospitals, nonprofits, schools, senior communities, disability organizations, and community partners interested in collaborating.</span>
++        <span class="action-card__go" aria-hidden="true">→</span>
++      </a>
++      <a class="action-card reveal reveal--d2" href="join.html">
++        <span class="action-card__title">Join the Circle</span>
++        <span class="action-card__desc">For students, volunteers, supporters, families, and community members who want to help continue the mission.</span>
++        <span class="action-card__go" aria-hidden="true">→</span>
++      </a>
+     </div>
+   </div>
+ </section>
+diff -ruN '--exclude=node_modules' '--exclude=package*.json' repo-pristine/js/partners.js repo/js/partners.js
+--- repo-pristine/js/partners.js	2026-07-11 10:59:49.403209448 +0000
++++ repo/js/partners.js	2026-07-11 11:05:33.441584511 +0000
+@@ -8,6 +8,7 @@
+      name     → the visible pathway name (edit here, updates site-wide)
+      logo     → path to the partner logo (assets/logos/…)
+      logoAlt  → accessible alt text for the logo
++     audience → who the page serves (card subtitle, e.g. "For Families")
+      cardText → short description shown on pathway cards
+    If a logo file is missing, a clean monogram fallback shows
+    automatically — the card never breaks.
+@@ -28,7 +29,8 @@
+     // TODO: Swap in an updated logo anytime — assets/logos/city-of-hope-atlanta.png
+     logo: "assets/logos/city-of-hope-atlanta.png",
+     logoAlt: "City of Hope logo",
+-    cardText: "For patients, families, caregivers, survivors, and healthcare staff — song requests, Voices of Love, teaching videos, Hope Capsule, and messages of encouragement.",
++    audience: "For Cancer Patients",
++    cardText: "Supporting patients, survivors, caregivers, and healthcare teams through encouragement, music, stories, and community.",
+     heroTitle: "WE ARE WITH YOU at City of Hope Atlanta",
+     heroText: "Music, messages, stories, and encouragement for patients, families, caregivers, survivors, and healthcare staff.",
+     about: "This page was created for the City of Hope Atlanta community — formerly Cancer Treatment Centers of America (CTCA). Through it, students and community partners share music, letters, teaching videos, stories, and activities designed for patients and the people beside them. It may be reached through QR codes, printed materials, digital links, events, and partner programs.",
+@@ -52,7 +54,8 @@
+     // TODO: Swap in an updated logo anytime — assets/logos/ronald-mcdonald-house.png
+     logo: "assets/logos/ronald-mcdonald-house.png",
+     logoAlt: "Ronald McDonald House logo",
+-    cardText: "For children, parents, siblings, and families near hospitals — letters for kids and parents, happy music moments, family requests, and activities.",
++    audience: "For Families",
++    cardText: "Providing hope and meaningful moments for families staying close to hospitalized children.",
+     heroTitle: "WE ARE WITH YOU at Ronald McDonald House",
+     heroText: "Music, letters, activities, and encouragement for children, parents, siblings, and families.",
+     about: "This page was created for families staying near hospitals while a child receives care. Through it, students share letters, cheerful music, sing-alongs, and simple activities that families can enjoy together during long and uncertain days.",
+@@ -75,7 +78,8 @@
+     // TODO: Swap in an updated logo anytime — assets/logos/northside-nicu.png
+     logo: "assets/logos/northside-nicu.png",
+     logoAlt: "Northside Hospital logo",
+-    cardText: "For babies, parents, families, and care teams — letters for your baby, quiet music, stories of hope, and gentle family encouragement.",
++    audience: "For Babies & Families",
++    cardText: "Supporting newborns and their families through music, messages, and compassionate care.",
+     heroTitle: "WE ARE WITH YOU at the Northside NICU",
+     heroText: "Gentle music, letters, stories, and encouragement for babies, parents, families, and care teams.",
+     about: "This page was created for the neonatal intensive care community at Northside Hospital. Everything here is intentionally quiet: gentle music, letters of love, and stories of hope for parents spending long days and nights beside their child.",
+@@ -96,7 +100,8 @@
+     // Swap in an updated logo anytime — assets/logos/senior-living.png
+     logo: "assets/logos/senior-living.png",
+     logoAlt: "Adoration Home Health and MeSun Senior Living logos",
+-    cardText: "For seniors, families, staff, and volunteers — familiar songs, memory-based music, student performances, and intergenerational connection.",
++    audience: "For Older Adults",
++    cardText: "Creating joyful experiences through performances, conversations, music, and intergenerational connection.",
+     heroTitle: "WE ARE WITH YOU at Senior Living",
+     heroText: "Music, memories, stories, and intergenerational connection.",
+     about: "This page was created for senior living communities — residents, families, staff, and the student volunteers who visit them. Familiar songs open conversations; memories become stories; generations meet through music.",
+@@ -119,7 +124,8 @@
+     // TODO: Swap in an updated logo anytime — assets/logos/milal.png
+     logo: "assets/logos/milal.png",
+     logoAlt: "The America Wheat Mission (Milal) — Wheat Mission in Atlanta logo",
+-    cardText: "For individuals, families, educators, and support communities — accessible music activities, adaptive participation, and inclusive projects with the Milal community.",
++    audience: "For Individuals with Disabilities",
++    cardText: "Building inclusive opportunities through music, education, family engagement, and accessible resources.",
+     heroTitle: "WE ARE WITH YOU with The America Wheat Mission (Milal)",
+     heroText: "Music, participation, stories, and encouragement for individuals, families, educators, and support communities.",
+     about: "This page was created with The America Wheat Mission (Milal) — the Wheat Mission in Atlanta, a community serving people with disabilities and their families. Everything here is accessibility-first and flexible by design: rhythm, movement, listening, and participation that adapt to each person, family, classroom, or community space.",
+@@ -141,7 +147,8 @@
+     // add assets/logos/schools-global.png (a clean monogram shows until then).
+     logo: "assets/logos/schools-global.png",
+     logoAlt: "Schools & Global Communities logo",
+-    cardText: "For students, teachers, and partner schools — English learning, music learning, story time, math activities, and teaching videos.",
++    audience: "For Students & Communities",
++    cardText: "Helping students learn, serve, and lead while connecting communities through education, music, and service.",
+     heroTitle: "WE ARE WITH YOU for Schools & Global Communities",
+     heroText: "Learning, music, stories, and encouragement for students, teachers, and partner schools.",
+     about: "This page was created for local and global partner schools. Students help other students learn — through simple English lessons, beginner music, read-aloud stories, and practice activities that can travel anywhere a link or QR code can go.",
+diff -ruN '--exclude=node_modules' '--exclude=package*.json' repo-pristine/js/site.js repo/js/site.js
+--- repo-pristine/js/site.js	2026-07-11 10:59:49.403588451 +0000
++++ repo/js/site.js	2026-07-11 11:05:50.519157482 +0000
+@@ -157,10 +157,10 @@
+   const cards = pathwayList().map((p, i) => `
+     <article class="card card--pathway reveal reveal--d${(i % 3) + 1}">
+       ${logoChip(p)}
+-      <span class="card__tag">Pathway</span>
++      <span class="card__tag">${p.audience || 'Pathway'}</span>
+       <h3>${p.name}</h3>
+       <p>${p.cardText || p.heroText}</p>
+-      <a class="btn btn--ink btn--sm" href="partner.html?p=${p.slug}">Open page</a>
++      <a class="btn btn--ink btn--sm" href="partner.html?p=${p.slug}">Learn More</a>
+     </article>`).join('');
+   mounts.forEach(m => { m.innerHTML = cards; });
+ })();
+diff -ruN '--exclude=node_modules' '--exclude=package*.json' repo-pristine/learning.html repo/learning.html
+--- repo-pristine/learning.html	2026-07-11 10:59:49.403850476 +0000
++++ repo/learning.html	2026-07-11 11:03:07.536290606 +0000
+@@ -5,9 +5,9 @@
+   <meta name="referrer" content="strict-origin-when-cross-origin" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>NADO School — Become a School | WE ARE WITH YOU</title>
+-  <meta name="description" content="NADO School is a lifelong learning community where everyone can learn, create, share, and grow. 'Nado' (나도) means 'me too' — the choice to join." />
++  <meta name="description" content="NADO School is a lifelong learning community where everyone is both a learner and a teacher. Learn. Own. Offer. Progress. Every person can become a school for someone else." />
+   <meta property="og:title" content="NADO School — Become a School" />
+-  <meta property="og:description" content="A lifelong learning community where everyone can learn, create, share, and grow. It starts with 'Nado.' It grows into 'We.' It becomes 'We are with you.'" />
++  <meta property="og:description" content="A lifelong learning community where everyone is both a learner and a teacher. Every lesson shared becomes someone else's beginning." />
+   <meta property="og:type" content="website" />
+   <meta property="og:url" content="https://akkk9202.github.io/we-are-with-you/learning.html" />
+   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+@@ -24,19 +24,23 @@
+   <div class="container">
+     <div class="eyebrow">NADO School</div>
+     <h1>Become a School.</h1>
+-    <div class="page-hero__kicker">A lifelong learning community where everyone can learn, create, share, and grow.</div>
+-    <p class="page-hero__sub">Everyone has something to learn. Everyone has something to share. Learning does not begin in a classroom — it begins when one person chooses to learn, then share what they have learned.</p>
++    <div class="page-hero__kicker">Every person can become a school for someone else.</div>
++    <p class="page-hero__sub">A school is more than a building. It begins wherever people choose to learn, teach, create, and grow together.</p>
++    <p class="page-hero__sub" style="margin-top:0.8rem;">NADO School is a lifelong learning community where everyone is both a learner and a teacher. Every lesson shared becomes someone else's beginning.</p>
++    <div style="margin-top:2rem;"><a class="btn btn--gold" href="#loop">Explore the Learning Journey</a></div>
+   </div>
+ </section>
+ 
+-<!-- 2 · A SCHOOL BEYOND WALLS -->
++<!-- 2 · WHAT IS NADO SCHOOL? -->
+ <section class="section">
+   <div class="container two-col reveal" style="align-items:start;">
+     <div class="two-col__text">
+       <div class="eyebrow">What is NADO School?</div>
+       <h2>A School Beyond Walls</h2>
+-      <p>A school is more than a building. It exists wherever people learn from one another and share what they have learned. At NADO School, everyone can be both a learner and a teacher.</p>
+-      <div class="pullquote"><p>Learning becomes sharing. Sharing inspires new learning. New learning becomes growth.</p></div>
++      <p>NADO School is a lifelong learning community where anyone can learn, teach, create, and grow.</p>
++      <p>We believe education is not limited to classrooms, teachers, or age. A school exists wherever people share knowledge, skills, experiences, encouragement, and hope.</p>
++      <p>Every learner can become a teacher.<br>Every teacher continues to learn.</p>
++      <div class="pullquote"><p>Every person can become a school for someone else.</p></div>
+     </div>
+     <!-- NADO School logo panel — swap assets/logos/nado-school.png anytime to update. -->
+     <figure class="logo-panel">
+@@ -55,119 +59,174 @@
+     </div>
+     <div class="two-col__text">
+       <div class="eyebrow">What does "NADO" mean?</div>
+-      <h2>More than agreement.<br>A personal choice to join.</h2>
+-      <p>"Nado" (나도) is a Korean word that means "me too." At NADO School, it means more than agreement — it is the moment someone chooses to participate. A choice to say:</p>
++      <h2>A Choice to Participate</h2>
++      <p>"Nado" (나도) is a Korean word that literally means "me too." At NADO School, it represents something deeper: the personal decision to participate instead of simply observe. It is the choice to say:</p>
+       <div class="say-grid">
+         <p>"I will learn, too."</p>
+         <p>"I will create, too."</p>
+-        <p>"I will share, too."</p>
++        <p>"I will contribute, too."</p>
+         <p>"I will grow, too."</p>
+       </div>
+-      <p style="margin-top:1.5rem;">Every journey begins with one person's decision. That decision is NADO.</p>
+     </div>
+   </div>
+ </section>
+ 
+-<!-- 4 · A CHOICE TO JOIN -->
+-<section class="section section--dark">
++<!-- 4 · EVERY COMMUNITY BEGINS WITH "NADO." -->
++<section class="section section--dark section--tight">
+   <div class="container center measure reveal">
+-    <div class="eyebrow eyebrow--center">A choice to join</div>
+-    <h2>One person says "Nado."<br>Then that person becomes part of "we."</h2>
+-    <p class="lead" style="margin-top:1.2rem;">To learn. To create. To share. To grow.</p>
++    <p class="lead">Every learning community begins when someone chooses to say:</p>
++    <h2 style="margin-top:0.8rem;"><em style="color:var(--gold-2)">"Nado."</em></h2>
+   </div>
+ </section>
+ 
+-<!-- 5 · THE LEARNING LOOP -->
+-<section class="section">
++<!-- 5 · THE NADO LEARNING LOOP -->
++<section class="section" id="loop">
+   <div class="container">
+     <div class="section-head reveal">
+-      <div class="eyebrow">The Learning Loop</div>
+-      <h2>Every experience begins the next one</h2>
++      <div class="eyebrow">The NADO Learning Loop</div>
++      <h2>Learn. Own. Offer. Progress.</h2>
++      <p>Learning is not a destination. It is a continuous cycle. Every cycle begins with learning. Learning becomes our own through practice and reflection. What we own becomes meaningful when we offer it to others. And every act of offering creates growth that inspires us to learn again.</p>
++    </div>
++
++    <!-- The Learning Loop as a circular graphic. -->
++    <div class="circle-figure reveal">
++      <svg viewBox="0 0 560 500" role="img" aria-label="The NADO Learning Loop: Learn, Own, Offer, Progress — a continuous circle where every ending becomes the beginning of a new journey.">
++        <circle cx="280" cy="250" r="155" fill="none" stroke="#C4A24E" stroke-width="1.4" opacity="0.85"/>
++        <circle cx="280" cy="250" r="155" fill="none" stroke="#3E6B8F" stroke-width="1" opacity="0.35" stroke-dasharray="4 8"/>
++        <g fill="#C4A24E">
++          <path d="M-6,-5 L8,0 L-6,5 Z" transform="translate(389.6,140.4) rotate(45)"/>
++          <path d="M-6,-5 L8,0 L-6,5 Z" transform="translate(389.6,359.6) rotate(135)"/>
++          <path d="M-6,-5 L8,0 L-6,5 Z" transform="translate(170.4,359.6) rotate(225)"/>
++          <path d="M-6,-5 L8,0 L-6,5 Z" transform="translate(170.4,140.4) rotate(315)"/>
++        </g>
++        <g font-family="Instrument Sans, sans-serif" font-size="15" font-weight="600" letter-spacing="2" fill="#3E6B8F" text-anchor="middle">
++          <circle cx="280" cy="95" r="4.5" fill="#C4A24E"/><text x="280" y="70">LEARN</text>
++          <circle cx="435" cy="250" r="4.5" fill="#C4A24E"/><text x="458" y="255" text-anchor="start">OWN</text>
++          <circle cx="280" cy="405" r="4.5" fill="#C4A24E"/><text x="280" y="440">OFFER</text>
++          <circle cx="125" cy="250" r="4.5" fill="#C4A24E"/><text x="102" y="255" text-anchor="end">PROGRESS</text>
++        </g>
++        <g text-anchor="middle" font-family="Fraunces, serif" font-style="italic" fill="#13233A" font-size="19">
++          <text x="280" y="228">Every ending becomes</text>
++          <text x="280" y="256">the beginning of</text>
++          <text x="280" y="284">a new journey.</text>
++        </g>
++      </svg>
+     </div>
++
+     <!-- Learning Loop cards — edit titles/descriptions right here. -->
+-    <div class="loop reveal">
++    <div class="loop loop--4 reveal">
+       <div class="loop__step">
+         <h3>Learn</h3>
+-        <p>Discover knowledge, skills, and purpose.</p>
++        <p>Discover new knowledge, skills, and experiences.</p>
+       </div>
+       <div class="loop__step">
+-        <h3>Create</h3>
+-        <p>Turn learning into meaningful projects and original work.</p>
++        <h3>Own</h3>
++        <p>Turn learning into understanding through practice, reflection, and real experience.</p>
+       </div>
+       <div class="loop__step">
+-        <h3>Share</h3>
+-        <p>Use what you have learned to help others.</p>
+-      </div>
+-      <div class="loop__step">
+-        <h3>Grow</h3>
+-        <p>Build confidence, leadership, reflection, and experience.</p>
++        <h3>Offer</h3>
++        <p>Use what you have learned to teach, serve, encourage, and create opportunities for others.</p>
+       </div>
+       <div class="loop__step loop__step--again">
+-        <h3>Learn Again</h3>
+-        <p>Every experience becomes the beginning of new learning.</p>
++        <h3>Progress</h3>
++        <p>Grow through every experience and begin the journey again.</p>
+       </div>
+     </div>
+-    <p class="loop__return reveal">↺ &nbsp;Step five returns to step one — the loop never closes, it continues.</p>
++    <p class="loop__return reveal">↺ &nbsp;Progress returns to Learn — the loop never closes, it continues.</p>
++  </div>
++</section>
++
++<!-- 6 · LEARNING IN ACTION -->
++<section class="section section--mist">
++  <div class="container">
++    <div class="section-head reveal">
++      <div class="eyebrow">Learning in action</div>
++      <h2>One Philosophy. Endless Possibilities.</h2>
++      <p>NADO School is not defined by a single subject. Every field follows the same learning philosophy: Learn. Own. Offer. Progress.</p>
++    </div>
++    <div class="field-grid reveal">
++      <div class="field-tile">Music</div>
++      <div class="field-tile">Science</div>
++      <div class="field-tile">Mathematics</div>
++      <div class="field-tile">Languages</div>
++      <div class="field-tile">Technology</div>
++      <div class="field-tile">Leadership</div>
++      <div class="field-tile">Art</div>
++      <div class="field-tile">Service</div>
++    </div>
++    <p class="statement reveal" style="margin-top:var(--space-lg);">Different paths. <em>One journey.</em></p>
+   </div>
+ </section>
+ 
+-<!-- 6 · HOW NADO SCHOOL COMES TO LIFE -->
+-<section class="section section--mist" id="programs">
++<!-- 7 · WHERE THE LEARNING HAPPENS -->
++<!-- Keep id="programs" — beat-and-breeze/taps-of-love redirects land here. -->
++<section class="section" id="programs">
+   <div class="container">
+     <div class="section-head reveal">
+-      <div class="eyebrow">Learning programs</div>
+-      <h2>How the loop comes to life</h2>
++      <div class="eyebrow">Where the learning happens</div>
++      <h2>One Philosophy. Many Experiences.</h2>
++      <p>The NADO philosophy comes to life through real projects and communities.</p>
+     </div>
+     <div class="cards cards--2">
+-      <div class="card reveal reveal--d1"><span class="card__tag">In person</span><h3>Beat &amp; Breeze</h3><p>In-person music teaching through rhythm, breathing, movement, instruments, and group participation. Students become teachers; participants become active learners.</p><a class="btn btn--ink btn--sm" data-form="teachingVideoRequest" href="contact.html">Request a session</a></div>
+-      <div class="card reveal reveal--d2"><span class="card__tag">Resources</span><h3>Books &amp; Educational Resources</h3><p>Student-created books, guides, worksheets, and learning materials designed to make education more accessible.</p></div>
+-      <div class="card reveal reveal--d1"><span class="card__tag">Video</span><h3>Learning Videos</h3><p>Short teaching videos — including Taps of Love — that let students share music, rhythm, language, math, stories, and creative activities with others.</p><a class="btn btn--ink btn--sm" data-form="teachingVideoRequest" href="contact.html">Request a video</a></div>
+-      <div class="card reveal reveal--d2"><span class="card__tag">Growth record</span><h3>Passport</h3><p>A growth record system where students document what they learn, what they teach, and how they share it with others.</p></div>
++      <div class="card reveal reveal--d1"><span class="card__tag">Experience</span><h3>Beat &amp; Breeze</h3><p>Interactive music, rhythm, and wellness experiences that bring people together.</p><a class="btn btn--ink btn--sm" data-form="teachingVideoRequest" href="contact.html">Request a session</a></div>
++      <div class="card reveal reveal--d2"><span class="card__tag">Growth record</span><h3>NADO Passport</h3><p>A lifelong digital record of learning, projects, service, and personal growth.</p><a class="btn btn--ink btn--sm" href="#passport">Explore the Passport</a></div>
++      <div class="card reveal reveal--d1"><span class="card__tag">Resources</span><h3>Books &amp; Resources</h3><p>Learning guides, educational materials, and community-created knowledge.</p></div>
++      <div class="card reveal reveal--d2"><span class="card__tag">Watch &amp; listen</span><h3>Videos &amp; Stories</h3><p>Performances, lessons, and experiences shared to inspire others around the world.</p><a class="btn btn--ink btn--sm" href="media.html">Watch and listen</a></div>
+     </div>
+   </div>
+ </section>
+ 
+-<!-- 7 · ONE LOOP. THREE EXPRESSIONS. -->
+-<section class="section">
+-  <div class="container">
+-    <div class="section-head reveal">
+-      <div class="eyebrow">One loop. Three expressions.</div>
+-      <h2>The philosophy, the practice, the action</h2>
++<!-- 8 · FROM PHILOSOPHY TO IMPACT -->
++<section class="section section--dark">
++  <div class="container center reveal">
++    <div class="eyebrow eyebrow--center">From philosophy to impact</div>
++    <h2>An idea becomes learning.<br>Learning becomes service.<br>Service becomes lasting impact.</h2>
++    <div class="journey" style="margin-top:var(--space-lg);">
++      <a class="journey__node journey__node--em" href="#loop">NADO School</a>
++      <span class="journey__arrow" aria-hidden="true"></span>
++      <a class="journey__node" href="student-community.html">GYCO</a>
++      <span class="journey__arrow" aria-hidden="true"></span>
++      <a class="journey__node" href="index.html">WE ARE WITH YOU</a>
+     </div>
+-    <div class="cards cards--3">
+-      <div class="card reveal reveal--d1">
+-        <span class="card__tag">The philosophy</span>
+-        <h3>NADO School</h3>
+-        <p>Learn, teach, create, share, grow. The belief that everyone can be both a learner and a teacher.</p>
+-      </div>
+-      <div class="card reveal reveal--d2">
+-        <span class="card__tag">The practice</span>
+-        <h3>GYCO</h3>
+-        <p>Where students practice it — creating ideas, projects, research, and programs with their communities. Music is the first tool.</p>
+-        <a class="btn btn--ink btn--sm" href="student-community.html">Meet GYCO</a>
+-      </div>
+-      <div class="card reveal reveal--d3">
+-        <span class="card__tag">The action</span>
+-        <h3>WE ARE WITH YOU</h3>
+-        <p>Where the learning becomes action — students bring hope, encouragement, and connection to hospitals, families, communities, and the world.</p>
+-        <a class="btn btn--ink btn--sm" href="programs.html">See the pathways</a>
+-      </div>
++  </div>
++</section>
++
++<!-- 9 · NADO PASSPORT -->
++<section class="section" id="passport">
++  <div class="container two-col reveal" style="align-items:center;">
++    <div class="two-col__text">
++      <div class="eyebrow">NADO Passport</div>
++      <h2>One Passport.<br>A Lifetime of Learning.</h2>
++      <p>The NADO Passport records your learning journey across every project, experience, and milestone.</p>
++      <p>Every lesson matters.<br>Every experience counts.<br>Every learner keeps growing.</p>
++    </div>
++    <!-- Passport mockup (inline SVG). Replace with a real photo anytime:
++         swap this .passport-panel for <figure class="invite-figure"><img …></figure>. -->
++    <div class="passport-panel" aria-hidden="true">
++      <svg viewBox="0 0 340 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NADO Passport mockup — a navy passport cover with a gold ring seal, reading NADO Passport, A Lifetime of Learning.">
++        <rect x="8" y="8" width="324" height="464" rx="20" fill="#13233A"/>
++        <rect x="20" y="20" width="300" height="440" rx="14" fill="none" stroke="#C4A24E" stroke-width="1" opacity="0.55"/>
++        <circle cx="170" cy="150" r="52" fill="none" stroke="#C4A24E" stroke-width="1.6"/>
++        <circle cx="170" cy="150" r="38" fill="none" stroke="#3E6B8F" stroke-width="1" opacity="0.7"/>
++        <circle cx="170" cy="98" r="6" fill="#C4A24E"/>
++        <text x="170" y="268" text-anchor="middle" font-family="Fraunces, serif" font-size="42" fill="#FAF8F3">NADO</text>
++        <text x="170" y="300" text-anchor="middle" font-family="Instrument Sans, sans-serif" font-size="16" font-weight="600" letter-spacing="7" fill="#D3B569">PASSPORT</text>
++        <line x1="120" y1="330" x2="220" y2="330" stroke="#C4A24E" stroke-width="1" opacity="0.55"/>
++        <text x="170" y="424" text-anchor="middle" font-family="Instrument Sans, sans-serif" font-size="10.5" font-weight="600" letter-spacing="3" fill="rgba(250,248,243,0.6)">A LIFETIME OF LEARNING</text>
++      </svg>
+     </div>
+   </div>
+ </section>
+ 
+-<!-- 8 · CLOSING -->
++<!-- 10 · FINAL CALL TO ACTION -->
+ <section class="section section--dark cta-band">
+   <div class="container reveal">
+-    <h2>It starts with "Nado."<br>It grows into "We."<br>It becomes <em style="color:var(--gold-2)">"We are with you."</em></h2>
+-    <div class="circle-words">
+-      <span class="circle-word">Learn</span><span class="circle-word">Create</span>
+-      <span class="circle-word">Share</span><span class="circle-word">Grow</span>
+-      <span class="circle-word">Learn Again</span>
+-    </div>
++    <div class="eyebrow eyebrow--center">Your journey starts today</div>
++    <h2>Become a School.</h2>
++    <p class="lead" style="margin-inline:auto;max-width:44ch;">You don't need a classroom to begin. You only need the willingness to learn, the courage to share, and the heart to help someone else grow.</p>
+     <div class="btn-row">
+-      <a class="btn btn--gold" href="student-community.html">See the practice — GYCO</a>
+-      <a class="btn btn--ghost" href="programs.html">See the action — pathways</a>
++      <a class="btn btn--gold" data-form="studentApplication" href="contact.html">Join NADO School</a>
++      <a class="btn btn--ghost" href="#passport">Explore the NADO Passport</a>
+     </div>
+   </div>
+ </section>
+diff -ruN '--exclude=node_modules' '--exclude=package*.json' repo-pristine/student-community.html repo/student-community.html
+--- repo-pristine/student-community.html	2026-07-11 10:59:49.405747326 +0000
++++ repo/student-community.html	2026-07-11 11:04:26.144293833 +0000
+@@ -5,9 +5,9 @@
+   <meta name="referrer" content="strict-origin-when-cross-origin" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>GYCO — Student-Led Innovation Community | WE ARE WITH YOU</title>
+-  <meta name="description" content="GYCO is a student-led innovation community where students learn, create ideas, design projects, and carry them out with their communities. Music is the first tool that begins the change." />
++  <meta name="description" content="GYCO is a student-led community where young people learn, create, research, and build projects that make a meaningful impact in their communities." />
+   <meta property="og:title" content="GYCO — Student-Led Innovation Community" />
+-  <meta property="og:description" content="Students grow as creators, leaders, researchers, and collaborators. WE ARE WITH YOU is their first flagship initiative — and new ones keep being born from student ideas." />
++  <meta property="og:description" content="GYCO is where students discover their gifts. WE ARE WITH YOU is where those gifts become hope for someone else." />
+   <meta property="og:type" content="website" />
+   <meta property="og:url" content="https://akkk9202.github.io/we-are-with-you/student-community.html" />
+   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+@@ -25,11 +25,11 @@
+     <div class="eyebrow">GYCO · Student-Led Innovation Community</div>
+     <h1>More Than Music.</h1>
+     <div class="page-hero__kicker">It starts with students.</div>
+-    <p class="page-hero__sub">GYCO — the Greater Youth Collaborative Opus — is a student-led growth community where students learn, create ideas, design projects, and build new change together with their communities. Music is the first tool that begins that change.</p>
++    <p class="page-hero__sub">GYCO is a student-led community where young people learn, create, research, and build projects that make a meaningful impact in their communities.</p>
+   </div>
+ </section>
+ 
+-<!-- 2 · WHAT GYCO IS -->
++<!-- 2 · WHAT IS GYCO? -->
+ <section class="section">
+   <div class="container two-col reveal" style="align-items:start;">
+     <!-- GYCO logo panel — swap assets/logos/gyco.png anytime to update. -->
+@@ -39,23 +39,122 @@
+     </figure>
+     <div class="two-col__text">
+       <div class="eyebrow">What is GYCO?</div>
+-      <h2>It starts with students</h2>
+-      <p>At GYCO, the heart of everything is the student. The music, the research, the teaching materials, the videos, the global partnerships — all of it is imagined, created, and carried out by students. They are not just participants here. They grow as:</p>
++      <h2>It Starts with Students</h2>
++      <p>At GYCO, the heart of everything is the student. The music, the research, the teaching materials, the videos, the global partnerships — all of it is imagined, created, and carried out by students. Here, students grow into:</p>
+       <div class="circle-words" style="margin:1rem 0;">
+-        <span class="circle-word">Creator</span><span class="circle-word">Leader</span>
+-        <span class="circle-word">Researcher</span><span class="circle-word">Collaborator</span>
++        <span class="circle-word">Creators</span><span class="circle-word">Leaders</span>
++        <span class="circle-word">Researchers</span><span class="circle-word">Collaborators</span>
+       </div>
+-      <p>Music is the first tool that begins the change — not the final destination. Students begin by learning together through rehearsals, education, and performance, then carry the confidence, teamwork, creativity, and leadership they build there into everything else they create.</p>
+-      <div class="pullquote"><p>GYCO is where students discover their gifts. WE ARE WITH YOU is where those gifts become hope for someone else.</p></div>
++      <div class="pullquote"><p>GYCO is where students discover their gifts.<br>WE ARE WITH YOU is where those gifts become hope for someone else.</p></div>
+     </div>
+   </div>
+ </section>
+ 
+-<!-- 3 · FIRST FLAGSHIP INITIATIVE — WE ARE WITH YOU -->
++<!-- 3 · THE STUDENT JOURNEY -->
++<section class="section section--mist" id="student-journey">
++  <div class="container center reveal">
++    <div class="eyebrow eyebrow--center">The student journey</div>
++    <h2>From Ideas to Impact</h2>
++    <p class="lead" style="margin-top:1rem;max-width:52ch;">Every student begins with an idea. Step by step, that idea grows into something that serves others.</p>
++    <div class="journey" style="margin-top:var(--space-lg);">
++      <span class="journey__node journey__node--em">Idea</span>
++      <span class="journey__arrow" aria-hidden="true"></span>
++      <span class="journey__node">Project</span>
++      <span class="journey__arrow" aria-hidden="true"></span>
++      <span class="journey__node">Program</span>
++      <span class="journey__arrow" aria-hidden="true"></span>
++      <span class="journey__node">Community</span>
++      <span class="journey__arrow" aria-hidden="true"></span>
++      <span class="journey__node journey__node--em">Impact</span>
++    </div>
++  </div>
++</section>
++
++<!-- 4 · EDUCATIONAL FOUNDATION — THE GYCO GROWTH LOOP -->
++<section class="section" id="growth-loop">
++  <div class="container">
++    <div class="section-head reveal">
++      <div class="eyebrow">Educational foundation</div>
++      <h2>The GYCO Growth Loop</h2>
++      <p>GYCO is built upon the educational philosophy of <a href="learning.html" style="text-decoration:underline;">NADO School</a>. Students grow through a lifelong learning journey that begins with learning, becomes personal through practice, is shared through service, and continues through reflection and growth.</p>
++    </div>
++    <div class="loop reveal">
++      <div class="loop__step">
++        <h3>Learn</h3>
++        <p>Discover new knowledge, skills, and opportunities.</p>
++      </div>
++      <div class="loop__step">
++        <h3>Own</h3>
++        <p>Make learning your own through practice, reflection, and real experience.</p>
++      </div>
++      <div class="loop__step">
++        <h3>Offer</h3>
++        <p>Use your gifts to serve, teach, create, perform, research, and encourage others.</p>
++      </div>
++      <div class="loop__step">
++        <h3>Progress</h3>
++        <p>Grow through every experience while inspiring new ideas, new leaders, and new opportunities.</p>
++      </div>
++      <div class="loop__step loop__step--again">
++        <h3>Learn Again</h3>
++        <p>Every experience becomes the beginning of a new journey of learning.</p>
++      </div>
++    </div>
++  </div>
++</section>
++
++<!-- 5 · WHAT IS OPUS? -->
++<section class="section section--dark" id="opus">
++  <div class="container">
++    <div class="section-head reveal">
++      <div class="eyebrow">What is OPUS?</div>
++      <h2>Every Great Work Begins with an Idea.</h2>
++      <p>In music, an Opus is a numbered work created by a composer, marking a unique piece in a creative journey. At GYCO, we embrace that tradition with a broader meaning.</p>
++      <p>An OPUS is a student-led area of learning, innovation, research, creativity, and service. Each OPUS begins with an idea, grows through collaboration, and becomes a meaningful contribution to individuals, communities, and the world.</p>
++      <p>Just as every musical opus tells a unique story, every GYCO OPUS represents a new chapter of learning, leadership, and positive impact.</p>
++    </div>
++    <div class="cards cards--3" id="student-innovation">
++      <div class="card reveal reveal--d1">
++        <span class="card__tag">OPUS 1</span>
++        <h3>OPUS 1 | WE ARE WITH YOU</h3>
++        <p>Bringing hope and encouragement to individuals, families, and communities through student-led projects.</p>
++        <a class="btn btn--ghost btn--sm" href="#flagship">See OPUS 1 in depth</a>
++      </div>
++      <div class="card reveal reveal--d2">
++        <span class="card__tag">OPUS 2</span>
++        <h3>OPUS 2 | NADO School</h3>
++        <p>Developing lifelong learners through the philosophy of Learn, Own, Offer, and Progress.</p>
++        <a class="btn btn--ghost btn--sm" href="learning.html">Explore NADO School</a>
++      </div>
++      <div class="card reveal reveal--d3">
++        <span class="card__tag">OPUS 3</span>
++        <h3>OPUS 3 | Student Research</h3>
++        <p>Exploring meaningful questions and creating research that serves people and communities.</p>
++      </div>
++      <div class="card reveal reveal--d1">
++        <span class="card__tag">OPUS 4</span>
++        <h3>OPUS 4 | Student Press</h3>
++        <p>Sharing stories, documenting impact, and connecting communities through student journalism and media.</p>
++      </div>
++      <div class="card reveal reveal--d2">
++        <span class="card__tag">OPUS 5</span>
++        <h3>OPUS 5 | SHAN &amp; ECHO</h3>
++        <p>Building student leadership, collaboration, and global connections through school clubs and partnerships.</p>
++      </div>
++      <div class="card reveal reveal--d3">
++        <span class="card__tag">OPUS 6</span>
++        <h3>OPUS 6 | Creative Projects</h3>
++        <p>Designing new educational resources, performances, media, and community initiatives inspired by students' ideas.</p>
++      </div>
++    </div>
++  </div>
++</section>
++
++<!-- 6 · OPUS 1 IN DEPTH — WE ARE WITH YOU -->
+ <section class="section section--mist" id="flagship">
+   <div class="container">
+     <div class="section-head reveal">
+-      <div class="eyebrow">Our first flagship initiative</div>
++      <div class="eyebrow">OPUS 1 in depth</div>
+       <h2>OPUS 1 | WE ARE WITH YOU</h2>
+       <p>The first flagship initiative students created — and continue to grow. Students discover what their communities need, propose new ideas, partner with organizations, and develop and run the programs themselves.</p>
+     </div>
+@@ -111,72 +210,24 @@
+   </div>
+ </section>
+ 
+-<!-- 4 · THE OPUS STRUCTURE — WHAT STUDENTS CREATE -->
+-<section class="section" id="student-innovation">
+-  <div class="container">
+-    <div class="section-head reveal">
+-      <div class="eyebrow">The OPUS structure</div>
+-      <h2>What do students create?</h2>
+-      <p>GYCO grows as a series of student-built OPUS areas. WE ARE WITH YOU is OPUS 1 — and every OPUS below turns student ideas into real work.</p>
+-    </div>
+-    <div class="cards cards--3">
+-      <div class="card reveal reveal--d1">
+-        <span class="card__tag">Create</span>
+-        <h3>OPUS 2 | Student Innovation</h3>
+-        <p>Creative work that turns student ideas into real, finished results.</p>
+-        <ul class="card__list">
+-          <li>Educational resources — teaching materials &amp; activity books</li>
+-          <li>Digital content — educational videos, QR &amp; digital content</li>
+-          <li>Project development — student projects, from idea to launch</li>
+-        </ul>
+-      </div>
+-      <div class="card reveal reveal--d2">
+-        <span class="card__tag">Research</span>
+-        <h3>OPUS 3 | Research &amp; Innovation</h3>
+-        <p>Inquiry where students study their own programs and make them better.</p>
+-        <ul class="card__list">
+-          <li>Research — program studies, surveys, interviews</li>
+-          <li>Analysis — data analysis</li>
+-          <li>Academic collaboration — universities &amp; experts, papers, presentations</li>
+-          <li>Development — new education &amp; service models</li>
+-        </ul>
+-      </div>
+-      <div class="card reveal reveal--d3">
+-        <span class="card__tag">Lead</span>
+-        <h3>OPUS 4 | Student Leadership</h3>
+-        <p>Leadership that connects school and community.</p>
+-        <ul class="card__list">
+-          <li>Leadership clubs — SHAN &amp; ECHO</li>
+-          <li>Student Leadership Team &amp; student mentoring</li>
+-          <li>Service — student-led projects &amp; event planning</li>
+-        </ul>
+-      </div>
+-      <div class="card reveal reveal--d1">
+-        <span class="card__tag">Collaborate</span>
+-        <h3>OPUS 5 | Global Collaboration</h3>
+-        <p>International partnership where students learn and grow with the world.</p>
+-        <ul class="card__list">
+-          <li>Partners — Philippines, Malawi, South Korea, China</li>
+-          <li>International schools &amp; global education partners</li>
+-          <li>Joint global projects</li>
+-        </ul>
+-      </div>
+-      <div class="card reveal reveal--d2">
+-        <span class="card__tag">Share</span>
+-        <h3>OPUS 6 | Student Media &amp; Communications</h3>
+-        <p>Media work that records the community's story and shares it with the world.</p>
+-        <ul class="card__list">
+-          <li>Student Reporters — event coverage, interviews, articles</li>
+-          <li>Student Correspondents — news from partners &amp; international projects</li>
+-          <li>Student Ambassadors — school &amp; community outreach</li>
+-          <li>Media — photo, video, website, newsletter, social content</li>
+-        </ul>
+-      </div>
++<!-- 7 · MUSIC WITH PURPOSE -->
++<section class="section" id="music-with-purpose">
++  <div class="container center measure reveal">
++    <div class="eyebrow eyebrow--center">Music With Purpose</div>
++    <h2>Our First Tool. Our Shared Gift.</h2>
++    <p style="margin-top:1.2rem;color:var(--muted);">Music is the first tool that brings people together. It creates connection before conversation, builds trust before words, and opens hearts before understanding.</p>
++    <p style="margin-top:1rem;color:var(--muted);">At GYCO, music is more than performance. It is the gift we use to share kindness, encouragement, hope, and love with others.</p>
++    <div class="flow" style="margin-top:2rem;">
++      <div class="flow__item">Every rehearsal prepares us to serve.</div>
++      <div class="flow__item">Every performance becomes an opportunity to connect.</div>
++      <div class="flow__item">Every shared moment becomes the beginning of a relationship.</div>
+     </div>
++    <p style="margin-top:2rem;color:var(--muted);">That journey continues through <strong>WE ARE WITH YOU</strong>, where students transform music into messages of hope, acts of compassion, and meaningful connections with individuals, families, and communities.</p>
++    <p class="statement" style="margin-top:var(--space-md);">Because every performance is more than a concert. It is the beginning of saying, <em>"We are with you."</em></p>
+   </div>
+ </section>
+ 
+-<!-- 5 · ROOTED IN REAL SERVICE (from the original GYCO site) -->
++<!-- 8 · ROOTED IN REAL SERVICE (from the original GYCO site) -->
+ <section class="section section--mist">
+   <div class="container two-col reveal" style="align-items:start;">
+     <div class="two-col__text">
+@@ -200,7 +251,7 @@
+   </div>
+ </section>
+ 
+-<!-- 6 · PHILOSOPHY QUOTE -->
++<!-- 9 · PHILOSOPHY QUOTE -->
+ <section class="section section--dark">
+   <div class="container center reveal">
+     <div class="eyebrow eyebrow--center">The philosophy we carry</div>
+@@ -213,28 +264,8 @@
+   </div>
+ </section>
+ 
+-<!-- 7 · CLOSING -->
+-<section class="section">
+-  <div class="container center measure reveal">
+-    <div class="eyebrow eyebrow--center">Where it leads</div>
+-    <h2>Students do not stay in the classroom.<br>They become someone else's "with you."</h2>
+-    <div class="flow" style="margin-top:2rem;">
+-      <div class="flow__item">An idea becomes a project.</div>
+-      <div class="flow__item">A project becomes a program.</div>
+-      <div class="flow__item">A program becomes a community.</div>
+-    </div>
+-    <div class="eyebrow eyebrow--center" style="margin-top:3rem;">Educational Foundation</div>
+-    <p style="margin-inline:auto;margin-top:1rem;color:var(--muted);">GYCO is built on the <strong>NADO School</strong> educational philosophy. Students grow through a repeating cycle —</p>
+-    <div class="circle-words" style="margin-top:1.25rem;">
+-      <span class="circle-word">Learn</span><span class="circle-word">Create</span>
+-      <span class="circle-word">Share</span><span class="circle-word">Grow</span>
+-    </div>
+-    <p style="margin-inline:auto;margin-top:1.25rem;color:var(--muted);">— and bring what they learn into their communities and the world. <strong>WE ARE WITH YOU</strong> was the first result. It won't be the last.</p>
+-  </div>
+-</section>
+-
+-<!-- 8 · CTA -->
+-<section class="section section--dark cta-band">
++<!-- 10 · CTA -->
++<section class="section section--dark cta-band" style="padding-top:0;">
+   <div class="container reveal">
+     <h2>Start with an idea. Grow it with a community.</h2>
+     <p class="lead" style="margin-inline:auto;max-width:48ch;">GYCO isn't only about becoming a better musician. It's about becoming a person who can imagine, research, lead, collaborate — and turn an idea into real change for someone else.</p>
+diff -ruN '--exclude=node_modules' '--exclude=package*.json' repo-pristine/test/smoke.test.js repo/test/smoke.test.js
+--- repo-pristine/test/smoke.test.js	2026-07-11 10:59:49.406288376 +0000
++++ repo/test/smoke.test.js	2026-07-11 11:14:20.246804043 +0000
+@@ -100,6 +100,20 @@
+   ok(footPrograms.textContent.includes('The America Wheat Mission (Milal)'), 'footer Programs column shows Milal name');
+ 
+   ok(!d.body.textContent.includes('Disability Community'), 'no visible "Disability Community" label remains');
++
++  const audTags = [...d.querySelectorAll('[data-pathway-cards] .card--pathway .card__tag')].map(t => t.textContent.trim());
++  ok(JSON.stringify(audTags) === JSON.stringify(['For Cancer Patients', 'For Families', 'For Babies & Families', 'For Older Adults', 'For Individuals with Disabilities', 'For Students & Communities']), 'pathway cards show audience subtitles in order');
++  ok([...d.querySelectorAll('[data-pathway-cards] .btn')].every(b => b.textContent.trim() === 'Learn More'), 'pathway card buttons say "Learn More"');
++  ok(d.body.textContent.includes('Even Here. Even Now. WE ARE WITH YOU.'), 'pathways section states the shared mission line');
++
++  ok(d.body.textContent.includes('Students Created This.') && d.body.textContent.includes('And They Keep Growing It.'), 'students section: new heading');
++  ok(d.body.textContent.includes('learn by building projects that create real impact'), 'students section: GYCO body copy');
++  const studentCtas = [...d.querySelectorAll('.action-card .action-card__title')].map(t => t.textContent.trim());
++  ok(studentCtas.includes('Explore GYCO') && studentCtas.includes('Explore NADO School'), 'students section: two prominent CTA cards');
++
++  ok(d.body.textContent.includes('One Message Can Change a Moment.') && d.body.textContent.includes('One Community Can Change a Life.'), 'final CTA: new heading');
++  ok(studentCtas.includes('Partner With Us') && studentCtas.includes('Join the Circle'), 'final CTA: Partner With Us + Join the Circle cards');
++  ok([...d.querySelectorAll('.action-card')].filter(a => ['Partner With Us', 'Join the Circle'].includes(a.querySelector('.action-card__title').textContent.trim())).every(a => a.getAttribute('href') === 'join.html'), 'final CTA cards link to join.html');
+   ok(!/Cancer Care(?!.*CTCA)/.test([...d.querySelectorAll('h3')].map(h => h.textContent).join('|')), 'no bare "Cancer Care" card heading remains');
+ }
+ 
+@@ -171,12 +185,19 @@
+   const series = [...d.querySelectorAll('#flagship .cards--4 .card h3')].map(h => h.textContent);
+   ok(JSON.stringify(series) === JSON.stringify(['Taps of Love', 'Winds of Love', 'Voices of Love', 'Circle of Love']), 'flagship series: Taps / Winds / Voices / Circle of Love');
+   ok(d.body.textContent.includes('first flagship initiative'), 'WE ARE WITH YOU framed as first flagship initiative');
+-  const opus = [...d.querySelectorAll('#student-innovation .cards--3 .card h3')].map(h => h.textContent);
+-  ok(JSON.stringify(opus) === JSON.stringify(['OPUS 2 | Student Innovation', 'OPUS 3 | Research & Innovation', 'OPUS 4 | Student Leadership', 'OPUS 5 | Global Collaboration', 'OPUS 6 | Student Media & Communications']), 'OPUS 2-6 headers: Innovation / Research / Leadership / Global / Media');
++  const opus = [...d.querySelectorAll('#student-innovation .card h3')].map(h => h.textContent);
++  ok(JSON.stringify(opus) === JSON.stringify(['OPUS 1 | WE ARE WITH YOU', 'OPUS 2 | NADO School', 'OPUS 3 | Student Research', 'OPUS 4 | Student Press', 'OPUS 5 | SHAN & ECHO', 'OPUS 6 | Creative Projects']), 'OPUS 1-6 cards: WAWY / NADO / Research / Press / SHAN & ECHO / Creative');
++  ok(d.body.textContent.includes('What is OPUS?') && d.body.textContent.includes('Every Great Work Begins with an Idea.'), '"What is OPUS?" intro precedes the OPUS cards');
+   ok(d.querySelector('#flagship h2').textContent === 'OPUS 1 | WE ARE WITH YOU', 'OPUS 1 header on flagship section');
+-  ok(d.body.textContent.includes('Student Correspondents'), 'OPUS 6 detail: Student Correspondents present');
+-  const roles = ['Creator', 'Leader', 'Researcher', 'Collaborator'];
+-  ok(roles.every(r => [...d.querySelectorAll('.circle-word')].some(w => w.textContent === r)), 'roles: Creator / Leader / Researcher / Collaborator');
++  const growth = [...d.querySelectorAll('#growth-loop .loop__step h3')].map(h => h.textContent);
++  ok(JSON.stringify(growth) === JSON.stringify(['Learn', 'Own', 'Offer', 'Progress', 'Learn Again']), 'GYCO Growth Loop: Learn / Own / Offer / Progress / Learn Again');
++  const journey = [...d.querySelectorAll('#student-journey .journey__node')].map(n => n.textContent.trim());
++  ok(JSON.stringify(journey) === JSON.stringify(['Idea', 'Project', 'Program', 'Community', 'Impact']), 'student journey: Idea → Project → Program → Community → Impact');
++  ok(d.body.textContent.includes('Our First Tool. Our Shared Gift.'), 'Music With Purpose section present');
++  ok(d.body.textContent.includes('It is the beginning of saying'), 'Music With Purpose closing statement present');
++  ok(![...d.querySelectorAll('.loop__step h3, .circle-word')].some(el => ['Create', 'Share', 'Grow'].includes(el.textContent.trim())), 'old Learn/Create/Share/Grow framework fully replaced');
++  const roles = ['Creators', 'Leaders', 'Researchers', 'Collaborators'];
++  ok(roles.every(r => [...d.querySelectorAll('.circle-word')].some(w => w.textContent === r)), 'roles: Creators / Leaders / Researchers / Collaborators');
+   ok(d.body.textContent.includes('A WE begins with two people'), 'philosophy quote block present');
+   ok(d.body.textContent.includes('discover their gifts'), '"discover their gifts" bridge line present');
+   ok(d.querySelector('.logo-panel img[src="assets/logos/gyco.png"]'), 'GYCO logo displayed');
+@@ -191,11 +212,25 @@
+   ok(d.title.startsWith('NADO School'), 'title leads with NADO School');
+   ok(d.querySelector('h1').textContent.trim() === 'Become a School.', 'hero: Become a School.');
+   const steps = [...d.querySelectorAll('.loop .loop__step h3')].map(h => h.textContent);
+-  ok(JSON.stringify(steps) === JSON.stringify(['Learn', 'Create', 'Share', 'Grow', 'Learn Again']), 'Learning Loop: 5 steps in order');
++  ok(JSON.stringify(steps) === JSON.stringify(['Learn', 'Own', 'Offer', 'Progress']), 'NADO Learning Loop: Learn / Own / Offer / Progress');
+   ok(!!d.querySelector('#programs'), '#programs anchor preserved (beat-and-breeze/taps-of-love redirects still land)');
++  ok(!!d.querySelector('#loop') && !!d.querySelector('#passport'), '#loop and #passport anchors present (hero CTA + passport card land)');
++  const loopSvg = d.querySelector('#loop .circle-figure svg');
++  ok(loopSvg && ['LEARN', 'OWN', 'OFFER', 'PROGRESS'].every(w => loopSvg.textContent.includes(w)), 'Learning Loop rendered as a circular graphic with all four steps');
++  ok(loopSvg && loopSvg.textContent.includes('a new journey.'), 'loop graphic center: every ending becomes a new journey');
++  ok(d.querySelectorAll('.field-grid .field-tile').length === 8, 'Learning in Action: 8 field tiles (Music … Service)');
++  ok(d.body.textContent.includes('One Philosophy. Many Experiences.'), 'Where the Learning Happens heading present');
++  const feats = [...d.querySelectorAll('#programs .card h3')].map(h => h.textContent.replace(/\s+/g, ' ').trim());
++  ok(JSON.stringify(feats) === JSON.stringify(['Beat & Breeze', 'NADO Passport', 'Books & Resources', 'Videos & Stories']), 'four feature cards: Beat & Breeze / Passport / Books / Videos');
++  const impact = [...d.querySelectorAll('.journey .journey__node')].map(n => n.textContent.trim());
++  ok(JSON.stringify(impact) === JSON.stringify(['NADO School', 'GYCO', 'WE ARE WITH YOU']), 'From Philosophy to Impact: NADO School → GYCO → WE ARE WITH YOU');
++  ok(!!d.querySelector('.passport-panel svg') && d.body.textContent.includes('A Lifetime of Learning.'), 'NADO Passport section with mockup beside it');
+   ok(d.body.textContent.includes('나도'), 'Korean 나도 explanation present');
+-  ok(d.body.textContent.includes('I will learn, too'), 'four "I will…, too" declarations present');
+-  ok(d.body.textContent.includes('It starts with "Nado."'), 'closing line present');
++  ok(d.body.textContent.includes('I will learn, too') && d.body.textContent.includes('I will contribute, too'), 'four "I will…, too" declarations present (incl. contribute)');
++  ok(d.body.textContent.includes('Every learning community begins when someone chooses to say'), '"Nado." choice statement present');
++  ok(d.body.textContent.includes('Your journey starts today') && d.body.textContent.includes('Become a School.'), 'final CTA: Your Journey Starts Today / Become a School.');
++  ok([...d.querySelectorAll('.btn')].some(b => b.textContent.trim() === 'Explore the Learning Journey' && b.getAttribute('href') === '#loop'), 'hero CTA "Explore the Learning Journey" targets the loop');
++  ok(![...d.querySelectorAll('.loop__step h3, .circle-word')].some(el => ['Create', 'Share', 'Grow'].includes(el.textContent.trim())), 'old Learn/Create/Share/Grow framework fully replaced');
+   ok(d.querySelector('.logo-panel img[src="assets/logos/nado-school.png"]'), 'NADO School logo displayed');
+ }
+ 
+@@ -236,5 +271,61 @@
+   ok(senior.querySelector('.logo-chip__fallback').textContent === 'SL', 'Senior Living monogram = "SL"');
+ }
+ 
++/* ── 8. ABOUT PAGE (philosophy landing) ── */
++console.log('\n[about.html]');
++{
++  const dom = loadPage('about.html', 'https://x.test/about.html');
++  const d = dom.window.document;
++  ok(d.title.includes('One Philosophy. One Loop. One Community.'), 'title carries the philosophy line');
++  const h1 = d.querySelector('h1').textContent;
++  ok(['One philosophy.', 'One Loop.', 'One Community.'].every(l => h1.includes(l)), 'hero: One philosophy. One Loop. One Community.');
++  ok(d.body.textContent.includes('Every WE begins with one NADO.'), 'hero kicker present');
++  ok(d.querySelector('.invite-figure img[src="assets/images/home-invitation.jpg"]'), 'invitation image is the hero visual');
++  ok([...d.querySelectorAll('.btn')].some(b => b.textContent.trim() === 'Enter WE ARE WITH YOU' && b.getAttribute('href') === 'index.html'), 'hero CTA: Enter WE ARE WITH YOU');
++
++  const merge = d.querySelector('.nado-we-figure svg');
++  ok(merge && merge.querySelectorAll('text').length === 3 && merge.textContent.includes('WE'), 'NADO + NADO → WE merge figure (two NADOs and one WE)');
++  ok(!!merge.closest('.reveal'), 'merge figure animates on scroll (inside a .reveal)');
++
++  const eco = d.querySelector('.eco-loop svg');
++  ok(!!eco, 'ecosystem loop diagram present');
++  ok(eco.textContent.includes('NADO + NADO') && eco.textContent.includes('WE'), 'loop center: NADO + NADO = WE');
++  ok(['NADO School', 'GYCO', 'WE ARE WITH YOU', 'New Experiences'].every(n => eco.textContent.includes(n)), 'loop connects all four stations');
++  ok(['LEARN', 'OFFER', 'LOOP'].every(n => eco.textContent.includes(n)), 'loop roles: LEARN / OFFER / LOOP');
++  ok(!!eco.querySelector('.orbit') && !!eco.querySelector('.dash-ring'), 'loop has continuous-motion elements (orbit dot + flowing dashes)');
++
++  const pillars = [...d.querySelectorAll('.pillar h3')].map(h => h.textContent.trim());
++  ok(JSON.stringify(pillars) === JSON.stringify(['NADO School', 'GYCO', 'WE ARE WITH YOU']), 'three expression explainers under the diagram');
++  const tri = [...d.querySelectorAll('.tri-circle h3')].map(h => h.textContent.trim());
++  ok(JSON.stringify(tri) === JSON.stringify(['NADO School', 'GYCO', 'WE ARE WITH YOU']), 'Different Purposes: three connected circles');
++
++  const closing = [...d.querySelectorAll('#closing-loop .journey__node')].map(n => n.textContent.trim());
++  ok(JSON.stringify(closing) === JSON.stringify(['NADO', 'GYCO', 'WE ARE WITH YOU', 'New Stories', 'NADO Again']), 'closing vertical flow: NADO → … → NADO Again');
++  ok(d.body.textContent.includes('Every ending becomes another beginning.'), 'ending statement present');
++}
++
++/* ── 9. REDIRECT STUBS + SLUG INTEGRITY ── */
++console.log('\n[redirect stubs & slugs]');
++{
++  const stubs = {
++    'gyco.html': 'student-community.html',
++    'about-gyco.html': 'about.html',
++    'beat-and-breeze.html': 'learning.html#programs',
++    'taps-of-love.html': 'learning.html#programs',
++    'voices-of-love.html': 'partner.html?p=cancer-care',
++    'we-are-with-you.html': 'programs.html',
++    'winds-of-love.html': 'media.html',
++  };
++  for (const [file, target] of Object.entries(stubs)) {
++    let html = '';
++    try { html = fs.readFileSync(path.join(ROOT, file), 'utf8'); } catch (e) {}
++    ok(html.includes('http-equiv="refresh"') && html.includes(target), `${file} stub intact → ${target}`);
++  }
++  const partnersSrc = fs.readFileSync(path.join(ROOT, 'js/partners.js'), 'utf8');
++  for (const slug of ['cancer-care', 'ronald-mcdonald-house', 'nicu', 'senior-living', 'disability', 'schools-global']) {
++    ok(partnersSrc.includes(`"${slug}"`), `partner slug "${slug}" unchanged (QR codes safe)`);
++  }
++}
++
+ console.log(`\n${passed} passed, ${failed} failed`);
+ process.exit(failed ? 1 : 0);

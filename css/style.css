@@ -132,16 +132,6 @@ em { font-style: italic; }
 .nav__links > li > a.active { color: var(--white); box-shadow: 0 2px 0 var(--gold); }
 .nav__caret { font-size: 0.55rem; opacity: 0.6; }
 
-/* Language toggle (EN ↔ 한국어) */
-.nav__lang-btn {
-  background: none; cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.3); border-radius: 999px;
-  font-family: inherit; font-size: 0.74rem; font-weight: 600;
-  letter-spacing: 0.05em; color: rgba(255,255,255,0.78);
-  padding: 0.32rem 0.85rem; transition: color 0.2s, border-color 0.2s;
-}
-.nav__lang-btn:hover, .nav__lang-btn:focus-visible { color: var(--gold-2); border-color: var(--gold-2); }
-
 .nav__dropdown {
   position: absolute; top: calc(100% + 8px); left: -1rem;
   min-width: 230px; background: var(--ink);
@@ -625,3 +615,149 @@ em { font-style: italic; }
   .carousel__arrow--next { right: 8px; }
   .logo-chip--hero { height: 72px; max-width: 210px; }
 }
+
+/* ════════════════════════════════════════════════════════════
+   v5 COMPONENTS — Learn·Own·Offer·Progress loop, journey
+   progressions, ecosystem loop diagram, NADO+NADO=WE figure,
+   tri-circles, action cards, field tiles, passport mockup
+   ════════════════════════════════════════════════════════════ */
+
+/* ── BIG STATEMENT (highlighted key lines) ── */
+.statement {
+  font-family: var(--display); font-style: italic;
+  font-size: clamp(1.45rem, 3vw, 2.1rem); line-height: 1.4;
+  text-align: center; max-width: 26ch; margin-inline: auto;
+  color: var(--ink); text-wrap: balance;
+}
+.section--dark .statement { color: var(--paper); }
+.statement em { color: var(--gold); font-style: inherit; }
+.section--dark .statement em { color: var(--gold-2); }
+
+/* ── JOURNEY (progression: Idea → Project → …) ── */
+.journey {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0.9rem; flex-wrap: wrap; margin-top: var(--space-md);
+}
+.journey__node {
+  padding: 0.8rem 1.6rem;
+  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
+  font-family: var(--display); font-size: 1.08rem;
+  transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+.journey__node:hover { transform: translateY(-2px); border-color: rgba(196,162,78,0.6); box-shadow: 0 10px 26px rgba(19,35,58,0.08); }
+a.journey__node { color: inherit; }
+.journey__node--em { border-color: var(--gold); background: rgba(196,162,78,0.07); }
+.journey__arrow { color: var(--gold); font-size: 1.1rem; user-select: none; }
+.journey__arrow::before { content: '→'; }
+.section--dark .journey__node { background: var(--ink-2); border-color: var(--line-d); color: var(--paper); }
+.section--dark .journey__node--em { border-color: var(--gold); background: rgba(196,162,78,0.12); }
+.journey--vertical { flex-direction: column; gap: 0.55rem; }
+.journey--vertical .journey__arrow::before { content: '↓'; }
+.journey__caption {
+  text-align: center; margin: var(--space-md) auto 0;
+  font-family: var(--display); font-style: italic; font-size: 1.1rem; color: var(--muted);
+}
+.section--dark .journey__caption { color: var(--muted-d); }
+@media (max-width: 640px) {
+  .journey:not(.journey--vertical) { flex-direction: column; gap: 0.55rem; }
+  .journey:not(.journey--vertical) .journey__arrow::before { content: '↓'; }
+}
+
+/* ── FIELD TILES (One Philosophy. Endless Possibilities.) ── */
+.field-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-sm); margin-top: var(--space-md); }
+.field-tile {
+  position: relative; text-align: center;
+  background: var(--white); border: 1px solid var(--line); border-top: 2px solid var(--gold);
+  border-radius: var(--radius); padding: 1.6rem 1rem 1.4rem;
+  font-family: var(--display); font-size: 1.22rem;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.field-tile:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(19,35,58,0.1); }
+.field-tile::before {
+  content: ''; display: block; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--gold); margin: 0 auto 0.7rem;
+}
+@media (max-width: 960px) { .field-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .field-grid { grid-template-columns: 1fr; } }
+
+/* ── ACTION CARDS (prominent CTAs with descriptions) ── */
+.action-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-sm); margin-top: var(--space-md); }
+.action-card {
+  position: relative; display: flex; flex-direction: column; gap: 0.55rem;
+  text-align: left; background: var(--white); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: var(--space-md);
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+.action-card:hover { transform: translateY(-3px); box-shadow: 0 16px 38px rgba(19,35,58,0.12); border-color: rgba(196,162,78,0.6); }
+.action-card__title { font-family: var(--display); font-size: 1.45rem; line-height: 1.2; }
+.action-card__desc { font-size: 0.95rem; color: var(--muted); max-width: none; }
+.action-card__go {
+  margin-top: auto; align-self: flex-end; color: var(--gold);
+  font-size: 1.25rem; transition: transform 0.25s;
+}
+.action-card:hover .action-card__go { transform: translateX(5px); }
+.section--dark .action-card { background: var(--ink-2); border-color: var(--line-d); }
+.section--dark .action-card__title { color: var(--paper); }
+.section--dark .action-card__desc { color: var(--muted-d); }
+@media (max-width: 780px) { .action-cards { grid-template-columns: 1fr; } }
+
+/* ── TRI-CIRCLES (one loop, different purposes) ── */
+.tri-circles { display: flex; justify-content: center; align-items: center; margin-top: var(--space-lg); }
+.tri-circle {
+  width: 240px; height: 240px; border-radius: 50%; flex-shrink: 0;
+  border: 1.5px solid var(--gold);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.35rem;
+  text-align: center; padding: 1.6rem; background: rgba(250,248,243,0.82);
+}
+.tri-circle + .tri-circle { margin-left: -44px; }
+.tri-circle:nth-child(2) { border-color: var(--blue); position: relative; z-index: 1; }
+.tri-circle h3 { font-size: 1.12rem; }
+.tri-circle p { font-size: 0.82rem; color: var(--muted); max-width: 18ch; }
+.tri-circle small {
+  font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold);
+}
+@media (max-width: 780px) {
+  .tri-circles { flex-direction: column; }
+  .tri-circle + .tri-circle { margin-left: 0; margin-top: -44px; }
+}
+
+/* ── ECOSYSTEM LOOP (about page centerpiece) ── */
+.eco-loop { display: flex; justify-content: center; margin-block: var(--space-md); }
+.eco-loop svg { width: min(680px, 94vw); height: auto; overflow: visible; }
+@media (prefers-reduced-motion: no-preference) {
+  .eco-loop .orbit { animation: eco-orbit 22s linear infinite; transform-origin: 380px 290px; }
+  .eco-loop .dash-ring { animation: eco-dash 60s linear infinite; }
+}
+@keyframes eco-orbit { to { transform: rotate(360deg); } }
+@keyframes eco-dash { to { stroke-dashoffset: -1068; } }
+
+/* ── NADO + NADO = WE (merge figure) ── */
+.nado-we-figure { display: flex; justify-content: center; margin-block: var(--space-md); }
+.nado-we-figure svg { width: min(560px, 92vw); height: auto; overflow: visible; }
+.nado-we__a, .nado-we__b { transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.25s; }
+.reveal .nado-we__a { transform: translateX(-92px); }
+.reveal .nado-we__b { transform: translateX(92px); }
+.reveal.visible .nado-we__a, .reveal.visible .nado-we__b { transform: translateX(0); }
+.nado-we__we { opacity: 0; transition: opacity 0.9s ease 1.5s; }
+.reveal.visible .nado-we__we { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal .nado-we__a, .reveal .nado-we__b { transform: none; }
+  .nado-we__we { opacity: 1; }
+}
+
+/* ── PASSPORT MOCKUP ── */
+.passport-panel { display: flex; justify-content: center; }
+.passport-panel svg {
+  width: min(300px, 72vw); height: auto;
+  filter: drop-shadow(0 24px 48px rgba(19,35,58,0.28));
+  transform: rotate(-3deg); transition: transform 0.35s;
+}
+.passport-panel:hover svg { transform: rotate(0deg); }
+
+/* ── LOOP, 4-step variant (Learn · Own · Offer · Progress) ── */
+.loop--4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1080px) { .loop--4 { grid-template-columns: repeat(2, 1fr); }
+  .loop--4 .loop__step:nth-child(2)::after { content: none; } }
+@media (max-width: 780px) { .loop--4 { grid-template-columns: 1fr; }
+  .loop--4 .loop__step:nth-child(2)::after { content: '↓'; right: auto; left: 50%; top: auto; bottom: -1.85rem; transform: translateX(-50%); } }
