@@ -126,15 +126,28 @@ const logoChip = (p, extra = '') => `
 
 /* ── FORM LINK WIRING ── */
 /* Any element with data-form="key" gets its href from SITE.forms.key.
-   If the link is still a REPLACE_ME placeholder, the button routes
-   to the contact page instead of a dead link. */
+   Live Google Form → opens in a new tab. Still a REPLACE_ME
+   placeholder → the button is disabled with a "coming soon" note,
+   because that form is still in progress. */
+function wireFormButton(el) {
+  const url = SITE.forms[el.dataset.form];
+  if (url && !url.startsWith('REPLACE_ME')) {
+    el.setAttribute('href', safeUrl(url));
+    el.target = '_blank'; el.rel = 'noopener';
+    return;
+  }
+  el.removeAttribute('href');
+  el.classList.add('btn--disabled');
+  el.setAttribute('aria-disabled', 'true');
+  el.title = 'Coming soon — this form is still in progress';
+  if (!(el.nextElementSibling && el.nextElementSibling.classList.contains('form-soon'))) {
+    el.insertAdjacentHTML('afterend', '<span class="form-soon" data-i18n="form.comingSoon">Coming soon — this form is still in progress</span>');
+  }
+}
+
 (function wireForms() {
   if (typeof SITE === 'undefined') return;
-  document.querySelectorAll('[data-form]').forEach(el => {
-    const url = SITE.forms[el.dataset.form];
-    el.setAttribute('href', url && !url.startsWith('REPLACE_ME') ? safeUrl(url) : 'contact.html');
-    if (url && !url.startsWith('REPLACE_ME')) { el.target = '_blank'; el.rel = 'noopener'; }
-  });
+  document.querySelectorAll('[data-form]').forEach(wireFormButton);
   document.querySelectorAll('[data-email]').forEach(el => {
     if (SITE.email && !SITE.email.startsWith('REPLACE_ME')) {
       el.textContent = SITE.email;
@@ -322,11 +335,7 @@ const logoChip = (p, extra = '') => `
   </div></section>`;
 
   // re-wire form buttons created after initial pass
-  document.querySelectorAll('#partner-root [data-form]').forEach(el => {
-    const url = SITE.forms[el.dataset.form];
-    el.setAttribute('href', url && !url.startsWith('REPLACE_ME') ? safeUrl(url) : 'contact.html');
-    if (url && !url.startsWith('REPLACE_ME')) { el.target = '_blank'; el.rel = 'noopener'; }
-  });
+  document.querySelectorAll('#partner-root [data-form]').forEach(wireFormButton);
 })();
 
 /* ── SCROLL REVEAL ── */

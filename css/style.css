@@ -285,6 +285,14 @@ em { font-style: italic; }
 .pillar p { font-size: 0.95rem; color: var(--muted); max-width: none; }
 .section--dark .pillar p { color: var(--muted-d); }
 
+/* ── FORM BUTTONS STILL IN PROGRESS ── */
+.btn--disabled { opacity: 0.45; pointer-events: none; cursor: not-allowed; }
+.form-soon {
+  display: block; margin-top: 0.45rem;
+  font-size: 0.8rem; font-style: italic; color: var(--muted);
+}
+.section--dark .form-soon { color: var(--muted-d); }
+
 /* ── MEDIA GALLERY ── */
 .media-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-sm); }
 .media-item {

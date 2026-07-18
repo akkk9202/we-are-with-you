@@ -32,6 +32,7 @@ const I18N_KO = {
   "footer.media": "미디어",
   "footer.join": "함께하기",
   "footer.about": "소개",
+  "form.comingSoon": "준비 중입니다 — 곧 열릴 예정이에요",
 
   /* ── GLOBAL · partner page template (rendered by site.js) ── */
   "partner.eyebrow": "WE ARE WITH YOU · 파트너 커뮤니티",

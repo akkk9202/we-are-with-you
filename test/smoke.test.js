@@ -167,9 +167,10 @@ console.log('\n[one-message-for-you.html]');
   const steps = [...d.querySelectorAll('.cards--3 .card h3')].map(h => h.textContent.trim());
   ok(JSON.stringify(steps) === JSON.stringify(['Write One Message', 'Add Your Voice', 'Become Part of the Circle']), 'OMFY three join steps in order');
   ok([...d.querySelectorAll('[data-form]')].every(a =>
-    a.getAttribute('href') === 'contact.html' ||
-    (a.getAttribute('href').startsWith('https://docs.google.com/forms/') && a.target === '_blank' && a.rel === 'noopener')
-  ), 'OMFY form buttons: live Google Form (new tab, noopener) or contact.html fallback');
+    (a.getAttribute('href') || '').startsWith('https://docs.google.com/forms/')
+      ? (a.target === '_blank' && a.rel === 'noopener')
+      : a.getAttribute('aria-disabled') === 'true'
+  ), 'OMFY form buttons: live Google Form (new tab, noopener) or disabled with notice');
   ok([...d.querySelectorAll('[data-form="letterSubmission"]')].every(a => a.getAttribute('href').includes('1FAIpQLScPFE6ckE10oraG')), 'OMFY letter buttons wired to the letter Google Form');
 }
 
@@ -190,7 +191,17 @@ console.log('\n[form wiring]');
   }
   for (const key of ['partnerInquiry', 'hopeCapsule', 'teachingVideoRequest']) {
     const a = byKey(key);
-    ok(a && a.getAttribute('href') === 'contact.html', `${key} still placeholder → routes to contact.html`);
+    ok(a && !a.hasAttribute('href') && a.getAttribute('aria-disabled') === 'true' && a.classList.contains('btn--disabled'), `${key} form in progress → button disabled`);
+    ok(a && a.nextElementSibling && a.nextElementSibling.classList.contains('form-soon') && /Coming soon/.test(a.nextElementSibling.textContent), `${key} shows a "coming soon" note`);
+  }
+  {
+    // partner pages re-wire dynamically rendered cards the same way
+    const pdom = loadPage('partner.html', 'https://x.test/partner.html?p=senior-living');
+    const pd = pdom.window.document;
+    const hc = pd.querySelector('#partner-root [data-form="hopeCapsule"]');
+    ok(hc && hc.getAttribute('aria-disabled') === 'true' && hc.nextElementSibling.classList.contains('form-soon'), 'partner page Hope Capsule button disabled with note (form in progress)');
+    const ls = pd.querySelector('#partner-root [data-form="letterSubmission"]');
+    ok(ls && ls.getAttribute('href').includes('1FAIpQLScPFE6ckE10oraG') && ls.target === '_blank', 'partner page letter button still live');
   }
 }
 
