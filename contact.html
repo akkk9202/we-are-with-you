@@ -33,7 +33,6 @@
       <h4 style="color:var(--gold);margin-bottom:1rem;">Our information</h4>
       <div class="contact-detail"><span class="contact-detail__label">Email</span><a data-email href="contact.html">Email coming soon</a></div>
       <div class="contact-detail" id="contact-instagram" hidden><span class="contact-detail__label">Instagram</span><a target="_blank" rel="noopener">Instagram</a></div>
-      <div class="contact-detail" id="contact-youtube" hidden><span class="contact-detail__label">YouTube</span><a target="_blank" rel="noopener">YouTube</a></div>
       <div class="contact-detail"><span class="contact-detail__label">Location</span><span id="contact-location">Georgia, United States</span></div>
     </div>
     <div class="reveal reveal--d1">
@@ -73,9 +72,7 @@
   // Show social rows only when real links exist in config.js
   (function () {
     const ig = document.getElementById('contact-instagram');
-    const yt = document.getElementById('contact-youtube');
     if (SITE.instagram) { ig.hidden = false; ig.querySelector('a').href = safeUrl(SITE.instagram); }
-    if (SITE.youtube)   { yt.hidden = false; yt.querySelector('a').href = safeUrl(SITE.youtube); }
     document.getElementById('contact-location').textContent = SITE.location;
   })();
 </script>

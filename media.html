@@ -57,7 +57,9 @@
     <div class="section-head reveal"><div class="eyebrow">Performances &amp; rehearsals</div>
       <h2>On stage, in rehearsal</h2></div>
     <div class="media-grid reveal">
-      <div class="media-item">♪</div><div class="media-item">♩</div><div class="media-item">♬</div>
+      <figure class="media-item"><img src="assets/images/media-performances-1.jpg" loading="lazy" alt="A GYCO student musician visiting with seniors after a performance at a partner community" /></figure>
+      <figure class="media-item"><img src="assets/images/media-performances-2.jpg" loading="lazy" alt="Student ensemble performing with strings and clarinets before an international flag display at a partner community" /></figure>
+      <figure class="media-item"><img src="assets/images/media-performances-3.jpg" loading="lazy" alt="GYCO student orchestra performing outdoors in a downtown Atlanta park — strings, clarinets, guitar, cello, and keyboards led by their conductor" /></figure>
     </div>
   </div>
 </section>
@@ -68,7 +70,9 @@
       <h2>Where the music travels</h2>
       <p>Senior living visits, healthcare and family support programs, and partner community moments.</p></div>
     <div class="media-grid reveal">
-      <div class="media-item">♥</div><div class="media-item">✦</div><div class="media-item">♪</div>
+      <figure class="media-item"><img src="assets/images/media-outreach-1.jpg" loading="lazy" alt="Students in festive holiday hats performing a Christmas concert with cellos, viola, and flute for a senior community" /></figure>
+      <figure class="media-item"><img src="assets/images/media-outreach-2.jpg" loading="lazy" alt="Students and senior living residents visiting together after a holiday performance" /></figure>
+      <figure class="media-item"><img src="assets/images/media-outreach-3.jpg" loading="lazy" alt="Residents of a senior community, some in wheelchairs, gathered to hear the student ensemble perform in their community room" /></figure>
     </div>
   </div>
 </section>
@@ -79,7 +83,9 @@
       <h2>Students become teachers</h2>
       <p>Beat &amp; Breeze sessions, Taps of Love teaching videos, and student-created learning resources.</p></div>
     <div class="media-grid reveal">
-      <div class="media-item">▶</div><div class="media-item">♩</div><div class="media-item">✦</div>
+      <figure class="media-item"><img src="assets/images/media-teaching-1.jpg" loading="lazy" alt="An older student teaching a younger student snare drum rhythms during an ensemble rehearsal" /></figure>
+      <figure class="media-item"><img src="assets/images/media-teaching-2.jpg" loading="lazy" alt="Student violinists coaching younger players through their part at a rehearsal" /></figure>
+      <figure class="media-item"><img src="assets/images/media-teaching-3.jpg" loading="lazy" alt="Four clarinet students practicing together in a circle with sheet music between them" /></figure>
     </div>
     <p class="reveal" style="margin-top:2rem;color:var(--muted);font-style:italic;font-size:0.92rem;">Gallery content is added as the program grows. Follow along for the latest performances, teaching sessions, and stories from our students and partners.</p>
   </div>
@@ -112,13 +118,11 @@
 <script src="js/i18n.js"></script>
 <script src="js/site.js"></script>
 <script>
-  // Show Instagram/YouTube buttons only when real links exist in config.js
+  // Show the Instagram button only when a real link exists in config.js
   (function () {
     const row = document.getElementById('social-ctas');
     if (SITE.instagram) row.insertAdjacentHTML('afterbegin',
       `<a class="btn btn--gold" href="${safeUrl(SITE.instagram)}" target="_blank" rel="noopener">Follow on Instagram</a>`);
-    if (SITE.youtube) row.insertAdjacentHTML('beforeend',
-      `<a class="btn btn--ghost" href="${safeUrl(SITE.youtube)}" target="_blank" rel="noopener">Watch on YouTube</a>`);
   })();
 </script>
 </body>

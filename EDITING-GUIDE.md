@@ -74,8 +74,8 @@ Open `js/partners.js`. Each partner is one block:
 
 ## 6. Change text on main pages
 Main page copy lives in the HTML files themselves — each section is labeled with an HTML comment (`<!-- 5 · CIRCLE OF LOVE -->` etc.):
-- `index.html` — homepage
-- `programs.html`, `student-community.html`, `learning.html`, `media.html`, `join.html`, `about.html`, `contact.html`
+- `index.html` — homepage (philosophy sections first, then the WE ARE WITH YOU welcome content — the old about.html now lives here)
+- `programs.html`, `student-community.html`, `learning.html`, `media.html`, `join.html`, `contact.html`
 
 ## 7. Add photos
 1. Put photos in `assets/images/` (logos go in `assets/logos/`).
@@ -130,7 +130,7 @@ student-community.html    GYCO — More Than Music
 learning.html             NADO School — Become a School
 media.html                Featured press + galleries
 join.html                 Four join paths
-about.html                Philosophy — One Loop (NADO + NADO = WE)
+about.html                Redirect stub → index.html (philosophy merged into homepage)
 contact.html              Contact info + form links
 404.html                  Not-found page
 css/style.css             All styling (tokens at top)

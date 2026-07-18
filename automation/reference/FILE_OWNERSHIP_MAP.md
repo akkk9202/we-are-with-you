@@ -46,7 +46,8 @@ Safety legend: 🟢 Safe to edit (this is where content lives) · 🟡 Edit with
 | `learning.html` | NADO School / learning page | Editor | 🟡 | |
 | `student-community.html` | GYCO student community | Editor | 🟡 | |
 | `media.html` | Media + featured press | Editor | 🟡 | Press renders from `SITE.press[]`. |
-| `join.html`, `about.html`, `contact.html` | Join / About / Contact pages | Editor | 🟡 | |
+| `join.html`, `contact.html` | Join / Contact pages | Editor | 🟡 | |
+| `about.html` | Redirect stub → `index.html` (philosophy merged into homepage) | — | 🔴 | Keep as stub; old links still land. |
 | `404.html` | Not-found page | Editor | 🟡 | |
 | Redirect stubs — `voices-of-love.html`, `taps-of-love.html`, `gyco.html`, `we-are-with-you.html`, `beat-and-breeze.html`, `winds-of-love.html`, `about-gyco.html` | Forward retired / printed-QR URLs to current pages | — | 🔴 | **Never delete; never change their internal targets.** See QR_AND_SLUG_PROTECTION_GUIDE.md. |
 | `assets/images/` | Photos (home invitation, carousel, press) | Editor | 🟢 | Overwrite file at the referenced path — no code change needed for a straight swap. |

@@ -14,7 +14,8 @@ const SITE = {
   // ── Contact & social ─────────────────────────────────────
   email: "gyco23@gmail.com",                 // official email
   instagram: "https://instagram.com/gyco_opus", // e.g. "https://instagram.com/yourhandle" (leave "" to hide)
-  youtube: "",                               // e.g. "https://youtube.com/@yourchannel" (leave "" to hide)
+  // No YouTube channel yet — when one exists, add:  youtube: "https://youtube.com/@yourchannel",
+  // then restore the YouTube links in js/site.js (footer), contact.html, and media.html.
   location: "Georgia, United States",
 
   // ── Google Form links ────────────────────────────────────
@@ -33,13 +34,12 @@ const SITE = {
   // The "Programs" dropdown builds itself from js/partners.js —
   // pathway names and order live there (name + order fields).
   nav: [
-    { label: "Home", label_ko: "홈", href: "index.html" },
+    { label: "We Are With You", href: "index.html" },
     { label: "Programs", label_ko: "프로그램", href: "programs.html", dropdown: "partners" },
     { label: "GYCO", href: "student-community.html" },
     { label: "NADO School", href: "learning.html" },
     { label: "Media", label_ko: "미디어", href: "media.html" },
     { label: "Join Us", label_ko: "함께하기", href: "join.html" },
-    { label: "About", label_ko: "소개", href: "about.html" },
     { label: "Contact", label_ko: "문의하기", href: "contact.html", cta: true },
   ],
 

@@ -101,7 +101,7 @@ data-driven.
 | `learning.html` | NADO School / learning |
 | `media.html` | Media + featured press |
 | `join.html` | Join Us |
-| `about.html`, `about-gyco.html`, `student-community.html`, `gyco.html` | About / GYCO / community |
+| `student-community.html`, `gyco.html`, `about-gyco.html` | GYCO / community (about.html is now a redirect stub → index.html) |
 | `contact.html` | Contact |
 | `404.html` | Not-found page |
 | `voices-of-love.html`, `taps-of-love.html`, `we-are-with-you.html`, `beat-and-breeze.html`, `winds-of-love.html` | **Redirect stubs** — forward retired URLs to current pages. Don't delete; don't change their internal targets |

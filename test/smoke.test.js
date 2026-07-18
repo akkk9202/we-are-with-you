@@ -50,6 +50,8 @@ console.log('\n[index.html]');
   ok(navLabels.includes('GYCO'), 'nav has "GYCO" (was Student Community)');
   ok(navLabels.includes('NADO School'), 'nav has "NADO School" (was Learning)');
   ok(!navLabels.includes('Student Community') && !navLabels.includes('Learning'), 'old nav labels removed');
+  ok(navLabels[0] === 'We Are With You', 'first nav tab renamed "We Are With You" (was Home)');
+  ok(!navLabels.includes('Home') && !navLabels.includes('About'), 'Home and About tabs removed (About merged into homepage)');
 
   const dd = [...d.querySelectorAll('.nav__dropdown a')].map(a => a.textContent.trim());
   ok(JSON.stringify(dd) === JSON.stringify(EXPECTED_ORDER), 'Programs dropdown: 6 renamed pathways in required order');
@@ -96,6 +98,9 @@ console.log('\n[index.html]');
 
   const footPlatform = [...d.querySelectorAll('.footer__col')].find(c => c.textContent.includes('Platform'));
   ok(footPlatform.textContent.includes('GYCO') && footPlatform.textContent.includes('NADO School'), 'footer Platform column uses GYCO / NADO School');
+  ok(!footPlatform.textContent.includes('About'), 'footer Platform column no longer links About');
+  const footConnect = [...d.querySelectorAll('.footer__col')].find(c => c.textContent.includes('Connect'));
+  ok(!footConnect.textContent.includes('YouTube'), 'footer Connect column has no YouTube link (no channel yet)');
   const footPrograms = [...d.querySelectorAll('.footer__col')].find(c => c.textContent.includes('Programs'));
   ok(footPrograms.textContent.includes('The America Wheat Mission (Milal)'), 'footer Programs column shows Milal name');
 
@@ -252,6 +257,33 @@ console.log('\n[media.html]');
   ok(links[1].href.includes('newswave25.com/%EB%B3%91%EC%9B%90'), 'Korean URL exact (encoded)');
   ok(links.every(l => l.target === '_blank' && l.rel === 'noopener'), 'both links open safely in new tab');
   ok(card.querySelector('.press-card__media img'), 'article image slot present (with styled fallback)');
+
+  /* gallery photos — Performances & rehearsals + Where the music travels */
+  const galleryImgs = [...d.querySelectorAll('.media-grid .media-item img')];
+  const perf = galleryImgs.filter(i => i.getAttribute('src').includes('media-performances-'));
+  const outreach = galleryImgs.filter(i => i.getAttribute('src').includes('media-outreach-'));
+  const teaching = galleryImgs.filter(i => i.getAttribute('src').includes('media-teaching-'));
+  ok(perf.length === 3, 'Performances & rehearsals gallery has 3 real photos');
+  ok(outreach.length === 3, 'Where the music travels gallery has 3 real photos');
+  ok(teaching.length === 3, 'Student teaching gallery has 3 real photos');
+  ok(galleryImgs.every(i => i.alt && i.alt.length > 10), 'every gallery photo has descriptive alt text');
+  ok(galleryImgs.every(i => i.getAttribute('loading') === 'lazy'), 'gallery photos lazy-load');
+  for (const img of [...perf, ...outreach, ...teaching]) {
+    const src = img.getAttribute('src');
+    ok(fs.existsSync(path.join(ROOT, src)), `image file exists on disk: ${src}`);
+  }
+  ok(!d.body.innerHTML.includes('YouTube'), 'media page has no YouTube link or button (no channel yet)');
+}
+
+/* ── 6b. NO YOUTUBE ANYWHERE (no channel yet) ── */
+console.log('\n[no-YouTube sweep]');
+{
+  const dom = loadPage('contact.html', 'https://x.test/contact.html');
+  ok(!dom.window.document.body.innerHTML.includes('YouTube'), 'contact page has no YouTube row');
+  const pages = fs.readdirSync(ROOT).filter(f => f.endsWith('.html'));
+  const offenders = pages.filter(f => /youtube/i.test(fs.readFileSync(path.join(ROOT, f), 'utf8')));
+  ok(offenders.length === 0, `no .html file references YouTube (${offenders.join(', ') || 'clean'})`);
+  ok(!/SITE\.youtube/.test(fs.readFileSync(path.join(ROOT, 'js/site.js'), 'utf8')), 'js/site.js no longer renders a YouTube link');
 }
 
 /* ── 7. LOGO FALLBACK BEHAVIOR ── */
@@ -271,17 +303,20 @@ console.log('\n[logo fallback]');
   ok(senior.querySelector('.logo-chip__fallback').textContent === 'SL', 'Senior Living monogram = "SL"');
 }
 
-/* ── 8. ABOUT PAGE (philosophy landing) ── */
-console.log('\n[about.html]');
+/* ── 8. PHILOSOPHY SECTIONS (merged from about.html into index.html) ── */
+console.log('\n[index.html · philosophy]');
 {
-  const dom = loadPage('about.html', 'https://x.test/about.html');
+  const dom = loadPage('index.html', 'https://x.test/index.html');
   const d = dom.window.document;
-  ok(d.title.includes('One Philosophy. One Loop. One Community.'), 'title carries the philosophy line');
   const h1 = d.querySelector('h1').textContent;
-  ok(['One philosophy.', 'One Loop.', 'One Community.'].every(l => h1.includes(l)), 'hero: One philosophy. One Loop. One Community.');
+  ok(['One philosophy.', 'One Loop.', 'One Community.'].every(l => h1.includes(l)), 'page opens with hero: One philosophy. One Loop. One Community.');
   ok(d.body.textContent.includes('Every WE begins with one NADO.'), 'hero kicker present');
-  ok(d.querySelector('.invite-figure img[src="assets/images/home-invitation.jpg"]'), 'invitation image is the hero visual');
-  ok([...d.querySelectorAll('.btn')].some(b => b.textContent.trim() === 'Enter WE ARE WITH YOU' && b.getAttribute('href') === 'index.html'), 'hero CTA: Enter WE ARE WITH YOU');
+  ok(d.querySelector('.page-hero .invite-figure img[src="assets/images/home-invitation.jpg"]'), 'invitation image is the hero visual');
+  ok([...d.querySelectorAll('.btn')].some(b => b.textContent.trim() === 'Enter WE ARE WITH YOU' && b.getAttribute('href') === '#wawy'), 'hero CTA: Enter WE ARE WITH YOU → #wawy anchor');
+  const wawy = d.getElementById('wawy');
+  ok(wawy && wawy.classList.contains('hero') && wawy.textContent.includes('Welcome to'), '#wawy anchor lands on the original Welcome hero');
+  const secs = [...d.querySelectorAll('main > section')];
+  ok(secs.findIndex(s => s.id === 'closing-loop') < secs.findIndex(s => s.id === 'wawy'), 'philosophy sections come first; original home content trails after');
 
   const merge = d.querySelector('.nado-we-figure svg');
   ok(merge && merge.querySelectorAll('text').length === 3 && merge.textContent.includes('WE'), 'NADO + NADO → WE merge figure (two NADOs and one WE)');
@@ -302,12 +337,15 @@ console.log('\n[about.html]');
   const closing = [...d.querySelectorAll('#closing-loop .journey__node')].map(n => n.textContent.trim());
   ok(JSON.stringify(closing) === JSON.stringify(['NADO', 'GYCO', 'WE ARE WITH YOU', 'New Stories', 'NADO Again']), 'closing vertical flow: NADO → … → NADO Again');
   ok(d.body.textContent.includes('Every ending becomes another beginning.'), 'ending statement present');
+  const loopLink = [...d.querySelectorAll('#closing-loop .journey__node')].find(n => n.textContent.trim() === 'WE ARE WITH YOU');
+  ok(loopLink && loopLink.getAttribute('href') === '#wawy', 'closing loop WE ARE WITH YOU node points to #wawy (no longer index.html)');
 }
 
 /* ── 9. REDIRECT STUBS + SLUG INTEGRITY ── */
 console.log('\n[redirect stubs & slugs]');
 {
   const stubs = {
+    'about.html': 'index.html',
     'gyco.html': 'student-community.html',
     'about-gyco.html': 'about.html',
     'beat-and-breeze.html': 'learning.html#programs',

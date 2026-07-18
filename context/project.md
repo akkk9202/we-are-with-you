@@ -28,7 +28,7 @@ clinical, salesy, or performative.**
 - **GYCO** (`student-community.html`) — the student growth community.
 - **NADO School** (`learning.html`) — the learning philosophy ("Nado / 나도" = "me too").
 - **Media** (`media.html`) — featured bilingual press + gallery placeholders.
-- **Join Us** (`join.html`), **About** (`about.html`), **Contact** (`contact.html`), **404**.
+- **Join Us** (`join.html`), **Contact** (`contact.html`), **404**. (`about.html` is now a redirect stub → `index.html`; the philosophy content lives at the top of the homepage.)
 - **Redirect stubs** — old URLs / printed QR codes (`voices-of-love.html`, `gyco.html`, …) forward
   to their new homes via `<meta http-equiv="refresh">`.
 
