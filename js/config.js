@@ -8,7 +8,7 @@
 const SITE = {
   name: "WE ARE WITH YOU",
   org: "Greater Youth Collaborative Opus (GYCO)",
-  tagline: "Even Here. Even Now. We Are With You.",
+  tagline: "Even Here. Even Now. WE ARE WITH YOU.",
   baseUrl: "https://akkk9202.github.io/we-are-with-you/",
 
   // ── Contact & social ─────────────────────────────────────
@@ -50,7 +50,7 @@ const SITE = {
     // overwrite assets/images/home-invitation.jpg or point src elsewhere.
     invitation: {
       src: "assets/images/home-invitation.jpg",
-      alt: "WE ARE WITH YOU invitation — you are invited to receive a message of hope. Even Here, Even Now.",
+      alt: "WE ARE WITH YOU invitation with the message: You are invited to receive a message of hope. Even Here. Even Now.",
     },
 
     // "One platform. Many communities." carousel (index.html, section 4).
@@ -59,34 +59,34 @@ const SITE = {
       // TODO: Replace carousel image 1 — overwrite assets/images/home-carousel-1.jpg
       {
         src: "assets/images/home-carousel-1.jpg",
-        alt: "WE ARE WITH YOU flyer for City of Hope Atlanta with QR codes for letters, music for hopeful moments, song requests, and the Hope Capsule",
+        alt: "WE ARE WITH YOU flyer for City of Hope Atlanta featuring QR codes for letters, music for hopeful moments, song requests, and the Hope Capsule",
         caption: "City of Hope Atlanta (CTCA)",
       },
       // TODO: Replace carousel image 2 — overwrite assets/images/home-carousel-2.jpg
       {
         src: "assets/images/home-carousel-2.jpg",
-        alt: "WE ARE WITH YOU flyer for Ronald McDonald House with QR codes for letters for kids and parents, happy music, and the Hope Capsule",
+        alt: "WE ARE WITH YOU flyer for Ronald McDonald House featuring QR codes for letters for children and parents, cheerful music, and the Hope Capsule",
         caption: "Ronald McDonald House",
       },
       // TODO: Replace carousel image 3 — overwrite assets/images/home-carousel-3.jpg
       {
         src: "assets/images/home-carousel-3.jpg",
-        alt: "WE ARE WITH YOU flyer for the Northside NICU with QR codes for a letter for your baby, letters for parents, quiet music, and the Hope Capsule",
+        alt: "WE ARE WITH YOU flyer for the Northside NICU featuring QR codes for a letter to your baby, letters for parents, quiet music, and the Hope Capsule",
         caption: "Northside Intensive Care Unit (NICU)",
       },
       {
         src: "assets/images/home-carousel-4.jpg",
-        alt: "WE ARE WITH YOU flyer for The America Wheat Mission (Milal) with QR codes for a letter for a friend, letters for families, music together, song requests, and the Hope Capsule",
+        alt: "WE ARE WITH YOU flyer for The America Wheat Mission (Milal) featuring QR codes for letters to friends and families, shared music activities, song requests, and the Hope Capsule",
         caption: "The America Wheat Mission (Milal)",
       },
       {
         src: "assets/images/home-carousel-5.jpg",
-        alt: "WE ARE WITH YOU flyer for senior living communities with QR codes for letters for seniors, Secret Wisdom messages, music together, songs with memories, and the Hope Capsule",
+        alt: "WE ARE WITH YOU flyer for senior living communities featuring QR codes for letters to older adults, Secret Wisdom messages, shared music, songs connected to memories, and the Hope Capsule",
         caption: "Senior Living Communities",
       },
       {
         src: "assets/images/home-carousel-6.jpg",
-        alt: "WE ARE WITH YOU flyer for MeSun Senior Living and Adoration Home Health with QR codes for letters, prayers, peaceful music, songs with memories, and the Hope Capsule",
+        alt: "WE ARE WITH YOU flyer for MeSun Senior Living and Adoration Home Health featuring QR codes for letters, prayers, peaceful music, songs connected to memories, and the Hope Capsule",
         caption: "MeSun Senior Living · Adoration Home Health",
       },
     ],
@@ -97,7 +97,7 @@ const SITE = {
   press: [
     {
       label: "Featured Press",
-      title: "Music of Hope: GYCO Brings Healing to the Community",
+      title: "Music of Hope: GYCO Brings Comfort and Connection to the Community",
       publisher: "Newswave25",
       description: "Students from GYCO brought live music to hospitals and senior communities across Georgia, sharing hope, comfort, and connection through service.",
       languages: "Available in English and Korean",
@@ -114,6 +114,6 @@ const SITE = {
     },
   ],
 
-  footerNote: "A student-led platform bringing music, learning, encouragement, and human connection into real communities.",
+  footerNote: "A student-led platform that brings music, learning, encouragement, and human connection to communities.",
   footerNote_ko: "음악과 배움, 격려와 따뜻한 연결을 병원, 가족 공간, 시니어 커뮤니티, 학교, 그리고 세계 곳곳의 커뮤니티에 전하는 학생 주도 플랫폼입니다.",
 };

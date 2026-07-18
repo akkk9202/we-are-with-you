@@ -86,7 +86,7 @@ console.log('\n[index.html]');
   ok(car.querySelectorAll('.carousel__dot')[2].getAttribute('aria-current') === 'true', 'active dot exposes aria-current');
   ok(!d.body.innerHTML.includes('autoplay'), 'carousel has no autoplay');
   const note = d.querySelector('.carousel-note');
-  ok(note && note.textContent.includes('display only') && note.textContent.includes("won't open anything"), 'carousel note explains QR codes are display-only dummies');
+  ok(note && note.textContent.includes('display purposes only') && note.textContent.includes('will not open a live page'), 'carousel note explains QR codes are display-only dummies');
   ok(note && note.parentElement.contains(car), 'QR note sits directly beneath the carousel');
 
   const svg = d.querySelector('.circle-figure svg');
@@ -114,8 +114,8 @@ console.log('\n[index.html]');
   ok([...d.querySelectorAll('[data-pathway-cards] .btn')].every(b => b.textContent.trim() === 'Learn More'), 'pathway card buttons say "Learn More"');
   ok(d.body.textContent.includes('Even Here. Even Now. WE ARE WITH YOU.'), 'pathways section states the shared mission line');
 
-  ok(d.body.textContent.includes('Students Created This.') && d.body.textContent.includes('And They Keep Growing It.'), 'students section: new heading');
-  ok(d.body.textContent.includes('learn by building projects that create real impact'), 'students section: GYCO body copy');
+  ok(d.body.textContent.includes('Students Created This.') && d.body.textContent.includes('And Continue to Grow It.'), 'students section: new heading');
+  ok(d.body.textContent.includes('learn by developing projects that create meaningful, lasting impact'), 'students section: GYCO body copy');
   const studentCtas = [...d.querySelectorAll('.action-card .action-card__title')].map(t => t.textContent.trim());
   ok(studentCtas.includes('Explore GYCO') && studentCtas.includes('Explore NADO School'), 'students section: two prominent CTA cards');
 
@@ -165,7 +165,7 @@ console.log('\n[one-message-for-you.html]');
 {
   const dom = loadPage('one-message-for-you.html', 'https://x.test/one-message-for-you.html');
   const d = dom.window.document;
-  ok(d.title === 'One Message for You — WE ARE WITH YOU', 'OMFY page title');
+  ok(d.title === 'One Message for You | WE ARE WITH YOU', 'OMFY page title');
   ok(d.querySelector('.page-hero h1').textContent.includes('One Message'), 'OMFY hero renders');
   const steps = [...d.querySelectorAll('.cards--3 .card h3')].map(h => h.textContent.trim());
   ok(JSON.stringify(steps) === JSON.stringify(['Write One Message', 'Add Your Voice', 'Become Part of the Circle']), 'OMFY three join steps in order');
@@ -212,7 +212,7 @@ console.log('\n[hope-capsule.html]');
 {
   const dom = loadPage('hope-capsule.html', 'https://x.test/hope-capsule.html');
   const d = dom.window.document;
-  ok(d.title === 'Hope Capsule — WE ARE WITH YOU', 'Hope Capsule page title');
+  ok(d.title === 'Hope Capsule | WE ARE WITH YOU', 'Hope Capsule page title');
   ok(d.querySelector('.page-hero h1').textContent.trim() === 'Hope Capsule', 'Hope Capsule hero renders');
   const steps = [...d.querySelectorAll('.cards--3 .card h3')].map(h => h.textContent.trim());
   ok(steps.length === 3 && steps[0] === 'Stories are gathered', 'Hope Capsule three creation steps');
@@ -238,7 +238,7 @@ console.log('\n[student-community.html]');
   const journey = [...d.querySelectorAll('#student-journey .journey__node')].map(n => n.textContent.trim());
   ok(JSON.stringify(journey) === JSON.stringify(['Idea', 'Project', 'Program', 'Community', 'Impact']), 'student journey: Idea → Project → Program → Community → Impact');
   ok(d.body.textContent.includes('Our First Tool. Our Shared Gift.'), 'Music With Purpose section present');
-  ok(d.body.textContent.includes('It is the beginning of saying'), 'Music With Purpose closing statement present');
+  ok(d.body.textContent.includes('It is an opportunity to say'), 'Music With Purpose closing statement present');
   ok(![...d.querySelectorAll('.loop__step h3, .circle-word')].some(el => ['Create', 'Share', 'Grow'].includes(el.textContent.trim())), 'old Learn/Create/Share/Grow framework fully replaced');
   const roles = ['Creators', 'Leaders', 'Researchers', 'Collaborators'];
   ok(roles.every(r => [...d.querySelectorAll('.circle-word')].some(w => w.textContent === r)), 'roles: Creators / Leaders / Researchers / Collaborators');
@@ -286,7 +286,7 @@ console.log('\n[media.html]');
   const card = d.querySelector('.press-card');
   ok(!!card, 'featured press card rendered');
   ok(d.querySelectorAll('.press-card').length === 1, 'ONE bilingual card, not two separate articles');
-  ok(card.textContent.includes('Music of Hope: GYCO Brings Healing to the Community'), 'article title correct');
+  ok(card.textContent.includes('Music of Hope: GYCO Brings Comfort and Connection to the Community'), 'article title correct');
   ok(card.textContent.includes('Newswave25'), 'publisher shown');
   ok(card.textContent.includes('Featured Press') && card.textContent.includes('Bilingual Coverage'), 'labels: Featured Press + Bilingual Coverage');
   ok(card.textContent.includes('Available in English and Korean'), 'language note present');
@@ -348,7 +348,7 @@ console.log('\n[index.html · philosophy]');
   const dom = loadPage('index.html', 'https://x.test/index.html');
   const d = dom.window.document;
   const h1 = d.querySelector('h1').textContent;
-  ok(['One philosophy.', 'One Loop.', 'One Community.'].every(l => h1.includes(l)), 'page opens with hero: One philosophy. One Loop. One Community.');
+  ok(['One Philosophy.', 'One Loop.', 'One Community.'].every(l => h1.includes(l)), 'page opens with hero: One philosophy. One Loop. One Community.');
   ok(d.body.textContent.includes('Every WE begins with one NADO.'), 'hero kicker present');
   ok(d.querySelector('.page-hero .invite-figure img[src="assets/images/home-invitation.jpg"]'), 'invitation image is the hero visual');
   ok([...d.querySelectorAll('.btn')].some(b => b.textContent.trim() === 'Enter WE ARE WITH YOU' && b.getAttribute('href') === '#wawy'), 'hero CTA: Enter WE ARE WITH YOU → #wawy anchor');
@@ -375,7 +375,7 @@ console.log('\n[index.html · philosophy]');
 
   const closing = [...d.querySelectorAll('#closing-loop .journey__node')].map(n => n.textContent.trim());
   ok(JSON.stringify(closing) === JSON.stringify(['NADO', 'GYCO', 'WE ARE WITH YOU', 'New Stories', 'NADO Again']), 'closing vertical flow: NADO → … → NADO Again');
-  ok(d.body.textContent.includes('Every ending becomes another beginning.'), 'ending statement present');
+  ok(d.body.textContent.includes('Every Ending Becomes Another Beginning.'), 'ending statement present');
   const loopLink = [...d.querySelectorAll('#closing-loop .journey__node')].find(n => n.textContent.trim() === 'WE ARE WITH YOU');
   ok(loopLink && loopLink.getAttribute('href') === '#wawy', 'closing loop WE ARE WITH YOU node points to #wawy (no longer index.html)');
 }
