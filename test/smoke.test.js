@@ -166,7 +166,32 @@ console.log('\n[one-message-for-you.html]');
   ok(d.querySelector('.page-hero h1').textContent.includes('One Message'), 'OMFY hero renders');
   const steps = [...d.querySelectorAll('.cards--3 .card h3')].map(h => h.textContent.trim());
   ok(JSON.stringify(steps) === JSON.stringify(['Write One Message', 'Add Your Voice', 'Become Part of the Circle']), 'OMFY three join steps in order');
-  ok([...d.querySelectorAll('[data-form]')].every(a => a.getAttribute('href') === 'contact.html'), 'OMFY placeholder forms route to contact.html');
+  ok([...d.querySelectorAll('[data-form]')].every(a =>
+    a.getAttribute('href') === 'contact.html' ||
+    (a.getAttribute('href').startsWith('https://docs.google.com/forms/') && a.target === '_blank' && a.rel === 'noopener')
+  ), 'OMFY form buttons: live Google Form (new tab, noopener) or contact.html fallback');
+  ok([...d.querySelectorAll('[data-form="letterSubmission"]')].every(a => a.getAttribute('href').includes('1FAIpQLScPFE6ckE10oraG')), 'OMFY letter buttons wired to the letter Google Form');
+}
+
+/* ── 3c. FORM WIRING (config.js → data-form buttons) ── */
+console.log('\n[form wiring]');
+{
+  const dom = loadPage('contact.html', 'https://x.test/contact.html');
+  const d = dom.window.document;
+  const byKey = k => d.querySelector(`[data-form="${k}"]`);
+  for (const [key, frag] of [
+    ['studentApplication', '1FAIpQLSfsiV5lgetCfyIkVz79'],
+    ['songRequest', '1FAIpQLSfIU7OKX5MHNmsAZHqbc'],
+    ['letterSubmission', '1FAIpQLScPFE6ckE10oraG'],
+  ]) {
+    const a = byKey(key);
+    ok(a && a.getAttribute('href').includes(frag), `${key} button links to its Google Form`);
+    ok(a && a.target === '_blank' && a.rel === 'noopener', `${key} opens in a new tab with noopener`);
+  }
+  for (const key of ['partnerInquiry', 'hopeCapsule', 'teachingVideoRequest']) {
+    const a = byKey(key);
+    ok(a && a.getAttribute('href') === 'contact.html', `${key} still placeholder → routes to contact.html`);
+  }
 }
 
 console.log('\n[hope-capsule.html]');

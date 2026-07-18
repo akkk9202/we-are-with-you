@@ -22,10 +22,10 @@ const SITE = {
   // Paste the "Send > link" URL from each Google Form.
   // Any button on the site with data-form="key" uses these.
   forms: {
-    studentApplication:  "REPLACE_ME_GOOGLE_FORM_URL",
+    studentApplication:  "https://docs.google.com/forms/d/e/1FAIpQLSfsiV5lgetCfyIkVz79eRAMjF-PhwheU1HsIRMlwpPglLc54w/viewform?usp=header",
     partnerInquiry:      "REPLACE_ME_GOOGLE_FORM_URL",
-    songRequest:         "REPLACE_ME_GOOGLE_FORM_URL",
-    letterSubmission:    "REPLACE_ME_GOOGLE_FORM_URL",
+    songRequest:         "https://docs.google.com/forms/d/e/1FAIpQLSfIU7OKX5MHNmsAZHqbcuVEMx637LtMDEzoLVGyauTXrZrB4w/viewform?usp=header",
+    letterSubmission:    "https://docs.google.com/forms/d/e/1FAIpQLScPFE6ckE10oraG-N0bj6d8ShcoQQRCPrkA5wtFsHS6L1wkow/viewform?usp=header",
     hopeCapsule:         "REPLACE_ME_GOOGLE_FORM_URL",
     teachingVideoRequest:"REPLACE_ME_GOOGLE_FORM_URL",
   },
