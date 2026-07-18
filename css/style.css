@@ -435,6 +435,10 @@ em { font-style: italic; }
 
 /* ── CAROUSEL (one image at a time · arrows · dots) ── */
 .carousel { position: relative; width: 100%; max-width: 430px; justify-self: center; }
+.carousel-note {
+  max-width: 430px; margin: 0.75rem auto 0; text-align: center;
+  font-size: 0.82rem; font-style: italic; color: var(--muted); line-height: 1.5;
+}
 .carousel__viewport {
   overflow: hidden; background: var(--white);
   border: 1px solid var(--line); border-radius: var(--radius);

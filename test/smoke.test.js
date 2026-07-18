@@ -85,6 +85,9 @@ console.log('\n[index.html]');
   ok(track.style.transform === 'translateX(-200%)', 'dot 3 jumps to slide 3');
   ok(car.querySelectorAll('.carousel__dot')[2].getAttribute('aria-current') === 'true', 'active dot exposes aria-current');
   ok(!d.body.innerHTML.includes('autoplay'), 'carousel has no autoplay');
+  const note = d.querySelector('.carousel-note');
+  ok(note && note.textContent.includes('display only') && note.textContent.includes("won't open anything"), 'carousel note explains QR codes are display-only dummies');
+  ok(note && note.parentElement.contains(car), 'QR note sits directly beneath the carousel');
 
   const svg = d.querySelector('.circle-figure svg');
   ok(svg.textContent.includes('WE ARE WITH YOU'), 'Circle of Love center includes WE ARE WITH YOU');
