@@ -65,7 +65,7 @@ const SITE = {
       // TODO: Replace carousel image 2 — overwrite assets/images/home-carousel-2.jpg
       {
         src: "assets/images/home-carousel-2.jpg",
-        alt: "WE ARE WITH YOU flyer for Ronald McDonald House featuring QR codes for letters for children and parents, cheerful music, and the Hope Capsule",
+        alt: "WE ARE WITH YOU flyer for Ronald McDonald House featuring One Message for You QR codes: With You messages, Melody Box music, Wish Pocket song requests, Bloom Bank resources, and the Hope Capsule",
         caption: "Ronald McDonald House",
       },
       // TODO: Replace carousel image 3 — overwrite assets/images/home-carousel-3.jpg
