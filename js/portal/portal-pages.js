@@ -389,7 +389,6 @@
           <ul class="hub-grid" data-hub-grid>
             ${cfg.portalOptions.map(hubOptionCard).join("")}
           </ul>
-          <img class="hub-flower hub-flower--left" src="${esc(Portal.rootUrl(cfg.portalDecor.flowersLeft))}" alt="" aria-hidden="true">
           <img class="hub-flower hub-flower--right" src="${esc(Portal.rootUrl(cfg.portalDecor.flowersRight))}" alt="" aria-hidden="true">
         </div>
         ${hubFooterMessage()}

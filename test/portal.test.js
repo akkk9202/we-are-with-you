@@ -345,8 +345,8 @@ console.log('\n[community/home.html · five-option hub]');
        return img && img.getAttribute('alt') === '' && img.getAttribute('src').startsWith('../assets/images/portal/');
      }), 'card illustrations are local, centralized assets with empty alt (decorative)');
   const decor = [...d.querySelectorAll('.hub-flower, .hub-smiley')];
-  ok(decor.length === 3 && decor.every((i) => i.getAttribute('alt') === '' && i.getAttribute('aria-hidden') === 'true'),
-     'decorative flowers + smiley are hidden from screen readers');
+  ok(decor.length === 2 && decor.every((i) => i.getAttribute('alt') === '' && i.getAttribute('aria-hidden') === 'true'),
+     'decorations (right flowers + smiley; left flowers removed by request) are hidden from screen readers');
   ok(d.body.textContent.includes('Thank you for being part of our community.')
      && d.body.textContent.includes('Wherever you are in your journey, we want you to know:')
      && d.body.textContent.includes('WE ARE WITH YOU.')

@@ -340,7 +340,6 @@ a.pitem__link:hover { border-color: var(--gold); transform: translateX(3px); }
    corners like the reference design at every width — never text. */
 .hub-grid-wrap { position: relative; }
 .hub-flower { position: absolute; pointer-events: none; user-select: none; z-index: 2; }
-.hub-flower--left  { left: -18px; top: 42%; width: clamp(64px, 11vw, 110px); }
 .hub-flower--right { right: -14px; bottom: -36px; width: clamp(66px, 12vw, 118px); }
 .hub-smiley { position: absolute; top: 4.4rem; right: 2px; width: clamp(34px, 6vw, 46px); }
 
