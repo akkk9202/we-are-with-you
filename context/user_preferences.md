@@ -18,6 +18,13 @@ overrides them.
 - **After editing, show the changed files and the exact diff** (`git diff`).
 - **Run available tests/checks** after changes and report the real result. If a check can't run
   (e.g., missing `jsdom`), install it transiently, run it, then clean up — and say so.
+- **Always end a task with a way to test it locally** (added Aug 2026). Every completed change
+  ships with concrete local-testing steps: which command to run (`npm run preview`,
+  `python3 test/preview.py`, or double-clicking `Preview Portal.command` for the portal;
+  `python3 -m http.server 8000` for the real site) and which URL/page to open to see the change.
+  If the change isn't covered by an existing local path, build or extend one (preview fixtures,
+  a harness, a sample page) as part of the task — don't hand over work that can only be
+  verified in production.
 
 ## Git & deploy
 

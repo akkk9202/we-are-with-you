@@ -31,11 +31,21 @@ const SITE = {
   },
 
   // ── Navigation (order matters) ───────────────────────────
-  // The "Programs" dropdown builds itself from js/partners.js —
-  // pathway names and order live there (name + order fields).
+  // The old "Programs" tab is now the Community Portal (community/).
+  // Its dropdown lists the six portal community pages. The legacy
+  // partner pages (partner.html?p=…) still exist for printed QR codes
+  // and are linked from the footer and from inside the portal.
   nav: [
     { label: "We Are With You", href: "index.html" },
-    { label: "Programs", label_ko: "프로그램", href: "programs.html", dropdown: "partners" },
+    { label: "Community Portal", label_ko: "커뮤니티 포털", href: "community/index.html", dropdown: [
+      { label: "Portal Home",           href: "community/home.html" },
+      { label: "City of Hope Atlanta",  href: "community/city-of-hope.html" },
+      { label: "Ronald McDonald House", href: "community/ronald-mcdonald-house.html" },
+      { label: "Northside NICU",        href: "community/northside-nicu.html" },
+      { label: "Senior Living",         href: "community/senior-living.html" },
+      { label: "Schools & Global",      href: "community/schools-global.html" },
+      { label: "Milal",                 href: "community/milal.html" },
+    ] },
     { label: "GYCO", href: "student-community.html" },
     { label: "NADO School", href: "learning.html" },
     { label: "Media", label_ko: "미디어", href: "media.html" },

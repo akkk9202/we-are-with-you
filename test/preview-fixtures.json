@@ -1,0 +1,502 @@
+{
+  "session": {
+    "user": {
+      "id": "u1",
+      "email": "sample@preview.local"
+    }
+  },
+  "tables": {
+    "communities": [
+      {
+        "id": "c1",
+        "name": "City of Hope Atlanta",
+        "slug": "city-of-hope",
+        "description": "Hope, courage, and music for patients and families.",
+        "image_url": "assets/logos/city-of-hope-atlanta.png",
+        "display_order": 1,
+        "is_active": true
+      },
+      {
+        "id": "c2",
+        "name": "Ronald McDonald House",
+        "slug": "ronald-mcdonald-house",
+        "description": "A home away from home for families.",
+        "image_url": "assets/logos/ronald-mcdonald-house.png",
+        "display_order": 2,
+        "is_active": true
+      },
+      {
+        "id": "c3",
+        "name": "Northside NICU",
+        "slug": "northside-nicu",
+        "description": "Gentle encouragement for the smallest fighters.",
+        "image_url": "assets/logos/northside-nicu.png",
+        "display_order": 3,
+        "is_active": true
+      },
+      {
+        "id": "c4",
+        "name": "Senior Living",
+        "slug": "senior-living",
+        "description": "Songs and memories with our seniors.",
+        "image_url": "assets/logos/senior-living.png",
+        "display_order": 4,
+        "is_active": true
+      },
+      {
+        "id": "c5",
+        "name": "Schools & Global",
+        "slug": "schools-global",
+        "description": "Learning and friendship across the world.",
+        "image_url": "",
+        "display_order": 5,
+        "is_active": true
+      },
+      {
+        "id": "c6",
+        "name": "Milal",
+        "slug": "milal",
+        "description": "Every ability, every voice, together.",
+        "image_url": "assets/logos/milal.png",
+        "display_order": 6,
+        "is_active": true
+      }
+    ],
+    "profiles": [
+      {
+        "id": "u1",
+        "full_name": "Sample Member",
+        "email": "sample@preview.local",
+        "account_type": "family_member",
+        "primary_community_id": "c2",
+        "role": "user",
+        "email_consent": true,
+        "is_disabled": false,
+        "created_at": "2026-07-01T12:00:00Z"
+      }
+    ],
+    "content": [
+      {
+        "id": "11111111-1111-4111-8111-111111111111",
+        "title": "Spring Concert Highlights (sample)",
+        "description": "Highlights from our spring visit.",
+        "content_type": "performance_video",
+        "video_url": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+        "image_url": null,
+        "body": null,
+        "language": "English",
+        "published_at": "2026-07-26T12:00:00Z",
+        "created_at": "2026-07-26T12:00:00Z",
+        "is_featured": true,
+        "is_public": false,
+        "is_published": true,
+        "content_communities": [
+          {
+            "community_id": "c2"
+          }
+        ]
+      },
+      {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "title": "Hallway Serenade (sample)",
+        "description": "A surprise mini-concert.",
+        "content_type": "performance_video",
+        "video_url": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+        "image_url": null,
+        "body": null,
+        "language": "English",
+        "published_at": "2026-07-18T12:00:00Z",
+        "created_at": "2026-07-18T12:00:00Z",
+        "is_featured": false,
+        "is_public": false,
+        "is_published": true,
+        "content_communities": [
+          {
+            "community_id": "c1"
+          },
+          {
+            "community_id": "c2"
+          }
+        ]
+      },
+      {
+        "id": "33333333-3333-4333-8333-333333333333",
+        "title": "You Raise Me Up — song performance (sample)",
+        "description": "Performed for the families we love.",
+        "content_type": "song_performance",
+        "video_url": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+        "image_url": null,
+        "body": null,
+        "language": "English",
+        "published_at": "2026-07-25T12:00:00Z",
+        "created_at": "2026-07-25T12:00:00Z",
+        "is_featured": false,
+        "is_public": false,
+        "is_published": true,
+        "content_communities": [
+          {
+            "community_id": "c2"
+          }
+        ]
+      },
+      {
+        "id": "44444444-4444-4444-8444-444444444444",
+        "title": "Lullaby for Quiet Evenings (sample)",
+        "description": "A gentle song for winding down.",
+        "content_type": "song_performance",
+        "video_url": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+        "image_url": null,
+        "body": null,
+        "language": "English",
+        "published_at": "2026-07-17T12:00:00Z",
+        "created_at": "2026-07-17T12:00:00Z",
+        "is_featured": false,
+        "is_public": false,
+        "is_published": true,
+        "content_communities": [
+          {
+            "community_id": "c3"
+          }
+        ]
+      },
+      {
+        "id": "55555555-5555-4555-8555-555555555555",
+        "title": "Gentle Breathing Basics (sample)",
+        "description": "A calming rhythm you can follow along.",
+        "content_type": "teaching_video",
+        "video_url": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+        "image_url": null,
+        "body": null,
+        "language": "English",
+        "published_at": "2026-07-24T12:00:00Z",
+        "created_at": "2026-07-24T12:00:00Z",
+        "is_featured": false,
+        "is_public": false,
+        "is_published": true,
+        "content_communities": [
+          {
+            "community_id": "c2"
+          }
+        ]
+      },
+      {
+        "id": "66666666-6666-4666-8666-666666666666",
+        "title": "First Steps on the Ukulele (sample)",
+        "description": "Three chords, one smile.",
+        "content_type": "teaching_video",
+        "video_url": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+        "image_url": null,
+        "body": null,
+        "language": "English",
+        "published_at": "2026-07-16T12:00:00Z",
+        "created_at": "2026-07-16T12:00:00Z",
+        "is_featured": false,
+        "is_public": false,
+        "is_published": true,
+        "content_communities": [
+          {
+            "community_id": "c5"
+          }
+        ]
+      },
+      {
+        "id": "77777777-7777-4777-8777-777777777777",
+        "title": "Hand Care Tips for Caregivers (sample)",
+        "description": "",
+        "content_type": "educational_resource",
+        "video_url": null,
+        "image_url": null,
+        "body": "Small comforts make a big difference.\n\nWash gently, rest often, and be kind to yourself, too.",
+        "language": "English",
+        "published_at": "2026-07-23T12:00:00Z",
+        "created_at": "2026-07-23T12:00:00Z",
+        "is_featured": false,
+        "is_public": false,
+        "is_published": true,
+        "content_communities": [
+          {
+            "community_id": "c2"
+          }
+        ]
+      },
+      {
+        "id": "88888888-8888-4888-8888-888888888888",
+        "title": "A Letter of Courage (sample)",
+        "description": "",
+        "content_type": "letter",
+        "video_url": null,
+        "image_url": null,
+        "body": "Dear friend,\n\nYou are doing better than you know. We are with you.",
+        "language": "English",
+        "published_at": "2026-07-22T12:00:00Z",
+        "created_at": "2026-07-22T12:00:00Z",
+        "is_featured": false,
+        "is_public": false,
+        "is_published": true,
+        "content_communities": [
+          {
+            "community_id": "c2"
+          }
+        ]
+      },
+      {
+        "id": "99999999-9999-4999-8999-999999999999",
+        "title": "One Message for You (sample)",
+        "description": "",
+        "content_type": "encouraging_message",
+        "video_url": null,
+        "image_url": null,
+        "body": "Even here, even now — you are not alone.",
+        "language": "English",
+        "published_at": "2026-07-21T12:00:00Z",
+        "created_at": "2026-07-21T12:00:00Z",
+        "is_featured": false,
+        "is_public": false,
+        "is_published": true,
+        "content_communities": [
+          {
+            "community_id": "c2"
+          }
+        ]
+      },
+      {
+        "id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "title": "A Story of Spring (sample)",
+        "description": "",
+        "content_type": "community_story",
+        "video_url": null,
+        "image_url": null,
+        "body": "It began with one song in a hallway…",
+        "language": "English",
+        "published_at": "2026-07-20T12:00:00Z",
+        "created_at": "2026-07-20T12:00:00Z",
+        "is_featured": true,
+        "is_public": false,
+        "is_published": true,
+        "content_communities": [
+          {
+            "community_id": "c2"
+          }
+        ]
+      },
+      {
+        "id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+        "title": "The Ukulele Club That Grew (sample)",
+        "description": "",
+        "content_type": "community_story",
+        "video_url": null,
+        "image_url": null,
+        "body": "Four students, six ukuleles, endless joy.",
+        "language": "English",
+        "published_at": "2026-07-15T12:00:00Z",
+        "created_at": "2026-07-15T12:00:00Z",
+        "is_featured": false,
+        "is_public": false,
+        "is_published": true,
+        "content_communities": [
+          {
+            "community_id": "c2"
+          }
+        ]
+      },
+      {
+        "id": "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+        "title": "August Program Update (sample)",
+        "description": "",
+        "content_type": "community_update",
+        "video_url": null,
+        "image_url": null,
+        "body": "New songs and new visits are coming this month.",
+        "language": "English",
+        "published_at": "2026-07-19T12:00:00Z",
+        "created_at": "2026-07-19T12:00:00Z",
+        "is_featured": false,
+        "is_public": false,
+        "is_published": true,
+        "content_communities": [
+          {
+            "community_id": "c2"
+          }
+        ]
+      },
+      {
+        "id": "dddddddd-dddd-4ddd-8ddd-dddddddddddd",
+        "title": "Fall Visit Schedule Announced (sample)",
+        "description": "",
+        "content_type": "program_announcement",
+        "video_url": null,
+        "image_url": null,
+        "body": null,
+        "language": "English",
+        "published_at": "2026-07-14T12:00:00Z",
+        "created_at": "2026-07-14T12:00:00Z",
+        "is_featured": false,
+        "is_public": false,
+        "is_published": true,
+        "content_communities": [
+          {
+            "community_id": "c2"
+          }
+        ]
+      },
+      {
+        "id": "eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee",
+        "title": "Family Music Afternoon (sample)",
+        "description": "Join us for an afternoon of songs and snacks.",
+        "content_type": "event",
+        "video_url": null,
+        "image_url": null,
+        "body": null,
+        "language": "English",
+        "published_at": "2026-07-13T12:00:00Z",
+        "created_at": "2026-07-13T12:00:00Z",
+        "is_featured": false,
+        "is_public": false,
+        "is_published": true,
+        "content_communities": [
+          {
+            "community_id": "c2"
+          }
+        ]
+      }
+    ],
+    "video_progress": [
+      {
+        "user_id": "u1",
+        "content_id": "11111111-1111-4111-8111-111111111111",
+        "progress_seconds": 120,
+        "total_seconds": 300,
+        "completion_percentage": 40,
+        "completed": false,
+        "last_watched_at": "2026-07-28T12:00:00Z"
+      }
+    ],
+    "letters": [
+      {
+        "id": "ffffffff-ffff-4fff-8fff-ffffffffffff",
+        "user_id": "u2",
+        "title": "To anyone waiting (sample)",
+        "body": "Hold on — brighter days are coming. From all of us, with love.",
+        "recipient_type": "patient",
+        "status": "approved",
+        "is_public": true,
+        "community_id": "c2",
+        "reviewed_at": "2026-07-18T12:00:00Z",
+        "created_at": "2026-07-17T12:00:00Z",
+        "updated_at": "2026-07-18T12:00:00Z"
+      },
+      {
+        "id": "99999999-9999-4999-8999-999999999999",
+        "user_id": "u1",
+        "title": "A note of courage (sample)",
+        "body": "You are stronger than this moment.",
+        "recipient_type": "parent",
+        "status": "under_review",
+        "is_public": false,
+        "community_id": "c2",
+        "created_at": "2026-07-27T12:00:00Z",
+        "updated_at": "2026-07-27T12:00:00Z"
+      }
+    ],
+    "activity_requests": [
+      {
+        "id": "22222222-2222-4222-8222-222222222222",
+        "user_id": "u1",
+        "title": "Amazing Grace",
+        "request_type": "song",
+        "status": "submitted",
+        "community_id": "c4",
+        "created_at": "2026-07-26T12:00:00Z",
+        "updated_at": "2026-07-26T12:00:00Z"
+      }
+    ],
+    "activity_definitions": [
+      {
+        "id": "act1",
+        "name": "Simple Rhythm Activity",
+        "slug": "simple-rhythm",
+        "description": "Clap along to an easy beat.",
+        "activity_type": "rhythm_activity",
+        "is_active": true,
+        "created_at": "2026-07-02T12:00:00Z"
+      },
+      {
+        "id": "act2",
+        "name": "One-Minute Breathing",
+        "slug": "one-minute-breathing",
+        "description": "A calm minute, whenever you need it.",
+        "activity_type": "breathing_activity",
+        "is_active": true,
+        "created_at": "2026-07-03T12:00:00Z"
+      }
+    ],
+    "activity_communities": [
+      {
+        "community_id": "c2",
+        "activity_definitions": {
+          "id": "act1",
+          "name": "Simple Rhythm Activity",
+          "slug": "simple-rhythm",
+          "description": "Clap along to an easy beat.",
+          "activity_type": "rhythm_activity",
+          "is_active": true
+        }
+      },
+      {
+        "community_id": "c2",
+        "activity_definitions": {
+          "id": "act2",
+          "name": "One-Minute Breathing",
+          "slug": "one-minute-breathing",
+          "description": "A calm minute, whenever you need it.",
+          "activity_type": "breathing_activity",
+          "is_active": true
+        }
+      }
+    ],
+    "activity_submissions": [],
+    "activity_events": [
+      {
+        "id": 1,
+        "user_id": "u1",
+        "event_type": "portal_home_viewed",
+        "community_id": "c2",
+        "created_at": "2026-07-28T12:00:00Z",
+        "metadata": {}
+      },
+      {
+        "id": 2,
+        "user_id": "u1",
+        "event_type": "video_progress_25",
+        "community_id": null,
+        "content_id": "11111111-1111-4111-8111-111111111111",
+        "created_at": "2026-07-28T12:00:00Z",
+        "metadata": {}
+      },
+      {
+        "id": 3,
+        "user_id": "u1",
+        "event_type": "letter_submitted",
+        "community_id": "c2",
+        "created_at": "2026-07-27T12:00:00Z",
+        "metadata": {}
+      },
+      {
+        "id": 4,
+        "user_id": "u1",
+        "event_type": "song_requested",
+        "community_id": "c4",
+        "created_at": "2026-07-26T12:00:00Z",
+        "metadata": {}
+      },
+      {
+        "id": 5,
+        "user_id": "u1",
+        "event_type": "logged_in",
+        "community_id": "c2",
+        "created_at": "2026-07-26T12:00:00Z",
+        "metadata": {}
+      }
+    ]
+  }
+}

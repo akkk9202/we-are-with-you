@@ -1,4 +1,11 @@
 {
+  "scripts": {
+    "test": "node test/smoke.test.js && node test/portal.test.js",
+    "test:site": "node test/smoke.test.js",
+    "test:portal": "node test/portal.test.js",
+    "test:live": "node test/portal-live-check.js",
+    "preview": "node test/preview.js"
+  },
   "dependencies": {
     "jsdom": "^29.1.1"
   }

@@ -7,14 +7,16 @@ into hospitals, family spaces, senior communities, schools, and global partner c
 
 ## Structure
 - **WE ARE WITH YOU** — the public front door and platform (this site)
-- **Programs** — partner-specific landing pages (City of Hope Atlanta (CTCA), Ronald McDonald House, Northside Intensive Care Unit (NICU), Senior Living, The America Wheat Mission (Milal), Schools & Global Communities), all generated from one template
+- **Community Portal** (`community/`) — the members' area that replaced the Programs tab: accounts, videos with saved progress, letters, song/video requests, activities, and an admin dashboard (`admin/community.html`). Backed by Supabase (auth + Postgres with Row Level Security). See `supabase/PORTAL-SETUP.md`.
+- **Partner pages** (`partner.html?p=…`) — the original partner landing pages, kept intact because printed QR codes point at them; they're linked from the footer, the programs redirect stub, and inside the portal
 - **GYCO** — More Than Music: the student growth community behind the work
 - **NADO School** — Become a School: the learning philosophy behind student growth
 - **NOS** — the operating system that keeps every partner page personal but connected
 
 ## Tech
-Plain HTML/CSS/JS. No framework, no build step, no dependencies.
-Nav + footer are injected from `js/config.js`; pathway cards, the nav dropdown, the footer program links, and all partner pages render from `js/partners.js` (single source for names, order, and logos). Homepage images + the featured press card are configured in `js/config.js`.
+Plain HTML/CSS/JS — no framework, no build step. The public site has zero runtime dependencies.
+Nav + footer are injected from `js/config.js`; pathway cards and all partner pages render from `js/partners.js`. Homepage images + the featured press card are configured in `js/config.js`.
+The Community Portal (`community/`, `admin/`, `js/portal/`, `css/portal.css`) uses a vendored copy of `@supabase/supabase-js` (`js/vendor/supabase.js`) against a Supabase project; all authorization is enforced server-side by Row Level Security (`supabase/migrations/`).
 
 ## Editing
 See **EDITING-GUIDE.md** — contact info, form links, nav, and all partner content
@@ -24,6 +26,15 @@ are centralized in `js/config.js` and `js/partners.js`.
 ```bash
 python3 -m http.server 8000   # then open http://localhost:8000
 ```
+
+## Tests
+```bash
+npm install          # jsdom (test-only; node_modules is gitignored)
+npm test             # 201 site DOM tests + 96 portal DOM tests
+npm run test:live    # live checks against the Supabase project (after setup)
+```
+`supabase/rls_verification.sql` additionally verifies all 66 security rules
+inside a rolled-back transaction (see `supabase/PORTAL-SETUP.md`).
 
 ## Deploy
 Push to `main` — GitHub Pages publishes automatically.

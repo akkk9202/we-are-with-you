@@ -53,11 +53,15 @@ console.log('\n[index.html]');
   ok(navLabels[0] === 'We Are With You', 'first nav tab renamed "We Are With You" (was Home)');
   ok(!navLabels.includes('Home') && !navLabels.includes('About'), 'Home and About tabs removed (About merged into homepage)');
 
+  ok(navLabels.includes('Community Portal') && !navLabels.includes('Programs'),
+     'nav: Community Portal replaces the Programs tab');
   const dd = [...d.querySelectorAll('.nav__dropdown a')].map(a => a.textContent.trim());
-  ok(JSON.stringify(dd) === JSON.stringify(EXPECTED_ORDER), 'Programs dropdown: 6 renamed pathways in required order');
+  ok(JSON.stringify(dd) === JSON.stringify(['Portal Home', 'City of Hope Atlanta', 'Ronald McDonald House',
+     'Northside NICU', 'Senior Living', 'Schools & Global', 'Milal']),
+     'Community Portal dropdown: Portal Home + the six portal communities');
   const ddHrefs = [...d.querySelectorAll('.nav__dropdown a')].map(a => a.getAttribute('href'));
-  ok(ddHrefs[0] === 'partner.html?p=cancer-care' && ddHrefs[4] === 'partner.html?p=disability',
-     'dropdown keeps legacy slugs (cancer-care, disability) so old QR codes work');
+  ok(ddHrefs[1] === 'community/city-of-hope.html' && ddHrefs[6] === 'community/milal.html',
+     'dropdown links point into the Community Portal');
 
   const cards = [...d.querySelectorAll('[data-pathway-cards] .card--pathway h3')].map(h => h.textContent.trim());
   ok(JSON.stringify(cards) === JSON.stringify(EXPECTED_ORDER), 'homepage pathway cards: correct names + order');
@@ -125,14 +129,15 @@ console.log('\n[index.html]');
   ok(!/Cancer Care(?!.*CTCA)/.test([...d.querySelectorAll('h3')].map(h => h.textContent).join('|')), 'no bare "Cancer Care" card heading remains');
 }
 
-/* ── 2. PROGRAMS PAGE ── */
+/* ── 2. PROGRAMS PAGE → COMMUNITY PORTAL REDIRECT ── */
 console.log('\n[programs.html]');
 {
-  const dom = loadPage('programs.html', 'https://x.test/programs.html');
-  const d = dom.window.document;
-  const cards = [...d.querySelectorAll('[data-pathway-cards] .card--pathway h3')].map(h => h.textContent.trim());
-  ok(JSON.stringify(cards) === JSON.stringify(EXPECTED_ORDER), 'Programs page cards: correct names + order');
-  ok(d.body.textContent.includes('Your community could be next'), 'future-partners card preserved');
+  const html = fs.readFileSync(path.join(ROOT, 'programs.html'), 'utf8');
+  ok(html.includes('http-equiv="refresh"') && html.includes('community/index.html'),
+     'programs.html now redirects into the Community Portal');
+  for (const slug of ['cancer-care', 'ronald-mcdonald-house', 'nicu', 'senior-living', 'disability', 'schools-global']) {
+    ok(html.includes(`partner.html?p=${slug}`), `programs stub keeps a fallback link to partner "${slug}" (QR codes safe)`);
+  }
 }
 
 /* ── 3. PARTNER PAGES (all six slugs) ── */
