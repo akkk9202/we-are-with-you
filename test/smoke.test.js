@@ -307,12 +307,17 @@ console.log('\n[media.html]');
   const perf = galleryImgs.filter(i => i.getAttribute('src').includes('media-performances-'));
   const outreach = galleryImgs.filter(i => i.getAttribute('src').includes('media-outreach-'));
   const teaching = galleryImgs.filter(i => i.getAttribute('src').includes('media-teaching-'));
+  const wawyCoh = galleryImgs.filter(i => i.getAttribute('src').includes('media-wawy-cityofhope-'));
+  const wawyRmh = galleryImgs.filter(i => i.getAttribute('src').includes('media-wawy-rmh-'));
   ok(perf.length === 3, 'Performances & rehearsals gallery has 3 real photos');
   ok(outreach.length === 3, 'Where the music travels gallery has 3 real photos');
   ok(teaching.length === 3, 'Student teaching gallery has 3 real photos');
+  ok(wawyCoh.length === 3, 'WAWY outreach — City of Hope Atlanta gallery has 3 real photos');
+  ok(wawyRmh.length === 7, 'WAWY outreach — Ronald McDonald House gallery has 7 real photos');
+  ok(d.body.textContent.includes('City of Hope Atlanta') && d.body.textContent.includes('Ronald McDonald House Charities of Atlanta'), 'WAWY outreach sections name both partner communities');
   ok(galleryImgs.every(i => i.alt && i.alt.length > 10), 'every gallery photo has descriptive alt text');
   ok(galleryImgs.every(i => i.getAttribute('loading') === 'lazy'), 'gallery photos lazy-load');
-  for (const img of [...perf, ...outreach, ...teaching]) {
+  for (const img of [...perf, ...outreach, ...teaching, ...wawyCoh, ...wawyRmh]) {
     const src = img.getAttribute('src');
     ok(fs.existsSync(path.join(ROOT, src)), `image file exists on disk: ${src}`);
   }
