@@ -82,6 +82,13 @@ Main page copy lives in the HTML files themselves — each section is labeled wi
 2. In Media galleries, replace `<div class="media-item">♪</div>` with `<figure class="media-item"><img src="assets/images/photo.jpg" alt="..." /></figure>`.
 Use JPGs under ~400KB so pages stay fast.
 
+### Media page: the "Most recent" pattern
+`media.html` opens with a **Most recent** section (eyebrow says "Most recent") that always shows the newest event, above Featured press. To add a new event:
+1. Copy the whole Most recent `<section>` as your template and fill it with the new photos (each venue gets an `<h3 class="media-sub">` + one-line intro + `.media-grid`).
+2. On the old Most recent section, change the eyebrow from `Most recent` to a season label (e.g. `Summer 2026`) and move that section down to the top of the **EVENT ARCHIVE** (marked with an HTML comment, right below Featured press).
+3. Keep section backgrounds alternating down the page: plain → `section--mist` → plain → …
+The full checklist also lives in an HTML comment at the top of the Most recent section itself.
+
 ## 8. Add videos
 Paste a YouTube embed where you want it:
 ```html

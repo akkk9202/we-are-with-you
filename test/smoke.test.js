@@ -315,6 +315,18 @@ console.log('\n[media.html]');
   ok(wawyCoh.length === 3, 'WAWY outreach — City of Hope Atlanta gallery has 3 real photos');
   ok(wawyRmh.length === 7, 'WAWY outreach — Ronald McDonald House gallery has 7 real photos');
   ok(d.body.textContent.includes('City of Hope Atlanta') && d.body.textContent.includes('Ronald McDonald House Charities of Atlanta'), 'WAWY outreach sections name both partner communities');
+
+  /* Most recent — combined WAWY section sits at the very top, above Featured press */
+  const mainSections = [...d.querySelectorAll('main > section')];
+  const recentSec = mainSections[1];
+  ok(mainSections[0].classList.contains('page-hero'), 'page hero is the first section');
+  ok(recentSec.querySelector('.eyebrow')?.textContent.trim() === 'Most recent', 'section right after the hero is labeled "Most recent"');
+  ok(recentSec.querySelectorAll('img[src*="media-wawy-"]').length === 10, 'Most recent section holds all 10 WAWY photos (3 CoH + 7 RMH)');
+  const subHeads = [...recentSec.querySelectorAll('h3.media-sub')].map(x => x.textContent.trim());
+  ok(subHeads.join('|') === 'City of Hope Atlanta|Ronald McDonald House Charities of Atlanta', 'Most recent sub-galleries: City of Hope first, then Ronald McDonald House');
+  const pressSec = card.closest('section');
+  ok(mainSections.indexOf(pressSec) === 2, 'Featured press moved below Most recent (second content section)');
+  ok(!recentSec.classList.contains('section--mist') && pressSec.classList.contains('section--mist'), 'backgrounds alternate: Most recent plain, Featured press mist');
   ok(galleryImgs.every(i => i.alt && i.alt.length > 10), 'every gallery photo has descriptive alt text');
   ok(galleryImgs.every(i => i.getAttribute('loading') === 'lazy'), 'gallery photos lazy-load');
   for (const img of [...perf, ...outreach, ...teaching, ...wawyCoh, ...wawyRmh]) {

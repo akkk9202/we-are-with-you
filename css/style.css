@@ -305,6 +305,9 @@ em { font-style: italic; }
 }
 .media-item img { width: 100%; height: 100%; object-fit: cover; }
 .media-item figcaption { display: none; }
+.media-sub { margin-top: var(--space-lg); }
+.section-head + .media-sub { margin-top: 0; }
+.media-sub + p { color: var(--muted); margin: 0.4rem 0 var(--space-sm); max-width: 720px; }
 
 /* ── CTA BAND ── */
 .cta-band { text-align: center; }
