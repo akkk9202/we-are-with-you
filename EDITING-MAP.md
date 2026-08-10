@@ -96,6 +96,7 @@ data-driven.
 | Page file | What it is |
 |---|---|
 | `index.html` | Homepage (hero, invitation, carousel) |
+| `our-philosophy.html` | Full philosophy narrative (content moved off the compact homepage — nothing deleted) |
 | `programs.html` | Programs / pathways overview |
 | `partner.html` | Renders a single partner via `?p=SLUG` |
 | `learning.html` | NADO School / learning |

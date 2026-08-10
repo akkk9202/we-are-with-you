@@ -377,7 +377,11 @@ console.log('\n[index.html · philosophy]');
   const wawy = d.getElementById('wawy');
   ok(wawy && wawy.classList.contains('hero') && wawy.textContent.includes('Welcome to'), '#wawy anchor lands on the original Welcome hero');
   const secs = [...d.querySelectorAll('main > section')];
-  ok(secs.findIndex(s => s.id === 'closing-loop') < secs.findIndex(s => s.id === 'wawy'), 'philosophy sections come first; original home content trails after');
+  ok(secs.findIndex(s => s.id === 'one-loop') !== -1 &&
+     secs.findIndex(s => s.id === 'one-loop') < secs.findIndex(s => s.id === 'wawy'), 'philosophy section comes first; original home content trails after');
+  ok(secs.length <= 10, `compact homepage: at most 10 sections (found ${secs.length})`);
+  ok(!d.getElementById('closing-loop') && !d.getElementById('different-purposes') && !d.querySelector('.tri-circle'),
+     'duplicate philosophy sections removed (tri-circles + closing loop band merged into #one-loop)');
 
   const merge = d.querySelector('.nado-we-figure svg');
   ok(merge && merge.querySelectorAll('text').length === 3 && merge.textContent.includes('WE'), 'NADO + NADO → WE merge figure (two NADOs and one WE)');
@@ -392,14 +396,69 @@ console.log('\n[index.html · philosophy]');
 
   const pillars = [...d.querySelectorAll('.pillar h3')].map(h => h.textContent.trim());
   ok(JSON.stringify(pillars) === JSON.stringify(['NADO School', 'GYCO', 'WE ARE WITH YOU']), 'three expression explainers under the diagram');
-  const tri = [...d.querySelectorAll('.tri-circle h3')].map(h => h.textContent.trim());
-  ok(JSON.stringify(tri) === JSON.stringify(['NADO School', 'GYCO', 'WE ARE WITH YOU']), 'Different Purposes: three connected circles');
+  const loop = d.getElementById('one-loop');
+  ok(loop && loop.contains(merge) && loop.contains(eco) && loop.contains(d.querySelector('.pillar')),
+     'merge figure, ecosystem loop, and pillars all live in the single #one-loop section');
+  ok(loop.textContent.includes('Every ending becomes another beginning.'), 'ending statement kept in the merged section');
+  const loopBtns = [...loop.querySelectorAll('.btn')].map(b => [b.textContent.trim(), b.getAttribute('href')]);
+  ok(loopBtns.some(([t, h]) => t === 'Explore NADO School' && h === 'learning.html') &&
+     loopBtns.some(([t, h]) => t === 'Explore GYCO' && h === 'student-community.html'),
+     'merged section links out to NADO School + GYCO');
+}
 
+/* ── 8c. OUR PHILOSOPHY PAGE (restored long-form content) ── */
+console.log('\n[our-philosophy.html]');
+{
+  const dom = loadPage('our-philosophy.html', 'https://x.test/our-philosophy.html');
+  const d = dom.window.document;
+  ok(d.querySelector('.page-hero h1').textContent.trim() === 'Our Philosophy', 'philosophy page hero');
+  const tri = [...d.querySelectorAll('.tri-circle h3')].map(h => h.textContent.trim());
+  ok(JSON.stringify(tri) === JSON.stringify(['NADO School', 'GYCO', 'WE ARE WITH YOU']), 'tri-circles restored: three roles, one philosophy');
   const closing = [...d.querySelectorAll('#closing-loop .journey__node')].map(n => n.textContent.trim());
-  ok(JSON.stringify(closing) === JSON.stringify(['NADO', 'GYCO', 'WE ARE WITH YOU', 'New Stories', 'NADO Again']), 'closing vertical flow: NADO → … → NADO Again');
-  ok(d.body.textContent.includes('Every Ending Becomes Another Beginning.'), 'ending statement present');
-  const loopLink = [...d.querySelectorAll('#closing-loop .journey__node')].find(n => n.textContent.trim() === 'WE ARE WITH YOU');
-  ok(loopLink && loopLink.getAttribute('href') === '#wawy', 'closing loop WE ARE WITH YOU node points to #wawy (no longer index.html)');
+  ok(JSON.stringify(closing) === JSON.stringify(['NADO', 'GYCO', 'WE ARE WITH YOU', 'New Stories', 'NADO Again']), 'vertical loop restored: NADO → … → NADO Again');
+  ok(d.body.textContent.includes('Every Ending Becomes Another Beginning.'), 'ending statement restored');
+  ok(d.body.textContent.includes('One Shared Template.'), 'platform model restored');
+  ok(d.querySelectorAll('.check-list li').length === 11, 'the 11 partner-page ingredients restored');
+  ok([...d.querySelectorAll('.flow')].some(f => f.querySelectorAll('.flow__item').length === 8), 'Circle of Love 8-step flow restored');
+  ok([...d.querySelectorAll('.card h3')].some(h => h.textContent.includes('Lessons that travel')), 'One Message example cards restored');
+  ok(d.body.textContent.includes('it will not be the last'), 'GYCO "not the last" line restored');
+  ok(d.querySelector('.nado-we-figure svg'), 'NADO + NADO = WE figure present');
+  ok(d.querySelector('[data-home-invitation] img'), 'invitation figure hydrates on the philosophy page');
+  const foot = [...d.querySelectorAll('.footer__col a')].map(a => a.getAttribute('href'));
+  ok(foot.includes('our-philosophy.html'), 'footer links to Our Philosophy site-wide');
+}
+{
+  const home = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  ok(home.includes('href="our-philosophy.html"'), 'homepage philosophy band links to the full philosophy page');
+}
+
+/* ── 8b. WORD BUDGETS (keep the public site compact) ──
+   Counts the visible words authored in each page's raw HTML
+   (scripts/styles/comments/attributes stripped). If a budget
+   trips, trim copy — don't raise the cap without a reason. */
+console.log('\n[word budgets]');
+{
+  const visibleWords = file => {
+    let h = fs.readFileSync(path.join(ROOT, file), 'utf8');
+    h = h.replace(/<script[\s\S]*?<\/script>/gi, ' ')
+         .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+         .replace(/<!--[\s\S]*?-->/g, ' ')
+         .replace(/<[^>]+>/g, ' ');
+    return h.split(/\s+/).filter(Boolean).length;
+  };
+  for (const [file, cap] of [
+    ['index.html', 700],
+    ['student-community.html', 700],
+    ['learning.html', 500],
+    ['hope-capsule.html', 260],
+    ['one-message-for-you.html', 250],
+    ['join.html', 220],
+    ['contact.html', 260],
+    ['our-philosophy.html', 1600],   // the complete archive of content compacted off other pages — long by design
+  ]) {
+    const n = visibleWords(file);
+    ok(n <= cap, `${file} stays compact: ${n} words (budget ${cap})`);
+  }
 }
 
 /* ── 9. REDIRECT STUBS + SLUG INTEGRITY ── */

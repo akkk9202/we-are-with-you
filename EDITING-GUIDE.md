@@ -149,8 +149,15 @@ js/site.js                Machinery (nav/footer/render) — rarely touch
 *.html redirect stubs     Old URLs → new pages (keep for old QR codes)
 ```
 
+## 12b. The design system
+`DESIGN.md` defines the visual rules (typography scale, navy/gold usage, spacing,
+button and card styles, radius, motion). Follow it when adding sections — in
+particular: no gradients or drop shadows, hairline borders, sentence-case
+buttons, and left-aligned section heads. Do not rename tokens in `css/style.css`
+(the Community Portal layers on them).
+
 ## 13. Run the tests
-80 automated checks cover the nav, pathway names/order, logos, the homepage carousel, the Circle of Love, all six partner pages, and the Media press card:
+228 automated checks cover the nav, pathway names/order, logos, the homepage carousel, the Circle of Love, all six partner pages, the Media press card, and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
 ```bash
 npm install jsdom   # once
 node test/smoke.test.js
