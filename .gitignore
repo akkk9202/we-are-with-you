@@ -4,3 +4,4 @@ node_modules/
 .DS_Store
 _to_delete/
 .claude/
+__pycache__/
