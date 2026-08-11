@@ -129,11 +129,10 @@
     const allHtml = [lettersHtml, requestsHtml, subsHtml, videosHtml].filter(Boolean).join("");
 
     el.innerHTML = `
-      <section class="phome-hero">
-        <div class="eyebrow">Community Portal</div>
+      <header class="hub-head">
         <h1>My Activity</h1>
-        <p class="phome-hero__sub">Everything you've watched, written, requested, and completed — with the current status of each submission.</p>
-      </section>
+        <p>Things you've watched, written, requested, and completed — with the status of each.</p>
+      </header>
       <div class="pfilterbar" role="toolbar" aria-label="Filter your activity">
         ${tabs.map((t, i) => `<button type="button" class="pfilter${i === 0 ? " is-active" : ""}"
             data-tab="${t.key}" aria-pressed="${i === 0 ? "true" : "false"}">${esc(t.label)}</button>`).join("")}
@@ -287,11 +286,10 @@
     const typeLabel = (cfg.accountTypes.find((t) => t.value === p.account_type) || {}).label || p.account_type;
 
     el.innerHTML = `
-      <section class="phome-hero">
-        <div class="eyebrow">Community Portal</div>
-        <h1>Profile Settings</h1>
-        <p class="phome-hero__sub">Member since ${esc(fmtDate(p.created_at))} · ${esc(p.email || "")}</p>
-      </section>
+      <header class="hub-head">
+        <h1>Profile</h1>
+        <p>Member since ${esc(fmtDate(p.created_at))} · ${esc(p.email || "")}</p>
+      </header>
 
       <section class="psection pprofile-grid">
         <div class="card pform-card">
@@ -431,9 +429,8 @@
 
     el.innerHTML = `
       <section class="pauth-card pauth-card--wide">
-        <div class="eyebrow">Community Portal</div>
-        <h1 class="pauth-card__title">${draft ? "Continue your letter" : "Write a Letter"}</h1>
-        <p>One kind message can change someone's day. Letters are reviewed by the GYCO team before delivery.</p>
+        <h1 class="pauth-card__title">${draft ? "Continue your letter" : "Write a letter"}</h1>
+        <p>Letters are reviewed by the GYCO team before they are delivered.</p>
         <div class="pnotice pnotice--info">${esc(cfg.privacyNote)}</div>
         <form novalidate data-letter-form>
           <div class="pnotice pnotice--bad" data-form-errors hidden tabindex="-1"></div>
@@ -510,7 +507,7 @@
         return null;
       },
       successTitle: "Your letter is on its way",
-      successText: "Thank you for sharing encouragement. The GYCO team will review your letter, and you can follow its status in My Activity.",
+      successText: "The GYCO team will review your letter. You can follow its status in My Activity.",
       successActions: `<a class="btn btn--gold btn--sm" href="activity.html">View status</a>
         <a class="btn btn--ink btn--sm" href="write-letter.html">Write another</a>`,
     });
@@ -535,8 +532,7 @@
     const el = root();
     el.innerHTML = `
       <section class="pauth-card pauth-card--wide">
-        <div class="eyebrow">Community Portal</div>
-        <h1 class="pauth-card__title">Request to Receive a Letter</h1>
+        <h1 class="pauth-card__title">Request a letter</h1>
         <p>Ask for an encouraging letter — for yourself, or for someone you care about.</p>
         <div class="pnotice pnotice--info">${esc(cfg.privacyNote)}</div>
         <form novalidate data-req-form>
@@ -608,7 +604,7 @@
         return null;
       },
       successTitle: "Letter request received",
-      successText: "The GYCO team will prepare a letter with care. Follow its status anytime in My Activity.",
+      successText: "The GYCO team will prepare a letter. Follow its status anytime in My Activity.",
       successActions: `<a class="btn btn--gold btn--sm" href="activity.html">View status</a>
         <a class="btn btn--ink btn--sm" href="home.html">Portal home</a>`,
     });
@@ -622,8 +618,7 @@
     const el = root();
     el.innerHTML = `
       <section class="pauth-card pauth-card--wide">
-        <div class="eyebrow">Community Portal</div>
-        <h1 class="pauth-card__title">Request a Video</h1>
+        <h1 class="pauth-card__title">Request a video</h1>
         <p>Ask GYCO students to create a teaching video, performance, or message of encouragement.</p>
         <form novalidate data-req-form>
           <div class="pnotice pnotice--bad" data-form-errors hidden tabindex="-1"></div>
@@ -705,8 +700,7 @@
     const el = root();
     el.innerHTML = `
       <section class="pauth-card pauth-card--wide">
-        <div class="eyebrow">Community Portal</div>
-        <h1 class="pauth-card__title">Request a Song</h1>
+        <h1 class="pauth-card__title">Request a song</h1>
         <p>Request a meaningful song for yourself or a loved one. When possible, GYCO students prepare it as a live or recorded performance.</p>
         <form novalidate data-req-form>
           <div class="pnotice pnotice--bad" data-form-errors hidden tabindex="-1"></div>
@@ -780,7 +774,7 @@
         return null;
       },
       successTitle: "Song request received",
-      successText: "Thank you — music means more when it's asked for. Follow the status of your request in My Activity.",
+      successText: "Follow the status of your request in My Activity.",
       successActions: `<a class="btn btn--gold btn--sm" href="activity.html">View status</a>
         <a class="btn btn--ink btn--sm" href="home.html">Portal home</a>`,
     });
@@ -815,7 +809,6 @@
 
     el.innerHTML = `
       <section class="pauth-card pauth-card--wide">
-        <div class="eyebrow">Community Portal · Activity</div>
         <h1 class="pauth-card__title">${esc(act.name)}</h1>
         ${act.description ? `<p>${esc(act.description)}</p>` : ""}
         ${act.instructions ? `<div class="pnotice pnotice--info">${esc(act.instructions)}</div>` : ""}
@@ -834,7 +827,7 @@
               <label for="af-reflection">${esc(conf.reflection)}</label>
               <textarea class="pinput ptextarea" id="af-reflection" name="f_reflection" rows="3" maxlength="2000"></textarea>
             </div>` : ""}
-          <button class="btn btn--gold" type="submit">I did this activity ✓</button>
+          <button class="btn btn--gold" type="submit">Mark as done</button>
         </form>
       </section>`;
 
@@ -854,8 +847,8 @@
         if (e2) throw e2;
         return null;
       },
-      successTitle: "Activity completed — well done!",
-      successText: "Small moments of participation keep the Circle of Love moving. It's recorded in My Activity.",
+      successTitle: "Activity completed",
+      successText: "It's recorded in My Activity.",
       successActions: `<a class="btn btn--gold btn--sm" href="activity.html">My Activity</a>
         <a class="btn btn--ink btn--sm" href="home.html">Portal home</a>`,
     });

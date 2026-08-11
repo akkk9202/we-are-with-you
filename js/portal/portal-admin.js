@@ -124,8 +124,7 @@
     ];
     el.innerHTML = `
       <section class="phome-hero">
-        <div class="eyebrow">Community Portal · Administration</div>
-        <h1>Admin Dashboard</h1>
+        <h1>Admin</h1>
         <p class="phome-hero__sub">Signed in as ${esc(p.full_name)} (administrator)</p>
       </section>
       <div class="pfilterbar" role="tablist" aria-label="Admin sections">

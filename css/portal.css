@@ -5,11 +5,6 @@
    Nothing in here changes the public website's styling.
    ============================================================ */
 
-/* Fonts used only by the portal hub (rounded display + handwritten).
-   Loaded here — after this file's header, before any rule — so the
-   public site's stylesheet and font set stay untouched. */
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Gochi+Hand&display=swap');
-
 /* ── page scaffold ── */
 /* The site nav is fixed and transparent, so every portal page starts
    with an ink band behind it (#portal-nav), exactly like the dark
@@ -21,6 +16,10 @@
 /* ── portal navigation (below the main site nav) ── */
 .portal-nav { background: var(--ink); border-bottom: 1px solid var(--line-d); }
 .portal-nav__inner { max-width: var(--max-w); margin-inline: auto; }
+.portal-nav__brand {
+  align-self: center; margin-right: 0.6rem; padding: 0 0.25rem;
+  font-family: var(--display); font-size: 0.92rem; color: var(--gold-2); white-space: nowrap;
+}
 .portal-nav__list {
   display: flex; gap: 0.15rem; align-items: stretch;
   overflow-x: auto; scrollbar-width: thin;
@@ -53,19 +52,20 @@
 .psection__more { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; color: var(--blue); white-space: nowrap; }
 .psection__more:hover { color: var(--gold); }
 
-/* ── filter bar ── */
+/* ── filter bar: quiet text tabs with an underline (scrolls on mobile) ── */
 .pfilterbar {
-  display: flex; gap: 0.4rem; flex-wrap: wrap;
-  padding: 0.6rem 0; margin-top: 0.4rem;
+  display: flex; gap: 1.1rem; flex-wrap: nowrap; overflow-x: auto;
+  border-bottom: 1px solid var(--line); margin-top: 0.4rem;
+  scrollbar-width: none;
 }
+.pfilterbar::-webkit-scrollbar { display: none; }
 .pfilter {
-  padding: 0.45rem 1.05rem; border-radius: 100px;
-  border: 1px solid var(--line); background: var(--white);
-  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em; color: var(--muted);
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  padding: 0.55rem 0.1rem; border-bottom: 2px solid transparent; margin-bottom: -1px;
+  font-size: 0.88rem; font-weight: 500; color: var(--muted); white-space: nowrap;
+  transition: color 0.2s, border-color 0.2s;
 }
-.pfilter:hover { border-color: var(--gold); color: var(--ink); }
-.pfilter.is-active { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.pfilter:hover { color: var(--ink); }
+.pfilter.is-active { color: var(--ink); border-bottom-color: var(--gold); font-weight: 600; }
 
 /* ── content cards ── */
 .pcards .card { gap: 0.45rem; }
@@ -93,7 +93,7 @@
 
 /* ── badges ── */
 .pbadge {
-  display: inline-flex; align-items: center; padding: 0.18rem 0.65rem; border-radius: 100px;
+  display: inline-flex; align-items: center; padding: 0.14rem 0.5rem; border-radius: 4px;
   font-size: 0.66rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
   border: 1px solid transparent; white-space: nowrap;
 }
@@ -114,14 +114,14 @@
 @media (prefers-reduced-motion: reduce) { .pskeleton__bar { animation: none; } }
 
 .pempty {
-  text-align: center; padding: var(--space-lg) var(--space-md);
-  border: 1px dashed var(--line); border-radius: var(--radius); background: var(--white);
+  padding: var(--space-sm) 0 var(--space-md);
+  border-top: 1px solid var(--line);
   margin-block: var(--space-sm);
 }
-.pempty__mark { font-size: 1.8rem; color: var(--gold); margin-bottom: 0.4rem; }
-.pempty h3 { margin-bottom: 0.35rem; }
-.pempty p { margin-inline: auto; color: var(--muted); margin-bottom: 1rem; }
-.pempty--error { border-color: rgba(166,61,61,0.4); }
+.pempty__mark { display: none; }
+.pempty h3 { margin-bottom: 0.3rem; font-size: 1.1rem; }
+.pempty p { color: var(--muted); margin-bottom: 0.9rem; }
+.pempty--error { border-top-color: rgba(166,61,61,0.4); }
 
 /* ── notices ── */
 .pnotice {
@@ -137,11 +137,9 @@
 .pauth-card {
   max-width: 480px; margin: var(--space-md) auto; padding: var(--space-md);
   background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
-  box-shadow: 0 18px 44px rgba(19,35,58,0.08);
 }
 .pauth-card--wide { max-width: 640px; }
 .pauth-card__title { font-size: clamp(1.7rem, 3.2vw, 2.3rem); margin-bottom: 0.3rem; }
-.pauth-card__kicker { font-family: var(--display); font-style: italic; color: var(--gold); margin-bottom: 1rem; }
 .pauth-card__links { margin-top: 1.2rem; font-size: 0.9rem; color: var(--muted); }
 .pauth-card__links a { color: var(--blue); }
 .pauth-card__links a:hover { color: var(--gold); }
@@ -179,14 +177,14 @@ select.pinput { appearance: auto; }
 .pconsent__list li::before { content: '·'; color: var(--gold); }
 
 /* ── activity lists / items ── */
-.pitems { display: grid; gap: 0.5rem; margin-top: var(--space-sm); }
+.pitems { display: block; margin-top: 0.4rem; }
 .pitem__link {
   display: flex; justify-content: space-between; align-items: center; gap: 1rem;
-  padding: 0.85rem 1.1rem; background: var(--white);
-  border: 1px solid var(--line); border-radius: var(--radius);
-  transition: border-color 0.2s, transform 0.2s;
+  padding: 0.8rem 0.25rem;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.15s;
 }
-a.pitem__link:hover { border-color: var(--gold); transform: translateX(3px); }
+a.pitem__link:hover { background: var(--mist); }
 .pitem__main { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
 .pitem__sub { font-size: 0.78rem; color: var(--muted); }
 .pitem__side { display: flex; align-items: center; gap: 0.7rem; flex-shrink: 0; }
@@ -316,122 +314,108 @@ a.pitem__link:hover { border-color: var(--gold); transform: translateX(3px); }
 }
 
 /* ════════════════════════════════════════════════════════════
-   PORTAL HUB — the five-option landing page (home.html) and the
-   shared headers of its destination pages (with-you, melody-box,
-   bloom-bank, hope-capsule). Layered on the site tokens; nothing
-   here changes public pages.
+   PORTAL HOME & HUB PAGES (Aug 2026 redesign) — the portal uses
+   the brand type system (Fraunces + Instrument Sans) and a quiet
+   action directory instead of illustrated marketing cards. The
+   five action illustrations (drawn as one set for the printed
+   poster) remain, small, where they identify an action.
    ════════════════════════════════════════════════════════════ */
-.hub {
-  --hub-blue: #5B8DB8;          /* heading — 3.3:1 on paper (large text) */
-  --hub-border: #A9C8E4;        /* card outline (decorative) */
-  --hub-border-strong: #7FA8CC;
-  --hub-card-bg: #FFFDF8;
-  --hub-text: #262626;
-  --hub-display: 'Fredoka', 'Instrument Sans', system-ui, sans-serif;
-  --hub-hand: 'Gochi Hand', 'Segoe Print', 'Comic Sans MS', cursive;
-  position: relative;
-  max-width: 900px;
-  margin-inline: auto;
-  padding-block: var(--space-md) var(--space-lg);
-}
-
-/* ── decorative artwork (ignored by screen readers) ──
-   The flowers are anchored to the card grid so they overlap card
-   corners like the reference design at every width — never text. */
-.hub-grid-wrap { position: relative; }
-.hub-flower { position: absolute; pointer-events: none; user-select: none; z-index: 2; }
-.hub-flower--right { right: -14px; bottom: -36px; width: clamp(66px, 12vw, 118px); }
-.hub-smiley { position: absolute; top: 4.4rem; right: 2px; width: clamp(34px, 6vw, 46px); }
 
 /* ── welcome header ── */
-.hub-head { position: relative; text-align: center; margin-bottom: var(--space-md); }
-.hub-title {
-  font-family: var(--hub-display); font-weight: 600;
-  font-size: clamp(2.5rem, 7.5vw, 4.3rem); letter-spacing: 0.045em;
-  color: var(--hub-blue); line-height: 1.05; margin-bottom: 1.1rem;
-}
-.hub-kicker {
-  font-family: var(--hub-hand); font-size: clamp(1.25rem, 3vw, 1.65rem);
-  letter-spacing: 0.06em; color: var(--hub-text); margin-bottom: 0.35rem;
-}
-.hub-lead { color: #4A4A4A; font-size: 1rem; line-height: 1.5; max-width: none; margin-inline: auto; }
+.hub-head { padding-block: var(--space-sm) 0; }
+.hub-head h1 { font-size: clamp(1.7rem, 3.4vw, 2.4rem); margin-bottom: 0.25rem; }
+.hub-head p { color: var(--muted); }
 
-/* ── the five option cards ── */
-.hub-grid {
-  position: relative; z-index: 1;
-  display: grid; grid-template-columns: 1fr; gap: 1.1rem;
-  list-style: none; margin: var(--space-md) 0 0; padding: 0;
+/* ── the action directory ── */
+.hub-actions { list-style: none; margin: var(--space-md) 0 0; padding: 0; border-top: 1px solid var(--line); }
+.hub-action {
+  display: flex; align-items: center; gap: 1.2rem;
+  padding: 1.05rem 0.4rem;
+  border-bottom: 1px solid var(--line);
+  transition: background 0.15s;
 }
-@media (min-width: 700px) {
-  .hub-grid { grid-template-columns: 1fr 1fr; gap: 1.4rem; }
-  .hub-grid__item--wide { grid-column: 1 / -1; }
-  .hub-grid__item--wide .hub-card { justify-content: center; }
-}
-.hub-card {
-  display: flex; align-items: center; gap: 1.3rem;
-  min-height: 132px; height: 100%;
-  padding: 1.35rem 1.5rem;
-  background: var(--hub-card-bg);
-  border: 2px solid var(--hub-border); border-radius: 22px;
-  color: var(--hub-text);
-  box-shadow: 0 2px 0 rgba(91, 141, 184, 0.08);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-}
-.hub-card:hover {
-  border-color: var(--hub-border-strong);
-  box-shadow: 0 10px 26px rgba(19, 35, 58, 0.10);
-  transform: translateY(-3px);
-}
-.hub-card:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
-.hub-card:active { transform: translateY(-1px); box-shadow: 0 3px 10px rgba(19, 35, 58, 0.10); }
-.hub-card__art { flex: 0 0 auto; width: clamp(74px, 18%, 108px); display: flex; align-items: center; justify-content: center; }
-.hub-card__art img { width: 100%; height: auto; max-height: 122px; object-fit: contain; }
-.hub-card__body { display: block; min-width: 0; }
-.hub-card__title {
-  font-family: var(--hub-hand); text-transform: uppercase;
-  font-size: clamp(1.3rem, 2.6vw, 1.62rem); letter-spacing: 0.05em;
-  color: var(--hub-text); margin-bottom: 0.3rem; line-height: 1.15;
-}
-.hub-card__desc { display: block; font-size: 0.95rem; line-height: 1.45; color: #4A4A4A; }
-.hub-grid__item--wide .hub-card__body { max-width: 36ch; }
+.hub-action:hover, .hub-action:focus-visible { background: var(--mist); }
+.hub-action:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+.hub-action__art { flex: 0 0 auto; width: 56px; display: flex; justify-content: center; }
+.hub-action__art img { width: 100%; height: auto; max-height: 56px; object-fit: contain; }
+.hub-action__body { min-width: 0; flex: 1; }
+.hub-action__title { display: block; font-family: var(--display); font-size: 1.22rem; line-height: 1.2; color: var(--ink); }
+.hub-action__desc { display: block; font-size: 0.92rem; color: var(--muted); margin-top: 0.1rem; }
+.hub-action__go { color: var(--gold); font-size: 1.15rem; flex-shrink: 0; }
 
-/* ── footer message ── */
-.hub-footer { position: relative; z-index: 1; text-align: center; margin-top: var(--space-lg); padding-bottom: 0.5rem; }
-.hub-footer p { max-width: none; margin: 0 0 0.35rem; color: var(--hub-text); font-size: 1rem; }
-.hub-footer__brand { font-family: var(--hub-hand); font-size: 1.35rem; letter-spacing: 0.08em; }
-.hub-footer__tag { font-style: italic; color: #4A4A4A; }
-.hub-footer__logo { width: 48px; height: auto; margin-top: 0.9rem; mix-blend-mode: multiply; }
-@media (min-width: 700px) {
-  .hub-footer__logo { position: absolute; left: 0; bottom: -4px; margin: 0; }
-}
+/* the featured first action (With You) is a little larger — deliberately unequal */
+.hub-action--featured { padding-block: 1.5rem; }
+.hub-action--featured .hub-action__art { width: 84px; }
+.hub-action--featured .hub-action__art img { max-height: 84px; }
+.hub-action--featured .hub-action__title { font-size: 1.5rem; }
 
-/* ── destination page headers ── */
+/* "Your community" quick line under the actions */
+.hub-mycommunity { margin-top: var(--space-md); font-size: 0.95rem; color: var(--muted); max-width: none; }
+.hub-mycommunity a { color: var(--blue); font-weight: 500; }
+.hub-mycommunity a:hover { color: var(--gold); }
+
+/* ── hub destination page headers ── */
 .hub-back { margin: var(--space-sm) 0 0; max-width: none; }
 .hub-back a { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.04em; color: var(--blue); }
 .hub-back a:hover, .hub-back a:focus-visible { color: var(--gold); }
-.hub-page-head { display: flex; align-items: center; gap: 1.4rem; padding-block: var(--space-sm) var(--space-xs); }
-.hub-page-head__art { flex: 0 0 auto; width: clamp(64px, 10vw, 96px); height: auto; }
-.hub-page-head__title {
-  font-family: var(--hub-hand); text-transform: uppercase;
-  font-size: clamp(1.9rem, 4vw, 2.7rem); letter-spacing: 0.04em;
-  line-height: 1.05; margin-bottom: 0.25rem;
-}
+.hub-page-head { display: flex; align-items: center; gap: 1.1rem; padding-block: var(--space-sm) var(--space-xs); }
+.hub-page-head__art { flex: 0 0 auto; width: clamp(48px, 7vw, 64px); height: auto; }
+.hub-page-head__title { font-size: clamp(1.7rem, 3.4vw, 2.4rem); line-height: 1.1; margin-bottom: 0.2rem; }
 .hub-page-head__lead { color: var(--muted); max-width: 56ch; }
 .hub-page-head__note { font-size: 0.9rem; color: var(--muted); margin-top: 0.45rem; max-width: none; }
 .hub-page-head__note a { color: var(--blue); text-decoration: underline; }
 .hub-page-head__note a:hover { color: var(--gold); }
 .hub-disclaimer { max-width: none; }
 
-/* ── small screens: stack, shrink art, keep decorations subtle ── */
+/* ── quick action rows on hub pages (write / request / read) ── */
+.hub-quick { list-style: none; margin: 0.4rem 0 0; padding: 0; border-top: 1px solid var(--line); }
+.hub-quick li { border-bottom: 1px solid var(--line); }
+.hub-quick a {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+  padding: 0.75rem 0.25rem; transition: background 0.15s;
+}
+.hub-quick a:hover { background: var(--mist); }
+.hub-quick__title { font-family: var(--display); font-size: 1.05rem; }
+.hub-quick__desc { flex: 1; font-size: 0.88rem; color: var(--muted); }
+.hub-quick__go { color: var(--gold); }
+@media (max-width: 640px) {
+  .hub-quick a { flex-wrap: wrap; gap: 0.15rem 0.6rem; }
+  .hub-quick__desc { flex-basis: 100%; }
+}
+
+/* ── communities directory ── */
+.pcomm-list { list-style: none; margin: var(--space-sm) 0 0; padding: 0; border-top: 1px solid var(--line); }
+.pcomm-row {
+  display: flex; align-items: center; gap: 1.1rem;
+  padding: 0.95rem 0.4rem; border-bottom: 1px solid var(--line);
+  transition: background 0.15s;
+}
+.pcomm-row:hover, .pcomm-row:focus-visible { background: var(--mist); }
+.pcomm-row__logo { flex: 0 0 88px; display: flex; }
+.pcomm-row__logo img { max-height: 40px; max-width: 88px; width: auto; height: auto; object-fit: contain; }
+.pcomm-row__body { min-width: 0; flex: 1; }
+.pcomm-row__name { display: block; font-family: var(--display); font-size: 1.15rem; color: var(--ink); }
+.pcomm-row__mine { display: block; font-size: 0.78rem; color: var(--gold); font-weight: 600; margin-top: 0.05rem; }
+.pcomm-row__desc { display: block; font-size: 0.9rem; color: var(--muted); margin-top: 0.1rem; }
+.pcomm-row__go { color: var(--gold); font-size: 1.1rem; flex-shrink: 0; }
+@media (max-width: 560px) {
+  .pcomm-row__logo { flex-basis: 64px; }
+  .pcomm-row__logo img { max-width: 64px; max-height: 32px; }
+}
+
+/* ── community page hero logo, shown naturally (no chip box) ── */
+.pcomm-logo { display: block; max-height: 48px; width: auto; margin-bottom: 0.9rem; }
+.pcomm-mine { font-size: 0.8rem; font-weight: 600; color: var(--gold); margin-bottom: 0.3rem; max-width: none; }
+
+/* ── small screens ── */
 @media (max-width: 480px) {
-  .hub-card { gap: 1rem; padding: 1.15rem 1.1rem; min-height: 112px; }
-  .hub-card__art { width: 72px; }
-  .hub-smiley { top: 3.4rem; }
-  .hub-page-head { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+  .hub-action { gap: 0.9rem; }
+  .hub-action__art { width: 44px; }
+  .hub-action--featured .hub-action__art { width: 60px; }
+  .hub-page-head { align-items: flex-start; }
 }
 
 /* ── respect reduced-motion preferences ── */
 @media (prefers-reduced-motion: reduce) {
-  .hub-card { transition: none; }
-  .hub-card:hover, .hub-card:active { transform: none; }
+  .hub-action, .pcomm-row, .hub-quick a, .pitem__link { transition: none; }
 }

@@ -183,11 +183,12 @@ console.log('\n[community/index.html · intro]');
     { tables: { communities: COMMS, content: [] } });
   await tick();
   const d = dom.window.document;
-  ok(d.body.textContent.includes('Even Here, Even Now, WE ARE WITH YOU.'), 'slogan displayed on the portal intro');
-  const login = [...d.querySelectorAll('a.btn')].find((a) => a.textContent.trim() === 'Log In');
-  const signup = [...d.querySelectorAll('a.btn')].find((a) => a.textContent.includes('Sign Up'));
-  ok(login && login.getAttribute('href') === 'login.html', 'clear Log In action');
-  ok(signup && signup.getAttribute('href') === 'signup.html', 'clear Sign Up action');
+  ok(d.querySelector('#portal-root h1').textContent === 'Community Portal', 'intro heading is plainly "Community Portal"');
+  const login = [...d.querySelectorAll('a.btn')].find((a) => a.textContent.trim() === 'Log in');
+  const signup = [...d.querySelectorAll('a.btn')].find((a) => a.textContent.includes('Create a free account'));
+  ok(login && login.getAttribute('href') === 'login.html', 'clear Log in action');
+  ok(signup && signup.getAttribute('href') === 'signup.html', 'clear Create account action');
+  ok(!d.querySelector('#portal-root .eyebrow'), 'intro has no eyebrow labels');
   ok(d.querySelector('.nav'), 'main site nav still renders on portal pages');
   const brandHref = d.querySelector('.nav__logo').getAttribute('href');
   ok(brandHref === '../index.html', 'site nav brand links back to the main site (root-relative)');
@@ -312,46 +313,40 @@ console.log('\n[community/home.html · five-option hub]');
   const d = dom.window.document;
   const w = dom.window;
 
-  ok(d.querySelector('#portal-root h1') && d.querySelector('#portal-root h1').textContent === 'WE ARE WITH YOU',
-     'main heading: WE ARE WITH YOU');
-  ok(d.body.textContent.includes('ONE MESSAGE FOR YOU'), 'subheading: ONE MESSAGE FOR YOU');
-  ok(d.body.textContent.includes('There are many ways to share'), 'supporting line present');
-  const hs = [...d.querySelectorAll('#portal-root h1, #portal-root h2, #portal-root h3')].map((h) => h.tagName);
-  ok(hs[0] === 'H1' && hs[1] === 'H2' && hs.length === 7 && hs.slice(2).every((t) => t === 'H3'),
-     'headings in logical order: h1 → h2 → five h3 card titles');
+  ok(d.querySelector('#portal-root h1') && d.querySelector('#portal-root h1').textContent === 'Welcome, Aaron',
+     'personal welcome uses the member\'s first name');
+  ok(d.body.textContent.includes('What would you like to do?'), 'action question, not a slogan');
+  ok(!d.body.textContent.includes('ONE MESSAGE FOR YOU'), 'no oversized duplicate branding on portal home');
+  ok(!d.body.textContent.includes('There are many ways to share'), 'old tagline removed');
 
-  const cards = [...d.querySelectorAll('a.hub-card')];
-  ok(cards.length === 5, 'exactly five option cards render');
+  const cards = [...d.querySelectorAll('a.hub-action')];
+  ok(cards.length === 5, 'exactly five action rows render');
   const got = cards.map((a) => [a.dataset.option, a.getAttribute('href')]);
   ok(JSON.stringify(got) === JSON.stringify([
       ['with_you', 'with-you.html'], ['melody_box', 'melody-box.html'],
       ['wish_pocket', 'request-song.html'], ['bloom_bank', 'bloom-bank.html'],
       ['hope_capsule', 'hope-capsule.html']]),
-     'cards link to With You / Melody Box / Wish Pocket (existing song request page) / Bloom Bank / Hope Capsule');
+     'rows link to With You / Melody Box / Wish Pocket (existing song request page) / Bloom Bank / Hope Capsule');
   ok(cards.every((a) => a.tagName === 'A' && a.getAttribute('href') && !a.hasAttribute('tabindex')),
-     'every card is a real link — keyboard and screen-reader operable, no fake buttons');
-  const titles = cards.map((a) => a.querySelector('.hub-card__title').textContent);
+     'every row is a real link — keyboard and screen-reader operable, no fake buttons');
+  const titles = cards.map((a) => a.querySelector('.hub-action__title').textContent);
   ok(JSON.stringify(titles) === JSON.stringify(['With You', 'Melody Box', 'Wish Pocket', 'Bloom Bank', 'Hope Capsule']),
-     'card titles match the design');
-  ok(d.body.textContent.includes('Share messages of hope, love, and encouragement')
-     && d.body.textContent.includes('Enjoy music that brings comfort and joy')
-     && d.body.textContent.includes('Request or dedicate a special song')
-     && d.body.textContent.includes('Explore trusted health tips and helpful resources')
-     && d.body.textContent.includes('Discover stories shared from the heart'),
-     'all five card descriptions present (options are not explained by illustration alone)');
-  ok(!!d.querySelector('.hub-grid__item--wide a[data-option="hope_capsule"]'), 'Hope Capsule is the full-width bottom card');
+     'the five action names are kept');
+  ok(cards.every((a) => (a.querySelector('.hub-action__desc').textContent || '').length > 10),
+     'every action has a plain description (not explained by illustration alone)');
+  ok(cards[0].classList.contains('hub-action--featured') && cards.slice(1).every((a) => !a.classList.contains('hub-action--featured')),
+     'With You is the single featured (larger) row — deliberately unequal');
   ok(cards.every((a) => {
        const img = a.querySelector('img');
        return img && img.getAttribute('alt') === '' && img.getAttribute('src').startsWith('../assets/images/portal/');
-     }), 'card illustrations are local, centralized assets with empty alt (decorative)');
-  const decor = [...d.querySelectorAll('.hub-flower, .hub-smiley')];
-  ok(decor.length === 2 && decor.every((i) => i.getAttribute('alt') === '' && i.getAttribute('aria-hidden') === 'true'),
-     'decorations (right flowers + smiley; left flowers removed by request) are hidden from screen readers');
-  ok(d.body.textContent.includes('Thank you for being part of our community.')
-     && d.body.textContent.includes('Wherever you are in your journey, we want you to know:')
-     && d.body.textContent.includes('WE ARE WITH YOU.')
-     && d.body.textContent.includes('Even Here, Even Now.'),
-     'footer message matches the design');
+     }), 'action illustrations are local, centralized assets with empty alt (decorative)');
+  ok(!d.querySelector('.hub-flower') && !d.querySelector('.hub-smiley'),
+     'decorative clip art (flowers, smiley) removed');
+  ok(!d.body.textContent.includes('Wherever you are in your journey'),
+     'no philosophical footer message inside the portal');
+  const myComm = d.querySelector('.hub-mycommunity a');
+  ok(myComm && myComm.getAttribute('href') === 'ronald-mcdonald-house.html' && myComm.textContent.includes('Ronald McDonald House'),
+     'portal home links straight to the member\'s own community');
 
   const navLinks = [...d.querySelectorAll('.portal-nav__link')].map((a) => a.textContent.replace('●', '').trim());
   ok(JSON.stringify(navLinks) === JSON.stringify(['Home', 'Communities', 'My Activity', 'Profile', 'Log Out']),
@@ -377,8 +372,8 @@ console.log('\n[community/home.html · five-option hub]');
   const dom = loadPortalPage('community/home.html', 'https://x.test/community/home.html',
     { session: SESSION, tables: { communities: [], profiles: [PROFILE] } });
   await tick(30);
-  ok(dom.window.document.querySelectorAll('a.hub-card').length === 5,
-     'all five options render even before any content or communities are published');
+  ok(dom.window.document.querySelectorAll('a.hub-action').length === 5,
+     'all five actions render even before any content or communities are published');
 }
 
 /* ── 8. COMMUNITY PAGE ── */
@@ -396,7 +391,7 @@ console.log('\n[community pages]');
   const d = dom.window.document;
   ok(d.querySelector('h1') && d.querySelector('h1').textContent === 'Ronald McDonald House', 'community page renders its name');
   ok(d.body.textContent.includes('Your community'), 'primary community is acknowledged on its own page');
-  ok(d.body.textContent.includes('Even Here, Even Now, WE ARE WITH YOU.'), 'slogan on community page');
+  ok(!d.querySelector('#portal-root .eyebrow'), 'community page has no eyebrow labels');
   ok(d.body.textContent.includes('Current Programs') && d.body.textContent.includes('One Message for You'),
      'programs section reuses the real partner program data');
   ok(d.body.textContent.includes('Available Activities') && d.body.textContent.includes('Simple Rhythm Activity'),
@@ -425,9 +420,9 @@ console.log('\n[community/with-you.html]');
   await tick(30);
   const d = dom.window.document;
   ok(d.querySelector('h1') && d.querySelector('h1').textContent === 'With You', 'With You page renders');
-  const hrefs = [...d.querySelectorAll('a.btn')].map((a) => a.getAttribute('href'));
-  ok(hrefs.includes('write-letter.html'), 'Write a Letter → the existing letter form (reused, not rebuilt)');
-  ok(hrefs.includes('request-letter.html'), 'Request to Receive a Letter → the existing request form');
+  const hrefs = [...d.querySelectorAll('.hub-quick a')].map((a) => a.getAttribute('href'));
+  ok(hrefs.includes('write-letter.html'), 'Write a letter → the existing letter form (reused, not rebuilt)');
+  ok(hrefs.includes('request-letter.html'), 'Request a letter → the existing request form');
   ok(hrefs.includes('#read-letters') && !!d.querySelector('#read-letters'), 'Read choice jumps to the letters right below');
   ok(d.body.textContent.includes('A Letter of Courage'), 'approved letter/message content listed');
   ok(d.body.textContent.includes('To anyone waiting') && d.body.textContent.includes('From a community member'),
@@ -511,8 +506,8 @@ console.log('\n[community/hope-capsule.html]');
   const dom = loadPortalPage('community/hope-capsule.html', 'https://x.test/community/hope-capsule.html',
     { session: SESSION, tables: { communities: COMMS, profiles: [PROFILE], content: [], letters: [] } });
   await tick(30);
-  ok(dom.window.document.body.textContent.includes('waiting for its first story'),
-     'empty Hope Capsule shows a warm empty state');
+  ok(dom.window.document.body.textContent.includes('Stories, updates, and shared letters will appear here'),
+     'empty Hope Capsule shows a plain, honest empty state');
 }
 
 console.log('\n[community/communities.html · All Communities]');
@@ -521,15 +516,19 @@ console.log('\n[community/communities.html · All Communities]');
     { session: SESSION, tables: { communities: COMMS, profiles: [PROFILE] } });
   await tick(30);
   const d = dom.window.document;
-  ok(d.querySelector('h1') && d.querySelector('h1').textContent === 'All Communities', 'All Communities chooser renders');
-  const visits = [...d.querySelectorAll('a.btn')].map((a) => a.getAttribute('href'));
+  ok(d.querySelector('h1') && d.querySelector('h1').textContent === 'Communities', 'Communities directory renders');
+  const visits = [...d.querySelectorAll('a.pcomm-row')].map((a) => a.getAttribute('href'));
   ok(['city-of-hope.html', 'ronald-mcdonald-house.html', 'northside-nicu.html', 'senior-living.html',
       'schools-global.html', 'milal.html'].every((h) => visits.includes(h)),
-     'all six community pages reachable from the chooser');
-  const first = d.querySelector('.pcards .pcard .pcard__title a');
-  ok(first && first.getAttribute('href') === 'ronald-mcdonald-house.html',
-     "member's own community is listed first");
-  ok(d.body.textContent.includes('Your community'), 'primary community badge shown');
+     'all six community pages reachable from the directory');
+  ok(visits[0] === 'ronald-mcdonald-house.html', "member's own community is listed first");
+  const mineRow = d.querySelector('a.pcomm-row .pcomm-row__mine');
+  ok(mineRow && mineRow.textContent === 'Your community'
+     && mineRow.closest('a').getAttribute('href') === 'ronald-mcdonald-house.html',
+     'understated "Your community" status on the member\'s own row (no COMMUNITY label spam)');
+  ok(!d.body.textContent.includes('COMMUNITY\n'), 'no repeated COMMUNITY eyebrow above every name');
+  ok([...d.querySelectorAll('.pcomm-row__desc')].every((el) => (el.textContent.match(/[.!?]/g) || []).length <= 1),
+     'directory descriptions are one sentence');
   ok([...d.querySelectorAll('a')].some((a) => a.getAttribute('href') === 'profile.html'),
      'link to change the primary community in Profile Settings');
   ok(d.querySelector('.portal-nav__link.is-active').textContent.trim() === 'Communities',
@@ -573,14 +572,13 @@ console.log('\n[content rendering safety]');
 console.log('\n[hub responsive & accessibility statics]');
 {
   const css = fs.readFileSync(path.join(ROOT, 'css/portal.css'), 'utf8');
-  ok(css.includes('display: grid; grid-template-columns: 1fr;'), 'mobile-first: hub cards stack in one column');
-  ok(css.includes('@media (min-width: 700px)') && css.includes('.hub-grid { grid-template-columns: 1fr 1fr;'),
-     'two-column card layout on tablet/desktop');
-  ok(css.includes('.hub-grid__item--wide { grid-column: 1 / -1; }'), 'Hope Capsule spans the full width on desktop');
-  ok(css.includes('@media (prefers-reduced-motion: reduce)') && css.includes('.hub-card { transition: none; }'),
-     'reduced-motion preference disables card motion');
-  ok(css.includes('.hub-card:focus-visible'), 'visible keyboard focus state on hub cards');
+  ok(!css.includes('Fredoka') && !css.includes('Gochi'), 'handwritten/rounded display fonts removed — brand type only');
+  ok(css.includes('.hub-action--featured'), 'With You featured row style exists (deliberately unequal layout)');
+  ok(css.includes('.hub-action:hover, .hub-action:focus-visible'), 'action rows have hover + visible focus states');
+  ok(css.includes('@media (prefers-reduced-motion: reduce)') && css.includes('.hub-action, .pcomm-row'),
+     'reduced-motion preference disables row motion');
   ok(css.includes('@media (max-width: 480px)'), 'small-phone adjustments present');
+  ok(!css.includes('border-radius: 22px'), 'oversized rounded hub cards removed');
 }
 
 /* ── 10. MY ACTIVITY ── */
@@ -734,7 +732,7 @@ console.log('\n[admin/community.html]');
     }, ADMIN_BUNDLE);
     await tick(40);
     const d = dom.window.document;
-    ok(d.body.textContent.includes('Admin Dashboard'), 'admins see the dashboard');
+    ok(d.querySelector('#portal-root h1').textContent === 'Admin', 'admins see the dashboard');
     const tabs = [...d.querySelectorAll('[data-tab]')].map((b) => b.textContent);
     ok(JSON.stringify(tabs) === JSON.stringify(['Overview', 'Accounts', 'Letters', 'Requests', 'Content', 'Activities']),
        'admin sections: Overview / Accounts / Letters / Requests / Content / Activities');

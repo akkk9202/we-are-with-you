@@ -29,7 +29,6 @@
     <header class="hub-page-head">
       <img class="hub-page-head__art" src="${esc(Portal.rootUrl(opt.art))}" alt="" aria-hidden="true">
       <div>
-        <div class="eyebrow">Community Portal</div>
         <h1 class="hub-page-head__title">${esc(opt.title)}</h1>
         <p class="hub-page-head__lead">${esc(opt.description)}</p>
         ${extraHtml}
@@ -76,21 +75,17 @@
     el.innerHTML = `
       ${hubPageHead(optionById("with_you"))}
       <section class="psection">
-        <div class="psection__head"><h2>What would you like to do?</h2></div>
-        <div class="cards cards--3 pcards">
-          <article class="card pcard"><span class="card__tag">Write</span>
-            <h3 class="pcard__title">Write a Letter</h3>
-            <p class="pcard__desc">Send a message of hope, love, or encouragement. Every letter is reviewed with care before it is shared.</p>
-            <a class="btn btn--gold btn--sm" href="write-letter.html">Write a Letter</a></article>
-          <article class="card pcard"><span class="card__tag">Receive</span>
-            <h3 class="pcard__title">Request to Receive a Letter</h3>
-            <p class="pcard__desc">Ask for an encouraging letter for yourself or for someone who could use one today.</p>
-            <a class="btn btn--ink btn--sm" href="request-letter.html">Request a Letter</a></article>
-          <article class="card pcard"><span class="card__tag">Read</span>
-            <h3 class="pcard__title">Read Letters &amp; Messages</h3>
-            <p class="pcard__desc">Approved letters and encouraging messages shared with our communities.</p>
-            <a class="btn btn--ink btn--sm" href="#read-letters">Read Below</a></article>
-        </div>
+        <ul class="hub-quick">
+          <li><a href="write-letter.html"><span class="hub-quick__title">Write a letter</span>
+            <span class="hub-quick__desc">Letters are reviewed before they are shared.</span>
+            <span class="hub-quick__go" aria-hidden="true">→</span></a></li>
+          <li><a href="request-letter.html"><span class="hub-quick__title">Request a letter</span>
+            <span class="hub-quick__desc">Ask for an encouraging letter for yourself or someone else.</span>
+            <span class="hub-quick__go" aria-hidden="true">→</span></a></li>
+          <li><a href="#read-letters"><span class="hub-quick__title">Read letters</span>
+            <span class="hub-quick__desc">Letters and messages shared with the communities, below.</span>
+            <span class="hub-quick__go" aria-hidden="true">→</span></a></li>
+        </ul>
       </section>
       <div id="read-letters">
         ${sectionHtml("Letters & Encouraging Messages", letters.slice(0, 12).map((c) => Portal.contentCard(c)).join(""))}
@@ -100,9 +95,9 @@
             <div class="cards cards--3 pcards">${publicLetters.map(publicLetterCard).join("")}</div>
           </section>` : ""}
         ${!letters.length && !publicLetters.length ? Portal.emptyState(
-          "No letters to read just yet",
-          "Approved letters and messages will appear here soon — yours could be the first.",
-          `<a class="btn btn--gold btn--sm" href="write-letter.html">Write the first letter</a>`) : ""}
+          "No letters yet",
+          "Approved letters and messages will appear here — yours could be the first.",
+          `<a class="btn btn--gold btn--sm" href="write-letter.html">Write a letter</a>`) : ""}
       </div>`;
   }
 
@@ -145,9 +140,9 @@
       ${sectionHtml("Song Performances", byType("song_performance").slice(0, 9).map(card).join(""))}
       ${sectionHtml("Musical & Performance Videos", byType("performance_video").slice(0, 9).map(card).join(""))}
       ${!music.length ? Portal.emptyState(
-        "The Melody Box is still being filled",
-        "Comforting music and performance videos will appear here as GYCO students share them. Check back soon!",
-        `<a class="btn btn--gold btn--sm" href="request-song.html">Request a special song</a>`) : ""}`;
+        "No music yet",
+        "Music and performance videos will appear here as GYCO students share them.",
+        `<a class="btn btn--gold btn--sm" href="request-song.html">Request a song</a>`) : ""}`;
   }
 
   /* ─────────────────────────────────────────────────────────
@@ -192,8 +187,8 @@
           </div>
         </section>` : ""}
       ${!education.length && !activities.length ? Portal.emptyState(
-        "The Bloom Bank is still growing",
-        "Trusted educational videos and helpful resources will bloom here soon. Check back shortly!") : ""}`;
+        "No resources yet",
+        "Teaching videos, resources, and activity guides will appear here as they are published.") : ""}`;
   }
 
   /* ─────────────────────────────────────────────────────────
@@ -231,8 +226,8 @@
           <div class="cards cards--3 pcards">${publicLetters.map(publicLetterCard).join("")}</div>
         </section>` : ""}
       ${!featured.length && !stories.length && !updates.length && !publicLetters.length ? Portal.emptyState(
-        "The Hope Capsule is waiting for its first story",
-        "Stories, updates, and messages shared from the heart will appear here soon.") : ""}`;
+        "No stories yet",
+        "Stories, updates, and shared letters will appear here as they are approved.") : ""}`;
   }
 
   /* ─────────────────────────────────────────────────────────
@@ -253,30 +248,38 @@
     const mine = (c) => c.id === p.primary_community_id;
     const ordered = [...comms].sort((a, b) => (mine(a) ? 0 : 1) - (mine(b) ? 0 : 1));
 
+    /* directory rows want one-sentence descriptions */
+    const firstSentence = (s) => {
+      const t = String(s || "").trim();
+      const m = t.match(/^[^.!?]{10,}?[.!?]/);
+      return m ? m[0] : t;
+    };
+
     el.innerHTML = `
       <p class="hub-back"><a href="home.html">&larr; Back to the portal</a></p>
       <header class="hub-page-head">
         <div>
-          <div class="eyebrow">Community Portal</div>
-          <h1 class="hub-page-head__title">All Communities</h1>
-          <p class="hub-page-head__lead">Every member can visit every community — your own simply comes first.</p>
+          <h1 class="hub-page-head__title">Communities</h1>
+          <p class="hub-page-head__lead">Every member can visit every community.</p>
         </div>
       </header>
-      <div class="cards cards--3 pcards" style="margin-top:1rem;">
+      <ul class="pcomm-list">
         ${ordered.map((c) => `
-          <article class="card pcard">
-            ${c.image_url ? `<span class="logo-chip logo-chip--portal" style="height:56px;margin-bottom:0.5rem;"><img
-                src="${esc(c.image_url.startsWith("http") ? c.image_url : Portal.rootUrl(c.image_url))}" alt=""
-                onerror="this.parentElement.remove()"></span>` : ""}
-            <div class="pcard__meta"><span class="card__tag">Community</span>
-              ${mine(c) ? '<span class="pbadge pbadge--gold">Your community</span>' : ""}</div>
-            <h3 class="pcard__title"><a href="${esc(c.slug)}.html">${esc(c.name)}</a></h3>
-            <p class="pcard__desc">${esc(c.description || "")}</p>
-            <a class="btn btn--ink btn--sm" href="${esc(c.slug)}.html" aria-label="Visit ${esc(c.name)}">Visit</a>
-          </article>`).join("")}
-      </div>
+          <li><a class="pcomm-row" href="${esc(c.slug)}.html">
+            <span class="pcomm-row__logo" aria-hidden="true">
+              ${c.image_url ? `<img src="${esc(c.image_url.startsWith("http") ? c.image_url : Portal.rootUrl(c.image_url))}" alt=""
+                onerror="this.remove()">` : ""}
+            </span>
+            <span class="pcomm-row__body">
+              <span class="pcomm-row__name">${esc(c.name)}</span>
+              ${mine(c) ? '<span class="pcomm-row__mine">Your community</span>' : ""}
+              <span class="pcomm-row__desc">${esc(firstSentence(c.description))}</span>
+            </span>
+            <span class="pcomm-row__go" aria-hidden="true">→</span>
+          </a></li>`).join("")}
+      </ul>
       <p class="phint" style="margin-top:1.2rem;">Want a different primary community? You can change it anytime in
-        <a href="profile.html">Profile Settings</a>.</p>`;
+        <a href="profile.html">Profile</a>.</p>`;
   }
 
   /* register + dispatch (same pattern as portal-pages2.js) */

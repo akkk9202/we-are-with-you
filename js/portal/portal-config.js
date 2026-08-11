@@ -77,34 +77,28 @@ const PORTAL_CONFIG = {
     activity:             { label: "Activity",             filter: "activities", action: "Participate" },
   },
 
-  /* ── The five-option portal hub (community/home.html) ──
-     One entry per card, in display order. `id` doubles as the
-     engagement-event metadata value (portal_option_selected).
-     Illustration paths are site-root-relative and centralized
-     here so final artwork can be swapped in one place.
-     `artAlt` is empty on purpose: every card's meaning is carried
+  /* ── The five portal actions (community/home.html) ──
+     One entry per action row, in display order. `id` doubles as
+     the engagement-event metadata value (portal_option_selected).
+     The five illustrations were drawn as one set for the printed
+     poster and identify each action; they stay small in the UI.
+     `artAlt` is empty on purpose: every row's meaning is carried
      by its visible title + description, so the illustration is
-     decorative for screen readers (WCAG 1.1.1). */
+     decorative for screen readers (WCAG 1.1.1). `featured` makes
+     With You the larger first row. Descriptions describe what the
+     page actually does — keep them plain and verb-first. */
   portalOptions: [
-    { id: "with_you",     title: "With You",     description: "Share messages of hope, love, and encouragement",
-      href: "with-you.html",     art: "assets/images/portal/with-you-envelope.png",  artAlt: "" },
-    { id: "melody_box",   title: "Melody Box",   description: "Enjoy music that brings comfort and joy",
+    { id: "with_you",     title: "With You",     description: "Write a letter, request one, or read messages from the community",
+      href: "with-you.html",     art: "assets/images/portal/with-you-envelope.png",  artAlt: "", featured: true },
+    { id: "melody_box",   title: "Melody Box",   description: "Watch and listen to music shared by GYCO students",
       href: "melody-box.html",   art: "assets/images/portal/melody-music-box.png",   artAlt: "" },
-    { id: "wish_pocket",  title: "Wish Pocket",  description: "Request or dedicate a special song",
+    { id: "wish_pocket",  title: "Wish Pocket",  description: "Request or dedicate a song",
       href: "request-song.html", art: "assets/images/portal/wish-pocket-pouch.png",  artAlt: "" },
-    { id: "bloom_bank",   title: "Bloom Bank",   description: "Explore trusted health tips and helpful resources",
+    { id: "bloom_bank",   title: "Bloom Bank",   description: "Teaching videos, resources, and activity guides",
       href: "bloom-bank.html",   art: "assets/images/portal/bloom-bank-book.png",    artAlt: "" },
-    { id: "hope_capsule", title: "Hope Capsule", description: "Discover stories shared from the heart",
-      href: "hope-capsule.html", art: "assets/images/portal/hope-capsule-jar.png",   artAlt: "", wide: true },
+    { id: "hope_capsule", title: "Hope Capsule", description: "Stories, updates, and letters shared by the community",
+      href: "hope-capsule.html", art: "assets/images/portal/hope-capsule-jar.png",   artAlt: "" },
   ],
-
-  /* Decorative artwork for the hub (ignored by screen readers). */
-  portalDecor: {
-    flowersLeft:  "assets/images/portal/flowers-left.png",
-    flowersRight: "assets/images/portal/flowers-right.png",
-    smiley:       "assets/images/portal/smiley.png",
-    gycoLogo:     "assets/images/portal/gyco-mark.png",  /* transparent version of assets/logos/gyco.png */
-  },
 
   /* Shown wherever health-related educational content appears. */
   healthDisclaimer:

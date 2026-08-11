@@ -217,6 +217,7 @@ const Portal = (() => {
     <div class="portal-nav" role="navigation" aria-label="Community Portal">
       <div class="portal-nav__inner">
         <ul class="portal-nav__list">
+          <li class="portal-nav__brand" aria-hidden="true">Community Portal</li>
           ${items.map((i) => `
             <li><a href="${esc(i.href)}"
                  class="portal-nav__link${i.key === activeKey ? " is-active" : ""}${i.primary ? " is-primary" : ""}"
@@ -250,11 +251,11 @@ const Portal = (() => {
         <li><a href="${esc(rootUrl("community/activity.html"))}">My Activity</a></li>
         <li><a href="${esc(rootUrl("community/profile.html"))}">Profile</a></li>
       </ul></div>
-      <div class="footer__col"><h4>Platform</h4><ul>
+      <div class="footer__col"><h4>About</h4><ul>
         <li><a href="${esc(rootUrl("student-community.html"))}">GYCO</a></li>
         <li><a href="${esc(rootUrl("learning.html"))}">NADO School</a></li>
         <li><a href="${esc(rootUrl("media.html"))}">Media</a></li>
-        <li><a href="${esc(rootUrl("join.html"))}">Join Us</a></li>
+        <li><a href="${esc(rootUrl("join.html"))}">Get Involved</a></li>
       </ul></div>
       <div class="footer__col"><h4>Connect</h4><ul>
         ${SITE.instagram ? `<li><a href="${esc(SITE.instagram)}" target="_blank" rel="noopener">Instagram</a></li>` : ""}

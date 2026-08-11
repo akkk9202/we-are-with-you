@@ -22,32 +22,29 @@
     const el = root();
     el.innerHTML = `
       <section class="pintro">
-        <div class="eyebrow">WE ARE WITH YOU · Community Portal</div>
-        <h1>A place made for you</h1>
-        <div class="page-hero__kicker">${esc(cfg.slogan)}</div>
-        <p class="pintro__lead">The Community Portal is where patients, families, students, seniors,
-          volunteers, and community members can watch videos, read letters and messages, write and
-          request letters, ask for songs, and take part in simple activities — created by GYCO
-          students for the people of six partner communities.</p>
+        <h1>Community Portal</h1>
+        <p class="pintro__lead">Watch videos, read and write letters, request songs, and take part
+          in activities — made by GYCO students for six partner communities.</p>
         <div class="btn-row" style="justify-content:flex-start;margin-top:1.6rem;">
-          <a class="btn btn--gold" href="login.html">Log In</a>
-          <a class="btn btn--ink" href="signup.html">Sign Up — it's free</a>
+          <a class="btn btn--gold" href="login.html">Log in</a>
+          <a class="btn btn--ink" href="signup.html">Create a free account</a>
         </div>
       </section>
       <section class="psection">
-        <div class="eyebrow">What you can do here</div>
-        <div class="cards cards--3" style="margin-top:1rem;">
-          <div class="card"><span class="card__tag">Watch</span><h3>Videos & music</h3><p>Performances, teaching videos, and songs shared by student musicians — with your progress saved so you can continue anytime.</p></div>
-          <div class="card"><span class="card__tag">Read & write</span><h3>Letters & messages</h3><p>Read encouraging letters, write your own, or request one for someone who needs it today.</p></div>
-          <div class="card"><span class="card__tag">Participate</span><h3>Songs & activities</h3><p>Request a meaningful song or try a simple rhythm, breathing, or memory activity — wherever you are.</p></div>
-        </div>
+        <ul class="hub-quick">
+          <li><a href="login.html"><span class="hub-quick__title">Videos &amp; music</span>
+            <span class="hub-quick__desc">Performances and teaching videos, with your place saved so you can continue anytime.</span></a></li>
+          <li><a href="login.html"><span class="hub-quick__title">Letters &amp; messages</span>
+            <span class="hub-quick__desc">Read encouraging letters, write your own, or request one for someone.</span></a></li>
+          <li><a href="login.html"><span class="hub-quick__title">Songs &amp; activities</span>
+            <span class="hub-quick__desc">Request a meaningful song or try a simple rhythm, breathing, or memory activity.</span></a></li>
+        </ul>
       </section>
       <section class="psection" data-public-teaser hidden>
-        <div class="eyebrow">A message for you</div>
-        <div class="cards cards--3" style="margin-top:1rem;" data-teaser-cards></div>
+        <div class="psection__head"><h2>A message for you</h2></div>
+        <div class="cards cards--3" data-teaser-cards></div>
       </section>
       <section class="psection">
-        <div class="eyebrow">Six communities, one circle</div>
         <p style="color:var(--muted);max-width:62ch;">The portal serves ${cfg.communities.map((c) => esc(c.name)).join(" · ")} — and every member can visit every community.</p>
       </section>`;
     /* content deliberately approved for public viewing shows even when logged out */
@@ -70,9 +67,7 @@
     const el = root();
     el.innerHTML = `
       <section class="pauth-card">
-        <div class="eyebrow">Community Portal</div>
-        <h1 class="pauth-card__title">Welcome back</h1>
-        <p class="pauth-card__kicker">${esc(cfg.slogan)}</p>
+        <h1 class="pauth-card__title">Log in</h1>
         ${qs.get("verified") ? `<div class="pnotice pnotice--good" role="status">Your email is verified — you can log in now.</div>` : ""}
         ${qs.get("reset") ? `<div class="pnotice pnotice--good" role="status">Your password was updated — log in with your new password.</div>` : ""}
         <form novalidate data-login-form>
@@ -87,7 +82,7 @@
             <input class="pinput" id="login-password" name="password" type="password" autocomplete="current-password" required>
             <p class="perror" id="err-login-password" data-error-for="password"></p>
           </div>
-          <button class="btn btn--gold" type="submit" style="width:100%;">Log In</button>
+          <button class="btn btn--gold" type="submit" style="width:100%;">Log in</button>
         </form>
         <p class="pauth-card__links">
           <a href="forgot-password.html">Forgot your password?</a>
@@ -125,9 +120,7 @@
     if (!comms) { el.innerHTML = Portal.errorState(); return; }
     el.innerHTML = `
       <section class="pauth-card pauth-card--wide">
-        <div class="eyebrow">Community Portal</div>
         <h1 class="pauth-card__title">Create your account</h1>
-        <p class="pauth-card__kicker">${esc(cfg.slogan)}</p>
         <form novalidate data-signup-form>
           <div class="pnotice pnotice--bad" data-form-errors hidden tabindex="-1"></div>
           <div class="pfield">
@@ -228,7 +221,6 @@
     const el = root();
     el.innerHTML = `
       <section class="pauth-card">
-        <div class="eyebrow">Community Portal</div>
         <h1 class="pauth-card__title">Reset your password</h1>
         <p>Enter your email and we'll send you a link to choose a new password.</p>
         <form novalidate data-forgot-form>
@@ -285,7 +277,6 @@
     }
     el.innerHTML = `
       <section class="pauth-card">
-        <div class="eyebrow">Community Portal</div>
         <h1 class="pauth-card__title">Choose a new password</h1>
         <form novalidate data-reset-form>
           <div class="pnotice pnotice--bad" data-form-errors hidden tabindex="-1"></div>
@@ -321,16 +312,16 @@
   }
 
   /* ─────────────────────────────────────────────────────────
-     PORTAL HOME — the five-option hub ("WE ARE WITH YOU · ONE
-     MESSAGE FOR YOU"). Every signed-in entry point (log in,
-     verified sign-up, password reset, and /community/ while
-     authenticated) already lands on home.html, so this page is
-     the portal's front door. The five cards are REAL links; a
-     click records exactly one portal_option_selected event with
-     the chosen option before navigating. The previous home
-     sections now live on the destination pages: music + Continue
-     Watching in the Melody Box, letters in With You, education in
-     the Bloom Bank, and stories/updates in the Hope Capsule.
+     PORTAL HOME — a personal welcome and the five-action
+     directory. Every signed-in entry point (log in, verified
+     sign-up, password reset, and /community/ while authenticated)
+     already lands on home.html, so this page is the portal's
+     front door. The five rows are REAL links; a click records
+     exactly one portal_option_selected event with the chosen
+     option before navigating. Content lives on the destination
+     pages: music + Continue Watching in the Melody Box, letters
+     in With You, education in the Bloom Bank, and stories/updates
+     in the Hope Capsule.
      ───────────────────────────────────────────────────────── */
 
   const sectionHtml = (title, cardsHtml) => cardsHtml ? `
@@ -339,41 +330,23 @@
       <div class="cards cards--3 pcards">${cardsHtml}</div>
     </section>` : "";
 
-  /* PortalOptionCard — one illustrated hub card. The whole card is a
-     single link; the illustration is decorative (empty alt) because
-     the visible title + description carry the meaning. */
-  const hubOptionCard = (opt) => `
-    <li class="hub-grid__item${opt.wide ? " hub-grid__item--wide" : ""}">
-      <a class="hub-card" href="${esc(opt.href)}" data-option="${esc(opt.id)}">
-        <span class="hub-card__art" aria-hidden="true">
+  /* One action row per portal option. The whole row is a single
+     link; the illustration is decorative (empty alt) because the
+     visible title + description carry the meaning. With You is
+     the featured (larger) first row. */
+  const hubActionRow = (opt) => `
+    <li>
+      <a class="hub-action${opt.featured ? " hub-action--featured" : ""}" href="${esc(opt.href)}" data-option="${esc(opt.id)}">
+        <span class="hub-action__art" aria-hidden="true">
           <img src="${esc(Portal.rootUrl(opt.art))}" alt="${esc(opt.artAlt || "")}" loading="lazy">
         </span>
-        <span class="hub-card__body">
-          <h3 class="hub-card__title">${esc(opt.title)}</h3>
-          <span class="hub-card__desc">${esc(opt.description)}</span>
+        <span class="hub-action__body">
+          <span class="hub-action__title">${esc(opt.title)}</span>
+          <span class="hub-action__desc">${esc(opt.description)}</span>
         </span>
+        <span class="hub-action__go" aria-hidden="true">→</span>
       </a>
     </li>`;
-
-  /* PortalWelcomeHeader */
-  const hubHeader = () => `
-    <header class="hub-head">
-      <img class="hub-smiley" src="${esc(Portal.rootUrl(cfg.portalDecor.smiley))}" alt="" aria-hidden="true">
-      <h1 class="hub-title">WE ARE WITH YOU</h1>
-      <h2 class="hub-kicker">ONE MESSAGE FOR YOU</h2>
-      <p class="hub-lead">There are many ways to share,<br>&ldquo;We Are With You.&rdquo;</p>
-    </header>`;
-
-  /* PortalFooterMessage */
-  const hubFooterMessage = () => `
-    <section class="hub-footer" aria-label="A message from GYCO">
-      <p>Thank you for being part of our community.</p>
-      <p>Wherever you are in your journey, we want you to know:</p>
-      <p class="hub-footer__brand">WE ARE WITH YOU.</p>
-      <p class="hub-footer__tag">Even Here, Even Now.</p>
-      <img class="hub-footer__logo" src="${esc(Portal.rootUrl(cfg.portalDecor.gycoLogo))}"
-           alt="GYCO — Greater Youth Collaborative Opus">
-    </section>`;
 
   async function pageHome() {
     const p = await Portal.requireAuth();
@@ -381,24 +354,28 @@
     Portal.buildPortalNav("home");
     Portal.logEvent("portal_home_viewed", { communityId: p.primary_community_id, oncePerPage: true });
 
+    const firstName = String(p.full_name || "").trim().split(/\s+/)[0] || "";
+    const comms = await Portal.communities().catch(() => []);
+    const myComm = comms.find((c) => c.id === p.primary_community_id);
+
     const el = root();
     el.innerHTML = `
-      <div class="hub">
-        ${hubHeader()}
-        <div class="hub-grid-wrap">
-          <ul class="hub-grid" data-hub-grid>
-            ${cfg.portalOptions.map(hubOptionCard).join("")}
-          </ul>
-          <img class="hub-flower hub-flower--right" src="${esc(Portal.rootUrl(cfg.portalDecor.flowersRight))}" alt="" aria-hidden="true">
-        </div>
-        ${hubFooterMessage()}
-      </div>`;
+      <header class="hub-head">
+        <h1>${firstName ? `Welcome, ${esc(firstName)}` : "Welcome"}</h1>
+        <p>What would you like to do?</p>
+      </header>
+      <ul class="hub-actions" data-hub-grid>
+        ${cfg.portalOptions.map(hubActionRow).join("")}
+      </ul>
+      ${myComm ? `<p class="hub-mycommunity">Your community:
+        <a href="${esc(myComm.slug)}.html">${esc(myComm.name)} →</a></p>` : `
+        <p class="hub-mycommunity"><a href="communities.html">Browse the six communities →</a></p>`}`;
 
-    /* Exactly one engagement event per card click, then navigate.
+    /* Exactly one engagement event per row click, then navigate.
        Navigation waits for the insert (or 350 ms, whichever comes
        first) so the event isn't lost when the page unloads. */
     el.querySelector("[data-hub-grid]").addEventListener("click", (ev) => {
-      const link = ev.target.closest("a.hub-card");
+      const link = ev.target.closest("a.hub-action");
       if (!link) return;
       const record = () => Portal.logEvent("portal_option_selected", {
         communityId: p.primary_community_id,
@@ -500,11 +477,10 @@
 
     el.innerHTML = `
       <section class="pcommunity-hero">
-        ${comm.image_url ? `<span class="logo-chip logo-chip--portal"><img src="${esc(comm.image_url.startsWith("http") ? comm.image_url : Portal.rootUrl(comm.image_url))}" alt="${esc(comm.name)} logo"
-            onerror="this.parentElement.remove()"></span>` : ""}
-        <div class="eyebrow">Community Portal${isPrimary ? " · Your community" : ""}</div>
+        ${comm.image_url ? `<img class="pcomm-logo" src="${esc(comm.image_url.startsWith("http") ? comm.image_url : Portal.rootUrl(comm.image_url))}" alt="${esc(comm.name)} logo"
+            onerror="this.remove()">` : ""}
+        ${isPrimary ? '<p class="pcomm-mine">Your community</p>' : ""}
         <h1>${esc(comm.name)}</h1>
-        <div class="page-hero__kicker">${esc(cfg.slogan)}</div>
         <p class="pintro__lead">${esc(comm.description || "")}</p>
         <div class="btn-row" style="justify-content:flex-start;margin-top:1.4rem;">
           <a class="btn btn--gold btn--sm" href="write-letter.html">Write a letter</a>
