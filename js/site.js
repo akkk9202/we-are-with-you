@@ -108,13 +108,13 @@ const logoChip = (p, extra = '') => `
         <div class="footer__brand-name">${ringMark(20)} ${SITE.name}</div>
         <p>${SITE.footerNote}</p>
       </div>
-      <div class="footer__col"><h4>Programs</h4><ul>${partnerLinks}</ul></div>
-      <div class="footer__col"><h4>Platform</h4><ul>
+      <div class="footer__col"><h4>Communities</h4><ul>${partnerLinks}</ul></div>
+      <div class="footer__col"><h4>About</h4><ul>
         <li><a href="our-philosophy.html">Our Philosophy</a></li>
         <li><a href="student-community.html">GYCO</a></li>
         <li><a href="learning.html">NADO School</a></li>
         <li><a href="media.html">Media</a></li>
-        <li><a href="join.html">Join Us</a></li>
+        <li><a href="join.html">Get Involved</a></li>
       </ul></div>
       <div class="footer__col"><h4>Connect</h4><ul>${connect}</ul></div>
     </div>
@@ -159,22 +159,23 @@ function wireFormButton(el) {
   });
 })();
 
-/* ── PATHWAY CARDS (homepage + Programs page) ── */
-/* Any element with [data-pathway-cards] is filled with one card per
-   partner in js/partners.js, in `order`. Edit names, order, logos,
-   and card text there — every page updates together. */
+/* ── COMMUNITY DIRECTORY (homepage "Our Communities") ── */
+/* Any element with [data-pathway-cards] is filled with one directory
+   row per partner in js/partners.js, in `order`. Edit names, order,
+   logos, and card text there — every page updates together. */
 (function renderPathwayCards() {
   const mounts = document.querySelectorAll('[data-pathway-cards]');
   if (!mounts.length) return;
-  const cards = pathwayList().map((p, i) => `
-    <article class="card card--pathway reveal reveal--d${(i % 3) + 1}">
+  const rows = pathwayList().map(p => `
+    <a class="index-item index-item--logo card--pathway" href="partner.html?p=${p.slug}">
       ${logoChip(p)}
-      <span class="card__tag">${p.audience || 'Pathway'}</span>
-      <h3>${p.name}</h3>
-      <p>${p.cardText || p.heroText}</p>
-      <a class="btn btn--ink btn--sm" href="partner.html?p=${p.slug}">Learn More</a>
-    </article>`).join('');
-  mounts.forEach(m => { m.innerHTML = cards; });
+      <span>
+        <span class="index-item__title">${p.name}</span>
+        <span class="index-item__meta">${p.audience || ''}</span>
+      </span>
+      <span class="index-item__go" aria-hidden="true">→</span>
+    </a>`).join('');
+  mounts.forEach(m => { m.classList.add('index-list'); m.innerHTML = rows; });
 })();
 
 /* ── HOMEPAGE INVITATION IMAGE ── */
@@ -366,10 +367,6 @@ function wireFormButton(el) {
         <span class="press-card__media-fallback" aria-hidden="true">♪<small>${a.publisher}</small></span>
       </div>
       <div class="press-card__body">
-        <div class="press-card__labels">
-          <span class="chip chip--gold">${a.label}</span>
-          <span class="chip chip--blue">Bilingual Coverage</span>
-        </div>
         <h3 class="press-card__title">${a.title}</h3>
         <p class="press-card__publisher">${a.publisher}</p>
         <p class="press-card__desc">${a.description}</p>
@@ -391,21 +388,22 @@ function wireFormButton(el) {
   if (!p) {
     root.innerHTML = `
     <section class="page-hero"><div class="container">
-      <div class="eyebrow">Programs</div>
       <h1>Choose a community</h1>
       <p class="page-hero__sub">This link didn't match a partner page. Pick one below.</p>
     </div></section>
-    <section class="section"><div class="container"><div class="cards cards--3">
+    <section class="section"><div class="container"><div class="index-list">
       ${pathwayList().map(pp => `
-        <div class="card">${logoChip(pp)}<h3>${pp.name}</h3><p>${pp.heroText}</p>
-        <a class="btn btn--ink btn--sm" href="partner.html?p=${pp.slug}">Open page</a></div>`).join('')}
+        <a class="index-item index-item--logo" href="partner.html?p=${pp.slug}">${logoChip(pp)}
+        <span><span class="index-item__title">${pp.name}</span>
+        <span class="index-item__meta">${pp.audience || ''}</span></span>
+        <span class="index-item__go" aria-hidden="true">→</span></a>`).join('')}
     </div></div></section>`;
     return;
   }
 
   document.title = `${p.name} — WE ARE WITH YOU`;
-  const cards = p.cards.map((c, i) => `
-    <div class="card reveal reveal--d${(i % 3) + 1}">
+  const cards = p.cards.map((c) => `
+    <div class="card">
       <h3>${c.title}</h3><p>${c.text}</p>
       <a class="btn btn--ink btn--sm" ${c.form ? `data-form="${c.form}" href="contact.html"` : `href="${c.href}"`}>${c.button}</a>
     </div>`).join('');
@@ -413,25 +411,17 @@ function wireFormButton(el) {
   root.innerHTML = `
   <section class="page-hero"><div class="container">
     ${p.logo ? logoChip(p, 'logo-chip--hero') : ''}
-    <div class="eyebrow">WE ARE WITH YOU · Partner Community</div>
     <h1>${p.heroTitle}</h1>
-    <div class="page-hero__kicker">${SITE.tagline}</div>
     <p class="page-hero__sub">${p.heroText}</p>
   </div></section>
 
   <section class="section"><div class="container">
-    <div class="section-head reveal"><div class="eyebrow">About this community</div>
-      <h2>Made for this place</h2><p>${p.about}</p></div>
+    <div class="section-head"><p>${p.about}</p></div>
     <div class="cards cards--3">${cards}</div>
+    <p class="caption" style="margin-top:2rem;">This page is usually reached through a QR code posted at ${p.name} — on flyers, cards, and program tables.</p>
   </div></section>
 
-  <section class="section section--mist"><div class="container center measure reveal">
-    <div class="eyebrow eyebrow--center">Scan. Open. Participate.</div>
-    <h2>One QR code, straight to this page</h2>
-    <p style="color:var(--muted);margin-top:1rem;">This page can be shared through QR codes on brochures, posters, cards, waiting rooms, program tables, newsletters, and digital messages — so visitors land exactly here in one tap.</p>
-  </section></div>
-
-  <section class="section section--dark"><div class="container center reveal">
+  <section class="section section--dark"><div class="container center">
     ${p.closing.map((line, i) => i === p.closing.length - 1
       ? `<h2 style="margin-top:1rem;"><em style="color:var(--gold-2)">${line}</em></h2>`
       : `<p class="lead" style="margin-inline:auto;">${line}</p>`).join('')}

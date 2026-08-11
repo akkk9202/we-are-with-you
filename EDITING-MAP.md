@@ -11,6 +11,9 @@ version for non-technical editors). For the rules, see `directives/website_editi
 > - Prefer editing the **data files** over hand-editing HTML.
 > - **Never rename a partner slug** (the object key) — change the `name` field instead.
 > - **Don't invent real values** for `REPLACE_ME…` / `TODO` — they render as safe fallbacks.
+> - **`.photo-placeholder` blocks** mark spots waiting for a real photo; each describes exactly
+>   what image is needed. Replace the whole `<figure>` with a `.photo-figure` + caption when the
+>   photo exists. Never fill one with a stock or AI-generated image.
 > - After any edit, run the regression gate (bottom of this file).
 
 ---
@@ -27,8 +30,8 @@ Site-wide settings: contact, forms, navigation, homepage images, featured press.
 | A Google Form link | `SITE.forms.<key>` | Keys: `studentApplication`, `partnerInquiry`, `songRequest`, `letterSubmission`, `hopeCapsule`, `teachingVideoRequest` |
 | Navigation items / order / labels | `SITE.nav` | Array order = display order. "Programs" builds its dropdown from `partners.js`. Don't change hrefs targeted by redirects |
 | The "Programs" CTA / Contact button | `SITE.nav` entry with `cta: true` | |
-| "Why we exist" homepage image | `SITE.home.invitation` | `src` + `alt`. Overwrite `assets/images/home-invitation.jpg` or repoint `src` |
-| Homepage carousel images / captions | `SITE.home.carousel[]` | Each item: `src`, `alt`, `caption`. One image at a time; no autoplay |
+| "You are invited" card image (One Message page) | `SITE.home.invitation` | `src` + `alt`. Overwrite `assets/images/home-invitation.jpg` or repoint `src` |
+| Flyer carousel images / captions (homepage "Our Communities") | `SITE.home.carousel[]` | Each item: `src`, `alt`, `caption`. One image at a time; no autoplay |
 | Featured press article | `SITE.press[]` | `title`, `publisher`, `description`, `languages`, `image`, `links[]`. **Preserve Korean text and encoded URLs exactly** |
 | Footer tagline note | `SITE.footerNote` | |
 
@@ -95,13 +98,13 @@ data-driven.
 
 | Page file | What it is |
 |---|---|
-| `index.html` | Homepage (hero, invitation, carousel) |
-| `our-philosophy.html` | Full philosophy narrative (content moved off the compact homepage — nothing deleted) |
+| `index.html` | Homepage — 7 sections: hero, What We Do, Recent Work, Our Communities, NADO School, About GYCO, final CTA |
+| `our-philosophy.html` | Condensed philosophy page (why we exist, NADO → WE, the three parts) |
 | `programs.html` | Programs / pathways overview |
 | `partner.html` | Renders a single partner via `?p=SLUG` |
 | `learning.html` | NADO School / learning |
 | `media.html` | Media + featured press |
-| `join.html` | Join Us |
+| `join.html` | Get Involved |
 | `student-community.html`, `gyco.html`, `about-gyco.html` | GYCO / community (about.html is now a redirect stub → index.html) |
 | `contact.html` | Contact |
 | `404.html` | Not-found page |
@@ -128,7 +131,7 @@ straight image swap.
 ```bash
 node --check js/site.js            # if JS changed
 npm install jsdom --no-save        # transient; node_modules is gitignored
-node test/smoke.test.js            # expect: 80 passed, 0 failed
+node test/smoke.test.js            # expect: 262 passed, 0 failed
 rm -rf node_modules                # optional cleanup
 ```
 

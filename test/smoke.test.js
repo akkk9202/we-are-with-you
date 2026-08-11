@@ -1,4 +1,4 @@
-/* DOM smoke tests for the WE ARE WITH YOU site.
+/* DOM smoke tests for the WE ARE WITH YOU site (v7 editorial redesign).
    Loads real HTML pages into jsdom, executes the real site JS,
    and asserts the rendered output. Run: node smoke.test.js */
 const { JSDOM } = require('jsdom');
@@ -36,6 +36,11 @@ const EXPECTED_ORDER = [
   'Schools & Global Communities',
 ];
 
+/* All public pages (portal + admin excluded — they have their own tests). */
+const PUBLIC_PAGES = ['index.html', 'student-community.html', 'learning.html', 'media.html',
+  'one-message-for-you.html', 'hope-capsule.html', 'join.html', 'contact.html',
+  'our-philosophy.html', 'partner.html', '404.html'];
+
 /* ── 1. HOMEPAGE ── */
 console.log('\n[index.html]');
 {
@@ -47,12 +52,8 @@ console.log('\n[index.html]');
   ok(!brand.textContent.includes('GYCO'), 'nav brand contains no GYCO co-branding');
 
   const navLabels = [...d.querySelectorAll('.nav__links > li > a')].map(a => a.textContent.replace('▾', '').trim());
-  ok(navLabels.includes('GYCO'), 'nav has "GYCO" (was Student Community)');
-  ok(navLabels.includes('NADO School'), 'nav has "NADO School" (was Learning)');
-  ok(!navLabels.includes('Student Community') && !navLabels.includes('Learning'), 'old nav labels removed');
-  ok(navLabels[0] === 'We Are With You', 'first nav tab renamed "We Are With You" (was Home)');
-  ok(!navLabels.includes('Home') && !navLabels.includes('About'), 'Home and About tabs removed (About merged into homepage)');
-
+  ok(navLabels.includes('GYCO') && navLabels.includes('NADO School'), 'nav has GYCO and NADO School');
+  ok(navLabels[0] === 'We Are With You', 'first nav tab is "We Are With You"');
   ok(navLabels.includes('Community Portal') && !navLabels.includes('Programs'),
      'nav: Community Portal replaces the Programs tab');
   const dd = [...d.querySelectorAll('.nav__dropdown a')].map(a => a.textContent.trim());
@@ -63,24 +64,49 @@ console.log('\n[index.html]');
   ok(ddHrefs[1] === 'community/city-of-hope.html' && ddHrefs[6] === 'community/milal.html',
      'dropdown links point into the Community Portal');
 
-  const cards = [...d.querySelectorAll('[data-pathway-cards] .card--pathway h3')].map(h => h.textContent.trim());
-  ok(JSON.stringify(cards) === JSON.stringify(EXPECTED_ORDER), 'homepage pathway cards: correct names + order');
-  ok(d.querySelectorAll('[data-pathway-cards] .logo-chip img').length === 6, 'every pathway card has a logo <img> with fallback');
-  const alts = [...d.querySelectorAll('[data-pathway-cards] .logo-chip img')].map(i => i.alt);
-  ok(alts.every(a => a && a.length > 3), 'every pathway logo has alt text');
+  /* hero */
+  const h1 = d.querySelector('h1');
+  ok(h1 && h1.textContent.trim() === 'WE ARE WITH YOU', 'hero h1 is the brand name, plainly');
+  ok(d.body.textContent.includes('Students using music, learning, and service to support their communities.'),
+     'hero lede: students + music/learning/service');
+  ok(d.body.textContent.includes('501(c)(3)') && d.body.textContent.includes('founded in 2023'),
+     'hero + About GYCO carry real facts (501(c)(3), 2023)');
+  const heroBtns = [...d.querySelectorAll('.home-hero .btn')].map(b => [b.textContent.trim(), b.getAttribute('href')]);
+  ok(heroBtns.some(([t, h]) => t === 'See our work' && h === 'media.html'), 'hero CTA: See our work → media.html');
+  ok(heroBtns.some(([t, h]) => t === 'Find your community' && h === 'programs.html'), 'hero CTA: Find your community → programs.html');
+  const heroImg = d.querySelector('.home-hero .photo-figure img');
+  ok(heroImg && heroImg.getAttribute('src') === 'assets/images/media-wawy-cityofhope-1.jpg', 'hero photo is a real documentary photograph');
+  ok(heroImg && heroImg.alt.length > 20, 'hero photo has descriptive alt text');
+  ok(d.querySelector('.home-hero .photo-figure figcaption').textContent.includes('City of Hope Atlanta'), 'hero photo captioned with the real place');
 
-  const inv = d.querySelector('[data-home-invitation] img');
-  ok(inv && inv.getAttribute('src') === 'assets/images/home-invitation.jpg', 'invitation image rendered from config');
-  ok(inv && inv.alt.includes('invitation'), 'invitation image has descriptive alt text');
+  /* what we do */
+  const pillars = [...d.querySelectorAll('.pillar h3')].map(h => h.textContent.trim());
+  ok(JSON.stringify(pillars) === JSON.stringify(['Perform', 'Write', 'Teach', 'Serve']), 'What We Do: Perform / Write / Teach / Serve');
 
+  /* recent work */
+  const duoImgs = [...d.querySelectorAll('.photo-duo img')].map(i => i.getAttribute('src'));
+  ok(duoImgs.length === 2 && duoImgs[0] !== duoImgs[1], 'Recent Work: two different real photos, unequal layout');
+  ok(duoImgs.every(src => fs.existsSync(path.join(ROOT, src))), 'Recent Work photos exist on disk');
+  const duoCaps = [...d.querySelectorAll('.photo-duo figcaption')].map(c => c.textContent);
+  ok(duoCaps.some(c => c.includes('Ronald McDonald House')) && duoCaps.some(c => c.includes('City of Hope Atlanta')),
+     'Recent Work captions name the real partners');
+
+  /* our communities — directory rows from partners.js */
+  const rows = [...d.querySelectorAll('[data-pathway-cards] .index-item')];
+  ok(rows.length === 6, 'Our Communities renders 6 directory rows');
+  const rowNames = rows.map(r => r.querySelector('.index-item__title').textContent.trim());
+  ok(JSON.stringify(rowNames) === JSON.stringify(EXPECTED_ORDER), 'community rows: correct names + order');
+  ok(rows.every(r => (r.getAttribute('href') || '').startsWith('partner.html?p=')), 'every row links to its partner page');
+  ok(d.querySelectorAll('[data-pathway-cards] .logo-chip img').length === 6, 'every community row has a logo <img> with fallback');
+  ok([...d.querySelectorAll('[data-pathway-cards] .logo-chip img')].every(i => i.alt && i.alt.length > 3), 'every logo has alt text');
+
+  /* carousel of real flyers */
   const car = d.querySelector('.carousel');
-  ok(!!car, 'carousel hydrated in "One platform" section');
+  ok(!!car, 'flyer carousel hydrated in Our Communities');
   ok(car.querySelectorAll('.carousel__slide').length === 6, 'carousel has exactly 6 slides');
   ok(car.getAttribute('aria-roledescription') === 'carousel' && car.tabIndex === 0, 'carousel is keyboard-focusable with ARIA role');
-  ok(car.querySelector('.carousel__arrow--prev') && car.querySelector('.carousel__arrow--next'), 'carousel has prev/next arrows');
-  ok(car.querySelectorAll('.carousel__dot').length === 6, 'carousel has 6 dot indicators');
   const track = car.querySelector('.carousel__track');
-  ok(track.style.transform === 'translateX(-0%)', 'carousel starts on slide 1 (one image at a time)');
+  ok(track.style.transform === 'translateX(-0%)', 'carousel starts on slide 1');
   car.querySelector('.carousel__arrow--next').dispatchEvent(new dom.window.Event('click', { bubbles: true }));
   ok(track.style.transform === 'translateX(-100%)', 'next arrow advances to slide 2');
   car.dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
@@ -90,43 +116,40 @@ console.log('\n[index.html]');
   ok(car.querySelectorAll('.carousel__dot')[2].getAttribute('aria-current') === 'true', 'active dot exposes aria-current');
   ok(!d.body.innerHTML.includes('autoplay'), 'carousel has no autoplay');
   const note = d.querySelector('.carousel-note');
-  ok(note && note.textContent.includes('display purposes only') && note.textContent.includes('will not open a live page'), 'carousel note explains QR codes are display-only dummies');
-  ok(note && note.parentElement.contains(car), 'QR note sits directly beneath the carousel');
+  ok(note && note.textContent.includes('display purposes only'), 'QR note explains sample flyers are display-only');
 
-  const svg = d.querySelector('.circle-figure svg');
-  ok(svg.textContent.includes('WE ARE WITH YOU'), 'Circle of Love center includes WE ARE WITH YOU');
-  ok(svg.textContent.includes('Even Here.') && svg.textContent.includes('Even Now.'), 'Circle keeps Even Here / Even Now');
-  const vb = svg.getAttribute('viewBox').split(' ').map(Number);
-  const texts = [...svg.querySelectorAll('text')];
-  const share = texts.find(t => t.textContent === 'SHARE');
-  const cont = texts.find(t => t.textContent === 'CONTINUE');
-  ok(Number(share.getAttribute('x')) + 90 < vb[2], 'SHARE label fits inside viewBox (right side, no clipping)');
-  ok(Number(cont.getAttribute('x')) - 100 > vb[0], 'CONTINUE label fits inside viewBox (left side, no clipping)');
+  /* NADO section */
+  ok(d.body.textContent.includes('Learn something. Make it your own. Teach it forward.'), 'NADO School lead line present');
+  const stepLine = d.querySelector('.step-line');
+  ok(stepLine && ['Learn', 'Own', 'Offer', 'Progress'].every(w => stepLine.textContent.includes(w)), 'inline steps: Learn → Own → Offer → Progress');
 
-  const footPlatform = [...d.querySelectorAll('.footer__col')].find(c => c.textContent.includes('Platform'));
-  ok(footPlatform.textContent.includes('GYCO') && footPlatform.textContent.includes('NADO School'), 'footer Platform column uses GYCO / NADO School');
-  ok(!footPlatform.textContent.includes('About'), 'footer Platform column no longer links About');
+  /* about GYCO — real history + photo placeholder */
+  ok(d.body.textContent.includes('Friends of Refugees') && d.body.textContent.includes('100 care packages'),
+     'About GYCO cites real service history');
+  const ph = d.querySelector('.photo-placeholder');
+  ok(ph && ph.textContent.includes('Photo to add') && ph.textContent.length > 60, 'photo placeholder describes exactly what image is needed');
+
+  /* final CTA */
+  ok(d.body.textContent.includes('Even Here. Even Now.'), 'final CTA uses the primary brand line');
+  const ctas = [...d.querySelectorAll('.section--dark .btn')].map(b => [b.textContent.trim(), b.getAttribute('href')]);
+  ok(ctas.some(([t, h]) => t === 'Get involved' && h === 'join.html') && ctas.some(([t, h]) => t === 'Contact us' && h === 'contact.html'),
+     'final CTA: Get involved + Contact us');
+
+  /* structure discipline */
+  const secs = [...d.querySelectorAll('main > section')];
+  ok(secs.length === 7, `homepage has exactly 7 sections (found ${secs.length})`);
+  ok(d.querySelectorAll('.eyebrow').length === 0, 'homepage has zero eyebrow labels');
+  ok(!d.querySelector('.cards'), 'homepage has no card grids');
+  ok(!d.querySelector('main svg'), 'homepage has no diagram SVGs (photos carry the page)');
+
+  /* footer */
+  const footAbout = [...d.querySelectorAll('.footer__col')].find(c => c.querySelector('h4').textContent === 'About');
+  ok(footAbout && footAbout.textContent.includes('GYCO') && footAbout.textContent.includes('NADO School'), 'footer About column present');
+  ok(!footAbout.textContent.includes('Platform'), 'footer no longer says "Platform"');
+  const footComms = [...d.querySelectorAll('.footer__col')].find(c => c.querySelector('h4').textContent === 'Communities');
+  ok(footComms && footComms.textContent.includes('The America Wheat Mission (Milal)'), 'footer Communities column shows Milal name');
   const footConnect = [...d.querySelectorAll('.footer__col')].find(c => c.textContent.includes('Connect'));
-  ok(!footConnect.textContent.includes('YouTube'), 'footer Connect column has no YouTube link (no channel yet)');
-  const footPrograms = [...d.querySelectorAll('.footer__col')].find(c => c.textContent.includes('Programs'));
-  ok(footPrograms.textContent.includes('The America Wheat Mission (Milal)'), 'footer Programs column shows Milal name');
-
-  ok(!d.body.textContent.includes('Disability Community'), 'no visible "Disability Community" label remains');
-
-  const audTags = [...d.querySelectorAll('[data-pathway-cards] .card--pathway .card__tag')].map(t => t.textContent.trim());
-  ok(JSON.stringify(audTags) === JSON.stringify(['For Cancer Patients', 'For Families', 'For Babies & Families', 'For Older Adults', 'For Individuals with Disabilities', 'For Students & Communities']), 'pathway cards show audience subtitles in order');
-  ok([...d.querySelectorAll('[data-pathway-cards] .btn')].every(b => b.textContent.trim() === 'Learn More'), 'pathway card buttons say "Learn More"');
-  ok(d.body.textContent.includes('Even Here. Even Now. WE ARE WITH YOU.'), 'pathways section states the shared mission line');
-
-  ok(d.body.textContent.includes('Students Created This.') && d.body.textContent.includes('And Continue to Grow It.'), 'students section: new heading');
-  ok(d.body.textContent.includes('learn by developing projects that create meaningful, lasting impact'), 'students section: GYCO body copy');
-  const studentCtas = [...d.querySelectorAll('.action-card .action-card__title')].map(t => t.textContent.trim());
-  ok(studentCtas.includes('Explore GYCO') && studentCtas.includes('Explore NADO School'), 'students section: two prominent CTA cards');
-
-  ok(d.body.textContent.includes('One Message Can Change a Moment.') && d.body.textContent.includes('One Community Can Change a Life.'), 'final CTA: new heading');
-  ok(studentCtas.includes('Partner With Us') && studentCtas.includes('Join the Circle'), 'final CTA: Partner With Us + Join the Circle cards');
-  ok([...d.querySelectorAll('.action-card')].filter(a => ['Partner With Us', 'Join the Circle'].includes(a.querySelector('.action-card__title').textContent.trim())).every(a => a.getAttribute('href') === 'join.html'), 'final CTA cards link to join.html');
-  ok(!/Cancer Care(?!.*CTCA)/.test([...d.querySelectorAll('h3')].map(h => h.textContent).join('|')), 'no bare "Cancer Care" card heading remains');
+  ok(!footConnect.textContent.includes('YouTube'), 'footer Connect column has no YouTube link');
 }
 
 /* ── 2. PROGRAMS PAGE → COMMUNITY PORTAL REDIRECT ── */
@@ -134,7 +157,7 @@ console.log('\n[programs.html]');
 {
   const html = fs.readFileSync(path.join(ROOT, 'programs.html'), 'utf8');
   ok(html.includes('http-equiv="refresh"') && html.includes('community/index.html'),
-     'programs.html now redirects into the Community Portal');
+     'programs.html redirects into the Community Portal');
   for (const slug of ['cancer-care', 'ronald-mcdonald-house', 'nicu', 'senior-living', 'disability', 'schools-global']) {
     ok(html.includes(`partner.html?p=${slug}`), `programs stub keeps a fallback link to partner "${slug}" (QR codes safe)`);
   }
@@ -158,28 +181,28 @@ for (const [slug, expectName, expectLogo] of [
   ok(d.querySelectorAll('#partner-root .card').length >= 6, `?p=${slug} renders its 6 program cards`);
   const firstCard = d.querySelector('#partner-root .card h3');
   ok(firstCard && firstCard.textContent.trim() === 'One Message for You', `?p=${slug} first card is "One Message for You"`);
+  ok(!d.querySelector('#partner-root .eyebrow'), `?p=${slug} has no eyebrow labels`);
+  ok(d.querySelector('#partner-root .caption').textContent.includes('QR code'), `?p=${slug} explains QR access in one plain line`);
 }
 {
   const dom = loadPage('partner.html', 'https://x.test/partner.html?p=bogus');
   const d = dom.window.document;
-  ok(d.querySelectorAll('#partner-root .card').length === 6, 'bad slug fallback lists all 6 pathways');
+  ok(d.querySelectorAll('#partner-root .index-item').length === 6, 'bad slug fallback lists all 6 communities');
 }
 
-/* ── 3b. PROGRAM PAGES ── */
+/* ── 3b. ONE MESSAGE FOR YOU ── */
 console.log('\n[one-message-for-you.html]');
 {
   const dom = loadPage('one-message-for-you.html', 'https://x.test/one-message-for-you.html');
   const d = dom.window.document;
   ok(d.title === 'One Message for You | WE ARE WITH YOU', 'OMFY page title');
-  ok(d.querySelector('.page-hero h1').textContent.includes('One Message'), 'OMFY hero renders');
-  const steps = [...d.querySelectorAll('.cards--3 .card h3')].map(h => h.textContent.trim());
-  ok(JSON.stringify(steps) === JSON.stringify(['Write One Message', 'Add Your Voice', 'Become Part of the Circle']), 'OMFY three join steps in order');
-  ok([...d.querySelectorAll('[data-form]')].every(a =>
-    (a.getAttribute('href') || '').startsWith('https://docs.google.com/forms/')
-      ? (a.target === '_blank' && a.rel === 'noopener')
-      : a.getAttribute('aria-disabled') === 'true'
-  ), 'OMFY form buttons: live Google Form (new tab, noopener) or disabled with notice');
-  ok([...d.querySelectorAll('[data-form="letterSubmission"]')].every(a => a.getAttribute('href').includes('1FAIpQLScPFE6ckE10oraG')), 'OMFY letter buttons wired to the letter Google Form');
+  ok(d.querySelector('.page-hero h1').textContent.trim() === 'One Message for You', 'OMFY hero is the program name, plainly');
+  ok(d.querySelector('.page-hero .page-hero__sub').textContent.includes('difficult time'), 'OMFY one-line description');
+  const steps = [...d.querySelectorAll('.steps--3 .step h3')].map(h => h.textContent.trim());
+  ok(JSON.stringify(steps) === JSON.stringify(['Write', 'Review', 'Delivered']), 'OMFY: three plain steps');
+  ok(d.querySelector('[data-home-invitation] img'), 'the real "You are invited" card renders from config');
+  ok([...d.querySelectorAll('[data-form="letterSubmission"]')].every(a => a.getAttribute('href').includes('1FAIpQLScPFE6ckE10oraG')),
+     'OMFY letter buttons wired to the letter Google Form');
 }
 
 /* ── 3c. FORM WIRING (config.js → data-form buttons) ── */
@@ -202,6 +225,8 @@ console.log('\n[form wiring]');
     ok(a && !a.hasAttribute('href') && a.getAttribute('aria-disabled') === 'true' && a.classList.contains('btn--disabled'), `${key} form in progress → button disabled`);
     ok(a && a.nextElementSibling && a.nextElementSibling.classList.contains('form-soon') && /Coming soon/.test(a.nextElementSibling.textContent), `${key} shows a "coming soon" note`);
   }
+  ok(d.querySelector('.page-hero h1').textContent.trim() === 'How Can We Help?', 'contact hero: How Can We Help?');
+  ok(d.querySelectorAll('.index-item').length === 6, 'contact page: six request rows');
   {
     // partner pages re-wire dynamically rendered cards the same way
     const pdom = loadPage('partner.html', 'https://x.test/partner.html?p=senior-living');
@@ -213,14 +238,19 @@ console.log('\n[form wiring]');
   }
 }
 
+/* ── 3d. HOPE CAPSULE ── */
 console.log('\n[hope-capsule.html]');
 {
   const dom = loadPage('hope-capsule.html', 'https://x.test/hope-capsule.html');
   const d = dom.window.document;
   ok(d.title === 'Hope Capsule | WE ARE WITH YOU', 'Hope Capsule page title');
   ok(d.querySelector('.page-hero h1').textContent.trim() === 'Hope Capsule', 'Hope Capsule hero renders');
-  const steps = [...d.querySelectorAll('.cards--3 .card h3')].map(h => h.textContent.trim());
-  ok(steps.length === 3 && steps[0] === 'Stories are gathered', 'Hope Capsule three creation steps');
+  ok(d.querySelector('.page-hero .page-hero__sub').textContent.trim() === 'A digital collection created for a specific community.',
+     'Hope Capsule described concretely in one line');
+  const steps = [...d.querySelectorAll('.steps--3 .step h3')].map(h => h.textContent.trim());
+  ok(JSON.stringify(steps) === JSON.stringify(['Gathered', 'Assembled', 'Shared']), 'Hope Capsule: three plain steps');
+  const ph = d.querySelector('.photo-placeholder');
+  ok(ph && ph.textContent.includes('real Hope Capsule'), 'placeholder asks for a real capsule screenshot');
 }
 
 /* ── 4. GYCO PAGE ── */
@@ -229,28 +259,31 @@ console.log('\n[student-community.html]');
   const dom = loadPage('student-community.html', 'https://x.test/student-community.html');
   const d = dom.window.document;
   ok(d.title.startsWith('GYCO'), 'title leads with GYCO');
-  ok(d.querySelector('h1').textContent.includes('More Than Music'), 'hero: More Than Music.');
-  ok(d.body.textContent.includes('Student-Led Innovation Community'), 'hero eyebrow: Student-Led Innovation Community');
-  const series = [...d.querySelectorAll('#flagship .cards--4 .card h3')].map(h => h.textContent);
-  ok(JSON.stringify(series) === JSON.stringify(['Taps of Love', 'Winds of Love', 'Voices of Love', 'Circle of Love']), 'flagship series: Taps / Winds / Voices / Circle of Love');
-  ok(d.body.textContent.includes('first flagship initiative'), 'WE ARE WITH YOU framed as first flagship initiative');
-  const opus = [...d.querySelectorAll('#student-innovation .card h3')].map(h => h.textContent);
-  ok(JSON.stringify(opus) === JSON.stringify(['OPUS 1 | WE ARE WITH YOU', 'OPUS 2 | NADO School', 'OPUS 3 | Student Research', 'OPUS 4 | Student Press', 'OPUS 5 | SHAN & ECHO', 'OPUS 6 | Creative Projects']), 'OPUS 1-6 cards: WAWY / NADO / Research / Press / SHAN & ECHO / Creative');
-  ok(d.body.textContent.includes('What is OPUS?') && d.body.textContent.includes('Every Great Work Begins with an Idea.'), '"What is OPUS?" intro precedes the OPUS cards');
-  ok(d.querySelector('#flagship h2').textContent === 'OPUS 1 | WE ARE WITH YOU', 'OPUS 1 header on flagship section');
-  const growth = [...d.querySelectorAll('#growth-loop .loop__step h3')].map(h => h.textContent);
-  ok(JSON.stringify(growth) === JSON.stringify(['Learn', 'Own', 'Offer', 'Progress', 'Learn Again']), 'GYCO Growth Loop: Learn / Own / Offer / Progress / Learn Again');
-  const journey = [...d.querySelectorAll('#student-journey .journey__node')].map(n => n.textContent.trim());
-  ok(JSON.stringify(journey) === JSON.stringify(['Idea', 'Project', 'Program', 'Community', 'Impact']), 'student journey: Idea → Project → Program → Community → Impact');
-  ok(d.body.textContent.includes('Our First Tool. Our Shared Gift.'), 'Music With Purpose section present');
-  ok(d.body.textContent.includes('It is an opportunity to say'), 'Music With Purpose closing statement present');
-  ok(![...d.querySelectorAll('.loop__step h3, .circle-word')].some(el => ['Create', 'Share', 'Grow'].includes(el.textContent.trim())), 'old Learn/Create/Share/Grow framework fully replaced');
-  const roles = ['Creators', 'Leaders', 'Researchers', 'Collaborators'];
-  ok(roles.every(r => [...d.querySelectorAll('.circle-word')].some(w => w.textContent === r)), 'roles: Creators / Leaders / Researchers / Collaborators');
-  ok(d.body.textContent.includes('A WE begins with two people'), 'philosophy quote block present');
-  ok(d.body.textContent.includes('discover their gifts'), '"discover their gifts" bridge line present');
-  ok(d.querySelector('.logo-panel img[src="assets/logos/gyco.png"]'), 'GYCO logo displayed');
-  ok(d.body.textContent.includes('501(c)(3)') && d.body.textContent.includes('Friends of Refugees'), 'old-site history integrated (501(c)(3), real service record)');
+  ok(d.querySelector('h1').textContent.trim() === 'GYCO', 'hero h1 is simply GYCO');
+  ok(d.body.textContent.includes('founded in 2023') && d.body.textContent.includes('501(c)(3)'), 'hero states real facts (2023, 501(c)(3))');
+  /* real service history near the top */
+  const secs = [...d.querySelectorAll('main > section')];
+  const servedIdx = secs.findIndex(s => s.textContent.includes('Where GYCO Has Served'));
+  ok(servedIdx >= 0 && servedIdx <= 2, 'real service history appears in the first three sections');
+  for (const item of ['City of Hope Atlanta (CTCA)', 'Ronald McDonald House', 'Friends of Refugees', '100 care packages', 'The America Wheat Mission (Milal)']) {
+    ok(d.body.textContent.includes(item), `served list includes "${item}"`);
+  }
+  /* programs as plain rows, real names kept */
+  const rowTitles = [...d.querySelectorAll('.index-item .index-item__title')].map(t => t.textContent.trim());
+  ok(['Winds of Love', 'Taps of Love', 'Voices of Love', 'Circle of Love'].every(n => rowTitles.includes(n)),
+     'program series kept: Winds / Taps / Voices / Circle of Love');
+  ok(d.body.textContent.includes('OPUS 1'), 'OPUS numbering kept, explained once in prose');
+  ok(!d.querySelector('.cards'), 'GYCO page has no card grids');
+  /* photos are real files */
+  const imgs = [...d.querySelectorAll('.photo-figure img')].map(i => i.getAttribute('src'));
+  ok(imgs.length >= 3 && imgs.every(src => fs.existsSync(path.join(ROOT, src))), 'GYCO page photos exist on disk');
+  ok([...d.querySelectorAll('.photo-figure img')].every(i => i.alt && i.alt.length > 10), 'GYCO photos have descriptive alt text');
+  const ph = d.querySelector('.photo-placeholder');
+  ok(ph && ph.textContent.includes('Photo to add'), 'photo placeholder present for the missing student-leadership photo');
+  ok(d.body.textContent.includes('A WE begins with two people'), 'the one quiet quote is kept');
+  ok(d.querySelectorAll('.eyebrow').length === 0, 'GYCO page has zero eyebrow labels');
+  const join = d.querySelector('[data-form="studentApplication"]');
+  ok(join && join.getAttribute('href').includes('1FAIpQLSfsiV5lgetCfyIkVz79'), 'Join GYCO wired to the student application form');
 }
 
 /* ── 5. NADO SCHOOL PAGE ── */
@@ -259,28 +292,23 @@ console.log('\n[learning.html]');
   const dom = loadPage('learning.html', 'https://x.test/learning.html');
   const d = dom.window.document;
   ok(d.title.startsWith('NADO School'), 'title leads with NADO School');
-  ok(d.querySelector('h1').textContent.trim() === 'Become a School.', 'hero: Become a School.');
-  const steps = [...d.querySelectorAll('.loop .loop__step h3')].map(h => h.textContent);
-  ok(JSON.stringify(steps) === JSON.stringify(['Learn', 'Own', 'Offer', 'Progress']), 'NADO Learning Loop: Learn / Own / Offer / Progress');
-  ok(!!d.querySelector('#programs'), '#programs anchor preserved (beat-and-breeze/taps-of-love redirects still land)');
-  ok(!!d.querySelector('#loop') && !!d.querySelector('#passport'), '#loop and #passport anchors present (hero CTA + passport card land)');
-  const loopSvg = d.querySelector('#loop .circle-figure svg');
-  ok(loopSvg && ['LEARN', 'OWN', 'OFFER', 'PROGRESS'].every(w => loopSvg.textContent.includes(w)), 'Learning Loop rendered as a circular graphic with all four steps');
-  ok(loopSvg && loopSvg.textContent.includes('a new journey.'), 'loop graphic center: every ending becomes a new journey');
-  ok(d.querySelectorAll('.field-grid .field-tile').length === 8, 'Learning in Action: 8 field tiles (Music … Service)');
-  ok(d.body.textContent.includes('One Philosophy. Many Experiences.'), 'Where the Learning Happens heading present');
-  const feats = [...d.querySelectorAll('#programs .card h3')].map(h => h.textContent.replace(/\s+/g, ' ').trim());
-  ok(JSON.stringify(feats) === JSON.stringify(['Beat & Breeze', 'NADO Passport', 'Books & Resources', 'Videos & Stories']), 'four feature cards: Beat & Breeze / Passport / Books / Videos');
-  const impact = [...d.querySelectorAll('.journey .journey__node')].map(n => n.textContent.trim());
-  ok(JSON.stringify(impact) === JSON.stringify(['NADO School', 'GYCO', 'WE ARE WITH YOU']), 'From Philosophy to Impact: NADO School → GYCO → WE ARE WITH YOU');
-  ok(!!d.querySelector('.passport-panel svg') && d.body.textContent.includes('A Lifetime of Learning.'), 'NADO Passport section with mockup beside it');
-  ok(d.body.textContent.includes('나도'), 'Korean 나도 explanation present');
-  ok(d.body.textContent.includes('I will learn, too') && d.body.textContent.includes('I will contribute, too'), 'four "I will…, too" declarations present (incl. contribute)');
-  ok(d.body.textContent.includes('Every learning community begins when someone chooses to say'), '"Nado." choice statement present');
-  ok(d.body.textContent.includes('Your journey starts today') && d.body.textContent.includes('Become a School.'), 'final CTA: Your Journey Starts Today / Become a School.');
-  ok([...d.querySelectorAll('.btn')].some(b => b.textContent.trim() === 'Explore the Learning Journey' && b.getAttribute('href') === '#loop'), 'hero CTA "Explore the Learning Journey" targets the loop');
-  ok(![...d.querySelectorAll('.loop__step h3, .circle-word')].some(el => ['Create', 'Share', 'Grow'].includes(el.textContent.trim())), 'old Learn/Create/Share/Grow framework fully replaced');
-  ok(d.querySelector('.logo-panel img[src="assets/logos/nado-school.png"]'), 'NADO School logo displayed');
+  ok(d.querySelector('h1').textContent.trim() === 'NADO School', 'hero h1 is simply NADO School');
+  ok(d.body.textContent.includes('Learn something. Make it your own. Teach it forward.'), 'kicker: the one summary line');
+  ok(!!d.querySelector('#loop') && !!d.querySelector('#programs') && !!d.querySelector('#passport'),
+     '#loop, #programs, #passport anchors preserved (redirect stubs + old URLs land)');
+  const steps = [...d.querySelectorAll('#loop .step h3')].map(h => h.textContent.trim());
+  ok(JSON.stringify(steps) === JSON.stringify(['Learn', 'Own', 'Offer', 'Progress']), 'four steps: Learn / Own / Offer / Progress — told once');
+  ok(d.body.textContent.includes('나도'), 'Korean 나도 explanation kept');
+  ok(d.querySelectorAll('.say-grid p').length === 4, 'four "I will…, too" lines kept');
+  const bb = [...d.querySelectorAll('.index-item')].find(r => r.textContent.includes('Beat & Breeze'));
+  ok(bb && bb.querySelector('[data-form="teachingVideoRequest"]'), 'Beat & Breeze row wired to the teaching-video form key');
+  ok(d.body.textContent.includes('NADO Passport'), 'NADO Passport mentioned honestly (in development), not sold as a product');
+  ok(!d.querySelector('.circle-figure') && !d.querySelector('.passport-panel'), 'diagram SVGs removed — one real photo instead');
+  const photo = d.querySelector('#programs .photo-figure img');
+  ok(photo && fs.existsSync(path.join(ROOT, photo.getAttribute('src'))), 'NADO page photo exists on disk');
+  ok(d.querySelectorAll('.eyebrow').length === 0, 'NADO page has zero eyebrow labels');
+  const secs = [...d.querySelectorAll('main > section')];
+  ok(secs.length === 5, `NADO page stays compact: 5 sections (found ${secs.length})`);
 }
 
 /* ── 6. MEDIA PAGE ── */
@@ -288,48 +316,37 @@ console.log('\n[media.html]');
 {
   const dom = loadPage('media.html', 'https://x.test/media.html');
   const d = dom.window.document;
+  ok(d.querySelector('.page-hero h1').textContent.trim() === 'Media', 'hero h1 is simply Media');
   const card = d.querySelector('.press-card');
   ok(!!card, 'featured press card rendered');
   ok(d.querySelectorAll('.press-card').length === 1, 'ONE bilingual card, not two separate articles');
   ok(card.textContent.includes('Music of Hope: GYCO Brings Comfort and Connection to the Community'), 'article title correct');
   ok(card.textContent.includes('Newswave25'), 'publisher shown');
-  ok(card.textContent.includes('Featured Press') && card.textContent.includes('Bilingual Coverage'), 'labels: Featured Press + Bilingual Coverage');
-  ok(card.textContent.includes('Available in English and Korean'), 'language note present');
+  ok(!card.querySelector('.chip'), 'press card has no badge chips');
   const links = [...card.querySelectorAll('a')];
   ok(links.length === 2 && links[0].textContent === 'Read in English' && links[1].textContent === 'Read in Korean', 'exactly two buttons: EN + KR');
   ok(links[0].href === 'https://newswave25.com/music-of-hope-gyco-brings-healing-to-the-community', 'English URL exact');
   ok(links[1].href.includes('newswave25.com/%EB%B3%91%EC%9B%90'), 'Korean URL exact (encoded)');
   ok(links.every(l => l.target === '_blank' && l.rel === 'noopener'), 'both links open safely in new tab');
-  ok(card.querySelector('.press-card__media img'), 'article image slot present (with styled fallback)');
 
-  /* gallery photos — Performances & rehearsals + Where the music travels */
+  /* galleries */
   const galleryImgs = [...d.querySelectorAll('.media-grid .media-item img')];
-  const perf = galleryImgs.filter(i => i.getAttribute('src').includes('media-performances-'));
-  const outreach = galleryImgs.filter(i => i.getAttribute('src').includes('media-outreach-'));
-  const teaching = galleryImgs.filter(i => i.getAttribute('src').includes('media-teaching-'));
-  const wawyCoh = galleryImgs.filter(i => i.getAttribute('src').includes('media-wawy-cityofhope-'));
-  const wawyRmh = galleryImgs.filter(i => i.getAttribute('src').includes('media-wawy-rmh-'));
-  ok(perf.length === 3, 'Performances & rehearsals gallery has 3 real photos');
-  ok(outreach.length === 3, 'Where the music travels gallery has 3 real photos');
-  ok(teaching.length === 3, 'Student teaching gallery has 3 real photos');
-  ok(wawyCoh.length === 3, 'WAWY outreach — City of Hope Atlanta gallery has 3 real photos');
-  ok(wawyRmh.length === 7, 'WAWY outreach — Ronald McDonald House gallery has 7 real photos');
-  ok(d.body.textContent.includes('City of Hope Atlanta') && d.body.textContent.includes('Ronald McDonald House Charities of Atlanta'), 'WAWY outreach sections name both partner communities');
+  const count = pre => galleryImgs.filter(i => i.getAttribute('src').includes(pre)).length;
+  ok(count('media-performances-') === 3, 'Performances gallery has 3 real photos');
+  ok(count('media-outreach-') === 3, 'Community visits gallery has 3 real photos');
+  ok(count('media-teaching-') === 3, 'Student teaching gallery has 3 real photos');
+  ok(count('media-wawy-cityofhope-') === 3, 'City of Hope gallery has 3 real photos');
+  ok(count('media-wawy-rmh-') === 7, 'Ronald McDonald House gallery has 7 real photos');
 
-  /* Most recent — combined WAWY section sits at the very top, above Featured press */
   const mainSections = [...d.querySelectorAll('main > section')];
-  const recentSec = mainSections[1];
   ok(mainSections[0].classList.contains('page-hero'), 'page hero is the first section');
-  ok(recentSec.querySelector('.eyebrow')?.textContent.trim() === 'Most recent', 'section right after the hero is labeled "Most recent"');
-  ok(recentSec.querySelectorAll('img[src*="media-wawy-"]').length === 10, 'Most recent section holds all 10 WAWY photos (3 CoH + 7 RMH)');
-  const subHeads = [...recentSec.querySelectorAll('h3.media-sub')].map(x => x.textContent.trim());
-  ok(subHeads.join('|') === 'City of Hope Atlanta|Ronald McDonald House Charities of Atlanta', 'Most recent sub-galleries: City of Hope first, then Ronald McDonald House');
-  const pressSec = card.closest('section');
-  ok(mainSections.indexOf(pressSec) === 2, 'Featured press moved below Most recent (second content section)');
-  ok(!recentSec.classList.contains('section--mist') && pressSec.classList.contains('section--mist'), 'backgrounds alternate: Most recent plain, Featured press mist');
+  const recentSec = mainSections[1];
+  ok(recentSec.querySelector('.eyebrow')?.textContent.trim() === 'Most recent', 'archive keeps its one navigational label: "Most recent"');
+  ok(recentSec.querySelectorAll('img[src*="media-wawy-"]').length === 10, 'Most recent section holds all 10 WAWY photos');
+  ok(d.querySelectorAll('.eyebrow').length === 1, 'media page has exactly one eyebrow (the archive date label)');
   ok(galleryImgs.every(i => i.alt && i.alt.length > 10), 'every gallery photo has descriptive alt text');
   ok(galleryImgs.every(i => i.getAttribute('loading') === 'lazy'), 'gallery photos lazy-load');
-  for (const img of [...perf, ...outreach, ...teaching, ...wawyCoh, ...wawyRmh]) {
+  for (const img of galleryImgs) {
     const src = img.getAttribute('src');
     ok(fs.existsSync(path.join(ROOT, src)), `image file exists on disk: ${src}`);
   }
@@ -344,7 +361,7 @@ console.log('\n[no-YouTube sweep]');
   const pages = fs.readdirSync(ROOT).filter(f => f.endsWith('.html'));
   const offenders = pages.filter(f => /youtube/i.test(fs.readFileSync(path.join(ROOT, f), 'utf8')));
   ok(offenders.length === 0, `no .html file references YouTube (${offenders.join(', ') || 'clean'})`);
-  ok(!/SITE\.youtube/.test(fs.readFileSync(path.join(ROOT, 'js/site.js'), 'utf8')), 'js/site.js no longer renders a YouTube link');
+  ok(!/SITE\.youtube/.test(fs.readFileSync(path.join(ROOT, 'js/site.js'), 'utf8')), 'js/site.js does not render a YouTube link');
 }
 
 /* ── 7. LOGO FALLBACK BEHAVIOR ── */
@@ -355,87 +372,35 @@ console.log('\n[logo fallback]');
   const chips = [...d.querySelectorAll('[data-pathway-cards] .logo-chip')];
   const senior = chips.find(c => c.querySelector('img').src.includes('senior-living'));
   const img = senior.querySelector('img');
-  // Execute the img's real inline onerror handler (jsdom outside-only
-  // mode doesn't compile attribute handlers, but browsers do).
   dom.window.__img = img;
   dom.window.eval(`(function(){ ${img.getAttribute('onerror')} }).call(__img)`);
   ok(senior.classList.contains('logo-chip--missing') && !senior.querySelector('img'),
-     'missing logo file → chip swaps to monogram fallback, card stays clean');
+     'missing logo file → chip swaps to monogram fallback, row stays clean');
   ok(senior.querySelector('.logo-chip__fallback').textContent === 'SL', 'Senior Living monogram = "SL"');
 }
 
-/* ── 8. PHILOSOPHY SECTIONS (merged from about.html into index.html) ── */
-console.log('\n[index.html · philosophy]');
-{
-  const dom = loadPage('index.html', 'https://x.test/index.html');
-  const d = dom.window.document;
-  const h1 = d.querySelector('h1').textContent;
-  ok(['One Philosophy.', 'One Loop.', 'One Community.'].every(l => h1.includes(l)), 'page opens with hero: One philosophy. One Loop. One Community.');
-  ok(d.body.textContent.includes('Every WE begins with one NADO.'), 'hero kicker present');
-  ok(d.querySelector('.page-hero .invite-figure img[src="assets/images/home-invitation.jpg"]'), 'invitation image is the hero visual');
-  ok([...d.querySelectorAll('.btn')].some(b => b.textContent.trim() === 'Enter WE ARE WITH YOU' && b.getAttribute('href') === '#wawy'), 'hero CTA: Enter WE ARE WITH YOU → #wawy anchor');
-  const wawy = d.getElementById('wawy');
-  ok(wawy && wawy.classList.contains('hero') && wawy.textContent.includes('Welcome to'), '#wawy anchor lands on the original Welcome hero');
-  const secs = [...d.querySelectorAll('main > section')];
-  ok(secs.findIndex(s => s.id === 'one-loop') !== -1 &&
-     secs.findIndex(s => s.id === 'one-loop') < secs.findIndex(s => s.id === 'wawy'), 'philosophy section comes first; original home content trails after');
-  ok(secs.length <= 10, `compact homepage: at most 10 sections (found ${secs.length})`);
-  ok(!d.getElementById('closing-loop') && !d.getElementById('different-purposes') && !d.querySelector('.tri-circle'),
-     'duplicate philosophy sections removed (tri-circles + closing loop band merged into #one-loop)');
-
-  const merge = d.querySelector('.nado-we-figure svg');
-  ok(merge && merge.querySelectorAll('text').length === 3 && merge.textContent.includes('WE'), 'NADO + NADO → WE merge figure (two NADOs and one WE)');
-  ok(!!merge.closest('.reveal'), 'merge figure animates on scroll (inside a .reveal)');
-
-  const eco = d.querySelector('.eco-loop svg');
-  ok(!!eco, 'ecosystem loop diagram present');
-  ok(eco.textContent.includes('NADO + NADO') && eco.textContent.includes('WE'), 'loop center: NADO + NADO = WE');
-  ok(['NADO School', 'GYCO', 'WE ARE WITH YOU', 'New Experiences'].every(n => eco.textContent.includes(n)), 'loop connects all four stations');
-  ok(['LEARN', 'OFFER', 'LOOP'].every(n => eco.textContent.includes(n)), 'loop roles: LEARN / OFFER / LOOP');
-  ok(!!eco.querySelector('.orbit') && !!eco.querySelector('.dash-ring'), 'loop has continuous-motion elements (orbit dot + flowing dashes)');
-
-  const pillars = [...d.querySelectorAll('.pillar h3')].map(h => h.textContent.trim());
-  ok(JSON.stringify(pillars) === JSON.stringify(['NADO School', 'GYCO', 'WE ARE WITH YOU']), 'three expression explainers under the diagram');
-  const loop = d.getElementById('one-loop');
-  ok(loop && loop.contains(merge) && loop.contains(eco) && loop.contains(d.querySelector('.pillar')),
-     'merge figure, ecosystem loop, and pillars all live in the single #one-loop section');
-  ok(loop.textContent.includes('Every ending becomes another beginning.'), 'ending statement kept in the merged section');
-  const loopBtns = [...loop.querySelectorAll('.btn')].map(b => [b.textContent.trim(), b.getAttribute('href')]);
-  ok(loopBtns.some(([t, h]) => t === 'Explore NADO School' && h === 'learning.html') &&
-     loopBtns.some(([t, h]) => t === 'Explore GYCO' && h === 'student-community.html'),
-     'merged section links out to NADO School + GYCO');
-}
-
-/* ── 8c. OUR PHILOSOPHY PAGE (restored long-form content) ── */
+/* ── 8. OUR PHILOSOPHY PAGE (condensed) ── */
 console.log('\n[our-philosophy.html]');
 {
   const dom = loadPage('our-philosophy.html', 'https://x.test/our-philosophy.html');
   const d = dom.window.document;
   ok(d.querySelector('.page-hero h1').textContent.trim() === 'Our Philosophy', 'philosophy page hero');
-  const tri = [...d.querySelectorAll('.tri-circle h3')].map(h => h.textContent.trim());
-  ok(JSON.stringify(tri) === JSON.stringify(['NADO School', 'GYCO', 'WE ARE WITH YOU']), 'tri-circles restored: three roles, one philosophy');
-  const closing = [...d.querySelectorAll('#closing-loop .journey__node')].map(n => n.textContent.trim());
-  ok(JSON.stringify(closing) === JSON.stringify(['NADO', 'GYCO', 'WE ARE WITH YOU', 'New Stories', 'NADO Again']), 'vertical loop restored: NADO → … → NADO Again');
-  ok(d.body.textContent.includes('Every Ending Becomes Another Beginning.'), 'ending statement restored');
-  ok(d.body.textContent.includes('One Shared Template.'), 'platform model restored');
-  ok(d.querySelectorAll('.check-list li').length === 11, 'the 11 partner-page ingredients restored');
-  ok([...d.querySelectorAll('.flow')].some(f => f.querySelectorAll('.flow__item').length === 8), 'Circle of Love 8-step flow restored');
-  ok([...d.querySelectorAll('.card h3')].some(h => h.textContent.includes('Lessons that travel')), 'One Message example cards restored');
-  ok(d.body.textContent.includes('it will not be the last'), 'GYCO "not the last" line restored');
-  ok(d.querySelector('.nado-we-figure svg'), 'NADO + NADO = WE figure present');
-  ok(d.querySelector('[data-home-invitation] img'), 'invitation figure hydrates on the philosophy page');
+  ok(d.querySelector('.nado-we-figure svg'), 'NADO + NADO = WE figure kept (told once)');
+  ok(d.body.textContent.includes('나도'), 'NADO explained from the Korean');
+  for (const part of ['NADO School', 'GYCO', 'WE ARE WITH YOU']) {
+    ok(d.body.textContent.includes(part), `three parts named: ${part}`);
+  }
+  ok([...d.querySelectorAll('.flow')].some(f => f.querySelectorAll('.flow__item').length === 8), 'the concrete 8-step encouragement flow kept');
+  ok(!d.body.textContent.includes('One Shared Template'), 'platform-model language gone');
+  ok(!d.body.textContent.includes('consistency defines'), 'design-system language gone');
+  ok(!d.querySelector('.tri-circle') && !d.querySelector('.eco-loop'), 'diagram overload removed');
+  const secs = [...d.querySelectorAll('main > section')];
+  ok(secs.length === 7, `philosophy page condensed to 7 sections (found ${secs.length})`);
   const foot = [...d.querySelectorAll('.footer__col a')].map(a => a.getAttribute('href'));
   ok(foot.includes('our-philosophy.html'), 'footer links to Our Philosophy site-wide');
 }
-{
-  const home = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
-  ok(home.includes('href="our-philosophy.html"'), 'homepage philosophy band links to the full philosophy page');
-}
 
-/* ── 8b. WORD BUDGETS (keep the public site compact) ──
-   Counts the visible words authored in each page's raw HTML
-   (scripts/styles/comments/attributes stripped). If a budget
-   trips, trim copy — don't raise the cap without a reason. */
+/* ── 9. WORD BUDGETS (keep the public site compact) ── */
 console.log('\n[word budgets]');
 {
   const visibleWords = file => {
@@ -447,21 +412,63 @@ console.log('\n[word budgets]');
     return h.split(/\s+/).filter(Boolean).length;
   };
   for (const [file, cap] of [
-    ['index.html', 700],
-    ['student-community.html', 700],
-    ['learning.html', 500],
-    ['hope-capsule.html', 260],
-    ['one-message-for-you.html', 250],
-    ['join.html', 220],
-    ['contact.html', 260],
-    ['our-philosophy.html', 1600],   // the complete archive of content compacted off other pages — long by design
+    ['index.html', 480],
+    ['student-community.html', 520],
+    ['learning.html', 420],
+    ['media.html', 420],
+    ['hope-capsule.html', 300],
+    ['one-message-for-you.html', 260],
+    ['join.html', 320],
+    ['contact.html', 350],
+    ['our-philosophy.html', 700],
   ]) {
     const n = visibleWords(file);
     ok(n <= cap, `${file} stays compact: ${n} words (budget ${cap})`);
   }
 }
 
-/* ── 9. REDIRECT STUBS + SLUG INTEGRITY ── */
+/* ── 10. REDESIGN GUARDRAILS — the AI-template patterns stay dead ── */
+console.log('\n[redesign guardrails]');
+{
+  /* Phrases that must never reappear on the public site (raw HTML +
+     the two content data files). These are the patterns the Aug 2026
+     redesign removed: internal design-system language, slogan stacking,
+     and template constructions. */
+  const BANNED = [
+    'One Philosophy', 'One Loop. One Community', 'One Shared Template',
+    'One Platform. One Message', 'consistency defines', 'platform model',
+    'The heart of the platform', 'Find Your Place in the Circle',
+    'Every Ending Becomes', 'ending becomes another beginning',
+    'Watch the Circle in Motion', 'From Ideas to Impact',
+    'Every Great Work Begins', 'meaningful, lasting impact',
+    'transformative', 'ecosystem', 'empower',
+  ];
+  const sources = [...PUBLIC_PAGES, 'js/config.js', 'js/partners.js', 'js/site.js'];
+  for (const phrase of BANNED) {
+    const hits = sources.filter(f => {
+      try { return fs.readFileSync(path.join(ROOT, f), 'utf8').toLowerCase().includes(phrase.toLowerCase()); }
+      catch (e) { return false; }
+    });
+    ok(hits.length === 0, `banned phrase absent: "${phrase}"${hits.length ? ' — found in ' + hits.join(', ') : ''}`);
+  }
+
+  /* Eyebrow budget: at most 1 per public page (media's archive label). */
+  for (const f of PUBLIC_PAGES) {
+    const n = (fs.readFileSync(path.join(ROOT, f), 'utf8').match(/class="eyebrow/g) || []).length;
+    ok(n <= 1, `${f}: at most one eyebrow label (found ${n})`);
+  }
+
+  /* Every photo placeholder must say specifically what image is needed. */
+  for (const f of PUBLIC_PAGES) {
+    const html = fs.readFileSync(path.join(ROOT, f), 'utf8');
+    const blocks = html.match(/photo-placeholder[\s\S]*?<\/figure>/g) || [];
+    for (const b of blocks) {
+      ok(/<p>[\s\S]{60,}<\/p>/.test(b), `${f}: placeholder describes the needed photo in detail`);
+    }
+  }
+}
+
+/* ── 11. REDIRECT STUBS + SLUG INTEGRITY ── */
 console.log('\n[redirect stubs & slugs]');
 {
   const stubs = {

@@ -124,6 +124,6 @@ const SITE = {
     },
   ],
 
-  footerNote: "A student-led platform that brings music, learning, encouragement, and human connection to communities.",
-  footerNote_ko: "음악과 배움, 격려와 따뜻한 연결을 병원, 가족 공간, 시니어 커뮤니티, 학교, 그리고 세계 곳곳의 커뮤니티에 전하는 학생 주도 플랫폼입니다.",
+  footerNote: "A student-led initiative by GYCO. Students bring music, letters, teaching, and service projects to community partners.",
+  footerNote_ko: "GYCO 학생들이 음악과 편지, 가르침과 봉사 프로젝트로 커뮤니티 파트너들과 함께하는 학생 주도 프로젝트입니다.",
 };

@@ -49,8 +49,8 @@ Drop a PNG into `assets/logos/` and point `logo` at it. Already in place: `city-
 
 ## 3b. Replace the homepage images
 `js/config.js` → the `home:` block.
-- **"Why we exist" image**: overwrite `assets/images/home-invitation.jpg` (keep the name and you're done), or change `home.invitation.src`. Update the `alt` text to describe the new image.
-- **Carousel** (One platform. Many communities.): overwrite `assets/images/home-carousel-1.jpg`, `-2.jpg`, `-3.jpg`. To reorder, add, or remove slides, edit the `home.carousel` array — arrows, dots, keyboard, and swipe adjust automatically. No autoplay by design.
+- **"You are invited" card image** (shown on the One Message for You page): overwrite `assets/images/home-invitation.jpg` (keep the name and you're done), or change `home.invitation.src`. Update the `alt` text to describe the new image.
+- **Flyer carousel** (homepage, "Our Communities"): overwrite `assets/images/home-carousel-1.jpg`, `-2.jpg`, `-3.jpg`. To reorder, add, or remove slides, edit the `home.carousel` array — arrows, dots, keyboard, and swipe adjust automatically. No autoplay by design.
 
 ## 3c. Edit the featured press article (Media page)
 `js/config.js` → the `press:` array — title, publisher, description, the English/Korean links, and the article image (`assets/images/press-newswave25.jpg`; a styled placeholder shows until the file exists). Add a second object to the array to feature another article.
@@ -74,7 +74,7 @@ Open `js/partners.js`. Each partner is one block:
 
 ## 6. Change text on main pages
 Main page copy lives in the HTML files themselves — each section is labeled with an HTML comment (`<!-- 5 · CIRCLE OF LOVE -->` etc.):
-- `index.html` — homepage (philosophy sections first, then the WE ARE WITH YOU welcome content — the old about.html now lives here)
+- `index.html` — homepage (hero, What We Do, Recent Work, Our Communities, NADO School, About GYCO, final CTA)
 - `programs.html`, `student-community.html`, `learning.html`, `media.html`, `join.html`, `contact.html`
 
 ## 7. Add photos
@@ -137,11 +137,11 @@ student-community.html    GYCO — More Than Music
 learning.html             NADO School — Become a School
 media.html                Featured press + galleries
 join.html                 Four join paths
-about.html                Redirect stub → index.html (philosophy merged into homepage)
+about.html                Redirect stub → index.html
 contact.html              Contact info + form links
 404.html                  Not-found page
 css/style.css             All styling (tokens at top)
-assets/images/            Homepage invitation + carousel, press photo
+assets/images/            Photos: outreach galleries, flyers, invitation card
 assets/logos/             Pathway + GYCO + NADO School logos
 js/config.js              ← EDIT: links, email, forms, nav, homepage images, press
 js/partners.js            ← EDIT: partner page content
@@ -157,7 +157,7 @@ buttons, and left-aligned section heads. Do not rename tokens in `css/style.css`
 (the Community Portal layers on them).
 
 ## 13. Run the tests
-228 automated checks cover the nav, pathway names/order, logos, the homepage carousel, the Circle of Love, all six partner pages, the Media press card, and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
+262 automated checks cover the nav, community names/order, logos, the flyer carousel, all six partner pages, the Media press card, **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
 ```bash
 npm install jsdom   # once
 node test/smoke.test.js

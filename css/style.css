@@ -1,5 +1,5 @@
 /* ============================================================
-   WE ARE WITH YOU — Global Stylesheet v3
+   WE ARE WITH YOU — Global Stylesheet v7 (editorial redesign)
    Design tokens live at the top. Change colors/fonts here once
    and the whole site updates. See EDITING-GUIDE.md.
    ============================================================ */
@@ -82,7 +82,7 @@ em { font-style: italic; }
   text-transform: uppercase; color: var(--blue);
   margin-bottom: var(--space-xs);
 }
-.section--dark .eyebrow, .page-hero .eyebrow, .hero .eyebrow { color: var(--gold-2); }
+.section--dark .eyebrow, .page-hero .eyebrow { color: var(--gold-2); }
 .eyebrow--center { text-align: center; }
 
 .lead { font-size: 1.2rem; line-height: 1.65; color: var(--muted); }
@@ -172,20 +172,6 @@ em { font-style: italic; }
 .nav.open .nav__hamburger span:nth-child(2) { opacity: 0; }
 .nav.open .nav__hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* ── HERO (home) ── */
-.hero {
-  position: relative; min-height: 72svh;
-  display: flex; align-items: center;
-  background: var(--ink);
-  color: var(--paper); overflow: hidden;
-}
-.hero__content { position: relative; z-index: 2; padding-block: 8rem 5rem; }
-.hero__title { color: var(--white); max-width: 15ch; margin-bottom: var(--space-md); }
-.hero__title em { color: var(--gold-2); }
-.hero__sub { font-size: 1.15rem; color: var(--muted-d); max-width: 56ch; margin-bottom: var(--space-md); }
-.hero__actions { display: flex; gap: var(--space-sm); flex-wrap: wrap; }
-
-
 /* ── PAGE HERO (inner pages) ── */
 .page-hero {
   background: var(--ink);
@@ -209,14 +195,14 @@ em { font-style: italic; }
 /* Primary: navy on light surfaces, gold on dark surfaces */
 .btn--gold, .btn--blue { background: var(--ink); color: var(--white); }
 .btn--gold:hover, .btn--blue:hover { background: #1B3049; }
-.section--dark .btn--gold, .page-hero .btn--gold, .hero .btn--gold, .cta-band .btn--gold {
+.section--dark .btn--gold, .page-hero .btn--gold, .cta-band .btn--gold {
   background: var(--gold); color: var(--ink);
 }
-.section--dark .btn--gold:hover, .page-hero .btn--gold:hover, .hero .btn--gold:hover, .cta-band .btn--gold:hover {
+.section--dark .btn--gold:hover, .page-hero .btn--gold:hover, .cta-band .btn--gold:hover {
   background: var(--gold-2);
 }
 .btn:active, .carousel__arrow:active, .carousel__dot:active { transform: scale(0.96); transition: transform 100ms ease-out; }
-.card:active, .action-card:active, .index-item:active, .journey__node:active { transform: scale(0.99); transition: transform 100ms ease-out; }
+.card:active, .index-item:active { transform: scale(0.99); transition: transform 100ms ease-out; }
 /* Secondary: hairline outline in the surface's text color */
 .btn--ink { border-color: var(--ink); color: var(--ink); }
 .btn--ink:hover { background: var(--ink); color: var(--white); }
@@ -245,6 +231,7 @@ em { font-style: italic; }
 
 /* ── TWO-COL ── */
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); align-items: center; }
+.two-col > * { min-width: 0; }  /* never let a wide child (carousel track) blow out the grid */
 .two-col__text h2 { margin-bottom: var(--space-sm); }
 .two-col__text p { margin-bottom: var(--space-sm); color: var(--muted); }
 .section--dark .two-col__text p { color: var(--muted-d); }
@@ -260,17 +247,6 @@ em { font-style: italic; }
 /* ── PULL QUOTE ── */
 .pullquote { border-left: 3px solid var(--gold); padding: var(--space-xs) var(--space-md); margin-block: var(--space-md); }
 .pullquote p { font-family: var(--display); font-style: italic; font-size: 1.22rem; line-height: 1.5; max-width: none; }
-
-/* ── CIRCLE OF LOVE ── */
-.circle-figure { display: flex; justify-content: center; margin-block: var(--space-md); }
-.circle-figure svg { width: min(460px, 88vw); height: auto; }
-.circle-words { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; margin-top: var(--space-md); }
-.circle-word {
-  padding: 0.4rem 1.05rem; border: 1px solid var(--line); border-radius: 100px;
-  font-size: 0.85rem; letter-spacing: 0.03em; color: var(--ink);
-  background: var(--white);
-}
-.section--dark .circle-word { border-color: var(--line-d); color: var(--paper); background: transparent; }
 
 /* ── FLOW LIST (ordered narrative steps) ── */
 .flow { display: flex; flex-direction: column; gap: 0; max-width: 560px; margin-inline: auto; }
@@ -372,6 +348,9 @@ em { font-style: italic; }
    adds .visible, which now only triggers the NADO + NADO → WE merge. ── */
 .reveal { opacity: 1; transform: none; }
 
+/* Pages with a light hero keep the nav readable from the first pixel. */
+body.nav-solid .nav { background: var(--ink); }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 960px) {
   .nav__links {
@@ -407,7 +386,6 @@ em { font-style: italic; }
   .footer__inner { grid-template-columns: 1fr; gap: var(--space-md); }
   .footer__bottom { flex-direction: column; text-align: center; }
   .media-grid { grid-template-columns: 1fr; }
-  .hero__content { padding-block: 7.5rem 4.5rem; }
 }
 @keyframes nav-drawer-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -447,19 +425,6 @@ em { font-style: italic; }
 .logo-chip--hero {
   height: 88px; max-width: 250px; margin-bottom: 1.5rem;
   border: none;
-}
-
-/* ── PAGE LOGO CARD (GYCO / NADO logo panels) ── */
-.logo-panel {
-  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
-  padding: var(--space-lg) var(--space-md);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: var(--space-sm); text-align: center;
-}
-.logo-panel img { max-width: min(320px, 80%); height: auto; }
-.logo-panel figcaption {
-  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--muted);
 }
 
 /* ── HOMEPAGE INVITATION FIGURE ── */
@@ -517,32 +482,6 @@ em { font-style: italic; }
 .section--dark .carousel__dot::before { background: var(--line-d); }
 .section--dark .carousel__dot[aria-current="true"]::before { background: var(--gold); }
 
-/* ── CIRCLE OF LOVE — never clip the ring labels ── */
-.circle-figure svg { overflow: visible; }
-
-/* ── FOUR-UP CARDS (GYCO: Learn · Create · Serve · Lead) ── */
-.cards--4 { grid-template-columns: repeat(4, 1fr); }
-.card__list { display: grid; gap: 0.4rem; margin-top: 0.2rem; }
-.card__list li {
-  display: flex; gap: 0.6rem; align-items: flex-start;
-  font-size: 0.92rem; color: var(--muted);
-}
-.card__list li::before { content: '→'; color: var(--gold); flex-shrink: 0; }
-
-/* ── PHILOSOPHY QUOTE BLOCK ── */
-.quote-block {
-  max-width: 560px; margin-inline: auto; text-align: center;
-  border-top: 1px solid var(--line-d); border-bottom: 1px solid var(--line-d);
-  padding: var(--space-md) var(--space-sm);
-  margin-top: var(--space-sm);
-}
-.quote-block p {
-  font-family: var(--display); font-style: italic;
-  font-size: clamp(1.3rem, 2.6vw, 1.75rem); line-height: 1.55;
-  max-width: none; color: inherit;
-}
-.quote-block p em { color: var(--gold-2); }
-
 /* ── NADO "I will…" LINES ── */
 .say-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-sm); margin-top: var(--space-md); }
 .say-grid p {
@@ -556,44 +495,6 @@ em { font-style: italic; }
   color: var(--blue); line-height: 1;
 }
 
-/* ── LEARNING LOOP (NADO School) ── */
-.loop {
-  display: grid; grid-template-columns: repeat(5, 1fr);
-  gap: var(--space-md); counter-reset: loopstep; margin-top: var(--space-md);
-}
-.loop__step {
-  position: relative; counter-increment: loopstep;
-  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
-  padding: 1.5rem 1.25rem;
-  transition: border-color 0.18s;
-}
-.loop__step:hover { border-color: rgba(19,35,58,0.32); }
-.loop__step::before {
-  content: counter(loopstep, decimal-leading-zero);
-  display: block; margin-bottom: 0.7rem;
-  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; color: var(--blue);
-}
-.loop__step h3 { font-size: 1.12rem; margin-bottom: 0.35rem; }
-.loop__step p { font-size: 0.88rem; color: var(--muted); max-width: none; }
-.loop__step:not(:last-child)::after {
-  content: '→'; position: absolute; right: -1.6rem; top: 50%; transform: translateY(-50%);
-  color: var(--gold); font-size: 1.15rem;
-}
-.loop__step--again { border: 1px dashed var(--gold); background: rgba(196,162,78,0.05); }
-.loop__return {
-  text-align: center; margin-top: var(--space-sm); margin-inline: auto;
-  font-family: var(--display); font-style: italic; font-size: 0.98rem; color: var(--muted);
-}
-
-/* ── FEATURED PRESS CARD (Media page) ── */
-.chip {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 0.32rem 0.85rem; border-radius: 100px;
-  font-size: 0.66rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
-  border: 1px solid var(--line); color: var(--muted); white-space: nowrap;
-}
-.chip--gold { background: var(--gold); border-color: var(--gold); color: var(--ink); }
-.chip--blue { border-color: rgba(62,107,143,0.45); color: var(--blue); }
 
 .press-card {
   display: grid; grid-template-columns: 5fr 7fr;
@@ -616,7 +517,6 @@ em { font-style: italic; }
   color: rgba(250,248,243,0.4);
 }
 .press-card__body { padding: var(--space-md); display: flex; flex-direction: column; gap: 0.65rem; }
-.press-card__labels { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 .press-card__title { font-size: clamp(1.4rem, 2.4vw, 1.9rem); }
 .press-card__publisher {
   font-size: 0.74rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
@@ -630,27 +530,15 @@ em { font-style: italic; }
 .press-card__actions { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 0.4rem; }
 
 /* ── v4 RESPONSIVE ── */
-@media (max-width: 1080px) {
-  .loop { grid-template-columns: repeat(3, 1fr); }
-  .loop__step:nth-child(3)::after { content: none; }
-}
 @media (max-width: 960px) {
-  .cards--4 { grid-template-columns: repeat(2, 1fr); }
   .press-card { grid-template-columns: 1fr; }
   .press-card__media { min-height: 240px; }
-  .invite-figure, .carousel { max-width: 460px; margin-inline: auto; }
+  .invite-figure, .carousel { max-width: min(460px, 100%); margin-inline: auto; }
 }
 @media (max-width: 780px) {
-  .loop { grid-template-columns: 1fr; }
-  .loop__step::after, .loop__step:nth-child(3)::after {
-    content: '↓'; right: auto; left: 50%; top: auto; bottom: -1.85rem;
-    transform: translateX(-50%);
-  }
-  .loop__step:last-child::after { content: none; }
   .say-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
-  .cards--4 { grid-template-columns: 1fr; }
   .carousel__arrow { width: 38px; height: 38px; }
   .carousel__arrow--prev { left: 8px; }
   .carousel__arrow--next { right: 8px; }
@@ -658,110 +546,8 @@ em { font-style: italic; }
 }
 
 /* ════════════════════════════════════════════════════════════
-   v5 COMPONENTS — Learn·Own·Offer·Progress loop, journey
-   progressions, ecosystem loop diagram, NADO+NADO=WE figure,
-   tri-circles, action cards, field tiles, passport mockup
+   v5 COMPONENTS — NADO + NADO = WE merge figure
    ════════════════════════════════════════════════════════════ */
-
-/* ── BIG STATEMENT (highlighted key lines) ── */
-.statement {
-  font-family: var(--display); font-style: italic;
-  font-size: clamp(1.25rem, 2.2vw, 1.6rem); line-height: 1.45;
-  text-align: center; max-width: 26ch; margin-inline: auto;
-  color: var(--ink); text-wrap: balance;
-}
-.section--dark .statement { color: var(--paper); }
-.statement em { color: var(--blue); font-style: inherit; }
-.section--dark .statement em { color: var(--gold-2); }
-
-/* ── JOURNEY (progression: Idea → Project → …) ── */
-.journey {
-  display: flex; align-items: center; justify-content: center;
-  gap: 0.9rem; flex-wrap: wrap; margin-top: var(--space-md);
-}
-.journey__node {
-  padding: 0.8rem 1.6rem;
-  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
-  font-family: var(--display); font-size: 1.02rem;
-  transition: border-color 0.18s;
-}
-.journey__node:hover { border-color: rgba(19,35,58,0.4); }
-a.journey__node { color: inherit; }
-.journey__node--em { border-color: var(--gold); background: rgba(196,162,78,0.07); }
-.journey__arrow { color: var(--gold); font-size: 1.1rem; user-select: none; }
-.journey__arrow::before { content: '→'; }
-.section--dark .journey__node { background: var(--ink-2); border-color: var(--line-d); color: var(--paper); }
-.section--dark .journey__node--em { border-color: var(--gold); background: rgba(196,162,78,0.12); }
-.journey--vertical { flex-direction: column; gap: 0.55rem; }
-.journey--vertical .journey__arrow::before { content: '↓'; }
-.journey__caption {
-  text-align: center; margin: var(--space-md) auto 0;
-  font-family: var(--display); font-style: italic; font-size: 1.1rem; color: var(--muted);
-}
-.section--dark .journey__caption { color: var(--muted-d); }
-@media (max-width: 640px) {
-  .journey:not(.journey--vertical) { flex-direction: column; gap: 0.55rem; }
-  .journey:not(.journey--vertical) .journey__arrow::before { content: '↓'; }
-}
-
-/* ── FIELD TILES (One Philosophy. Endless Possibilities.) ── */
-.field-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-sm); margin-top: var(--space-md); }
-.field-tile {
-  position: relative; text-align: center;
-  background: var(--white); border: 1px solid var(--line); border-top: 2px solid var(--gold);
-  border-radius: var(--radius); padding: 1.4rem 1rem;
-  font-family: var(--display); font-size: 1.12rem;
-  transition: border-color 0.18s;
-}
-.field-tile:hover { border-color: rgba(19,35,58,0.32); }
-@media (max-width: 960px) { .field-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 480px) { .field-grid { grid-template-columns: 1fr; } }
-
-/* ── ACTION CARDS (prominent CTAs with descriptions) ── */
-.action-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-sm); margin-top: var(--space-md); }
-.action-card {
-  position: relative; display: flex; flex-direction: column; gap: 0.55rem;
-  text-align: left; background: var(--white); border: 1px solid var(--line);
-  border-radius: var(--radius); padding: 1.75rem;
-  transition: border-color 0.18s;
-}
-.action-card:hover { border-color: rgba(19,35,58,0.4); }
-.action-card__title { font-family: var(--display); font-size: 1.45rem; line-height: 1.2; }
-.action-card__desc { font-size: 0.95rem; color: var(--muted); max-width: none; }
-.action-card__go {
-  margin-top: auto; align-self: flex-end; color: var(--gold);
-  font-size: 1.25rem;
-}
-.section--dark .action-card { background: var(--ink-2); border-color: var(--line-d); }
-.section--dark .action-card__title { color: var(--paper); }
-.section--dark .action-card__desc { color: var(--muted-d); }
-@media (max-width: 780px) { .action-cards { grid-template-columns: 1fr; } }
-
-/* ── TRI-CIRCLES (Our Philosophy: three roles, one philosophy) ── */
-.tri-circles { display: flex; justify-content: center; align-items: center; margin-top: var(--space-lg); }
-.tri-circle {
-  width: 240px; height: 240px; border-radius: 50%; flex-shrink: 0;
-  border: 1px solid var(--line);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.35rem;
-  text-align: center; padding: 1.6rem; background: var(--white);
-}
-.tri-circle + .tri-circle { margin-left: -44px; }
-.tri-circle:nth-child(2) { border-color: var(--gold); position: relative; z-index: 1; }
-.tri-circle h3 { font-size: 1.08rem; }
-.tri-circle p { font-size: 0.82rem; color: var(--muted); max-width: 18ch; }
-.tri-circle small {
-  font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--blue);
-}
-@media (max-width: 780px) {
-  .tri-circles { flex-direction: column; }
-  .tri-circle + .tri-circle { margin-left: 0; margin-top: -44px; }
-}
-
-/* ── ECOSYSTEM LOOP (about page centerpiece) ── */
-.eco-loop { display: flex; justify-content: center; margin-block: var(--space-md); }
-.eco-loop svg { width: min(680px, 94vw); height: auto; overflow: visible; }
-
 
 /* ── NADO + NADO = WE (merge figure) ── */
 .nado-we-figure { display: flex; justify-content: center; margin-block: var(--space-md); }
@@ -777,16 +563,88 @@ a.journey__node { color: inherit; }
   .nado-we__we { opacity: 1; }
 }
 
-/* ── PASSPORT MOCKUP ── */
-.passport-panel { display: flex; justify-content: center; }
-.passport-panel svg {
-  width: min(300px, 72vw); height: auto;
-  filter: drop-shadow(0 2px 6px rgba(19,35,58,0.18));
+/* ════════════════════════════════════════════════════════════
+   v7 COMPONENTS — editorial redesign (Aug 2026): documentary
+   photo figures, unequal photo pairs, plain numbered steps,
+   inline step lines, community directory rows, photo
+   placeholders awaiting real images. See DESIGN.md.
+   ════════════════════════════════════════════════════════════ */
+
+/* ── LIGHT HOME HERO ── */
+.home-hero { padding: 8.5rem var(--space-md) 0; }
+.home-hero h1 { max-width: 14ch; margin-bottom: var(--space-sm); }
+.home-hero .home-hero__lede { font-size: 1.25rem; line-height: 1.55; color: var(--ink); max-width: 34ch; margin-bottom: var(--space-sm); font-family: var(--display); }
+.home-hero p { color: var(--muted); margin-bottom: var(--space-md); }
+.home-hero .btn-row { display: flex; gap: var(--space-sm); flex-wrap: wrap; }
+
+/* ── DOCUMENTARY PHOTO FIGURE (image + plain caption) ── */
+.photo-figure { margin: 0; }
+.photo-figure img { width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--line); }
+.photo-figure--wide img { aspect-ratio: 21 / 9; object-fit: cover; }
+.photo-figure figcaption, .caption {
+  margin-top: 0.6rem; font-size: 0.85rem; color: var(--muted); line-height: 1.5;
+}
+.photo-figure figcaption strong, .caption strong { color: var(--ink); font-weight: 600; }
+
+/* ── UNEQUAL PHOTO PAIR (editorial, not a symmetric grid) ── */
+.photo-duo { display: grid; grid-template-columns: 3fr 2fr; gap: var(--space-md); align-items: start; }
+.photo-duo .photo-figure img { aspect-ratio: 4 / 3; object-fit: cover; }
+.photo-duo .photo-figure:first-child img { aspect-ratio: 16 / 10; }
+@media (max-width: 780px) { .photo-duo { grid-template-columns: 1fr; } }
+
+/* ── PHOTO PLACEHOLDER (an image is planned but not shot/added yet) ── */
+.photo-placeholder {
+  margin: 0; border: 1px dashed rgba(19,35,58,0.35); border-radius: var(--radius);
+  background: var(--mist); padding: var(--space-md);
+  display: flex; flex-direction: column; gap: 0.4rem; justify-content: center;
+  min-height: 220px;
+}
+.photo-placeholder small {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--blue);
+}
+.photo-placeholder p { font-size: 0.92rem; color: var(--muted); max-width: 44ch; margin: 0; }
+
+/* ── PLAIN NUMBERED STEPS (no boxes — hairline top, number, text) ── */
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-md); margin-top: var(--space-md); counter-reset: step; }
+.steps--3 { grid-template-columns: repeat(3, 1fr); }
+.step { border-top: 1px solid var(--line); padding-top: var(--space-sm); counter-increment: step; }
+.step::before {
+  content: counter(step, decimal-leading-zero);
+  display: block; margin-bottom: 0.5rem;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; color: var(--blue);
+}
+.step h3 { font-size: 1.12rem; margin-bottom: 0.3rem; }
+.step p { font-size: 0.95rem; color: var(--muted); max-width: none; }
+.section--dark .step { border-color: var(--line-d); }
+.section--dark .step p { color: var(--muted-d); }
+@media (max-width: 960px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .steps, .steps--3 { grid-template-columns: 1fr; } }
+
+/* ── INLINE STEP LINE (Learn → Own → Offer → Progress) ── */
+.step-line { font-family: var(--display); font-size: 1.15rem; display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: baseline; }
+.step-line span[aria-hidden] { color: var(--gold); }
+
+/* ── FOUR-UP PILLARS (What we do) ── */
+.pillars--4 { grid-template-columns: repeat(4, 1fr); gap: var(--space-md); }
+.pillar a { font-weight: 500; font-size: 0.92rem; color: var(--blue); }
+.pillar a:hover { color: var(--ink); }
+@media (max-width: 960px) { .pillars--4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .pillars--4 { grid-template-columns: 1fr; } }
+
+/* Index lists inside a two-col column stack their description full-width. */
+.two-col .index-item { grid-template-columns: 1fr auto; }
+.two-col .index-item__desc { grid-column: 1 / -1; }
+
+/* ── COMMUNITY DIRECTORY ROWS (index-list with a partner logo) ── */
+.index-item--logo { grid-template-columns: 92px 1fr auto; align-items: center; }
+.index-item--logo .logo-chip { max-width: 92px; height: 44px; padding: 0.3rem 0.5rem; }
+.index-item__meta { font-size: 0.78rem; color: var(--blue); font-weight: 600; letter-spacing: 0.04em; display: block; }
+@media (max-width: 780px) {
+  .index-item--logo { grid-template-columns: 72px 1fr; }
+  .index-item--logo .index-item__go { display: none; }
 }
 
-/* ── LOOP, 4-step variant (Learn · Own · Offer · Progress) ── */
-.loop--4 { grid-template-columns: repeat(4, 1fr); }
-@media (max-width: 1080px) { .loop--4 { grid-template-columns: repeat(2, 1fr); }
-  .loop--4 .loop__step:nth-child(2)::after { content: none; } }
-@media (max-width: 780px) { .loop--4 { grid-template-columns: 1fr; }
-  .loop--4 .loop__step:nth-child(2)::after { content: '↓'; right: auto; left: 50%; top: auto; bottom: -1.85rem; transform: translateX(-50%); } }
+/* ── QUIET QUOTE (single centered quote — used sparingly) ── */
+.quiet-quote { max-width: 560px; margin-inline: auto; text-align: center; }
+.quiet-quote p { font-family: var(--display); font-style: italic; font-size: clamp(1.25rem, 2.4vw, 1.6rem); line-height: 1.55; max-width: none; }
