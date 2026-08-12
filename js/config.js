@@ -70,8 +70,8 @@ const SITE = {
     // This replaced the old six-slide flyer carousel (Aug 2026).
     poster: {
       src: "assets/images/home-poster.png",
-      alt: "WE ARE WITH YOU · One Message for You poster showing five ways to connect — With You messages, Melody Box music, Wish Pocket song requests, Bloom Bank resources, and the Hope Capsule — with the GYCO and Ronald McDonald House Atlanta logos",
-      caption: "The One Message for You poster displayed during our visits. Its QR codes open the Community Portal.",
+      alt: "WE ARE WITH YOU · One Message for You poster showing five ways to connect — With You messages, Melody Box music, Wish Pocket song requests, Bloom Bank resources, and the Hope Capsule",
+      caption: "The One Message for You poster displayed during our visits.",
     },
 
     // ── Homepage brochure / poster previews ("Take WE ARE WITH YOU With You").
