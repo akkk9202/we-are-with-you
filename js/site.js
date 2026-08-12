@@ -1,8 +1,9 @@
 /* ============================================================
    SITE.JS — builds the nav + footer on every page from
-   js/config.js, renders pathway cards + partner pages from
-   js/partners.js, powers the homepage carousel and the Media
-   press card, and handles scroll/reveal/menu behavior.
+   js/config.js, renders partner pages from js/partners.js,
+   fills the homepage poster / brochure / community-logo
+   sections and the Media press card, and handles
+   scroll/reveal/menu behavior.
    You should rarely need to edit this file.
    ============================================================ */
 
@@ -159,25 +160,6 @@ function wireFormButton(el) {
   });
 })();
 
-/* ── COMMUNITY DIRECTORY (homepage "Our Communities") ── */
-/* Any element with [data-pathway-cards] is filled with one directory
-   row per partner in js/partners.js, in `order`. Edit names, order,
-   logos, and card text there — every page updates together. */
-(function renderPathwayCards() {
-  const mounts = document.querySelectorAll('[data-pathway-cards]');
-  if (!mounts.length) return;
-  const rows = pathwayList().map(p => `
-    <a class="index-item index-item--logo card--pathway" href="partner.html?p=${p.slug}">
-      ${logoChip(p)}
-      <span>
-        <span class="index-item__title">${p.name}</span>
-        <span class="index-item__meta">${p.audience || ''}</span>
-      </span>
-      <span class="index-item__go" aria-hidden="true">→</span>
-    </a>`).join('');
-  mounts.forEach(m => { m.classList.add('index-list'); m.innerHTML = rows; });
-})();
-
 /* ── HOMEPAGE INVITATION IMAGE ── */
 /* Fills [data-home-invitation] from SITE.home.invitation (config.js). */
 (function renderHomeInvitation() {
@@ -187,170 +169,65 @@ function wireFormButton(el) {
   m.innerHTML = `<img src="${im.src}" alt="${im.alt}">`;
 })();
 
-/* ── CAROUSEL ── */
-/* Hydrates [data-carousel="home"] from SITE.home.carousel (config.js).
-   One image at a time · arrows · dots · keyboard · swipe · no autoplay. */
-(function initCarousels() {
-  document.querySelectorAll('[data-carousel]').forEach(mount => {
-    if (typeof SITE === 'undefined' || !SITE.home) return;
-    const slides = mount.dataset.carousel === 'home' ? SITE.home.carousel : null;
-    if (!slides || !slides.length) return;
+/* ── HOMEPAGE COMMUNITY POSTER ── */
+/* Fills [data-home-poster] from SITE.home.poster (config.js) — the one
+   large image that replaced the six-slide flyer carousel (Aug 2026). */
+(function renderHomePoster() {
+  const m = document.querySelector('[data-home-poster]');
+  if (!m || typeof SITE === 'undefined' || !SITE.home || !SITE.home.poster) return;
+  const p = SITE.home.poster;
+  m.innerHTML = `
+    <figure class="photo-figure photo-figure--poster">
+      <img src="${p.src}" alt="${p.alt}">
+      ${p.caption ? `<figcaption>${p.caption}</figcaption>` : ''}
+    </figure>`;
+})();
 
-    mount.classList.add('carousel');
-    mount.setAttribute('role', 'group');
-    mount.setAttribute('aria-roledescription', 'carousel');
-    mount.setAttribute('aria-label', mount.dataset.carouselLabel || 'Image carousel');
-    mount.tabIndex = 0;
+/* ── HOMEPAGE BROCHURE PREVIEWS ── */
+/* Fills [data-brochures] from SITE.home.brochures (config.js) with two
+   portrait previews of the printed materials. While a file is missing,
+   the slot swaps to a labeled placeholder automatically (same pattern
+   as the partner-logo monogram fallback); once the real image exists it
+   becomes clickable to view full size. */
+(function renderBrochures() {
+  const m = document.querySelector('[data-brochures]');
+  if (!m || typeof SITE === 'undefined' || !SITE.home || !SITE.home.brochures) return;
+  m.classList.add('brochure-duo');
+  m.innerHTML = SITE.home.brochures.map((b, i) => `
+    <a class="brochure" href="${b.src}" target="_blank" rel="noopener"
+       aria-label="View full size: ${b.alt}">
+      <img src="${b.src}" alt="${b.alt}" loading="lazy"
+           onerror="this.parentElement.classList.add('brochure--missing');this.parentElement.removeAttribute('href');this.parentElement.removeAttribute('target');this.remove();">
+      <span class="brochure__fallback">
+        <small>Brochure ${i + 1} — coming soon</small>
+        <span>A digital copy of one of the printed WE ARE WITH YOU brochures we hand out during visits will appear here.</span>
+      </span>
+    </a>`).join('');
+})();
 
-    mount.innerHTML = `
-      <div class="carousel__viewport" aria-live="polite">
-        <div class="carousel__track">
-          ${slides.map((s, i) => `
-          <figure class="carousel__slide" role="group" aria-roledescription="slide"
-                  aria-label="Slide ${i + 1} of ${slides.length}">
-            <img src="${s.src}" alt="${s.alt}" ${i ? 'loading="lazy"' : ''} draggable="false">
-            ${s.caption ? `<figcaption>${s.caption}</figcaption>` : ''}
-          </figure>`).join('')}
-        </div>
-      </div>
-      <button type="button" class="carousel__arrow carousel__arrow--prev" aria-label="Previous slide">&#8249;</button>
-      <button type="button" class="carousel__arrow carousel__arrow--next" aria-label="Next slide">&#8250;</button>
-      <div class="carousel__dots">
-        ${slides.map((s, i) => `<button type="button" class="carousel__dot" aria-label="Go to slide ${i + 1}"></button>`).join('')}
-      </div>`;
-
-    const track = mount.querySelector('.carousel__track');
-    const dots = [...mount.querySelectorAll('.carousel__dot')];
-    const vp = mount.querySelector('.carousel__viewport');
-    let index = 0;
-
-    /* ── Fluid engine (Apple-style springs) ─────────────────────
-       Real browsers get 1:1 drag, momentum projection, and an
-       interruptible spring. jsdom / reduced-motion / zero-width
-       environments fall through to the instant percent path. */
-    const reduced = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const vpW = () => vp.clientWidth || 0;
-    const maxOff = () => -(slides.length - 1) * vpW();
-    const canFluid = () => !reduced && typeof requestAnimationFrame === 'function' && vpW() > 0;
-
-    let pos = 0;          // presentation value (px)
-    let vel = 0;          // spring velocity (px/s)
-    let raf = null;
-    let last = 0;
-
-    const setStatic = () => { track.style.transform = `translateX(-${index * 100}%)`; };
-    const setPx = (x) => { track.style.transform = `translateX(${x}px)`; };
-    const stopSpring = () => { if (raf !== null) { cancelAnimationFrame(raf); raf = null; } };
-
-    // Critically/under-damped spring, integrated per display frame.
-    const spring = (damping) => {
-      stopSpring();
-      const omega = (2 * Math.PI) / 0.35;             // response 0.35s
-      last = performance.now();
-      track.style.willChange = 'transform';
-      const step = (now) => {
-        const dt = Math.min((now - last) / 1000, 1 / 30);
-        last = now;
-        const target = -index * vpW();
-        const x = pos - target;
-        vel += (-(omega * omega) * x - 2 * damping * omega * vel) * dt;
-        pos += vel * dt;
-        if (Math.abs(pos - target) < 0.5 && Math.abs(vel) < 10) {
-          pos = target; vel = 0; raf = null;
-          track.style.willChange = '';
-          setStatic();                                 // rest state is % — resize-proof
-          return;
-        }
-        setPx(pos);
-        raf = requestAnimationFrame(step);
-      };
-      raf = requestAnimationFrame(step);
-    };
-
-    const go = (n, opts) => {
-      index = (n + slides.length) % slides.length;
-      dots.forEach((d, di) => d.setAttribute('aria-current', di === index ? 'true' : 'false'));
-      if (canFluid() && !(opts && opts.instant)) {
-        // Animate from the current on-screen value (never the target).
-        const m = /translateX\((-?[\d.]+)px\)/.exec(track.style.transform);
-        if (m) pos = parseFloat(m[1]); else pos = -index * vpW() + 0; // percent rest → recompute below
-        if (!m) { const p = /translateX\(-?([\d.]+)%\)/.exec(track.style.transform); pos = p ? -(parseFloat(p[1]) / 100) * vpW() : pos; }
-        spring(opts && opts.damping || 1.0);
-      } else {
-        stopSpring(); vel = 0;
-        setStatic();
-      }
-    };
-    mount.querySelector('.carousel__arrow--prev').addEventListener('click', () => go(index - 1));
-    mount.querySelector('.carousel__arrow--next').addEventListener('click', () => go(index + 1));
-    dots.forEach((d, di) => d.addEventListener('click', () => go(di)));
-    mount.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') { e.preventDefault(); go(index - 1); }
-      if (e.key === 'ArrowRight') { e.preventDefault(); go(index + 1); }
-    });
-
-    /* 1:1 drag: respects grab point, tracks continuously, rubber-bands
-       past the ends, projects momentum on release, hands velocity to
-       the spring — and a moving carousel can be grabbed mid-flight. */
-    const HYSTERESIS = 10;                            // px before we commit to the drag
-    const rubber = (over, dim, c = 0.55) => (over * dim * c) / (dim + c * Math.abs(over));
-    let drag = null;                                  // { startX, startPos, history, active }
-
-    vp.addEventListener('pointerdown', (e) => {
-      if (!canFluid()) { drag = { startX: e.clientX, simple: true }; return; }
-      // Interrupt: grab the presentation value, don't wait for the spring.
-      const m = /translateX\((-?[\d.]+)px\)/.exec(track.style.transform);
-      pos = m ? parseFloat(m[1]) : -index * vpW();
-      stopSpring();
-      drag = { startX: e.clientX, startPos: pos, history: [{ x: e.clientX, t: performance.now() }], active: false };
-      if (vp.setPointerCapture) vp.setPointerCapture(e.pointerId);
-    });
-    vp.addEventListener('pointermove', (e) => {
-      if (!drag || drag.simple) return;
-      const dx = e.clientX - drag.startX;
-      if (!drag.active) {
-        if (Math.abs(dx) < HYSTERESIS) return;        // let vertical scrolls win (touch-action: pan-y)
-        drag.active = true;
-        track.style.willChange = 'transform';
-      }
-      drag.history.push({ x: e.clientX, t: performance.now() });
-      if (drag.history.length > 6) drag.history.shift();
-      let next = drag.startPos + dx;
-      if (next > 0) next = rubber(next, vpW());                       // soft edge, not a wall
-      if (next < maxOff()) next = maxOff() + rubber(next - maxOff(), vpW());
-      pos = next;
-      setPx(pos);
-    });
-    const release = (e) => {
-      if (!drag) return;
-      if (drag.simple) {                              // legacy path (jsdom / reduced motion)
-        const dx = e.clientX - drag.startX; drag = null;
-        if (Math.abs(dx) > 40) go(index + (dx < 0 ? 1 : -1));
-        return;
-      }
-      const d = drag; drag = null;
-      track.style.willChange = '';
-      if (!d.active) return;                          // it was a tap, not a drag
-      // Release velocity from the last few frames (px/s).
-      const a = d.history[0], b = d.history[d.history.length - 1];
-      const v = b.t > a.t ? ((b.x - a.x) / (b.t - a.t)) * 1000 : 0;
-      // Project momentum to where the gesture is going, then snap to
-      // the nearest slide from the *projection* (decay form, not v²/2a).
-      const projected = pos + (v / 1000) * 0.998 / (1 - 0.998);
-      const target = Math.max(0, Math.min(slides.length - 1, Math.round(-projected / vpW())));
-      index = target;
-      dots.forEach((dd, di) => dd.setAttribute('aria-current', di === index ? 'true' : 'false'));
-      vel = v;                                        // velocity handoff — no seam
-      spring(Math.abs(v) > 200 ? 0.85 : 1.0);         // bounce only when the flick earned it
-    };
-    vp.addEventListener('pointerup', release);
-    vp.addEventListener('pointercancel', () => {
-      if (drag && !drag.simple && drag.active) { vel = 0; spring(1.0); }
-      drag = null; track.style.willChange = '';
-    });
-
-    go(0, { instant: true });
-  });
+/* ── HOMEPAGE COMMUNITY LOGO STRIP ── */
+/* Fills [data-community-logos] from SITE.home.communities (config.js).
+   Each item links to that community's partner page (partner.html?p=slug),
+   pulling the logo from js/partners.js — so a visitor who scanned a QR
+   code at, say, Ronald McDonald House immediately finds their place. */
+(function renderCommunityStrip() {
+  const m = document.querySelector('[data-community-logos]');
+  if (!m || typeof SITE === 'undefined' || !SITE.home || !SITE.home.communities) return;
+  if (typeof PARTNERS === 'undefined') return;
+  m.classList.add('logo-strip');
+  m.innerHTML = SITE.home.communities.map(c => {
+    const p = PARTNERS[c.slug];
+    if (!p) return '';
+    return `
+    <a class="logo-strip__item" href="partner.html?p=${c.slug}">
+      ${logoChip(p)}
+      <span class="logo-strip__text">
+        <span class="logo-strip__name">${c.label}</span>
+        <span class="logo-strip__line">${c.line || ''}</span>
+      </span>
+      <span class="index-item__go" aria-hidden="true">→</span>
+    </a>`;
+  }).join('');
 })();
 
 /* ── FEATURED PRESS (Media page) ── */
@@ -430,6 +307,27 @@ function wireFormButton(el) {
 
   // re-wire form buttons created after initial pass
   document.querySelectorAll('#partner-root [data-form]').forEach(wireFormButton);
+})();
+
+/* ── READ MORE / SHOW LESS ── */
+/* Wires every button.read-more[aria-controls] to its .more block.
+   Each toggle is independent; state lives in aria-expanded + .open.
+   The expanded copy stays in the HTML (SEO), hidden accessibly
+   (aria-hidden + CSS visibility) until opened. */
+(function wireReadMore() {
+  document.querySelectorAll('button.read-more[aria-controls]').forEach(btn => {
+    const target = document.getElementById(btn.getAttribute('aria-controls'));
+    if (!target) return;
+    btn.addEventListener('click', () => {
+      const open = target.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(open));
+      target.setAttribute('aria-hidden', String(!open));
+      const label = btn.querySelector('[data-more-label]');
+      const arrow = btn.querySelector('.read-more__arrow');
+      if (label) label.textContent = open ? 'Show Less' : 'Read More';
+      if (arrow) arrow.textContent = open ? '↑' : '↓';
+    });
+  });
 })();
 
 /* ── SCROLL REVEAL ── */

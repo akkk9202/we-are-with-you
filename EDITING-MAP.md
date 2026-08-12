@@ -28,10 +28,12 @@ Site-wide settings: contact, forms, navigation, homepage images, featured press.
 | Instagram / YouTube links | `SITE.instagram`, `SITE.youtube` | Leave `""` to hide the icon |
 | Location text | `SITE.location` | Currently "Georgia, United States" |
 | A Google Form link | `SITE.forms.<key>` | Keys: `studentApplication`, `partnerInquiry`, `songRequest`, `letterSubmission`, `hopeCapsule`, `teachingVideoRequest` |
-| Navigation items / order / labels | `SITE.nav` | Array order = display order. "Programs" builds its dropdown from `partners.js`. Don't change hrefs targeted by redirects |
+| Navigation items / order / labels | `SITE.nav` | Array order = display order (Philosophy sits between Media and Join Us). Don't change hrefs targeted by redirects |
 | The "Programs" CTA / Contact button | `SITE.nav` entry with `cta: true` | |
 | "You are invited" card image (One Message page) | `SITE.home.invitation` | `src` + `alt`. Overwrite `assets/images/home-invitation.jpg` or repoint `src` |
-| Flyer carousel images / captions (homepage "Our Communities") | `SITE.home.carousel[]` | Each item: `src`, `alt`, `caption`. One image at a time; no autoplay |
+| The one large homepage community poster | `SITE.home.poster` | Overwrite `assets/images/home-poster.png` (or repoint `src`) + update `alt`/`caption`. Replaced the old six-slide carousel |
+| The two homepage brochure previews | `SITE.home.brochures[]` | Drop real files at `assets/images/brochure-1.jpg` / `brochure-2.jpg` + update `alt`. A labeled placeholder shows until a file exists |
+| The six homepage community logos / labels | `SITE.home.communities[]` | `slug` must match a key in `partners.js` (logo + link come from there); edit `label`/`line` here |
 | Featured press article | `SITE.press[]` | `title`, `publisher`, `description`, `languages`, `image`, `links[]`. **Preserve Korean text and encoded URLs exactly** |
 | Footer tagline note | `SITE.footerNote` | |
 
@@ -82,10 +84,25 @@ in `SITE.forms`, or use `href` for a direct internal link.
 
 ---
 
+## Map 2b — `js/archive.js` (the GYCO performance archive)
+
+The "Our Work Through the Years" section on the GYCO page renders from the
+`GYCO_ARCHIVE` array in **`js/archive.js`** — this is where you paste real
+performance/activity records. The file opens with a field-by-field guide;
+in short: one `{ … }` block per event with `date` ("YYYY-MM-DD"; use day 01
+for month-only dates), `title`, `partner`, `location`, `description`,
+`images[]` (files go in `assets/images/archive/`), `videoUrl`, `category`,
+`participants`, `link`. Year tabs, sorting, and pagination are automatic.
+The entries currently in the file are **clearly-marked sample placeholders** —
+replace them as real history is collected. The renderer is `js/archive-ui.js`
+(edit rarely, like site.js).
+
+---
+
 ## Map 3 — `js/site.js` (the engine) — edit rarely
 
-Builds the nav + footer, and renders cards, the carousel, and each partner page from the two data
-files. Also home to the safety helpers (e.g. `safeUrl()` for config-supplied links, the `?p=` slug
+Builds the nav + footer, and renders the homepage poster / brochures / community logo strip and each
+partner page from the data files. Also home to the safety helpers (e.g. `safeUrl()` for config-supplied links, the `?p=` slug
 lookup). **Touching this is high-risk** — re-run the full regression gate *and*
 `directives/security_check_before_deploy.md` afterward. Most tasks never need to edit it.
 
@@ -98,7 +115,7 @@ data-driven.
 
 | Page file | What it is |
 |---|---|
-| `index.html` | Homepage — 7 sections: hero, What We Do, Recent Work, Our Communities, NADO School, About GYCO, final CTA |
+| `index.html` | Homepage — 7 sections: hero (QR-visitor intro + Portal CTA on the left; brochures + community logo strip in the right rail), What We Do, Recent Work, the community poster, About GYCO, NADO School, final CTA |
 | `our-philosophy.html` | Condensed philosophy page (why we exist, NADO → WE, the three parts) |
 | `programs.html` | Programs / pathways overview |
 | `partner.html` | Renders a single partner via `?p=SLUG` |
@@ -131,7 +148,7 @@ straight image swap.
 ```bash
 node --check js/site.js            # if JS changed
 npm install jsdom --no-save        # transient; node_modules is gitignored
-node test/smoke.test.js            # expect: 262 passed, 0 failed
+node test/smoke.test.js            # expect: 325 passed, 0 failed
 rm -rf node_modules                # optional cleanup
 ```
 

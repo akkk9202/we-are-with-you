@@ -49,6 +49,7 @@ const SITE = {
     { label: "GYCO", href: "student-community.html" },
     { label: "NADO School", href: "learning.html" },
     { label: "Media", label_ko: "미디어", href: "media.html" },
+    { label: "Philosophy", label_ko: "철학", href: "our-philosophy.html" },
     { label: "Join Us", label_ko: "함께하기", href: "join.html" },
     { label: "Contact", label_ko: "문의하기", href: "contact.html", cta: true },
   ],
@@ -63,42 +64,44 @@ const SITE = {
       alt: "WE ARE WITH YOU invitation with the message: You are invited to receive a message of hope. Even Here. Even Now.",
     },
 
-    // "One platform. Many communities." carousel (index.html, section 4).
-    // One image at a time · arrows · dots · keyboard · swipe. No autoplay.
-    carousel: [
-      // TODO: Replace carousel image 1 — overwrite assets/images/home-carousel-1.jpg
+    // ── The one large community poster (index.html, "From our posters" section).
+    // REPLACE WITH HOMEPAGE COMMUNITY IMAGE: overwrite
+    // assets/images/home-poster.png (or repoint src) and update alt/caption.
+    // This replaced the old six-slide flyer carousel (Aug 2026).
+    poster: {
+      src: "assets/images/home-poster.png",
+      alt: "WE ARE WITH YOU · One Message for You poster showing five ways to connect — With You messages, Melody Box music, Wish Pocket song requests, Bloom Bank resources, and the Hope Capsule — with the GYCO and Ronald McDonald House Atlanta logos",
+      caption: "The One Message for You poster displayed during our visits. Its QR codes open the Community Portal.",
+    },
+
+    // ── Homepage brochure / poster previews ("Take WE ARE WITH YOU With You").
+    // REPLACE WITH BROCHURE 1 / BROCHURE 2: drop the real files at these
+    // paths (portrait, like the printed handouts — e.g. 8.5×11) and update
+    // the alt text. Until a file exists, a labeled placeholder shows
+    // automatically and nothing looks broken.
+    brochures: [
       {
-        src: "assets/images/home-carousel-1.jpg",
-        alt: "WE ARE WITH YOU flyer for City of Hope Atlanta featuring QR codes for letters, music for hopeful moments, song requests, and the Hope Capsule",
-        caption: "City of Hope Atlanta (CTCA)",
-      },
-      // TODO: Replace carousel image 2 — overwrite assets/images/home-carousel-2.jpg
-      {
-        src: "assets/images/home-carousel-2.jpg",
-        alt: "WE ARE WITH YOU flyer for Ronald McDonald House featuring One Message for You QR codes: With You messages, Melody Box music, Wish Pocket song requests, Bloom Bank resources, and the Hope Capsule",
-        caption: "Ronald McDonald House",
-      },
-      // TODO: Replace carousel image 3 — overwrite assets/images/home-carousel-3.jpg
-      {
-        src: "assets/images/home-carousel-3.jpg",
-        alt: "WE ARE WITH YOU flyer for the Northside NICU featuring QR codes for a letter to your baby, letters for parents, quiet music, and the Hope Capsule",
-        caption: "Northside Intensive Care Unit (NICU)",
-      },
-      {
-        src: "assets/images/home-carousel-4.jpg",
-        alt: "WE ARE WITH YOU flyer for The America Wheat Mission (Milal) featuring QR codes for letters to friends and families, shared music activities, song requests, and the Hope Capsule",
-        caption: "The America Wheat Mission (Milal)",
+        src: "assets/images/brochure-1.jpg",   // REPLACE WITH BROCHURE 1
+        alt: "WE ARE WITH YOU brochure — front",
       },
       {
-        src: "assets/images/home-carousel-5.jpg",
-        alt: "WE ARE WITH YOU flyer for senior living communities featuring QR codes for letters to older adults, Secret Wisdom messages, shared music, songs connected to memories, and the Hope Capsule",
-        caption: "Senior Living Communities",
+        src: "assets/images/brochure-2.jpg",   // REPLACE WITH BROCHURE 2
+        alt: "WE ARE WITH YOU brochure — back",
       },
-      {
-        src: "assets/images/home-carousel-6.jpg",
-        alt: "WE ARE WITH YOU flyer for MeSun Senior Living and Adoration Home Health featuring QR codes for letters, prayers, peaceful music, songs connected to memories, and the Hope Capsule",
-        caption: "MeSun Senior Living · Adoration Home Health",
-      },
+    ],
+
+    // ── The six partner/community logos near the top of the homepage.
+    // Each slug must match a key in js/partners.js (logo + page come from
+    // there, so a QR visitor lands on the right community page). Edit the
+    // short label/line here; swap a logo by overwriting its file in
+    // assets/logos/ (a clean monogram shows if a file is missing).
+    communities: [
+      { slug: "cancer-care",           label: "City of Hope Atlanta",  line: "Cancer care community" },
+      { slug: "ronald-mcdonald-house", label: "Ronald McDonald House", line: "Families and children" },
+      { slug: "nicu",                  label: "Northside NICU",        line: "Babies and families" },
+      { slug: "senior-living",         label: "Senior Living",         line: "Older adult communities" },
+      { slug: "schools-global",        label: "Schools & Global",      line: "Students and partner schools" },
+      { slug: "disability",            label: "Milal",                 line: "The America Wheat Mission" },
     ],
   },
 

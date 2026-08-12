@@ -20,20 +20,33 @@
 
 <main id="main">
 
-<!-- 1 · HERO -->
+<!-- 1 · HERO — answers the QR-code visitor first: what this is, why you
+     got the code, and where to go next. The right column carries the
+     brochure previews (SITE.home.brochures in js/config.js) with the six
+     partner communities directly beneath (SITE.home.communities; logos +
+     pages from js/partners.js) so a QR visitor recognizes their own place
+     without scrolling. -->
 <section class="home-hero">
-  <div class="container">
-    <h1>WE ARE WITH YOU</h1>
-    <p class="home-hero__lede">Students using music, learning, and service to support their communities.</p>
-    <p>WE ARE WITH YOU is a student-led initiative by GYCO, a 501(c)(3) youth organization in Georgia. Through performances, letters, teaching, and community projects, students create ways to connect with patients, families, older adults, and community partners.</p>
-    <div class="btn-row">
-      <a class="btn btn--gold" href="media.html">See our work</a>
-      <a class="btn btn--ink" href="programs.html">Find your community</a>
+  <div class="container home-hero__grid">
+    <div class="home-hero__text">
+      <h1>WE ARE WITH YOU</h1>
+      <p class="home-hero__lede">Students using music, learning, and service to support their communities.</p>
+      <p>WE ARE WITH YOU is a student-led initiative by GYCO, a 501(c)(3) youth organization in Georgia. Through performances, letters, teaching, videos, and community projects, students create ways to connect with patients, families, older adults, and community partners.</p>
+      <p>Our work often begins in person — but it is not meant to end when a performance or visit is over. This website helps that connection continue. Whether you met us at an event, received one of our letters, or scanned a QR code from one of our materials, you can return here to watch performances, explore projects, read and send messages, request activities, and connect with the community you are part of.</p>
+      <p>Even when we are no longer in the same room, our message stays the same:</p>
+      <p class="home-hero__slogan">Even Here. Even Now. WE ARE WITH YOU.</p>
+      <div class="btn-row">
+        <a class="btn btn--gold" href="community/index.html">Visit the Community Portal</a>
+        <a class="btn btn--ink" href="media.html">See our work</a>
+      </div>
+      <p class="caption" style="margin-top:0.75rem;">Scan, reconnect, and continue where your visit left off.</p>
     </div>
-    <figure class="photo-figure photo-figure--wide" style="margin-top:var(--space-lg);">
-      <img src="assets/images/media-wawy-cityofhope-1.jpg" alt="GYCO students performing in the lobby of City of Hope Atlanta between two WE ARE WITH YOU banners" />
-      <figcaption><strong>City of Hope Atlanta</strong> — GYCO students performing between the WE ARE WITH YOU banners.</figcaption>
-    </figure>
+    <aside class="home-hero__aside" aria-label="Our printed materials and partner communities">
+      <h2 class="home-hero__aside-title">Take WE ARE WITH YOU With You</h2>
+      <p class="home-hero__aside-note">The same materials you may have received during one of our visits can also be viewed here.</p>
+      <div data-brochures></div>
+      <div data-community-logos style="margin-top:var(--space-sm);"></div>
+    </aside>
   </div>
 </section>
 
@@ -88,39 +101,27 @@
   </div>
 </section>
 
-<!-- 4 · OUR COMMUNITIES — rows render from js/partners.js;
-     the flyer carousel renders from SITE.home.carousel in js/config.js -->
+<!-- 4 · ON THE WALL WHERE WE VISIT — the one large poster image that
+     replaced the six-slide flyer carousel. Image + caption live in
+     SITE.home.poster (js/config.js). -->
 <section class="section">
-  <div class="container two-col" style="align-items:start;">
-    <div>
-      <h2 style="margin-bottom:var(--space-sm);">Our Communities</h2>
-      <p style="color:var(--muted);">Each partner community has its own page, reached through QR codes shared at that partner's site — with letters, music, and activities chosen for that place.</p>
-      <div data-pathway-cards></div>
+  <div class="container two-col" style="align-items:center;">
+    <div class="two-col__text">
+      <h2>On the Wall Where We Visit</h2>
+      <p>This is the poster we leave behind at partner communities. Its five doors — With You, Melody Box, Wish Pocket, Bloom Bank, and the Hope Capsule — are the same ones that open here, in the Community Portal.</p>
+      <p>If you scanned a QR code from one of these posters, you are already in the right place.</p>
+      <p><a class="btn btn--ink btn--sm" href="community/index.html">Open the Community Portal</a></p>
     </div>
-    <div>
-      <div data-carousel="home" data-carousel-label="Printed WE ARE WITH YOU flyers for each partner community"></div>
-      <p class="carousel-note" data-i18n="home.carouselNote">Please note: The QR codes on these sample flyers are for display purposes only. Each code is activated for its partner community during designated activities, so scanning a code from this screen will not open a live page.</p>
-    </div>
+    <div data-home-poster></div>
   </div>
 </section>
 
-<!-- 5 · NADO SCHOOL -->
+<!-- 5 · ABOUT GYCO — the parent organization, introduced before NADO School -->
 <section class="section section--mist">
-  <div class="container">
-    <h2 style="margin-bottom:var(--space-xs);">NADO School</h2>
-    <p class="home-hero__lede" style="max-width:none;">Learn something. Make it your own. Teach it forward.</p>
-    <p style="color:var(--muted);margin-top:var(--space-xs);">NADO School is GYCO's approach to learning. Students learn a skill, practice it until it is their own, use it to help someone else, and keep growing through the experience.</p>
-    <p class="step-line" style="margin-top:var(--space-sm);">Learn <span aria-hidden="true">→</span> Own <span aria-hidden="true">→</span> Offer <span aria-hidden="true">→</span> Progress</p>
-    <p style="margin-top:var(--space-md);"><a class="btn btn--ink btn--sm" href="learning.html">Explore NADO School</a></p>
-  </div>
-</section>
-
-<!-- 6 · ABOUT GYCO -->
-<section class="section">
   <div class="container two-col" style="align-items:start;">
     <div class="two-col__text">
       <h2>About GYCO</h2>
-      <p>GYCO — the Greater Youth Collaborative Opus — is a student organization founded in 2023 and registered as a 501(c)(3) nonprofit. Students rehearse, perform, teach, and organize their own community projects.</p>
+      <p>GYCO — the Greater Youth Collaborative Opus — is a student-centered youth nonprofit founded in 2022 and registered as a 501(c)(3) in April 2023. Students rehearse, perform, teach, and organize their own community projects.</p>
       <p>GYCO students have performed at City of Hope Atlanta, Ronald McDonald House Atlanta, and senior communities; written letters and prepared care packages for veterans; served refugee families in partnership with Friends of Refugees; and assembled 100 care packages for people experiencing homelessness in Atlanta.</p>
       <p><a class="btn btn--ink btn--sm" href="student-community.html">More about GYCO</a></p>
     </div>
@@ -129,6 +130,17 @@
       <small>Photo to add</small>
       <p>A group photo of GYCO students together — for example after a rehearsal, performance, or service project. Candid and real is better than posed.</p>
     </figure>
+  </div>
+</section>
+
+<!-- 6 · NADO SCHOOL -->
+<section class="section">
+  <div class="container">
+    <h2 style="margin-bottom:var(--space-xs);">NADO School</h2>
+    <p class="home-hero__lede" style="max-width:none;">Learn something. Make it your own. Teach it forward.</p>
+    <p style="color:var(--muted);margin-top:var(--space-xs);">NADO School is GYCO's approach to learning. Students learn a skill, practice it until it is their own, use it to help someone else, and keep growing through the experience.</p>
+    <p class="step-line" style="margin-top:var(--space-sm);">Learn <span aria-hidden="true">→</span> Own <span aria-hidden="true">→</span> Offer <span aria-hidden="true">→</span> Progress</p>
+    <p style="margin-top:var(--space-md);"><a class="btn btn--ink btn--sm" href="learning.html">Explore NADO School</a></p>
   </div>
 </section>
 

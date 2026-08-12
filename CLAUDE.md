@@ -32,7 +32,9 @@ css/style.css              The public design system (tokens, components). Import
 css/portal.css             Portal components layered on the same tokens. Never changes public pages.
 js/config.js               EDIT HERE: contact info, form URLs, nav, homepage images, featured press.
 js/partners.js             EDIT HERE: every partner/pathway's page content (slugs are load-bearing).
-js/site.js                 Engine for public pages: nav + footer, cards/carousel/partner pages. Rarely edit.
+js/site.js                 Engine for public pages: nav + footer, homepage poster/brochures/logo strip, partner pages. Rarely edit.
+js/archive.js              EDIT HERE: the GYCO Performances & Activities archive data (dates, events, photos).
+js/archive-ui.js           Engine for the archive (year tabs, pagination, detail view). Rarely edit.
 js/portal/                 Portal engine: portal-config.js (publishable key + vocabulary +
                            the five-option hub config), portal-core.js (client, guards, chrome,
                            forms, events), portal-pages.js + portal-pages2.js (page renderers,
@@ -44,7 +46,7 @@ supabase/setup.sql         The five migrations concatenated for one-paste setup.
 supabase/rls_verification.sql  66 security checks; runs in a transaction and ROLLS BACK.
 supabase/PORTAL-SETUP.md   The 3-step Supabase setup + admin how-to.
 assets/images, assets/logos  Photos and partner logos.
-test/smoke.test.js         262 jsdom DOM tests for the public site (incl. redesign guardrails).
+test/smoke.test.js         325 jsdom DOM tests for the public site (incl. redesign guardrails).
 test/preview.js            Zero-dependency local preview server (npm run preview): offline sample data.
 test/portal.test.js        168 jsdom DOM tests for the portal (stubbed Supabase).
 test/portal-live-check.js  Live anonymous-visitor checks against the real project.
@@ -74,8 +76,9 @@ Almost all editable content lives in **two data files**, not in the HTML:
 - `js/config.js` — the `SITE` object (contact, forms, nav, home images, press).
 - `js/partners.js` — the `PARTNERS` object (one entry per partner community).
 
-`js/site.js` reads those objects and injects nav, footer, cards, the carousel, and each partner page
-at runtime. **Change content in the data files and every page updates together.** Prefer editing
+`js/site.js` reads those objects and injects nav, footer, the homepage poster/brochure/logo-strip
+sections, and each partner page at runtime. (A third data file, `js/archive.js`, holds the GYCO
+performance archive rendered by `js/archive-ui.js`.) **Change content in the data files and every page updates together.** Prefer editing
 `config.js`/`partners.js` over hand-editing HTML. See `directives/website_editing_workflow.md`.
 
 Legacy partner **slugs are load-bearing** (`cancer-care`, `nicu`, `disability`, …): printed QR codes
@@ -100,7 +103,7 @@ To run the tests you need `jsdom` (`node_modules/` is gitignored):
 
 ```bash
 npm install                      # jsdom only; node_modules is gitignored
-npm test                         # expect "262 passed" + "168 passed"
+npm test                         # expect "325 passed" + "168 passed"
 node --check js/site.js          # syntax check (same for js/portal/*.js)
 rm -rf node_modules              # optional cleanup
 ```

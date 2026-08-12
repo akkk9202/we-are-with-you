@@ -50,10 +50,15 @@ Drop a PNG into `assets/logos/` and point `logo` at it. Already in place: `city-
 ## 3b. Replace the homepage images
 `js/config.js` → the `home:` block.
 - **"You are invited" card image** (shown on the One Message for You page): overwrite `assets/images/home-invitation.jpg` (keep the name and you're done), or change `home.invitation.src`. Update the `alt` text to describe the new image.
-- **Flyer carousel** (homepage, "Our Communities"): overwrite `assets/images/home-carousel-1.jpg`, `-2.jpg`, `-3.jpg`. To reorder, add, or remove slides, edit the `home.carousel` array — arrows, dots, keyboard, and swipe adjust automatically. No autoplay by design.
+- **The community poster** (homepage, "On the Wall Where We Visit"): overwrite `assets/images/home-poster.png` (keep the name and you're done), or change `home.poster.src`. Update `alt` and `caption` to describe the new image. This single image replaced the old six-slide flyer carousel.
+- **The two brochure previews** (homepage, "Take WE ARE WITH YOU With You"): drop portrait images at `assets/images/brochure-1.jpg` and `assets/images/brochure-2.jpg` — that's all. Until a file exists, a labeled "coming soon" placeholder shows automatically. Update the `alt` text in `home.brochures` when you add the real files. Visitors can click a brochure to see it full size.
+- **The six community logos near the top**: the strip pulls each logo from `js/partners.js` (see 3a), so replacing a logo file updates both places. The short labels/lines under "Where You May Have Met Us" live in `home.communities`.
 
 ## 3c. Edit the featured press article (Media page)
 `js/config.js` → the `press:` array — title, publisher, description, the English/Korean links, and the article image (`assets/images/press-newswave25.jpg`; a styled placeholder shows until the file exists). Add a second object to the array to feature another article.
+
+## 3d. Add events to the GYCO performance archive
+The "Our Work Through the Years" section on the GYCO page reads from **`js/archive.js`**. The file starts with a step-by-step guide; the short version: copy one of the `{ … }` blocks, set `date` ("2026-07-29", or "2026-07-01" if you only know the month), `title`, `partner`, and `description`, and drop event photos into `assets/images/archive/` and list them under `images`. Year tabs, sorting, "Showing 1–6 of…", and pagination all update automatically. The entries there now are **samples marked "Placeholder"** — replace them with real events and delete the leftovers.
 
 ## 4. Edit a partner page (or add a new one)
 Open `js/partners.js`. Each partner is one block:
@@ -157,7 +162,7 @@ buttons, and left-aligned section heads. Do not rename tokens in `css/style.css`
 (the Community Portal layers on them).
 
 ## 13. Run the tests
-262 automated checks cover the nav, community names/order, logos, the flyer carousel, all six partner pages, the Media press card, **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
+325 automated checks cover the nav (including the Philosophy tab), community names/order, logos, the homepage poster and brochure placeholders, the GYCO performance archive (year tabs, pagination, detail view), all six partner pages, the Media press card, **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
 ```bash
 npm install jsdom   # once
 node test/smoke.test.js

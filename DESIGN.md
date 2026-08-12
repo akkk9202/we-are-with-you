@@ -1,4 +1,52 @@
-# WE ARE WITH YOU — design system (v7, Aug 2026 editorial redesign)
+# WE ARE WITH YOU — design system (v8, Aug 2026)
+
+## What v8 added (the QR-visitor revisions)
+
+Most visitors arrive by scanning a QR code at a partner site, not through
+Google. The homepage now orients that visitor in its first three sections:
+
+1. **Hero** (`.home-hero__grid`, 7:5 two-column) — left: brand, lede, a short
+   "why you got this QR code" intro set tight (small paragraph gaps, no hero
+   photo), the one brand line as its own beat, and the Community Portal as the
+   primary CTA ("Scan, reconnect, and continue where your visit left off.").
+   Right rail (`.home-hero__aside`, "Take WE ARE WITH YOU With You"): two
+   portrait brochure previews (`.brochure`, 17:22 flyer proportions,
+   `SITE.home.brochures`; missing file → labeled placeholder, link disarmed)
+   with the six communities directly beneath as a single-column `.logo-strip`,
+   each linking to its partner page. Stacks under the text below 960px.
+   Still a public homepage, never a login page.
+
+Then What We Do · Recent Work · the one large community poster
+(`SITE.home.poster`, "On the Wall Where We Visit") · About GYCO (the parent
+org, deliberately **before**) · NADO School · final CTA. **7 sections, tested.**
+The six-slide flyer carousel and its spring engine were removed entirely.
+
+The GYCO page gained **Our Work Through the Years** — a data-driven
+performance/activity archive (`js/archive.js` data + `js/archive-ui.js`
+renderer): year tabs, 6-per-page pagination, and an in-place detail view
+(description, gallery, video/article links, focus-managed). Cards are
+photo-led; sample entries are explicitly named "Placeholder".
+
+**Philosophy** is now a top-level nav tab (between Media and Join Us). The
+philosophy page gained "The Visit Ends. The Connection Doesn't." — the
+continuity idea in plain words. With 8 nav items, the hamburger drawer now
+starts at 1200px (content breakpoints stay at 960px).
+
+The GYCO page was later restructured around **condensed-first content**:
+About GYCO (founded 2022, 501(c)(3) April 2023, "Learn Well. Share Well.",
+70+ performances) and five programs (01 Performance/PERFORM ·
+02 Education/EDUCATE · 03 Research/RESEARCH · 04 Press/CONNECT ·
+05 GYCO Chapters/LEAD as `.program` rows with a number/verb rail) each show
+a short version with an understated **Read More / Show Less** toggle
+(`.read-more` button + `.more` block: grid-template-rows animation, 220ms,
+aria-expanded/aria-hidden, independent per section, full copy kept in the
+HTML for SEO — that's why student-community.html carries a larger word
+budget). "How GYCO Works" (LEARN → SHARE → OBSERVE → CREATE → LEAD,
+`.steps--5`) is never collapsed. No accordion boxes, no FAQ look.
+
+---
+
+# v7 foundation (Aug 2026 editorial redesign)
 
 The reference feel: a real student-led community organization documented by an
 editor — calm, warm, photograph-driven, specific. White pages, navy as the one
@@ -24,7 +72,7 @@ shapes, no scroll-hiding animations.
   read about it.
 - **Left-aligned by default.** Centered text is reserved for the final CTA band
   and the one quiet quote (`.quiet-quote`).
-- Homepage = exactly 7 sections (tested). Most pages: 3–7 sections.
+- Homepage = exactly 7 sections since v8 (tested). Most pages: 3–7 sections.
 
 ## Typography
 - **Display** Fraunces 500 — h1–h3, pull quotes, the `.step-line`. Matches printed QR flyers.
@@ -57,10 +105,9 @@ shapes, no scroll-hiding animations.
 ## Motion
 - One signature animation: the NADO + NADO → WE merge (our-philosophy.html, once, on scroll).
 - Press feedback on the down-stroke (scale 0.96/0.99, 100ms).
-- The flyer carousel keeps its gesture-driven spring engine (drag, momentum,
-  interruptible spring). No autoplay.
 - Everything else: 150–200ms color/border transitions. No staggered reveals,
   no content hidden before scroll. `prefers-reduced-motion` gets static paths.
+  (The flyer carousel and its spring engine were removed in v8.)
 
 ## Copy rules (enforced by the guardrail tests)
 - Specific beats inspirational: name the partner, the activity, the year.

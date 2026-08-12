@@ -5,9 +5,9 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GYCO | Greater Youth Collaborative Opus | WE ARE WITH YOU</title>
-  <meta name="description" content="GYCO is a student organization in Georgia, founded in 2023. Students rehearse, perform, teach, and organize service projects with community partners." />
+  <meta name="description" content="GYCO is a student-centered youth nonprofit in Georgia, founded in 2022 and registered as a 501(c)(3) in April 2023. Students perform, educate, research, connect, and lead." />
   <meta property="og:title" content="GYCO — Greater Youth Collaborative Opus" />
-  <meta property="og:description" content="A student organization in Georgia. Students rehearse, perform, teach, and organize service projects with community partners." />
+  <meta property="og:description" content="A student-centered youth nonprofit in Georgia. Learn Well. Share Well." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://akkk9202.github.io/we-are-with-you/student-community.html" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
@@ -23,22 +23,29 @@
 <section class="page-hero">
   <div class="container">
     <h1>GYCO</h1>
-    <p class="page-hero__sub">The Greater Youth Collaborative Opus is a student organization in Georgia, founded in 2023 and registered as a 501(c)(3) nonprofit. Students rehearse, perform, teach, and organize their own community projects.</p>
+    <p class="page-hero__sub">The Greater Youth Collaborative Opus is a student-centered youth nonprofit in Georgia. Students rehearse, perform, teach, research, and organize their own community projects.</p>
   </div>
 </section>
 
-<!-- 2 · WHAT STUDENTS DO -->
+<!-- 2 · ABOUT GYCO — condensed by default; Read More reveals the rest.
+     (Expandable content stays in the HTML for SEO; js/site.js wires the
+     .read-more buttons.) -->
 <section class="section">
   <div class="container two-col" style="align-items:start;">
     <div class="two-col__text">
-      <h2>What Students Do</h2>
-      <p>Most GYCO students are musicians. They rehearse as an ensemble and perform for community partners — and the work has grown from there.</p>
-      <ul class="check-list" style="margin-top:var(--space-sm);">
-        <li>Perform live music at hospitals, family houses, and senior communities</li>
-        <li>Teach — younger students, teaching videos, and Beat &amp; Breeze sessions</li>
-        <li>Write letters and prepare care packages</li>
-        <li>Plan and run projects with partner organizations</li>
-      </ul>
+      <h2>About GYCO</h2>
+      <p>Greater Youth Collaborative Opus (GYCO) is a student-centered youth nonprofit founded in 2022 by two students and an educator and officially registered as a 501(c)(3) nonprofit organization in April 2023.</p>
+      <p>Built around the idea of <em>"Learn Well. Share Well."</em>, GYCO helps students turn what they learn into meaningful service through music, education, research, storytelling, and student leadership.</p>
+      <p>Through more than 70 performances, service projects, and community initiatives, students have worked with seniors, patients and families, individuals with disabilities, refugees, unhoused communities, and other community partners.</p>
+      <div class="more" id="about-more" aria-hidden="true"><div>
+        <p>What began primarily through music has continued to grow into something broader. Students now create educational resources, conduct research inspired by their service experiences, document community stories, develop new outreach projects, and bring those ideas back to their own schools.</p>
+        <p>One of the programs that grew from these experiences is <strong>WE ARE WITH YOU (WAWY)</strong>, a student-led community initiative that expands GYCO's outreach beyond in-person service. Through performances, letters, educational resources, videos, and community projects, students create new ways for people and communities to remain connected even when they cannot be together in person.</p>
+        <p>Today, GYCO's work is organized around five areas:</p>
+        <p class="step-line" style="font-size:1rem;">Perform <span aria-hidden="true">·</span> Educate <span aria-hidden="true">·</span> Research <span aria-hidden="true">·</span> Connect <span aria-hidden="true">·</span> Lead</p>
+      </div></div>
+      <button type="button" class="read-more" aria-expanded="false" aria-controls="about-more">
+        <span data-more-label>Read More</span> <span class="read-more__arrow" aria-hidden="true">↓</span>
+      </button>
     </div>
     <figure class="photo-figure">
       <img src="assets/images/media-performances-3.jpg" alt="GYCO student orchestra performing outdoors in a downtown Atlanta park, with strings, clarinets, guitar, cello, and keyboards led by a conductor" />
@@ -77,56 +84,168 @@
   </div>
 </section>
 
-<!-- 4 · PROGRAMS -->
+<!-- 4 · OUR WORK THROUGH THE YEARS — the performance & activity archive.
+     Events live in js/archive.js (year tabs, pagination, and the detail
+     view are rendered by js/archive-ui.js). Add real events there. -->
+<section class="section" id="archive">
+  <div class="container">
+    <div class="section-head">
+      <h2>Our Work Through the Years</h2>
+      <p>Performances, visits, teaching, and community projects since 2023, documented as we go. Choose a year, then open an event for its story and photos.</p>
+    </div>
+    <div data-archive></div>
+  </div>
+</section>
+
+<!-- 5 · OUR PROGRAMS — five areas, each condensed with its own independent
+     Read More. Expanded copy stays in the HTML for SEO. -->
+<section class="section section--mist">
+  <div class="container">
+    <div class="section-head">
+      <h2>Our Programs</h2>
+    </div>
+    <div class="programs">
+
+      <article class="program">
+        <div class="program__rail">
+          <span class="program__no">01</span>
+          <span class="program__verb">Perform</span>
+        </div>
+        <div class="program__body">
+          <h3>Performance</h3>
+          <p>Music was where GYCO began and remains one of the most direct ways we connect with others.</p>
+          <p>Students perform for patients and families, senior communities, individuals with disabilities, and community organizations, using music to create moments of encouragement and connection.</p>
+          <div class="more" id="program-more-1" aria-hidden="true"><div>
+            <p>Performances range from small community visits to collaborative concerts and special events with partner organizations. Students are encouraged not only to perform well, but also to understand who they are performing for and why their presence matters.</p>
+            <p>For GYCO, performance is not simply about presenting music. It is about using music as a way to enter a community, listen, build relationships, and share an experience together.</p>
+          </div></div>
+          <button type="button" class="read-more" aria-expanded="false" aria-controls="program-more-1">
+            <span data-more-label>Read More</span> <span class="read-more__arrow" aria-hidden="true">↓</span>
+          </button>
+        </div>
+      </article>
+
+      <article class="program">
+        <div class="program__rail">
+          <span class="program__no">02</span>
+          <span class="program__verb">Educate</span>
+        </div>
+        <div class="program__body">
+          <h3>Education</h3>
+          <p>GYCO encourages students to share what they have learned with others.</p>
+          <p>Students create books, educational materials, teaching videos, digital resources, workshops, and activities that make their knowledge useful to the communities around them.</p>
+          <div class="more" id="program-more-2" aria-hidden="true"><div>
+            <p>Projects may involve music, health education, academics, language, creative learning, or other topics that can benefit the communities we work with.</p>
+            <p>Educational projects should be developed with accessibility and usefulness in mind. When possible, students work with educators, professionals, and partner organizations to make sure resources are appropriate for the people they are designed to serve.</p>
+            <p>The goal is simple: learning should not stop with the person who learned it.</p>
+            <p>When students teach, explain, create, and share, they deepen their own understanding while helping someone else gain access to new information or opportunities.</p>
+          </div></div>
+          <button type="button" class="read-more" aria-expanded="false" aria-controls="program-more-2">
+            <span data-more-label>Read More</span> <span class="read-more__arrow" aria-hidden="true">↓</span>
+          </button>
+        </div>
+      </article>
+
+      <article class="program">
+        <div class="program__rail">
+          <span class="program__no">03</span>
+          <span class="program__verb">Research</span>
+        </div>
+        <div class="program__body">
+          <h3>Research</h3>
+          <p>Service often creates questions.</p>
+          <p>GYCO helps students turn questions discovered through community experiences into research that can improve programs and inspire new ideas.</p>
+          <div class="more" id="program-more-3" aria-hidden="true"><div>
+            <p>Students may collect observations, review existing research, develop surveys, analyze program outcomes, or work with mentors to better understand the communities and issues connected to their projects.</p>
+            <p>Research is not treated as something separate from service. Instead, it completes a cycle:</p>
+            <p class="step-line" style="font-size:1rem;">Serve <span aria-hidden="true">→</span> Observe <span aria-hidden="true">→</span> Question <span aria-hidden="true">→</span> Research <span aria-hidden="true">→</span> Improve</p>
+            <p>What students learn through research can then be used to strengthen existing programs, develop new projects, and make future community engagement more thoughtful and effective.</p>
+          </div></div>
+          <button type="button" class="read-more" aria-expanded="false" aria-controls="program-more-3">
+            <span data-more-label>Read More</span> <span class="read-more__arrow" aria-hidden="true">↓</span>
+          </button>
+        </div>
+      </article>
+
+      <article class="program">
+        <div class="program__rail">
+          <span class="program__no">04</span>
+          <span class="program__verb">Connect</span>
+        </div>
+        <div class="program__body">
+          <h3>Press</h3>
+          <p>Every community has stories worth hearing.</p>
+          <p>Through GYCO Press, students use interviews, articles, photography, and video to document and connect the people, organizations, schools, and communities involved in our work.</p>
+          <div class="more" id="program-more-4" aria-hidden="true"><div>
+            <p>Students may highlight a partner organization, speak with a community leader, document a student project, or share how young people in different places are responding to similar challenges.</p>
+            <p>Press should not feel like simple promotion or marketing for GYCO. Its purpose is to connect communities through their experiences and perspectives.</p>
+            <p>By documenting and sharing these stories, students learn how to listen carefully, communicate responsibly, and help voices from different communities reach one another.</p>
+          </div></div>
+          <button type="button" class="read-more" aria-expanded="false" aria-controls="program-more-4">
+            <span data-more-label>Read More</span> <span class="read-more__arrow" aria-hidden="true">↓</span>
+          </button>
+        </div>
+      </article>
+
+      <article class="program">
+        <div class="program__rail">
+          <span class="program__no">05</span>
+          <span class="program__verb">Lead</span>
+        </div>
+        <div class="program__body">
+          <h3>GYCO Chapters</h3>
+          <p>GYCO Chapters allow students to bring what they have learned into their own schools and communities.</p>
+          <p>Each Chapter can identify local needs, create its own projects, and remain connected with students across the larger GYCO network.</p>
+          <div class="more" id="program-more-5" aria-hidden="true"><div>
+            <p>Rather than simply repeating the same activities everywhere, each Chapter should be able to develop projects that make sense for its own environment.</p>
+            <p>Students may organize performances, educational projects, community partnerships, research activities, interviews, service events, or new initiatives of their own.</p>
+            <p>Chapters remain connected through the larger GYCO network, allowing students from different schools and communities to exchange ideas, share resources, collaborate on projects, and learn from one another.</p>
+            <p>The goal is to help students progress from participants to organizers, and from organizers to responsible leaders who can recognize a need, develop an idea, build a team, and turn that idea into action.</p>
+          </div></div>
+          <button type="button" class="read-more" aria-expanded="false" aria-controls="program-more-5">
+            <span data-more-label>Read More</span> <span class="read-more__arrow" aria-hidden="true">↓</span>
+          </button>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- 6 · HOW GYCO WORKS — always fully visible; built to scan, not to read. -->
 <section class="section">
   <div class="container">
     <div class="section-head">
-      <h2>Programs</h2>
-      <p><strong>WE ARE WITH YOU</strong> is GYCO's main community initiative — the performances, letters, and partner pages across this site. Within it, students run several ongoing series:</p>
+      <h2>How GYCO Works</h2>
     </div>
-    <div class="index-list">
-      <div class="index-item">
-        <span class="index-item__title">Winds of Love</span>
-        <span class="index-item__desc">Performances at hospitals, family houses, senior communities, and community concerts.</span>
-        <a class="index-item__go" href="media.html">Photos →</a>
+    <div class="steps steps--5">
+      <div class="step">
+        <h3>LEARN</h3>
+        <p>Develop knowledge, skills, and experiences.</p>
       </div>
-      <div class="index-item">
-        <span class="index-item__title">Taps of Love</span>
-        <span class="index-item__desc">Short teaching videos created by students — rhythms, instruments, and simple activities.</span>
-        <a class="index-item__go" href="learning.html#programs">Learn more →</a>
+      <div class="step">
+        <h3>SHARE</h3>
+        <p>Use what you have learned to serve others.</p>
       </div>
-      <div class="index-item">
-        <span class="index-item__title">Voices of Love</span>
-        <span class="index-item__desc">Community members share the story or memory behind a song; students perform it when possible.</span>
-        <a class="index-item__go" href="one-message-for-you.html">Learn more →</a>
+      <div class="step">
+        <h3>OBSERVE</h3>
+        <p>Recognize needs, questions, and opportunities.</p>
       </div>
-      <div class="index-item">
-        <span class="index-item__title">Circle of Love</span>
-        <span class="index-item__desc">Family programs, volunteer projects, and partnership work with community organizations.</span>
-        <a class="index-item__go" href="join.html">Get involved →</a>
+      <div class="step">
+        <h3>CREATE</h3>
+        <p>Turn those observations into projects and ideas.</p>
+      </div>
+      <div class="step">
+        <h3>LEAD</h3>
+        <p>Take responsibility and help others participate.</p>
       </div>
     </div>
-    <p style="margin-top:var(--space-md);color:var(--muted);">GYCO numbers its larger bodies of work like a composer numbers an opus. WE ARE WITH YOU is OPUS 1; NADO School is OPUS 2; student research, student press, school clubs (SHAN &amp; ECHO), and new creative projects continue the series.</p>
+    <div class="pullquote" style="margin-top:var(--space-md);"><p>Learn Well. Share Well.</p></div>
+    <p style="color:var(--muted);">We believe young people grow most when learning becomes something they can use for someone beyond themselves. The thinking behind this — why our support shouldn't end when a visit does — is written out in <a href="our-philosophy.html" style="text-decoration:underline;">Our Philosophy</a>.</p>
   </div>
 </section>
 
-<!-- 5 · HOW STUDENTS LEARN -->
-<section class="section section--mist">
-  <div class="container two-col" style="align-items:start;">
-    <div class="two-col__text">
-      <h2>How Students Learn</h2>
-      <p>GYCO uses the <a href="learning.html" style="text-decoration:underline;">NADO School</a> approach: learn a skill, make it your own, use it to help someone else, and keep growing from there. New students don't need experience — curiosity and commitment are enough.</p>
-      <p>Students lead the work themselves: choosing repertoire, planning visits, producing videos, and building relationships with partners.</p>
-    </div>
-    <!-- PLACEHOLDER — replace this block with a real photo when available. -->
-    <figure class="photo-placeholder">
-      <small>Photo to add</small>
-      <p>Students planning or leading — a rehearsal being run by a student, a planning meeting, or students setting up for a community visit.</p>
-    </figure>
-  </div>
-</section>
-
-<!-- 6 · A QUOTE, THEN GET INVOLVED -->
+<!-- 7 · A QUOTE, THEN GET INVOLVED -->
 <section class="section section--dark">
   <div class="container">
     <div class="quiet-quote">
@@ -148,5 +267,7 @@
 <script src="js/config.js"></script>
 <script src="js/partners.js"></script>
 <script src="js/site.js"></script>
+<script src="js/archive.js"></script>
+<script src="js/archive-ui.js"></script>
 </body>
 </html>
