@@ -92,9 +92,12 @@ performance/activity records. The file opens with a field-by-field guide;
 in short: one `{ … }` block per event with `date` ("YYYY-MM-DD"; use day 01
 for month-only dates), `title`, `partner`, `location`, `description`,
 `images[]` (files go in `assets/images/archive/`), `videoUrl`, `category`,
-`participants`, `link`. Year tabs, sorting, and pagination are automatic.
-The entries currently in the file are **clearly-marked sample placeholders** —
-replace them as real history is collected. The renderer is `js/archive-ui.js`
+`participants`, `link`. Year tabs, sorting, and pagination are automatic
+(year tabs appear once entries span more than one year; `dateLabel` shows
+honest text like "Since 2023" for undated collections). The entries currently
+in the file are **real community photo collections** imported from
+gyco-opus.org (photos in `assets/images/archive/`) — add dated event records
+alongside them as history is collected. The renderer is `js/archive-ui.js`
 (edit rarely, like site.js).
 
 ---

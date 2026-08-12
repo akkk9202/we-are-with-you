@@ -29,13 +29,16 @@
     .replace(/"/g, '&quot;');
 
   /* "2026-07-29" → { year: 2026, label: "July 29, 2026" }.
-     Day 01 is treated as "month only" → "July 2026". */
+     Day 01 is treated as "month only" → "July 2026".
+     An entry's `dateLabel` (e.g. "Since 2023") overrides the
+     displayed label; `date` still drives sorting and year tabs. */
   const parseDate = (iso) => {
     const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
     if (!m) return { year: 0, label: iso || '' };
     const year = +m[1], month = MONTHS[+m[2] - 1] || '', day = +m[3];
     return { year, label: day > 1 ? `${month} ${day}, ${year}` : `${month} ${year}` };
   };
+  const dateText = (e) => e.dateLabel || e._d.label;
 
   /* Normalize + sort newest first; group by year. */
   const events = GYCO_ARCHIVE
@@ -67,16 +70,17 @@
     const start = (state.page - 1) * PER_PAGE;
     const slice = list.slice(start, start + PER_PAGE);
 
-    const tabs = years.map(y => `
+    /* Year tabs only appear once the data spans more than one year. */
+    const tabs = years.length > 1 ? years.map(y => `
       <button type="button" class="archive-year" data-year="${y}"
-              aria-pressed="${y === state.year}">${y}</button>`).join('');
+              aria-pressed="${y === state.year}">${y}</button>`).join('') : '';
 
     const cards = slice.map(e => `
       <button type="button" class="archive-card" data-event="${e._id}"
               aria-label="${esc(e.title)} — open details">
         ${cardMedia(e)}
         <span class="archive-card__body">
-          <span class="archive-card__date">${esc(e._d.label)}${e.category ? ` · ${esc(e.category)}` : ''}</span>
+          <span class="archive-card__date">${esc(dateText(e))}${e.category ? ` · ${esc(e.category)}` : ''}</span>
           <span class="archive-card__title">${esc(e.title)}</span>
           ${metaLine(e) ? `<span class="archive-card__meta">${metaLine(e)}</span>` : ''}
         </span>
@@ -90,7 +94,7 @@
       </div>` : '';
 
     mount.innerHTML = `
-      <div class="archive-years" role="group" aria-label="Filter by year">${tabs}</div>
+      ${tabs ? `<div class="archive-years" role="group" aria-label="Filter by year">${tabs}</div>` : ''}
       <p class="archive-count" aria-live="polite">Showing ${list.length ? start + 1 : 0}–${start + slice.length} of ${list.length}</p>
       <div class="archive-grid">${cards}</div>
       ${pager}`;
@@ -125,7 +129,7 @@
       e.link && e.link.href ? `<a class="btn btn--ink btn--sm" href="${safeUrl(e.link.href)}" target="_blank" rel="noopener">${esc(e.link.label || 'Read more')}</a>` : '',
     ].filter(Boolean).join('');
 
-    const meta = [e._d.label, e.partner, e.location, e.category, e.participants]
+    const meta = [dateText(e), e.partner, e.location, e.category, e.participants]
       .filter(Boolean).map(esc).join(' · ');
 
     mount.innerHTML = `

@@ -397,62 +397,93 @@ console.log('\n[student-community.html]');
   const philLink = [...d.querySelectorAll('main a')].find(a => a.getAttribute('href') === 'our-philosophy.html');
   ok(!!philLink, 'GYCO page links to Our Philosophy in prose (teaser, not a duplicate essay)');
 
-  /* ── the Performances & Activities archive ── */
+  /* ── the archive: real community photo collections ── */
   ok(d.body.textContent.includes('Our Work Through the Years'), 'archive section: Our Work Through the Years');
   const arch = d.querySelector('[data-archive]');
   ok(!!arch, 'archive mount present and hydrated');
-  const yearTabs = [...arch.querySelectorAll('.archive-year')];
-  ok(yearTabs.length >= 4 && yearTabs[0].textContent === '2026' && yearTabs[yearTabs.length - 1].textContent === '2023',
-     'year tabs run newest → 2023');
-  ok(yearTabs[0].getAttribute('aria-pressed') === 'true', 'newest year selected by default');
-  ok(arch.querySelectorAll('.archive-card').length === 6, 'page 1 shows at most 6 event cards');
+  ok(arch.querySelectorAll('.archive-year').length === 0,
+     'year tabs stay hidden while entries span a single year (appear automatically later)');
+  ok(arch.querySelectorAll('.archive-card').length === 6, 'page 1 shows 6 community cards');
   ok(arch.querySelector('.archive-count').textContent.includes('Showing 1–6 of 7'), 'count line: Showing 1–6 of 7');
   ok(arch.querySelector('.archive-pager__status').textContent.trim() === 'Page 1 of 2', 'pager reads Page 1 of 2');
-  ok([...arch.querySelectorAll('.archive-card__title')].every(t => t.textContent.length > 3), 'every card has a title');
-  ok([...arch.querySelectorAll('.archive-card__date')].every(t => /\d{4}/.test(t.textContent)), 'every card shows its date');
+  const cardTitles = [...arch.querySelectorAll('.archive-card__title')].map(t => t.textContent);
+  ok(cardTitles[0] === 'City of Hope Atlanta (CTCA)', 'City of Hope leads the collections');
+  ok(cardTitles.includes('Ronald McDonald House Charities of Atlanta') && cardTitles.includes('Veterans'),
+     'community collections match the served list');
+  ok([...arch.querySelectorAll('.archive-card__date')].every(t => t.textContent.includes('Since 2023')),
+     'cards carry the honest "Since 2023" label — no invented event dates');
+  ok(arch.querySelectorAll('.archive-card__media img').length === 6, 'every community card leads with a real photo');
 
   /* pagination */
   arch.querySelector('[data-page-next]').dispatchEvent(new dom.window.Event('click', { bubbles: true }));
-  ok(arch.querySelectorAll('.archive-card').length === 1, 'Next → page 2 shows the remaining card');
+  ok(arch.querySelectorAll('.archive-card').length === 1, 'Next → page 2 shows the remaining collection');
   ok(arch.querySelector('.archive-count').textContent.includes('Showing 7–7 of 7'), 'page 2 count line: Showing 7–7 of 7');
+  ok(arch.querySelector('.archive-card__title').textContent.includes('Homelessness'),
+     'the homelessness outreach collection closes the list');
   arch.querySelector('[data-page-prev]').dispatchEvent(new dom.window.Event('click', { bubbles: true }));
   ok(arch.querySelectorAll('.archive-card').length === 6, 'Previous returns to page 1');
 
-  /* year filter */
-  const tab2025 = yearTabsFind(arch, '2025');
-  tab2025.dispatchEvent(new dom.window.Event('click', { bubbles: true }));
-  ok(tab2025 && arch.querySelector('.archive-year[aria-pressed="true"]').textContent === '2025', '2025 tab activates');
-  ok(arch.querySelectorAll('.archive-card').length === 3, '2025 shows its 3 entries');
-  ok(!arch.querySelector('.archive-pager'), 'no pager when a year fits on one page');
-
   /* detail view */
   const firstCard = arch.querySelector('.archive-card');
-  const cardTitle = firstCard.querySelector('.archive-card__title').textContent;
   firstCard.dispatchEvent(new dom.window.Event('click', { bubbles: true }));
   const detail = arch.querySelector('.archive-detail');
-  ok(!!detail, 'clicking a card opens the event detail view');
-  ok(detail.querySelector('h3').textContent === cardTitle, 'detail heading matches the card');
-  ok(detail.querySelector('.archive-detail__meta').textContent.length > 5, 'detail shows date/partner meta');
-  ok(!!detail.querySelector('.archive-detail__gallery'), 'detail has a photo gallery area');
+  ok(!!detail, 'clicking a card opens the collection detail view');
+  ok(detail.querySelector('h3').textContent === 'City of Hope Atlanta (CTCA)', 'detail heading matches the card');
+  ok(detail.querySelector('.archive-detail__meta').textContent.includes('Since 2023'), 'detail meta uses the honest date label');
+  ok(detail.querySelectorAll('.archive-detail__gallery .photo-figure img').length === 10,
+     'City of Hope detail shows its full 10-photo gallery');
   detail.querySelector('[data-archive-back]').dispatchEvent(new dom.window.Event('click', { bubbles: true }));
-  ok(arch.querySelectorAll('.archive-card').length === 3 &&
-     arch.querySelector('.archive-year[aria-pressed="true"]').textContent === '2025',
-     'Back returns to the same year');
+  ok(arch.querySelectorAll('.archive-card').length === 6, 'Back returns to the grid');
 
-  /* data-driven + honestly marked as samples */
+  /* data-driven; every photo is a real file with real alt text */
   const archSrc = fs.readFileSync(path.join(ROOT, 'js/archive.js'), 'utf8');
   ok(/const GYCO_ARCHIVE\s*=\s*\[/.test(archSrc), 'archive data lives in js/archive.js as a plain array');
-  ok(/SAMPLE PLACEHOLDER/.test(archSrc), 'sample entries are clearly marked in the data file');
-  ok((archSrc.match(/Placeholder/g) || []).length >= 10, 'every sample entry is named a Placeholder');
+  ok(!/Placeholder/.test(archSrc), 'no sample placeholder entries remain — the archive is real content now');
+  const archImgSrcs = [...archSrc.matchAll(/src: "([^"]+)"/g)].map(m => m[1]);
+  ok(archImgSrcs.length >= 45, `archive holds a real photo library (${archImgSrcs.length} photos)`);
+  ok(archImgSrcs.every(s => fs.existsSync(path.join(ROOT, s))), 'every archive photo exists on disk');
+  const archAlts = [...archSrc.matchAll(/alt: "([^"]+)"/g)].map(m => m[1]);
+  ok(archAlts.length === archImgSrcs.length && archAlts.every(a => a.length > 15),
+     'every archive photo has descriptive alt text');
   const gycoHtml = fs.readFileSync(path.join(ROOT, 'student-community.html'), 'utf8');
   ok(gycoHtml.includes('js/archive.js') && gycoHtml.includes('js/archive-ui.js'),
      'GYCO page loads the archive data + renderer');
   ok(!/archive-card|archive-year/.test(gycoHtml), 'no archive entries hardcoded into the HTML');
 }
 
-/* helper: find a year tab by label */
-function yearTabsFind(arch, label) {
-  return [...arch.querySelectorAll('.archive-year')].find(b => b.textContent === label);
+/* ── 4b. ARCHIVE MECHANISM (synthetic multi-year data) ── */
+console.log('\n[archive mechanism]');
+{
+  const SYNTH = `const GYCO_ARCHIVE = [${[...Array(8)].map((_, i) => `
+    { date: "2026-0${8 - i}-01", title: "Event ${i + 1}", partner: "P", description: "D", images: [], category: "Performance" },`).join('')}
+    { date: "2025-06-01", title: "Old Event A", partner: "P", description: "D", images: [] },
+    { date: "2025-03-01", title: "Old Event B", partner: "P", description: "D", images: [] },
+  ];`;
+  const html = fs.readFileSync(path.join(ROOT, 'student-community.html'), 'utf8');
+  const dom = new JSDOM(html, { url: 'https://x.test/student-community.html', runScripts: 'outside-only' });
+  dom.window.IntersectionObserver = class { observe() {} unobserve() {} disconnect() {} };
+  const bundle = ['js/config.js', 'js/partners.js', 'js/site.js']
+    .map(js => fs.readFileSync(path.join(ROOT, js), 'utf8')).join('\n;\n')
+    + '\n;\n' + SYNTH + '\n;\n' + fs.readFileSync(path.join(ROOT, 'js/archive-ui.js'), 'utf8');
+  dom.window.eval(bundle);
+  const d = dom.window.document;
+  const arch = d.querySelector('[data-archive]');
+  const tabs = [...arch.querySelectorAll('.archive-year')].map(b => b.textContent);
+  ok(JSON.stringify(tabs) === JSON.stringify(['2026', '2025']), 'multi-year data → year tabs appear, newest first');
+  ok(arch.querySelector('.archive-year[aria-pressed="true"]').textContent === '2026', 'newest year selected by default');
+  ok(arch.querySelectorAll('.archive-card').length === 6 &&
+     arch.querySelector('.archive-pager__status').textContent.trim() === 'Page 1 of 2',
+     '8 events in 2026 → 6 per page + pager');
+  ok(arch.querySelector('.archive-card__media--empty'), 'events without photos get a clean placeholder block');
+  [...arch.querySelectorAll('.archive-year')].find(b => b.textContent === '2025')
+    .dispatchEvent(new dom.window.Event('click', { bubbles: true }));
+  ok(arch.querySelector('.archive-year[aria-pressed="true"]').textContent === '2025' &&
+     arch.querySelectorAll('.archive-card').length === 2 && !arch.querySelector('.archive-pager'),
+     'switching years filters the grid and drops the pager when it fits');
+  arch.querySelector('.archive-card').dispatchEvent(new dom.window.Event('click', { bubbles: true }));
+  arch.querySelector('[data-archive-back]').dispatchEvent(new dom.window.Event('click', { bubbles: true }));
+  ok(arch.querySelector('.archive-year[aria-pressed="true"]').textContent === '2025',
+     'detail → Back returns to the same year');
 }
 
 /* ── 5. NADO SCHOOL PAGE ── */
