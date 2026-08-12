@@ -76,9 +76,6 @@
       ${hubPageHead(optionById("with_you"))}
       <section class="psection">
         <ul class="hub-quick">
-          <li><a href="write-letter.html"><span class="hub-quick__title">Write a letter</span>
-            <span class="hub-quick__desc">Letters are reviewed before they are shared.</span>
-            <span class="hub-quick__go" aria-hidden="true">→</span></a></li>
           <li><a href="request-letter.html"><span class="hub-quick__title">Request a letter</span>
             <span class="hub-quick__desc">Ask for an encouraging letter for yourself or someone else.</span>
             <span class="hub-quick__go" aria-hidden="true">→</span></a></li>
@@ -96,8 +93,8 @@
           </section>` : ""}
         ${!letters.length && !publicLetters.length ? Portal.emptyState(
           "No letters yet",
-          "Approved letters and messages will appear here — yours could be the first.",
-          `<a class="btn btn--gold btn--sm" href="write-letter.html">Write a letter</a>`) : ""}
+          "Approved letters and messages will appear here.",
+          `<a class="btn btn--gold btn--sm" href="request-letter.html">Request a letter</a>`) : ""}
       </div>`;
   }
 

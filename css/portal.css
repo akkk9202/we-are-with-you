@@ -343,12 +343,6 @@ a.pitem__link:hover { background: var(--mist); }
 .hub-action__desc { display: block; font-size: 0.92rem; color: var(--muted); margin-top: 0.1rem; }
 .hub-action__go { color: var(--gold); font-size: 1.15rem; flex-shrink: 0; }
 
-/* the featured first action (With You) is a little larger — deliberately unequal */
-.hub-action--featured { padding-block: 1.5rem; }
-.hub-action--featured .hub-action__art { width: 84px; }
-.hub-action--featured .hub-action__art img { max-height: 84px; }
-.hub-action--featured .hub-action__title { font-size: 1.5rem; }
-
 /* "Your community" quick line under the actions */
 .hub-mycommunity { margin-top: var(--space-md); font-size: 0.95rem; color: var(--muted); max-width: none; }
 .hub-mycommunity a { color: var(--blue); font-weight: 500; }
@@ -411,7 +405,6 @@ a.pitem__link:hover { background: var(--mist); }
 @media (max-width: 480px) {
   .hub-action { gap: 0.9rem; }
   .hub-action__art { width: 44px; }
-  .hub-action--featured .hub-action__art { width: 60px; }
   .hub-page-head { align-items: flex-start; }
 }
 

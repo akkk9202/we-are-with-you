@@ -148,20 +148,13 @@
             </div>
           </div>
           <div class="pfield">
-            <label for="su-type">I am joining as…</label>
-            <select class="pinput" id="su-type" name="account_type" required>
+            <label for="su-from">I am joining from…</label>
+            <select class="pinput" id="su-from" name="joining_from" required>
               <option value="">Choose one…</option>
-              ${cfg.accountTypes.map((t) => `<option value="${t.value}">${esc(t.label)}</option>`).join("")}
-            </select>
-            <p class="perror" id="err-su-type" data-error-for="account_type"></p>
-          </div>
-          <div class="pfield">
-            <label for="su-community">My primary community</label>
-            <select class="pinput" id="su-community" name="primary_community_id" required>
-              <option value="">Choose your community…</option>
               ${comms.map((c) => `<option value="${c.id}">${esc(c.name)}</option>`).join("")}
+              <option value="gyco">GYCO — student or volunteer</option>
             </select>
-            <p class="perror" id="err-su-community" data-error-for="primary_community_id"></p>
+            <p class="perror" id="err-su-from" data-error-for="joining_from"></p>
             <p class="phint">You can visit every community, and you can change this anytime in Profile Settings.</p>
           </div>
           <fieldset class="pconsent">
@@ -188,12 +181,16 @@
         if (!Portal.vEmail(v.email)) e.email = "Please enter a valid email address.";
         if (!v.password || v.password.length < 8) e.password = "Your password needs at least 8 characters.";
         if (v.password !== v.password2) e.password2 = "The two passwords don't match.";
-        if (!Portal.vRequired(v.account_type)) e.account_type = "Please choose an account type.";
-        if (!Portal.vRequired(v.primary_community_id)) e.primary_community_id = "Please choose your primary community.";
+        if (!Portal.vRequired(v.joining_from)) e.joining_from = "Please choose where you are joining from.";
         if (!v.agree) e.agree = "Please read and agree to the privacy and consent statement.";
         return e;
       },
       submit: async (v) => {
+        /* One "joining from" choice covers both stored fields:
+           a community → community member of that community;
+           GYCO → student volunteer (no primary community — they
+           serve all of them; changeable later in Profile Settings). */
+        const fromGyco = v.joining_from === "gyco";
         const { data, error } = await sb.auth.signUp({
           email: String(v.email).trim(),
           password: v.password,
@@ -201,8 +198,8 @@
             emailRedirectTo: Portal.absUrl("community/login.html?verified=1"),
             data: {
               full_name: String(v.full_name).trim(),
-              account_type: v.account_type,
-              primary_community_id: v.primary_community_id,
+              account_type: fromGyco ? "student_volunteer" : "community_member",
+              primary_community_id: fromGyco ? "" : v.joining_from,
               email_consent: !!v.email_consent,
             },
           },
@@ -332,11 +329,11 @@
 
   /* One action row per portal option. The whole row is a single
      link; the illustration is decorative (empty alt) because the
-     visible title + description carry the meaning. With You is
-     the featured (larger) first row. */
+     visible title + description carry the meaning. All five rows
+     are the same size. */
   const hubActionRow = (opt) => `
     <li>
-      <a class="hub-action${opt.featured ? " hub-action--featured" : ""}" href="${esc(opt.href)}" data-option="${esc(opt.id)}">
+      <a class="hub-action" href="${esc(opt.href)}" data-option="${esc(opt.id)}">
         <span class="hub-action__art" aria-hidden="true">
           <img src="${esc(Portal.rootUrl(opt.art))}" alt="${esc(opt.artAlt || "")}" loading="lazy">
         </span>

@@ -84,12 +84,12 @@ const PORTAL_CONFIG = {
      poster and identify each action; they stay small in the UI.
      `artAlt` is empty on purpose: every row's meaning is carried
      by its visible title + description, so the illustration is
-     decorative for screen readers (WCAG 1.1.1). `featured` makes
-     With You the larger first row. Descriptions describe what the
-     page actually does — keep them plain and verb-first. */
+     decorative for screen readers (WCAG 1.1.1). All five rows are
+     the same size. Descriptions describe what the page actually
+     does — keep them plain and verb-first. */
   portalOptions: [
-    { id: "with_you",     title: "With You",     description: "Write a letter, request one, or read messages from the community",
-      href: "with-you.html",     art: "assets/images/portal/with-you-envelope.png",  artAlt: "", featured: true },
+    { id: "with_you",     title: "With You",     description: "Request a letter or read messages from the community",
+      href: "with-you.html",     art: "assets/images/portal/with-you-envelope.png",  artAlt: "" },
     { id: "melody_box",   title: "Melody Box",   description: "Watch and listen to music shared by GYCO students",
       href: "melody-box.html",   art: "assets/images/portal/melody-music-box.png",   artAlt: "" },
     { id: "wish_pocket",  title: "Wish Pocket",  description: "Request or dedicate a song",

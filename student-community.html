@@ -54,12 +54,15 @@
   </div>
 </section>
 
-<!-- 3 · RECENT COMMUNITY WORK — real service history, near the top -->
-<section class="section section--mist">
+<!-- 3 · OUR WORK THROUGH THE YEARS — where GYCO has served + the
+     performance & activity archive, combined. Events live in
+     js/archive.js (year tabs, pagination, and the detail view are
+     rendered by js/archive-ui.js). Add real events there. -->
+<section class="section section--mist" id="archive">
   <div class="container">
     <div class="section-head">
-      <h2>Where GYCO Has Served</h2>
-      <p>Students return to the same communities rather than visiting once. So far that has included:</p>
+      <h2>Our Work Through the Years</h2>
+      <p>Students return to the same communities rather than visiting once. Since 2023 that has included:</p>
     </div>
     <ul class="check-list check-list--cols">
       <li>City of Hope Atlanta (CTCA)</li>
@@ -70,36 +73,15 @@
       <li>Refugee families, in partnership with Friends of Refugees</li>
       <li>People experiencing homelessness in Atlanta — music and 100 care packages</li>
     </ul>
-    <div class="photo-duo" style="margin-top:var(--space-md);">
-      <figure class="photo-figure">
-        <img src="assets/images/media-outreach-3.jpg" alt="Residents of a senior community, some in wheelchairs, gathered to hear the student ensemble perform in their community room" />
-        <figcaption>A performance in the community room of a senior living partner.</figcaption>
-      </figure>
-      <figure class="photo-figure">
-        <img src="assets/images/media-teaching-1.jpg" alt="An older GYCO student teaching a younger student snare drum rhythms during an ensemble rehearsal" />
-        <figcaption>An older student teaching a younger one during rehearsal.</figcaption>
-      </figure>
-    </div>
+    <p style="margin-top:var(--space-md);margin-bottom:var(--space-sm);color:var(--muted);">Choose a year, then open an event for its story and photos.</p>
+    <div data-archive></div>
     <p style="margin-top:var(--space-md);"><a class="btn btn--ink btn--sm" href="media.html">See photos and press</a></p>
   </div>
 </section>
 
-<!-- 4 · OUR WORK THROUGH THE YEARS — the performance & activity archive.
-     Events live in js/archive.js (year tabs, pagination, and the detail
-     view are rendered by js/archive-ui.js). Add real events there. -->
-<section class="section" id="archive">
-  <div class="container">
-    <div class="section-head">
-      <h2>Our Work Through the Years</h2>
-      <p>Performances, visits, teaching, and community projects since 2023, documented as we go. Choose a year, then open an event for its story and photos.</p>
-    </div>
-    <div data-archive></div>
-  </div>
-</section>
-
-<!-- 5 · OUR PROGRAMS — five areas, each condensed with its own independent
+<!-- 4 · OUR PROGRAMS — five areas, each condensed with its own independent
      Read More. Expanded copy stays in the HTML for SEO. -->
-<section class="section section--mist">
+<section class="section">
   <div class="container">
     <div class="section-head">
       <h2>Our Programs</h2>
@@ -212,8 +194,8 @@
   </div>
 </section>
 
-<!-- 6 · HOW GYCO WORKS — always fully visible; built to scan, not to read. -->
-<section class="section">
+<!-- 5 · HOW GYCO WORKS — always fully visible; built to scan, not to read. -->
+<section class="section section--mist">
   <div class="container">
     <div class="section-head">
       <h2>How GYCO Works</h2>
@@ -245,7 +227,7 @@
   </div>
 </section>
 
-<!-- 7 · A QUOTE, THEN GET INVOLVED -->
+<!-- 6 · A QUOTE, THEN GET INVOLVED -->
 <section class="section section--dark">
   <div class="container">
     <div class="quiet-quote">

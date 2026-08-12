@@ -247,7 +247,7 @@ const Portal = (() => {
       </div>
       <div class="footer__col"><h4>Community Portal</h4><ul>
         <li><a href="${esc(rootUrl("community/home.html"))}">Portal Home</a></li>
-        <li><a href="${esc(rootUrl("community/write-letter.html"))}">Write a Letter</a></li>
+        <li><a href="${esc(rootUrl("community/request-letter.html"))}">Request a Letter</a></li>
         <li><a href="${esc(rootUrl("community/activity.html"))}">My Activity</a></li>
         <li><a href="${esc(rootUrl("community/profile.html"))}">Profile</a></li>
       </ul></div>

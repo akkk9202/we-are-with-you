@@ -273,33 +273,55 @@ console.log('\n[community/signup.html]');
     { tables: { communities: COMMS } });
   await tick();
   const d = dom.window.document;
-  ok(d.querySelectorAll('#su-type option').length === 6, 'five account types offered (plus placeholder)');
-  ok(d.querySelectorAll('#su-community option').length === 7, 'six communities offered (plus placeholder)');
+  ok(!d.querySelector('#su-type') && !d.querySelector('#su-community'),
+     'the separate account-type and community dropdowns are gone');
+  const fromOpts = [...d.querySelectorAll('#su-from option')];
+  ok(fromOpts.length === 8, 'one combined "joining from" dropdown: placeholder + six communities + GYCO');
+  ok(fromOpts[fromOpts.length - 1].value === 'gyco' && /GYCO/.test(fromOpts[fromOpts.length - 1].textContent),
+     'GYCO is the final option');
+  ok(d.body.textContent.includes('I am joining from'), 'label reads "I am joining from…"');
   ok(d.body.textContent.includes('request account and data removal'), 'consent statement covers data removal');
   ok(d.body.textContent.includes('parent or guardian'), 'consent statement covers minors');
   const form = d.querySelector('[data-signup-form]');
   form.dispatchEvent(new dom.window.Event('submit', { bubbles: true, cancelable: true }));
   await tick();
   ok(d.querySelector('[data-error-for="agree"]').textContent.length > 0, 'required consent agreement is validated');
-  ok(d.querySelector('[data-error-for="primary_community_id"]').textContent.length > 0, 'community selection is required');
-  // fill it in and submit for real
+  ok(d.querySelector('[data-error-for="joining_from"]').textContent.length > 0, 'joining-from selection is required');
+  // fill it in and submit for real — community path
   d.querySelector('#su-name').value = 'New Member';
   d.querySelector('#su-email').value = 'new@member.org';
   d.querySelector('#su-password').value = 'longenough1';
   d.querySelector('#su-password2').value = 'longenough1';
-  d.querySelector('#su-type').value = 'family_member';
-  d.querySelector('#su-community').value = 'c3';
+  d.querySelector('#su-from').value = 'c3';
   d.querySelector('input[name="agree"]').checked = true;
   d.querySelector('input[name="email_consent"]').checked = true;
   form.dispatchEvent(new dom.window.Event('submit', { bubbles: true, cancelable: true }));
   await tick(30);
   const su = dom.window.__calls.signUp;
   ok(su && su.email === 'new@member.org', 'signUp called with the email');
-  ok(su && su.options.data.account_type === 'family_member' && su.options.data.primary_community_id === 'c3',
-     'account type + primary community sent as sign-up metadata');
+  ok(su && su.options.data.account_type === 'community_member' && su.options.data.primary_community_id === 'c3',
+     'community choice → community_member of that community (valid schema values)');
   ok(su && su.options.data.email_consent === true, 'optional email consent captured');
   ok(su && /community\/login\.html\?verified=1$/.test(su.options.emailRedirectTo), 'email verification redirects back to portal login');
   ok(d.body.textContent.includes('check your email'), 'success panel asks the member to verify their email');
+}
+{
+  // GYCO path: student volunteer, no primary community (trigger nulls it)
+  const dom = loadPortalPage('community/signup.html', 'https://x.test/community/signup.html',
+    { tables: { communities: COMMS } });
+  await tick();
+  const d = dom.window.document;
+  d.querySelector('#su-name').value = 'GYCO Student';
+  d.querySelector('#su-email').value = 'student@gyco.org';
+  d.querySelector('#su-password').value = 'longenough1';
+  d.querySelector('#su-password2').value = 'longenough1';
+  d.querySelector('#su-from').value = 'gyco';
+  d.querySelector('input[name="agree"]').checked = true;
+  d.querySelector('[data-signup-form]').dispatchEvent(new dom.window.Event('submit', { bubbles: true, cancelable: true }));
+  await tick(30);
+  const su = dom.window.__calls.signUp;
+  ok(su && su.options.data.account_type === 'student_volunteer' && su.options.data.primary_community_id === '',
+     'GYCO choice → student_volunteer with no primary community');
 }
 
 /* ── 6. PORTAL HOME — the five-option hub (signed in) ── */
@@ -334,8 +356,8 @@ console.log('\n[community/home.html · five-option hub]');
      'the five action names are kept');
   ok(cards.every((a) => (a.querySelector('.hub-action__desc').textContent || '').length > 10),
      'every action has a plain description (not explained by illustration alone)');
-  ok(cards[0].classList.contains('hub-action--featured') && cards.slice(1).every((a) => !a.classList.contains('hub-action--featured')),
-     'With You is the single featured (larger) row — deliberately unequal');
+  ok(cards.every((a) => !a.classList.contains('hub-action--featured')),
+     'all five action rows are the same size — no featured row');
   ok(cards.every((a) => {
        const img = a.querySelector('img');
        return img && img.getAttribute('alt') === '' && img.getAttribute('src').startsWith('../assets/images/portal/');
@@ -421,7 +443,8 @@ console.log('\n[community/with-you.html]');
   const d = dom.window.document;
   ok(d.querySelector('h1') && d.querySelector('h1').textContent === 'With You', 'With You page renders');
   const hrefs = [...d.querySelectorAll('.hub-quick a')].map((a) => a.getAttribute('href'));
-  ok(hrefs.includes('write-letter.html'), 'Write a letter → the existing letter form (reused, not rebuilt)');
+  ok(!hrefs.includes('write-letter.html'), 'With You no longer offers Write a letter');
+  ok(hrefs.includes('request-letter.html'), 'Request a letter remains the first With You action');
   ok(hrefs.includes('request-letter.html'), 'Request a letter → the existing request form');
   ok(hrefs.includes('#read-letters') && !!d.querySelector('#read-letters'), 'Read choice jumps to the letters right below');
   ok(d.body.textContent.includes('A Letter of Courage'), 'approved letter/message content listed');
@@ -573,7 +596,7 @@ console.log('\n[hub responsive & accessibility statics]');
 {
   const css = fs.readFileSync(path.join(ROOT, 'css/portal.css'), 'utf8');
   ok(!css.includes('Fredoka') && !css.includes('Gochi'), 'handwritten/rounded display fonts removed — brand type only');
-  ok(css.includes('.hub-action--featured'), 'With You featured row style exists (deliberately unequal layout)');
+  ok(!css.includes('.hub-action--featured'), 'no featured-row style — the five actions are visually equal');
   ok(css.includes('.hub-action:hover, .hub-action:focus-visible'), 'action rows have hover + visible focus states');
   ok(css.includes('@media (prefers-reduced-motion: reduce)') && css.includes('.hub-action, .pcomm-row'),
      'reduced-motion preference disables row motion');

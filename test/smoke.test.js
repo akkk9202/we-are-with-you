@@ -339,10 +339,14 @@ console.log('\n[student-community.html]');
   ok(aboutBtn.getAttribute('aria-expanded') === 'false' && !aboutMore.classList.contains('open'),
      'About: Show Less collapses again');
 
-  /* real service history near the top */
+  /* real service history — combined into Our Work Through the Years, near the top */
   const secs = [...d.querySelectorAll('main > section')];
-  const servedIdx = secs.findIndex(s => s.textContent.includes('Where GYCO Has Served'));
-  ok(servedIdx >= 0 && servedIdx <= 2, 'real service history appears in the first three sections');
+  const workIdx = secs.findIndex(s => s.textContent.includes('Our Work Through the Years'));
+  ok(workIdx >= 0 && workIdx <= 2, 'Our Work Through the Years appears in the first three sections');
+  ok(!d.body.textContent.includes('Where GYCO Has Served'),
+     'served list merged into the archive section (no separate heading)');
+  ok(secs[workIdx].querySelector('.check-list') && secs[workIdx].querySelector('[data-archive]'),
+     'one combined section: served list + the year archive');
   for (const item of ['City of Hope Atlanta (CTCA)', 'Ronald McDonald House', 'Friends of Refugees', '100 care packages', 'The America Wheat Mission (Milal)']) {
     ok(d.body.textContent.includes(item), `served list includes "${item}"`);
   }
@@ -384,7 +388,7 @@ console.log('\n[student-community.html]');
   ok(!d.querySelector('.cards'), 'GYCO page has no card grids');
   /* photos are real files */
   const imgs = [...d.querySelectorAll('.photo-figure img')].map(i => i.getAttribute('src'));
-  ok(imgs.length >= 3 && imgs.every(src => fs.existsSync(path.join(ROOT, src))), 'GYCO page photos exist on disk');
+  ok(imgs.length >= 1 && imgs.every(src => fs.existsSync(path.join(ROOT, src))), 'GYCO page photos exist on disk');
   ok([...d.querySelectorAll('.photo-figure img')].every(i => i.alt && i.alt.length > 10), 'GYCO photos have descriptive alt text');
   ok(d.body.textContent.includes('A WE begins with two people'), 'the one quiet quote is kept');
   ok(d.querySelectorAll('.eyebrow').length === 0, 'GYCO page has zero eyebrow labels');
