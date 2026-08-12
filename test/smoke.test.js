@@ -70,6 +70,8 @@ console.log('\n[index.html]');
      'hero lede: students + music/learning/service');
   ok(d.body.textContent.includes('501(c)(3)') && d.body.textContent.includes('founded in 2022'),
      'hero + About GYCO carry real facts (501(c)(3), founded 2022)');
+  ok(d.body.textContent.includes('Jueon (Aaron) Kim') && d.body.textContent.includes('Yeoeun (Kate) Kim'),
+     'homepage intro credits the two student founders');
   ok(d.body.textContent.includes('scanned a QR code from one of our materials'),
      'hero explains why a QR-code visitor is here');
   ok(d.body.textContent.includes('not meant to end when a performance or visit is over'),
@@ -316,6 +318,8 @@ console.log('\n[student-community.html]');
   ok(d.querySelector('h1').textContent.trim() === 'GYCO', 'hero h1 is simply GYCO');
   ok(d.body.textContent.includes('founded in 2022') && d.body.textContent.includes('April 2023') &&
      d.body.textContent.includes('501(c)(3)'), 'About states real facts (founded 2022, 501(c)(3) April 2023)');
+  ok(d.body.textContent.includes('Jueon (Aaron) Kim') && d.body.textContent.includes('Yeoeun (Kate) Kim'),
+     'About GYCO names the two student founders');
   ok(d.body.textContent.includes('more than 70 performances'), 'About cites the 70+ performances figure');
   ok(d.body.textContent.includes('Learn Well. Share Well.'), 'the Learn Well. Share Well. idea is present');
 
