@@ -118,6 +118,9 @@
   border-top: 1px solid var(--line);
   margin-block: var(--space-sm);
 }
+/* With You: the empty state sits directly under the quick-action rows,
+   which already end in a hairline — no second rule, no empty band. */
+#read-letters > .pempty { border-top: none; margin-top: 0; padding-top: 0; }
 .pempty__mark { display: none; }
 .pempty h3 { margin-bottom: 0.3rem; font-size: 1.1rem; }
 .pempty p { color: var(--muted); margin-bottom: 0.9rem; }
