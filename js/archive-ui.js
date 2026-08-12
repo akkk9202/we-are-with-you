@@ -30,7 +30,7 @@
 
   /* "2026-07-29" → { year: 2026, label: "July 29, 2026" }.
      Day 01 is treated as "month only" → "July 2026".
-     An entry's `dateLabel` (e.g. "Since 2023") overrides the
+     An entry's `dateLabel` overrides the
      displayed label; `date` still drives sorting and year tabs. */
   const parseDate = (iso) => {
     const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
@@ -38,7 +38,9 @@
     const year = +m[1], month = MONTHS[+m[2] - 1] || '', day = +m[3];
     return { year, label: day > 1 ? `${month} ${day}, ${year}` : `${month} ${year}` };
   };
-  const dateText = (e) => e.dateLabel || e._d.label;
+  /* dateLabel: undefined → show the real date; "text" → show that
+     text; "" (empty) → show no date at all. */
+  const dateText = (e) => (e.dateLabel !== undefined && e.dateLabel !== null) ? e.dateLabel : e._d.label;
 
   /* Normalize + sort newest first; group by year. */
   const events = GYCO_ARCHIVE
@@ -80,7 +82,8 @@
               aria-label="${esc(e.title)} — open details">
         ${cardMedia(e)}
         <span class="archive-card__body">
-          <span class="archive-card__date">${esc(dateText(e))}${e.category ? ` · ${esc(e.category)}` : ''}</span>
+          ${[dateText(e), e.category].filter(Boolean).length
+            ? `<span class="archive-card__date">${[dateText(e), e.category].filter(Boolean).map(esc).join(' · ')}</span>` : ''}
           <span class="archive-card__title">${esc(e.title)}</span>
           ${metaLine(e) ? `<span class="archive-card__meta">${metaLine(e)}</span>` : ''}
         </span>

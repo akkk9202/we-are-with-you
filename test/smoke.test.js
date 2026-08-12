@@ -410,8 +410,8 @@ console.log('\n[student-community.html]');
   ok(cardTitles[0] === 'City of Hope Atlanta (CTCA)', 'City of Hope leads the collections');
   ok(cardTitles.includes('Ronald McDonald House Charities of Atlanta') && cardTitles.includes('Veterans'),
      'community collections match the served list');
-  ok([...arch.querySelectorAll('.archive-card__date')].every(t => t.textContent.includes('Since 2023')),
-     'cards carry the honest "Since 2023" label — no invented event dates');
+  ok([...arch.querySelectorAll('.archive-card__date')].every(t => !/20\d\d/.test(t.textContent)),
+     'community cards show no dates at all — only the category label');
   ok(arch.querySelectorAll('.archive-card__media img').length === 6, 'every community card leads with a real photo');
 
   /* pagination */
@@ -429,7 +429,9 @@ console.log('\n[student-community.html]');
   const detail = arch.querySelector('.archive-detail');
   ok(!!detail, 'clicking a card opens the collection detail view');
   ok(detail.querySelector('h3').textContent === 'City of Hope Atlanta (CTCA)', 'detail heading matches the card');
-  ok(detail.querySelector('.archive-detail__meta').textContent.includes('Since 2023'), 'detail meta uses the honest date label');
+  ok(detail.querySelector('.archive-detail__meta').textContent.includes('Cancer care community') &&
+     !/20\d\d/.test(detail.querySelector('.archive-detail__meta').textContent),
+     'detail meta names the community with no date mentioned');
   ok(detail.querySelectorAll('.archive-detail__gallery .photo-figure img').length === 10,
      'City of Hope detail shows its full 10-photo gallery');
   detail.querySelector('[data-archive-back]').dispatchEvent(new dom.window.Event('click', { bubbles: true }));

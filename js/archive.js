@@ -18,9 +18,9 @@
                   month, use the 1st (e.g. "2024-10-01") — the
                   site shows "October 2024" style labels.
      dateLabel    Optional text shown INSTEAD of the date on the
-                  card (e.g. "Since 2023") — useful for ongoing
-                  or undated collections. Sorting still uses
-                  `date`.
+                  card. Use "" (empty) to show no date at all —
+                  the current community collections do this.
+                  Sorting still uses `date`.
      title        Entry name. Required.
      partner      Community/partner name for the card meta line.
      location     Optional, e.g. "Atlanta, GA".
@@ -47,7 +47,7 @@ const GYCO_ARCHIVE = [
   /* ── City of Hope Atlanta (CTCA) ── */
   {
     date: "2025-07-07",
-    dateLabel: "Since 2023",
+    dateLabel: "",   // "" = show no date on the card/detail
     title: "City of Hope Atlanta (CTCA)",
     partner: "Cancer care community",
     location: "Atlanta, GA",
@@ -73,7 +73,7 @@ const GYCO_ARCHIVE = [
   /* ── Ronald McDonald House ── */
   {
     date: "2025-07-06",
-    dateLabel: "Since 2023",
+    dateLabel: "",   // "" = show no date on the card/detail
     title: "Ronald McDonald House Charities of Atlanta",
     partner: "Families and children",
     location: "Atlanta, GA",
@@ -95,7 +95,7 @@ const GYCO_ARCHIVE = [
   /* ── Senior living communities ── */
   {
     date: "2025-07-05",
-    dateLabel: "Since 2023",
+    dateLabel: "",   // "" = show no date on the card/detail
     title: "Senior Living Communities",
     partner: "Older adult communities",
     location: "Georgia",
@@ -124,7 +124,7 @@ const GYCO_ARCHIVE = [
   /* ── The America Wheat Mission (Milal) ── */
   {
     date: "2025-07-04",
-    dateLabel: "Since 2023",
+    dateLabel: "",   // "" = show no date on the card/detail
     title: "The America Wheat Mission (Milal)",
     partner: "People with disabilities and their families",
     location: "Atlanta, GA",
@@ -143,7 +143,7 @@ const GYCO_ARCHIVE = [
   /* ── Veterans ── */
   {
     date: "2025-07-03",
-    dateLabel: "Since 2023",
+    dateLabel: "",   // "" = show no date on the card/detail
     title: "Veterans",
     partner: "Veterans' communities",
     location: "Georgia",
@@ -162,7 +162,7 @@ const GYCO_ARCHIVE = [
   /* ── Refugee families ── */
   {
     date: "2025-07-02",
-    dateLabel: "Since 2023",
+    dateLabel: "",   // "" = show no date on the card/detail
     title: "Refugee Families",
     partner: "In partnership with Friends of Refugees",
     location: "Georgia",
@@ -183,7 +183,7 @@ const GYCO_ARCHIVE = [
   /* ── People experiencing homelessness ── */
   {
     date: "2025-07-01",
-    dateLabel: "Since 2023",
+    dateLabel: "",   // "" = show no date on the card/detail
     title: "People Experiencing Homelessness in Atlanta",
     partner: "Downtown Atlanta outreach",
     location: "Atlanta, GA",
