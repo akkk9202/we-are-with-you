@@ -200,7 +200,7 @@ function wireFormButton(el) {
            onerror="this.parentElement.classList.add('brochure--missing');this.parentElement.removeAttribute('href');this.parentElement.removeAttribute('target');this.remove();">
       <span class="brochure__fallback">
         <small>Brochure ${i + 1} — coming soon</small>
-        <span>A digital copy of one of the printed WE ARE WITH YOU brochures we hand out during visits will appear here.</span>
+        <span>One of our printed brochures will appear here.</span>
       </span>
     </a>`).join('');
 })();

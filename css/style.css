@@ -644,8 +644,15 @@ body.nav-solid .nav { background: var(--ink); }
   .home-hero__aside { border-top: 1px solid var(--line); padding-top: var(--space-md); }
 }
 @media (max-width: 640px) {
-  /* brochures stack on small screens even inside the hero rail */
-  .home-hero__aside .brochure-duo { grid-template-columns: 1fr; }
+  /* On phones the rail stays COMPACT so the intro, brochures, and the six
+     communities still read as one piece: brochures side by side at a small
+     size (full size on tap once real images exist) instead of two huge
+     stacked boxes, with the slim community rows right beneath. */
+  .home-hero__aside .brochure-duo { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+  .home-hero__aside .brochure { max-width: none; margin-inline: 0; min-height: 230px; }
+  .home-hero__aside .brochure__fallback { padding: 0.7rem; gap: 0.35rem; }
+  .home-hero__aside .brochure__fallback small { font-size: 0.58rem; letter-spacing: 0.1em; }
+  .home-hero__aside .brochure__fallback span { font-size: 0.75rem; line-height: 1.45; }
 }
 
 /* ── BROCHURE PREVIEWS (portrait, like the printed handouts) ── */
