@@ -36,16 +36,22 @@ continuity idea in plain words. With 8 nav items, the hamburger drawer now
 starts at 1200px (content breakpoints stay at 960px).
 
 The GYCO page was later restructured around **condensed-first content**:
-About GYCO (founded 2022, 501(c)(3) May 2023, "Learn well, Give well",
-70+ performances) and five programs (01 Performance/PERFORM ·
+About GYCO (founded 2022, 501(c)(3) May 2023, "Learn well, Give well";
+since Aug 13 2026 it closes with **"Our Impact — 2023 to Present"**, a
+`.impact` stat band — gold-hairline dt/dd tiles with Fraunces numerals,
+3/2/1-column responsive grid, figures supplied by GYCO, none invented)
+and five programs (01 Performance/PERFORM ·
 02 Education/EDUCATE · 03 Research/RESEARCH · 04 Press/CONNECT ·
 05 GYCO Chapters/LEAD as `.program` rows with a number/verb rail) each show
 a short version with an understated **Read More / Show Less** toggle
 (`.read-more` button + `.more` block: grid-template-rows animation, 220ms,
 aria-expanded/aria-hidden, independent per section, full copy kept in the
 HTML for SEO — that's why student-community.html carries a larger word
-budget). "How GYCO Works" (LEARN → SHARE → OBSERVE → CREATE → LEAD,
-`.steps--5`) is never collapsed. No accordion boxes, no FAQ look.
+budget). "How GYCO Works" (the L.O.O.P.: L—LEARN → O—OWN → O—OFFER →
+P—PROGRESS, `.steps--loop` — counters off, the letters are the markers)
+is never collapsed. No accordion boxes, no FAQ look. Below it, **Our
+Story** (`#our-story`, `.story`) tells five milestones 2022→2026 as
+year-rail timeline rows sharing the program-row skeleton.
 
 ---
 

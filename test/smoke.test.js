@@ -74,17 +74,17 @@ console.log('\n[index.html]');
      'hero lede: students + music/learning/service');
   ok(d.body.textContent.includes('501(c)(3)') && d.body.textContent.includes('founded in 2022'),
      'hero + About GYCO carry real facts (501(c)(3), founded 2022)');
-  ok(d.body.textContent.includes('suggested by two students, Jueon (Aaron) Kim and Yeoeun (Kate) Kim'),
-     'homepage intro credits Aaron and Kate with suggesting WAWY (not founding)');
-  ok(d.body.textContent.includes('first student-led initiative'),
-     'homepage frames WAWY as GYCO\'s first student-led initiative');
-  ok(d.body.textContent.includes('scanned a QR code from one of our materials'),
+  ok(d.body.textContent.includes('proposed and developed by student founders Jueon (Aaron) Kim and Yeoeun (Kate) Kim'),
+     'homepage intro credits student founders Aaron and Kate with proposing and developing WAWY');
+  ok(d.body.textContent.includes('first student-centered platform'),
+     'homepage frames WAWY as GYCO\'s first student-centered platform');
+  ok(d.body.textContent.includes('website and QR-based connections'),
      'hero explains why a QR-code visitor is here');
-  ok(d.body.textContent.includes('not meant to end when a performance or visit is over'),
+  ok(d.body.textContent.includes('not meant to end when a performance, visit, or activity is over'),
      'hero explains the continuity idea');
   const slogan = d.querySelector('.home-hero__slogan');
-  ok(slogan && slogan.textContent.trim() === 'Even Here. Even Now. WE ARE WITH YOU.',
-     'hero carries the brand line as its own beat');
+  ok(slogan && slogan.textContent.trim() === 'Even Here, Even Now, WE ARE WITH YOU.',
+     'hero carries the brand line as its own beat (comma form, per the Aug 13 copy)');
   const heroBtns = [...d.querySelectorAll('.home-hero .btn')].map(b => [b.textContent.trim(), b.getAttribute('href')]);
   ok(heroBtns.some(([t, h]) => t === 'Visit the Community Portal' && h === 'community/index.html'),
      'hero primary CTA: Visit the Community Portal → community/index.html');
@@ -350,7 +350,6 @@ console.log('\n[student-community.html]');
      'About GYCO does not name individual founders');
   ok(d.body.textContent.includes('two students and an educator'),
      'About GYCO credits two students and an educator, unnamed');
-  ok(d.body.textContent.includes('more than 70 performances'), 'About cites the 70+ performances figure');
   ok(d.body.textContent.includes('Learn well, Give well'), 'the Learn well, Give well idea is present');
   ok(!d.body.textContent.includes('Learn Well. Share Well.'), 'the old Share Well phrasing is fully retired');
 
@@ -364,8 +363,10 @@ console.log('\n[student-community.html]');
   ok(aboutMore.textContent.includes('WE ARE WITH YOU (WAWY)'), 'About expanded copy names WAWY (in the HTML for SEO)');
   ok(aboutMore.textContent.includes('proposed and developed by student founders Aaron and Kate'),
      'About WAWY credits student founders Aaron and Kate');
-  ok(aboutMore.textContent.includes('QR-based connections') && aboutMore.textContent.includes('hospice communities'),
-     'About WAWY describes QR-based connections and who it reaches');
+  ok(aboutMore.textContent.includes('How can we still be with them when we cannot be there in person?'),
+     'About WAWY carries the founding question');
+  ok(aboutMore.textContent.includes('beyond a single visit or performance'),
+     'About WAWY explains extending connections beyond a single visit or performance');
   aboutBtn.dispatchEvent(new dom.window.Event('click', { bubbles: true }));
   ok(aboutBtn.getAttribute('aria-expanded') === 'true' && aboutMore.classList.contains('open') &&
      aboutMore.getAttribute('aria-hidden') === 'false', 'About: Read More expands with correct ARIA state');
@@ -373,6 +374,31 @@ console.log('\n[student-community.html]');
   aboutBtn.dispatchEvent(new dom.window.Event('click', { bubbles: true }));
   ok(aboutBtn.getAttribute('aria-expanded') === 'false' && !aboutMore.classList.contains('open'),
      'About: Show Less collapses again');
+
+  /* Our Impact — 2023 to Present (stat band inside the About section) */
+  const impact = d.querySelector('.impact');
+  ok(!!impact && impact.closest('section') === aboutBtn.closest('section'),
+     'Our Impact lives inside the About GYCO section (archive stays near the top)');
+  ok(impact.querySelector('.impact__title').textContent.includes('Our Impact — 2023 to Present'),
+     'Impact heading: Our Impact — 2023 to Present');
+  const impactItems = [...impact.querySelectorAll('.impact__item')];
+  ok(impactItems.length === 8, `Impact lists exactly 8 figures (found ${impactItems.length})`);
+  const nums = impactItems.map(i => (i.querySelector('.impact__num') || {}).textContent || '');
+  ok(JSON.stringify(nums.slice(0, 6)) === JSON.stringify(['70+', '4,000+', '100', '44', '4', '0+']),
+     'Impact numbers: 70+ / 4,000+ / 100 / 44 / 4 / 0+');
+  const labels = impactItems.map(i => i.querySelector('.impact__label').textContent);
+  ok(labels[0] === 'Performances' && labels[1] === 'People Reached' && labels[5] === 'WAWY Messages Shared',
+     'Impact labels name what each figure counts');
+  ok(labels[6] === 'Community & Global Outreach' && labels[7] === 'Student-Led Research',
+     'Impact closes with outreach + research entries (no number — none claimed)');
+  ok(impact.textContent.includes('Malawi'), 'global outreach names Malawi');
+  ok(impact.textContent.includes('Journal of Emerging Investigators (JEI)') &&
+     impact.textContent.includes('nearly 100 participants'),
+     'research entry cites JEI review + ~100 participants');
+  ok(impactItems[7].classList.contains('impact__item--wide') && impactItems[7].querySelectorAll('dd').length === 2,
+     'research entry spans the grid with its two paragraphs');
+  ok(impactItems.every(i => i.querySelector('dt') && i.querySelector('dd')),
+     'every impact figure is a dt/dd pair (label + description)');
 
   /* real service history — combined into Our Work Through the Years, near the top */
   const secs = [...d.querySelectorAll('main > section')];
@@ -415,14 +441,36 @@ console.log('\n[student-community.html]');
     b1.dispatchEvent(new dom.window.Event('click', { bubbles: true }));
   }
 
-  /* How GYCO Works — always visible, built to scan */
-  const gycoSteps = [...d.querySelectorAll('.steps--5 .step h3')].map(h => h.textContent.trim());
-  ok(JSON.stringify(gycoSteps) === JSON.stringify(['LEARN', 'SHARE', 'OBSERVE', 'CREATE', 'LEAD']),
-     'How GYCO Works: LEARN / SHARE / OBSERVE / CREATE / LEAD, never hidden');
-  ok([...d.querySelectorAll('.steps--5 .step p')].every(p => p.textContent.trim().length > 10),
+  /* How GYCO Works — the L.O.O.P., always visible, built to scan */
+  const gycoSteps = [...d.querySelectorAll('.steps--loop .step h3')].map(h => h.textContent.trim());
+  ok(JSON.stringify(gycoSteps) === JSON.stringify(['L — LEARN', 'O — OWN', 'O — OFFER', 'P — PROGRESS']),
+     'How GYCO Works: the four L.O.O.P. steps (Learn / Own / Offer / Progress), never hidden');
+  ok(!d.querySelector('.steps--5') && !/steps--5/.test(fs.readFileSync(path.join(ROOT, 'css/style.css'), 'utf8')),
+     'the old five-step layout is fully retired (markup + CSS)');
+  ok([...d.querySelectorAll('.steps--loop .step p')].every(p => p.textContent.trim().length > 10),
      'each step carries its one-line description');
-  ok(!d.querySelector('.steps--5 ~ .more') && !secs.find(s => s.querySelector('.steps--5')).querySelector('.read-more'),
+  ok(!d.querySelector('.steps--loop ~ .more') && !secs.find(s => s.querySelector('.steps--loop')).querySelector('.read-more'),
      'How GYCO Works has no Read More — fully visible');
+
+  /* Our Story — five milestones, year-rail timeline, after How GYCO Works */
+  const story = d.querySelector('#our-story .story');
+  ok(!!story, 'Our Story timeline present');
+  const storyYears = [...story.querySelectorAll('.story__year')].map(y => y.textContent.trim());
+  ok(JSON.stringify(storyYears) === JSON.stringify(['2022', '2023 – Summer 2024', '2024–2025', 'Late 2025', '2026']),
+     'Our Story: five milestones from 2022 to 2026');
+  const storyTitles = [...story.querySelectorAll('h3')].map(h => h.textContent.trim());
+  ok(JSON.stringify(storyTitles) === JSON.stringify(['Where It Began', 'Learning Through Service',
+     'A Question Became an Idea', 'From Idea to Practice', 'WE ARE WITH YOU']),
+     'Our Story milestone titles match the provided copy');
+  ok(story.textContent.includes('How can we stay connected even when we cannot be there in person?'),
+     'Our Story carries the founding question');
+  ok(story.textContent.includes('developed by Aaron and Kate') &&
+     story.textContent.includes('beyond distance and time'),
+     'Our Story credits Aaron and Kate (first names only) and lands on the WAWY promise');
+  ok(secs.indexOf(d.querySelector('#our-story')) === secs.indexOf(secs.find(s => s.querySelector('.steps--loop'))) + 1,
+     'Our Story sits right after How GYCO Works, before the closing quote');
+  ok(story.tagName === 'OL' && [...story.children].every(li => li.tagName === 'LI'),
+     'Our Story is an ordered list (chronology is semantic)');
 
   ok(!d.querySelector('.cards'), 'GYCO page has no card grids');
   /* photos are real files */
@@ -684,8 +732,10 @@ console.log('\n[word budgets]');
   };
   for (const [file, cap] of [
     ['index.html', 640],              // raised Aug 2026: QR-visitor intro + brochure/poster sections
-    ['student-community.html', 1150], // raised Aug 2026: About/Programs expanded copy stays in the
-                                      // HTML for SEO but is collapsed behind Read More by default
+    ['student-community.html', 1420], // raised Aug 2026: About/Programs expanded copy stays in the
+                                      // HTML for SEO but is collapsed behind Read More by default;
+                                      // Aug 13: + the "Our Impact — 2023 to Present" stat band
+                                      // and the five-milestone "Our Story" timeline
     ['media.html', 420],
     ['hope-capsule.html', 300],
     ['one-message-for-you.html', 260],

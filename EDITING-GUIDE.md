@@ -82,6 +82,8 @@ Main page copy lives in the HTML files themselves — each section is labeled wi
 - `index.html` — homepage (hero, What We Do, Recent Work, the community poster, About GYCO, final CTA)
 - `student-community.html`, `media.html`, `contact.html` (`programs.html`, `learning.html`, and `join.html` are redirect stubs — NADO School and Join Us are excluded for now, saved in `context/excluded/`)
 
+**Updating the "Our Impact — 2023 to Present" numbers** (GYCO page, inside the About GYCO section of `student-community.html`): each figure is one small block — the number lives in a `<span class="impact__num">` (e.g. `70+`), the label in `<span class="impact__label">`, and the sentence below it in the `<dd>` line. Change the text between the tags and save; nothing else needs to move. The `0+` on "WAWY Messages Shared" is a live counter to update the same way as messages accumulate.
+
 ## 7. Add photos
 1. Put photos in `assets/images/` (logos go in `assets/logos/`).
 2. In Media galleries, replace `<div class="media-item">♪</div>` with `<figure class="media-item"><img src="assets/images/photo.jpg" alt="..." /></figure>`.
@@ -162,7 +164,7 @@ buttons, and left-aligned section heads. Do not rename tokens in `css/style.css`
 (the Community Portal layers on them).
 
 ## 13. Run the tests
-368 automated checks cover the nav (including the Philosophy tab), community names/order, logos, the homepage poster and brochure previews, the NADO School / Join Us exclusion (stubs + saved content), the GYCO performance archive (year tabs, pagination, detail view), all six partner pages, the Media press card, **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
+386 automated checks cover the nav (including the Philosophy tab), community names/order, logos, the homepage poster and brochure previews, the NADO School / Join Us exclusion (stubs + saved content), the GYCO performance archive (year tabs, pagination, detail view), all six partner pages, the Media press card, **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
 ```bash
 npm install jsdom   # once
 node test/smoke.test.js

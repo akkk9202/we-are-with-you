@@ -125,6 +125,6 @@ const SITE = {
     },
   ],
 
-  footerNote: "A student-led initiative by GYCO. Students bring music, letters, teaching, and service projects to community partners.",
-  footerNote_ko: "GYCO 학생들이 음악과 편지, 가르침과 봉사 프로젝트로 커뮤니티 파트너들과 함께하는 학생 주도 프로젝트입니다.",
+  footerNote: "GYCO's first student-centered platform. Students bring music, letters, teaching, and service projects to community partners.",
+  footerNote_ko: "GYCO의 첫 학생 중심 플랫폼으로, 학생들이 음악과 편지, 가르침과 봉사 프로젝트로 커뮤니티 파트너들과 함께합니다.",
 };
