@@ -104,7 +104,7 @@ To run the tests you need `jsdom` (`node_modules/` is gitignored):
 
 ```bash
 npm install                      # jsdom only; node_modules is gitignored
-npm test                         # expect "367 passed" + "172 passed"
+npm test                         # expect "368 passed" + "172 passed"
 node --check js/site.js          # syntax check (same for js/portal/*.js)
 rm -rf node_modules              # optional cleanup
 ```

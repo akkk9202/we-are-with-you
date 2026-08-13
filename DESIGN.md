@@ -36,7 +36,7 @@ continuity idea in plain words. With 8 nav items, the hamburger drawer now
 starts at 1200px (content breakpoints stay at 960px).
 
 The GYCO page was later restructured around **condensed-first content**:
-About GYCO (founded 2022, 501(c)(3) April 2023, "Learn well, Give well",
+About GYCO (founded 2022, 501(c)(3) May 2023, "Learn well, Give well",
 70+ performances) and five programs (01 Performance/PERFORM ·
 02 Education/EDUCATE · 03 Research/RESEARCH · 04 Press/CONNECT ·
 05 GYCO Chapters/LEAD as `.program` rows with a number/verb rail) each show

@@ -211,6 +211,12 @@ console.log('\n[index.html]');
   ok(!d.querySelector('.cards'), 'homepage has no card grids');
   ok(!d.querySelector('main svg'), 'homepage has no diagram SVGs (photos carry the page)');
   {
+    /* the poster section sits right after the hero, above What We Do */
+    const idxOf = (t) => secs.findIndex(s => (s.querySelector('h2') || {}).textContent === t);
+    ok(idxOf('On the Wall Where We Visit') === 1 && idxOf('On the Wall Where We Visit') < idxOf('What We Do'),
+       'On the Wall Where We Visit comes right after the hero/brochures, above What We Do');
+  }
+  {
     /* GYCO (the parent organization) closes the page before the final CTA */
     const idxOf = (t) => secs.findIndex(s => (s.querySelector('h2') || {}).textContent === t);
     ok(idxOf('About GYCO') >= 0 && idxOf('About GYCO') === secs.length - 2,
@@ -338,8 +344,8 @@ console.log('\n[student-community.html]');
   const d = dom.window.document;
   ok(d.title.startsWith('GYCO'), 'title leads with GYCO');
   ok(d.querySelector('h1').textContent.trim() === 'GYCO', 'hero h1 is simply GYCO');
-  ok(d.body.textContent.includes('founded in 2022') && d.body.textContent.includes('April 2023') &&
-     d.body.textContent.includes('501(c)(3)'), 'About states real facts (founded 2022, 501(c)(3) April 2023)');
+  ok(d.body.textContent.includes('founded in 2022') && d.body.textContent.includes('May 2023') &&
+     d.body.textContent.includes('501(c)(3)'), 'About states real facts (founded 2022, 501(c)(3) May 2023)');
   ok(!d.body.textContent.includes('Jueon') && !d.body.textContent.includes('Yeoeun'),
      'About GYCO does not name individual founders');
   ok(d.body.textContent.includes('two students and an educator'),
