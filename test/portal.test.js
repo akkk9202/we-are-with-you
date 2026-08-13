@@ -93,11 +93,11 @@ function loadPortalPage(file, url, stubState, extraFiles) {
 /* fixture data */
 const COMMS = [
   { id: 'c1', name: 'City of Hope Atlanta', slug: 'city-of-hope', description: 'Hope.', image_url: 'assets/logos/city-of-hope-atlanta.png', display_order: 1, is_active: true },
-  { id: 'c2', name: 'Ronald McDonald House', slug: 'ronald-mcdonald-house', description: 'Families.', image_url: '', display_order: 2, is_active: true },
+  { id: 'c2', name: 'RMH (Ronald McDonald House in Atlanta)', slug: 'ronald-mcdonald-house', description: 'Families.', image_url: '', display_order: 2, is_active: true },
   { id: 'c3', name: 'Northside NICU', slug: 'northside-nicu', description: 'Gentle.', image_url: '', display_order: 3, is_active: true },
   { id: 'c4', name: 'Senior Living', slug: 'senior-living', description: 'Memories.', image_url: '', display_order: 4, is_active: true },
   { id: 'c5', name: 'Schools & Global', slug: 'schools-global', description: 'Learning.', image_url: '', display_order: 5, is_active: true },
-  { id: 'c6', name: 'Milal', slug: 'milal', description: 'Inclusion.', image_url: '', display_order: 6, is_active: true },
+  { id: 'c6', name: 'Wheat Mission Atlanta (Milal)', slug: 'milal', description: 'Inclusion.', image_url: '', display_order: 6, is_active: true },
 ];
 const PROFILE = { id: 'u1', full_name: 'Aaron Tester', email: 'a@test.org', account_type: 'student_volunteer',
   primary_community_id: 'c2', role: 'user', email_consent: true, is_disabled: false, created_at: '2026-07-01T00:00:00Z' };
@@ -411,7 +411,7 @@ console.log('\n[community pages]');
   });
   await tick(30);
   const d = dom.window.document;
-  ok(d.querySelector('h1') && d.querySelector('h1').textContent === 'Ronald McDonald House', 'community page renders its name');
+  ok(d.querySelector('h1') && d.querySelector('h1').textContent === 'RMH (Ronald McDonald House in Atlanta)', 'community page renders its name');
   ok(d.body.textContent.includes('Your community'), 'primary community is acknowledged on its own page');
   ok(!d.querySelector('#portal-root .eyebrow'), 'community page has no eyebrow labels');
   ok(d.body.textContent.includes('Current Programs') && d.body.textContent.includes('One Message for You'),
@@ -747,7 +747,7 @@ console.log('\n[admin/community.html]');
       rpc: {},
       __fns: `window.__stubState.rpc = { admin_summary_metrics: () => ({ data: {
         range: { from: '2026-07-01', to: '2026-08-01' }, total_accounts: 7, new_accounts: 3,
-        disabled_accounts: 0, accounts_by_community: { 'Milal': 2 }, accounts_by_type: { participant: 4 },
+        disabled_accounts: 0, accounts_by_community: { 'Wheat Mission Atlanta (Milal)': 2 }, accounts_by_type: { participant: 4 },
         active_users: 5, returning_users: 2, videos_opened: 9, videos_started: 8, videos_completed: 4,
         avg_video_completion: 61.5, letters_written: 3, letters_requested: 1, video_requests: 2,
         song_requests: 2, activities_started: 6, activities_completed: 5,

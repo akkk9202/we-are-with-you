@@ -121,14 +121,14 @@ const GYCO_ARCHIVE = [
     link: null,
   },
 
-  /* ── The America Wheat Mission (Milal) ── */
+  /* ── Wheat Mission Atlanta (Milal) ── */
   {
     date: "2025-07-04",
     dateLabel: "",   // "" = show no date on the card/detail
-    title: "The America Wheat Mission (Milal)",
+    title: "Wheat Mission Atlanta (Milal)",
     partner: "People with disabilities and their families",
     location: "Atlanta, GA",
-    description: "Music and participation with Milal, an Atlanta organization serving people with disabilities and their families — performances and shared activities designed so everyone can take part.",
+    description: "Music and participation with Wheat Mission Atlanta (Milal), an Atlanta organization serving people with disabilities and their families — performances and shared activities designed so everyone can take part.",
     images: [
       { src: "assets/images/archive/milal-1.jpg", alt: "A large group gathered under a wooden pavilion for a GYCO visit with the Milal community" },
       { src: "assets/images/archive/milal-2.jpg", alt: "A GYCO chamber ensemble with conductor performing in a bright sunroom for the Milal community" },

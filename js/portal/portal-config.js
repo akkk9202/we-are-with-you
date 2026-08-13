@@ -18,11 +18,11 @@ const PORTAL_CONFIG = {
   /* ── The six portal communities (slug order = display order) ── */
   communities: [
     { slug: "city-of-hope",          name: "City of Hope Atlanta" },
-    { slug: "ronald-mcdonald-house", name: "Ronald McDonald House" },
+    { slug: "ronald-mcdonald-house", name: "RMH (Ronald McDonald House in Atlanta)" },
     { slug: "northside-nicu",        name: "Northside NICU" },
     { slug: "senior-living",         name: "Senior Living" },
     { slug: "schools-global",        name: "Schools & Global" },
-    { slug: "milal",                 name: "Milal" },
+    { slug: "milal",                 name: "Wheat Mission Atlanta (Milal)" },
   ],
 
   /* Legacy partner-page slugs (printed QR codes) → portal community slugs */

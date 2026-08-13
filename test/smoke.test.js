@@ -60,8 +60,8 @@ console.log('\n[index.html]');
     ok(phil && phil.getAttribute('href') === 'our-philosophy.html', 'Philosophy tab → our-philosophy.html');
   }
   const dd = [...d.querySelectorAll('.nav__dropdown a')].map(a => a.textContent.trim());
-  ok(JSON.stringify(dd) === JSON.stringify(['Portal Home', 'City of Hope Atlanta', 'Ronald McDonald House',
-     'Northside NICU', 'Senior Living', 'Schools & Global', 'Milal']),
+  ok(JSON.stringify(dd) === JSON.stringify(['Portal Home', 'City of Hope Atlanta', 'RMH (Ronald McDonald House in Atlanta)',
+     'Northside NICU', 'Senior Living', 'Schools & Global', 'Wheat Mission Atlanta (Milal)']),
      'Community Portal dropdown: Portal Home + the six portal communities');
   const ddHrefs = [...d.querySelectorAll('.nav__dropdown a')].map(a => a.getAttribute('href'));
   ok(ddHrefs[1] === 'community/city-of-hope.html' && ddHrefs[6] === 'community/milal.html',
@@ -105,6 +105,13 @@ console.log('\n[index.html]');
      'each brochure slot has an image + labeled fallback');
   ok(brochures.every(b => (b.getAttribute('href') || '').startsWith('assets/images/brochure-')),
      'each brochure links to its full-size file (config-driven paths)');
+  const brochureAlts = brochures.map(b => b.querySelector('img').getAttribute('alt') || '');
+  ok(brochureAlts[0].includes('You are invited') && brochureAlts[0].includes('QR code'),
+     'brochure 1 alt describes the invitation front (You are invited · QR code)');
+  ok(brochureAlts[1].includes('This Is For You') && brochureAlts[1].includes('support WAWY'),
+     'brochure 2 alt describes the new back (This Is For You · support WAWY)');
+  ok(['assets/images/brochure-1.jpg', 'assets/images/brochure-2.jpg'].every(f => fs.existsSync(path.join(ROOT, f))),
+     'both real brochure images exist on disk');
   {
     // missing file → slot degrades to a clean labeled placeholder, link disarmed
     const img = brochures[0].querySelector('img');
@@ -126,8 +133,8 @@ console.log('\n[index.html]');
   ]), 'every strip item links to its partner page, in the agreed order');
   const stripNames = strip.map(a => a.querySelector('.logo-strip__name').textContent.trim());
   ok(JSON.stringify(stripNames) === JSON.stringify([
-    'City of Hope Atlanta', 'Ronald McDonald House', 'Northside NICU',
-    'Senior Living', 'Schools & Global', 'Milal',
+    'City of Hope Atlanta', 'RMH (Ronald McDonald House in Atlanta)', 'Northside NICU',
+    'Senior Living', 'Schools & Global', 'Wheat Mission Atlanta (Milal)',
   ]), 'strip names match the six major communities');
   ok(strip.every(a => a.querySelector('.logo-chip img')), 'every strip item has a logo (with monogram fallback)');
   ok(strip.every(a => a.querySelector('.logo-strip__line').textContent.trim().length > 0),
@@ -217,7 +224,7 @@ console.log('\n[index.html]');
      'footer About column has no NADO School or Get Involved link (excluded for now)');
   ok(!footAbout.textContent.includes('Platform'), 'footer no longer says "Platform"');
   const footComms = [...d.querySelectorAll('.footer__col')].find(c => c.querySelector('h4').textContent === 'Communities');
-  ok(footComms && footComms.textContent.includes('The America Wheat Mission (Milal)'), 'footer Communities column shows Milal name');
+  ok(footComms && footComms.textContent.includes('Wheat Mission Atlanta (Milal)'), 'footer Communities column shows the Wheat Mission Atlanta (Milal) name');
   const footConnect = [...d.querySelectorAll('.footer__col')].find(c => c.textContent.includes('Connect'));
   ok(!footConnect.textContent.includes('YouTube'), 'footer Connect column has no YouTube link');
 }
@@ -237,10 +244,10 @@ console.log('\n[programs.html]');
 console.log('\n[partner.html?p=…]');
 for (const [slug, expectName, expectLogo] of [
   ['cancer-care', 'City of Hope Atlanta (CTCA)', 'assets/logos/city-of-hope-atlanta.png'],
-  ['ronald-mcdonald-house', 'Ronald McDonald House', 'assets/logos/ronald-mcdonald-house.png'],
+  ['ronald-mcdonald-house', 'RMH (Ronald McDonald House in Atlanta)', 'assets/logos/ronald-mcdonald-house.png'],
   ['nicu', 'Northside Intensive Care Unit (NICU)', 'assets/logos/northside-nicu.png'],
   ['senior-living', 'Senior Living', 'assets/logos/senior-living.png'],
-  ['disability', 'The America Wheat Mission (Milal)', 'assets/logos/milal.png'],
+  ['disability', 'Wheat Mission Atlanta (Milal)', 'assets/logos/milal.png'],
   ['schools-global', 'Schools & Global Communities', 'assets/logos/schools-global.png'],
 ]) {
   const dom = loadPage('partner.html', `https://x.test/partner.html?p=${slug}`);
@@ -248,6 +255,7 @@ for (const [slug, expectName, expectLogo] of [
   ok(d.title === `${expectName} — WE ARE WITH YOU`, `?p=${slug} → title "${expectName}"`);
   const heroLogo = d.querySelector('.page-hero .logo-chip img');
   ok(heroLogo && heroLogo.getAttribute('src') === expectLogo, `?p=${slug} hero shows logo ${expectLogo}`);
+  ok(fs.existsSync(path.join(ROOT, expectLogo)), `?p=${slug} logo file exists on disk (${expectLogo})`);
   ok(d.querySelectorAll('#partner-root .card').length >= 6, `?p=${slug} renders its 6 program cards`);
   const firstCard = d.querySelector('#partner-root .card h3');
   ok(firstCard && firstCard.textContent.trim() === 'One Message for You', `?p=${slug} first card is "One Message for You"`);
@@ -337,7 +345,8 @@ console.log('\n[student-community.html]');
   ok(d.body.textContent.includes('two students and an educator'),
      'About GYCO credits two students and an educator, unnamed');
   ok(d.body.textContent.includes('more than 70 performances'), 'About cites the 70+ performances figure');
-  ok(d.body.textContent.includes('Learn Well. Share Well.'), 'the Learn Well. Share Well. idea is present');
+  ok(d.body.textContent.includes('Learn well, Give well'), 'the Learn well, Give well idea is present');
+  ok(!d.body.textContent.includes('Learn Well. Share Well.'), 'the old Share Well phrasing is fully retired');
 
   /* About GYCO — condensed by default, Read More reveals the rest */
   const aboutBtn = d.querySelector('[aria-controls="about-more"]');
@@ -347,6 +356,10 @@ console.log('\n[student-community.html]');
   ok(aboutMore && aboutMore.getAttribute('aria-hidden') === 'true' && !aboutMore.classList.contains('open'),
      'About: expanded copy hidden accessibly by default');
   ok(aboutMore.textContent.includes('WE ARE WITH YOU (WAWY)'), 'About expanded copy names WAWY (in the HTML for SEO)');
+  ok(aboutMore.textContent.includes('proposed and developed by student founders Aaron and Kate'),
+     'About WAWY credits student founders Aaron and Kate');
+  ok(aboutMore.textContent.includes('QR-based connections') && aboutMore.textContent.includes('hospice communities'),
+     'About WAWY describes QR-based connections and who it reaches');
   aboutBtn.dispatchEvent(new dom.window.Event('click', { bubbles: true }));
   ok(aboutBtn.getAttribute('aria-expanded') === 'true' && aboutMore.classList.contains('open') &&
      aboutMore.getAttribute('aria-hidden') === 'false', 'About: Read More expands with correct ARIA state');
@@ -363,7 +376,7 @@ console.log('\n[student-community.html]');
      'served list merged into the archive section (no separate heading)');
   ok(secs[workIdx].querySelector('.check-list') && secs[workIdx].querySelector('[data-archive]'),
      'one combined section: served list + the year archive');
-  for (const item of ['City of Hope Atlanta (CTCA)', 'Ronald McDonald House', 'Friends of Refugees', '100 care packages', 'The America Wheat Mission (Milal)']) {
+  for (const item of ['City of Hope Atlanta (CTCA)', 'Ronald McDonald House', 'Friends of Refugees', '100 care packages', 'Wheat Mission Atlanta (Milal)']) {
     ok(d.body.textContent.includes(item), `served list includes "${item}"`);
   }
 
@@ -378,9 +391,13 @@ console.log('\n[student-community.html]');
   ok(JSON.stringify(programs.map(p => p.querySelector('.program__verb').textContent)) ===
      JSON.stringify(['Perform', 'Educate', 'Research', 'Connect', 'Lead']),
      'action words: Perform / Educate / Research / Connect / Lead');
+  ok(d.body.textContent.includes('Some are officially recognized school clubs'),
+     'GYCO Chapters: new copy — school clubs and student-led groups');
+  ok(d.body.textContent.includes('participate in GYCO projects, create its own projects'),
+     'GYCO Chapters: chapters participate in GYCO projects and create their own');
   ok(programs.every(p => p.querySelector('button.read-more[aria-expanded="false"]') && p.querySelector('.more[aria-hidden="true"]')),
      'every program collapsed by default with a semantic Read More button');
-  ok(d.body.textContent.includes('responsible leaders who can recognize a need'),
+  ok(d.body.textContent.includes('sharing the same GYCO philosophy'),
      'expanded program copy lives in the HTML (SEO-visible)');
   {
     // independence: opening one program leaves the others closed
@@ -531,6 +548,20 @@ console.log('\n[learning.html + join.html — excluded]');
     ok(!src.includes('learning.html') && !/href="join\.html"|join\.html"\)/.test(src),
        `${f} does not link to excluded pages`);
   }
+}
+
+/* ── 3b. SCHOOLS & GLOBAL — CLCL + HYCS ── */
+console.log('\n[schools-global partners]');
+{
+  const psrc = fs.readFileSync(path.join(ROOT, 'js/partners.js'), 'utf8');
+  ok(psrc.includes('CLCL (Chisomo Leadership Centre Limited)') &&
+     psrc.includes('HYCS (Harvester Yeshua Christian School Inc.)'),
+     'Schools & Global names its partner schools: CLCL and HYCS');
+  ok(psrc.includes('Harvester Yeshua Christian School Inc. (HYCS) logo'),
+     'schools-global logo alt names HYCS (temporary logo)');
+  const csrc = fs.readFileSync(path.join(ROOT, 'js/config.js'), 'utf8');
+  ok(csrc.includes('CLCL, HYCS, and partner schools'),
+     'homepage strip line mentions CLCL and HYCS');
 }
 
 /* ── 6. MEDIA PAGE ── */

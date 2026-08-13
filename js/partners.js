@@ -50,13 +50,13 @@ const PARTNERS = {
 
   "ronald-mcdonald-house": {
     order: 2,
-    name: "Ronald McDonald House",
+    name: "RMH (Ronald McDonald House in Atlanta)",
     // TODO: Swap in an updated logo anytime — assets/logos/ronald-mcdonald-house.png
     logo: "assets/logos/ronald-mcdonald-house.png",
     logoAlt: "Ronald McDonald House logo",
     audience: "For Families",
     cardText: "Music, letters, and simple activities for families staying close to hospitalized children.",
-    heroTitle: "WE ARE WITH YOU at Ronald McDonald House",
+    heroTitle: "WE ARE WITH YOU at Ronald McDonald House in Atlanta",
     heroText: "Music, letters, activities, and encouragement for children, parents, siblings, and families.",
     about: "This page was created for families staying near a hospital while a child receives care. Students share letters, cheerful music, sing-alongs, and simple activities that families can enjoy together during long and uncertain days.",
     cards: [
@@ -117,18 +117,18 @@ const PARTNERS = {
   },
 
   /* Slug kept as "disability" so existing links & QR codes keep working.
-     Visible name is The America Wheat Mission (Milal). */
+     Visible name is Wheat Mission Atlanta (Milal). */
   "disability": {
     order: 5,
-    name: "The America Wheat Mission (Milal)",
-    // TODO: Swap in an updated logo anytime — assets/logos/milal.png
+    name: "Wheat Mission Atlanta (Milal)",
+    // Real "Wheat Mission in Atlanta" stamp (Aaron, Aug 2026) — overwrite assets/logos/milal.png to swap.
     logo: "assets/logos/milal.png",
-    logoAlt: "The America Wheat Mission (Milal) — Wheat Mission in Atlanta logo",
+    logoAlt: "Wheat Mission in Atlanta (Milal) logo",
     audience: "For Individuals with Disabilities",
     cardText: "Accessible music activities and teaching videos for individuals and families.",
-    heroTitle: "WE ARE WITH YOU at The America Wheat Mission (Milal)",
+    heroTitle: "WE ARE WITH YOU at Wheat Mission Atlanta (Milal)",
     heroText: "Music, participation, stories, and encouragement for individuals, families, educators, and support networks.",
-    about: "This page was created with The America Wheat Mission (Milal), an Atlanta-based organization serving people with disabilities and their families. Every activity is designed with accessibility and flexibility in mind, including rhythm, movement, listening, and participation that can be adapted to individuals, families, classrooms, and community settings.",
+    about: "This page was created with Wheat Mission Atlanta (Milal), an Atlanta-based organization serving people with disabilities and their families. Every activity is designed with accessibility and flexibility in mind, including rhythm, movement, listening, and participation that can be adapted to individuals, families, classrooms, and community settings.",
     cards: [
       { title: "One Message for You", text: "Every friendship begins with one message. Read a message of encouragement, or share one for an individual, family, educator, or support network.", button: "Read & share a message", form: "letterSubmission" },
       { title: "Accessible Music Activities", text: "Simple activities centered on rhythm, movement, listening, and participation.", button: "Try an activity", form: "teachingVideoRequest" },
@@ -143,15 +143,16 @@ const PARTNERS = {
   "schools-global": {
     order: 6,
     name: "Schools & Global Communities",
-    // TODO: Replace with the final Schools & Global logo —
-    // add assets/logos/schools-global.png (a clean monogram shows until then).
+    // TEMPORARY logo (per Aaron, Aug 2026): the HYCS — Harvester Yeshua
+    // Christian School Inc. — logo stands in until a dedicated Schools &
+    // Global logo exists. Overwrite assets/logos/schools-global.png to swap.
     logo: "assets/logos/schools-global.png",
-    logoAlt: "Schools & Global Communities logo",
+    logoAlt: "Harvester Yeshua Christian School Inc. (HYCS) logo",
     audience: "For Students & Communities",
-    cardText: "English, music, and learning materials shared between student communities.",
+    cardText: "English, music, and learning materials shared with partner schools like CLCL and HYCS.",
     heroTitle: "WE ARE WITH YOU for Schools & Global Communities",
     heroText: "Learning, music, stories, and encouragement for students, teachers, and partner schools.",
-    about: "This page was created for local and global partner schools. Students help other students learn through simple English lessons, beginner music instruction, read-aloud stories, and practice activities that are accessible through a digital link or QR code.",
+    about: "This page was created for local and global partner schools, including CLCL (Chisomo Leadership Centre Limited) and HYCS (Harvester Yeshua Christian School Inc.). Students help other students learn through simple English lessons, beginner music instruction, read-aloud stories, and practice activities that are accessible through a digital link or QR code.",
     cards: [
       { title: "One Message for You", text: "Learning begins with encouragement. Read a message from another student, or send one to a classroom across the world.", button: "Read & share a message", form: "letterSubmission" },
       { title: "Learn English", text: "Simple English lessons, vocabulary videos, reading activities, and practice materials.", button: "Learn English", form: "teachingVideoRequest" },

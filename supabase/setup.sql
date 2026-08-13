@@ -930,7 +930,7 @@ insert into public.communities (name, slug, description, image_url, display_orde
   ('City of Hope Atlanta', 'city-of-hope',
    'Music, messages, stories, and encouragement for patients, families, caregivers, survivors, and healthcare staff at City of Hope Atlanta (formerly CTCA).',
    'assets/logos/city-of-hope-atlanta.png', 1),
-  ('Ronald McDonald House', 'ronald-mcdonald-house',
+  ('RMH (Ronald McDonald House in Atlanta)', 'ronald-mcdonald-house',
    'Hope and meaningful moments for families staying close to hospitalized children — letters, cheerful music, and simple activities to share together.',
    'assets/logos/ronald-mcdonald-house.png', 2),
   ('Northside NICU', 'northside-nicu',
@@ -942,8 +942,8 @@ insert into public.communities (name, slug, description, image_url, display_orde
   ('Schools & Global', 'schools-global',
    'Learning, music, stories, and encouragement for students, teachers, and partner schools — locally and around the world.',
    'assets/logos/schools-global.png', 5),
-  ('Milal', 'milal',
-   'Inclusive music, participation, and encouragement with The America Wheat Mission (Milal), serving people with disabilities and their families.',
+  ('Wheat Mission Atlanta (Milal)', 'milal',
+   'Inclusive music, participation, and encouragement with Wheat Mission Atlanta (Milal), serving people with disabilities and their families.',
    'assets/logos/milal.png', 6)
 on conflict (slug) do nothing;
 

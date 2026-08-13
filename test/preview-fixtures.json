@@ -18,7 +18,7 @@
       },
       {
         "id": "c2",
-        "name": "Ronald McDonald House",
+        "name": "RMH (Ronald McDonald House in Atlanta)",
         "slug": "ronald-mcdonald-house",
         "description": "A home away from home for families.",
         "image_url": "assets/logos/ronald-mcdonald-house.png",
@@ -54,7 +54,7 @@
       },
       {
         "id": "c6",
-        "name": "Milal",
+        "name": "Wheat Mission Atlanta (Milal)",
         "slug": "milal",
         "description": "Every ability, every voice, together.",
         "image_url": "assets/logos/milal.png",

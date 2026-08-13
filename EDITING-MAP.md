@@ -31,8 +31,8 @@ Site-wide settings: contact, forms, navigation, homepage images, featured press.
 | Navigation items / order / labels | `SITE.nav` | Array order = display order (Philosophy sits between Media and Contact). Don't change hrefs targeted by redirects |
 | The "Programs" CTA / Contact button | `SITE.nav` entry with `cta: true` | |
 | "You are invited" card image (One Message page) | `SITE.home.invitation` | `src` + `alt`. Overwrite `assets/images/home-invitation.jpg` or repoint `src` |
-| The one large homepage community poster | `SITE.home.poster` | Overwrite `assets/images/home-poster.png` (or repoint `src`) + update `alt`/`caption`. Replaced the old six-slide carousel |
-| The two homepage brochure previews | `SITE.home.brochures[]` | Real brochures are in place (invitation + This Is For You, from Aaron's PDFs, Aug 2026). To swap one, overwrite its file and update `alt` |
+| The one large homepage community poster | `SITE.home.poster` | The revised “One Message For You” poster is in place (Aaron's 수정본 PDF, Aug 13 2026). Overwrite `assets/images/home-poster.png` (or repoint `src`) + update `alt`/`caption`. Replaced the old six-slide carousel |
+| The two homepage brochure previews | `SITE.home.brochures[]` | Real brochures are in place (front “One Message For You” + back “This Is For You”, from Aaron's revised PDFs, Aug 13 2026). To swap one, overwrite its file and update `alt` |
 | The six homepage community logos / labels | `SITE.home.communities[]` | `slug` must match a key in `partners.js` (logo + link come from there); edit `label`/`line` here |
 | Featured press article | `SITE.press[]` | `title`, `publisher`, `description`, `languages`, `image`, `links[]`. **Preserve Korean text and encoded URLs exactly** |
 | Footer tagline note | `SITE.footerNote` | |
@@ -56,7 +56,7 @@ the homepage and the Programs page — all rendered automatically.
 | `ronald-mcdonald-house` | Ronald McDonald House | 2 |
 | `nicu` | Northside Intensive Care Unit (NICU) | 3 |
 | `senior-living` | Senior Living | 4 |
-| `disability` | The America Wheat Mission (Milal) | 5 |
+| `disability` | Wheat Mission Atlanta (Milal) | 5 |
 | `schools-global` | Schools & Global Communities | 6 |
 
 Slugs are printed on physical QR codes and linked from old URLs. To change what shows publicly,

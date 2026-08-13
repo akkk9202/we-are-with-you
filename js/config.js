@@ -40,11 +40,11 @@ const SITE = {
     { label: "Community Portal", label_ko: "커뮤니티 포털", href: "community/index.html", dropdown: [
       { label: "Portal Home",           href: "community/home.html" },
       { label: "City of Hope Atlanta",  href: "community/city-of-hope.html" },
-      { label: "Ronald McDonald House", href: "community/ronald-mcdonald-house.html" },
+      { label: "RMH (Ronald McDonald House in Atlanta)", href: "community/ronald-mcdonald-house.html" },
       { label: "Northside NICU",        href: "community/northside-nicu.html" },
       { label: "Senior Living",         href: "community/senior-living.html" },
       { label: "Schools & Global",      href: "community/schools-global.html" },
-      { label: "Milal",                 href: "community/milal.html" },
+      { label: "Wheat Mission Atlanta (Milal)", href: "community/milal.html" },
     ] },
     { label: "GYCO", href: "student-community.html" },
     { label: "Media", label_ko: "미디어", href: "media.html" },
@@ -63,9 +63,9 @@ const SITE = {
     },
 
     // ── The one large community poster (index.html, "From our posters" section).
-    // REPLACE WITH HOMEPAGE COMMUNITY IMAGE: overwrite
-    // assets/images/home-poster.png (or repoint src) and update alt/caption.
-    // This replaced the old six-slide flyer carousel (Aug 2026).
+    // The revised "One Message For You" poster (Aaron's 수정본 PDF, Aug 13 2026).
+    // To swap: overwrite assets/images/home-poster.png (or repoint src) and
+    // update alt/caption. This replaced the old six-slide flyer carousel (Aug 2026).
     poster: {
       src: "assets/images/home-poster.png",
       alt: "WE ARE WITH YOU · One Message for You poster showing five ways to connect — With You messages, Melody Box music, Wish Pocket song requests, Bloom Bank resources, and the Hope Capsule",
@@ -73,10 +73,10 @@ const SITE = {
     },
 
     // ── Homepage brochure / poster previews ("Take WE ARE WITH YOU With You").
-    // REPLACE WITH BROCHURE 1 / BROCHURE 2: drop the real files at these
-    // paths (portrait, like the printed handouts — e.g. 8.5×11) and update
-    // the alt text. Until a file exists, a labeled placeholder shows
-    // automatically and nothing looks broken.
+    // The two printed brochures (front: the wildflower invitation with QR ·
+    // back: "This Is For You", from Aaron's revised Aug 13 2026 PDF). To swap
+    // one, overwrite its file (portrait 3:4, 1400×1867) and update the alt
+    // text. If a file goes missing, a labeled placeholder shows automatically.
     brochures: [
       {
         src: "assets/images/brochure-1.jpg",
@@ -84,7 +84,7 @@ const SITE = {
       },
       {
         src: "assets/images/brochure-2.jpg",
-        alt: "WE ARE WITH YOU brochure — “This Is For You” — introducing With You messages, Melody Box, Wish Pocket, Bloom Box, and the Hope Capsule, with ways to support WAWY",
+        alt: "WE ARE WITH YOU brochure — “This Is For You · Even Here, Even Now” — a space to share and receive messages, music, helpful resources, and meaningful moments, with ways to support WAWY",
       },
     ],
 
@@ -95,11 +95,11 @@ const SITE = {
     // assets/logos/ (a clean monogram shows if a file is missing).
     communities: [
       { slug: "cancer-care",           label: "City of Hope Atlanta",  line: "Cancer care community" },
-      { slug: "ronald-mcdonald-house", label: "Ronald McDonald House", line: "Families and children" },
+      { slug: "ronald-mcdonald-house", label: "RMH (Ronald McDonald House in Atlanta)", line: "Families and children" },
       { slug: "nicu",                  label: "Northside NICU",        line: "Babies and families" },
       { slug: "senior-living",         label: "Senior Living",         line: "Older adult communities" },
-      { slug: "schools-global",        label: "Schools & Global",      line: "Students and partner schools" },
-      { slug: "disability",            label: "Milal",                 line: "The America Wheat Mission" },
+      { slug: "schools-global",        label: "Schools & Global",      line: "CLCL, HYCS, and partner schools" },
+      { slug: "disability",            label: "Wheat Mission Atlanta (Milal)", line: "People with disabilities and their families" },
     ],
   },
 
