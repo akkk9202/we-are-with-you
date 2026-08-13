@@ -257,6 +257,7 @@ const Portal = (() => {
       </ul></div>
       <div class="footer__col"><h4>Connect</h4><ul>
         ${SITE.instagram ? `<li><a href="${esc(SITE.instagram)}" target="_blank" rel="noopener">Instagram</a></li>` : ""}
+        ${SITE.youtube ? `<li><a href="${esc(SITE.youtube)}" target="_blank" rel="noopener">YouTube</a></li>` : ""}
         <li><a href="${esc(rootUrl("contact.html"))}">Email us</a></li>
       </ul></div>
     </div>

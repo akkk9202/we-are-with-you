@@ -232,7 +232,12 @@ console.log('\n[index.html]');
   const footComms = [...d.querySelectorAll('.footer__col')].find(c => c.querySelector('h4').textContent === 'Communities');
   ok(footComms && footComms.textContent.includes('Wheat Mission Atlanta (Milal)'), 'footer Communities column shows the Wheat Mission Atlanta (Milal) name');
   const footConnect = [...d.querySelectorAll('.footer__col')].find(c => c.textContent.includes('Connect'));
-  ok(!footConnect.textContent.includes('YouTube'), 'footer Connect column has no YouTube link');
+  {
+    const yt = [...footConnect.querySelectorAll('a')].find(a => a.textContent.trim() === 'YouTube');
+    ok(yt && yt.getAttribute('href') === 'https://youtube.com/@gyco_wawy' &&
+       yt.target === '_blank' && yt.rel === 'noopener',
+       'footer Connect column links the GYCO YouTube channel (new tab, noopener)');
+  }
 }
 
 /* ── 2. PROGRAMS PAGE → COMMUNITY PORTAL REDIRECT ── */
@@ -657,18 +662,34 @@ console.log('\n[media.html]');
     const src = img.getAttribute('src');
     ok(fs.existsSync(path.join(ROOT, src)), `image file exists on disk: ${src}`);
   }
-  ok(!d.body.innerHTML.includes('YouTube'), 'media page has no YouTube link or button (no channel yet)');
+  ok(!d.querySelector('main').innerHTML.includes('YouTube'),
+     'media page content has no YouTube section (the channel link lives in the footer + contact)');
 }
 
-/* ── 6b. NO YOUTUBE ANYWHERE (no channel yet) ── */
-console.log('\n[no-YouTube sweep]');
+/* ── 6b. YOUTUBE CHANNEL (config-driven, added Aug 2026) ── */
+console.log('\n[YouTube wiring]');
 {
-  const dom = loadPage('contact.html', 'https://x.test/contact.html');
-  ok(!dom.window.document.body.innerHTML.includes('YouTube'), 'contact page has no YouTube row');
-  const pages = fs.readdirSync(ROOT).filter(f => f.endsWith('.html'));
-  const offenders = pages.filter(f => /youtube/i.test(fs.readFileSync(path.join(ROOT, f), 'utf8')));
-  ok(offenders.length === 0, `no .html file references YouTube (${offenders.join(', ') || 'clean'})`);
-  ok(!/SITE\.youtube/.test(fs.readFileSync(path.join(ROOT, 'js/site.js'), 'utf8')), 'js/site.js does not render a YouTube link');
+  // like loadPage, but the page's inline social-row script runs in the same
+  // eval scope as the bundle (SITE/safeUrl are lexical there, not on window)
+  const html = fs.readFileSync(path.join(ROOT, 'contact.html'), 'utf8');
+  const dom = new JSDOM(html, { url: 'https://x.test/contact.html', runScripts: 'outside-only' });
+  const d = dom.window.document;
+  dom.window.IntersectionObserver = class { observe() {} unobserve() {} disconnect() {} };
+  const bundle = ['js/config.js', 'js/partners.js', 'js/site.js']
+    .map(js => fs.readFileSync(path.join(ROOT, js), 'utf8')).join('\n;\n');
+  const inline = [...d.querySelectorAll('script:not([src])')].map(s => s.textContent).join(';\n');
+  dom.window.eval(bundle + '\n;\n' + inline);
+  const row = d.querySelector('#contact-youtube');
+  ok(row && !row.hidden, 'contact page shows the YouTube row (SITE.youtube is set)');
+  const a = row.querySelector('a');
+  ok(a && a.getAttribute('href') === 'https://youtube.com/@gyco_wawy' &&
+     a.target === '_blank' && a.rel === 'noopener',
+     'contact YouTube row links @gyco_wawy (new tab, noopener, via safeUrl)');
+  ok(/SITE\.youtube/.test(fs.readFileSync(path.join(ROOT, 'js/site.js'), 'utf8')) &&
+     /safeUrl\(SITE\.youtube\)/.test(fs.readFileSync(path.join(ROOT, 'js/site.js'), 'utf8')),
+     'js/site.js renders the footer YouTube link through safeUrl');
+  ok(/SITE\.youtube/.test(fs.readFileSync(path.join(ROOT, 'js/portal/portal-core.js'), 'utf8')),
+     'portal footer offers the same conditional YouTube link');
 }
 
 /* ── 7. LOGO FALLBACK BEHAVIOR ── */

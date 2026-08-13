@@ -99,6 +99,7 @@ const logoChip = (p, extra = '') => `
     .map(p => `<li><a href="partner.html?p=${p.slug}">${p.name}</a></li>`).join('');
   const connect = [
     SITE.instagram ? `<li><a href="${safeUrl(SITE.instagram)}" target="_blank" rel="noopener">Instagram</a></li>` : '',
+    SITE.youtube ? `<li><a href="${safeUrl(SITE.youtube)}" target="_blank" rel="noopener">YouTube</a></li>` : '',
     `<li><a href="contact.html">Email us</a></li>`,
   ].join('');
 

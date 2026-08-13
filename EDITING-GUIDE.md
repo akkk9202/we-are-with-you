@@ -164,7 +164,7 @@ buttons, and left-aligned section heads. Do not rename tokens in `css/style.css`
 (the Community Portal layers on them).
 
 ## 13. Run the tests
-386 automated checks cover the nav (including the Philosophy tab), community names/order, logos, the homepage poster and brochure previews, the NADO School / Join Us exclusion (stubs + saved content), the GYCO performance archive (year tabs, pagination, detail view), all six partner pages, the Media press card, **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
+387 automated checks cover the nav (including the Philosophy tab), community names/order, logos, the homepage poster and brochure previews, the NADO School / Join Us exclusion (stubs + saved content), the GYCO performance archive (year tabs, pagination, detail view), all six partner pages, the Media press card, **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
 ```bash
 npm install jsdom   # once
 node test/smoke.test.js

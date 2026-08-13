@@ -14,8 +14,7 @@ const SITE = {
   // ── Contact & social ─────────────────────────────────────
   email: "gyco23@gmail.com",                 // official email
   instagram: "https://instagram.com/gyco_opus", // e.g. "https://instagram.com/yourhandle" (leave "" to hide)
-  // No YouTube channel yet — when one exists, add:  youtube: "https://youtube.com/@yourchannel",
-  // then restore the YouTube links in js/site.js (footer), contact.html, and media.html.
+  youtube: "https://youtube.com/@gyco_wawy",    // official channel (leave "" to hide everywhere)
   location: "Georgia, United States",
 
   // ── Google Form links ────────────────────────────────────
