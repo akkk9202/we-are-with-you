@@ -47,10 +47,8 @@ const SITE = {
       { label: "Milal",                 href: "community/milal.html" },
     ] },
     { label: "GYCO", href: "student-community.html" },
-    { label: "NADO School", href: "learning.html" },
     { label: "Media", label_ko: "미디어", href: "media.html" },
     { label: "Philosophy", label_ko: "철학", href: "our-philosophy.html" },
-    { label: "Join Us", label_ko: "함께하기", href: "join.html" },
     { label: "Contact", label_ko: "문의하기", href: "contact.html", cta: true },
   ],
 
@@ -81,12 +79,12 @@ const SITE = {
     // automatically and nothing looks broken.
     brochures: [
       {
-        src: "assets/images/brochure-1.jpg",   // REPLACE WITH BROCHURE 1
-        alt: "WE ARE WITH YOU brochure — front",
+        src: "assets/images/brochure-1.jpg",
+        alt: "WE ARE WITH YOU invitation brochure — “You are invited to receive a message of hope. Even here, even now” — with wildflowers and the QR code we hand out during visits",
       },
       {
-        src: "assets/images/brochure-2.jpg",   // REPLACE WITH BROCHURE 2
-        alt: "WE ARE WITH YOU brochure — back",
+        src: "assets/images/brochure-2.jpg",
+        alt: "WE ARE WITH YOU brochure — “This Is For You” — introducing With You messages, Melody Box, Wish Pocket, Bloom Box, and the Hope Capsule, with ways to support WAWY",
       },
     ],
 

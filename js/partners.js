@@ -41,7 +41,7 @@ const PARTNERS = {
       { title: "One Message for You", text: "Every visit begins with one message. Read a message of encouragement written for you, or share one for a patient, family member, caregiver, survivor, or staff member.", button: "Read & share a message", form: "letterSubmission" },
       { title: "Song Request", text: "Request a meaningful song for yourself, a patient, caregiver, family member, or loved one. When possible, GYCO students may prepare the song for a live or recorded performance.", button: "Request a song", form: "songRequest" },
       { title: "Voices of Love", text: "Share the story, memory, or meaning behind a song. Patients, families, caregivers, survivors, and staff may share how music connects to their journey.", button: "Share your voice", form: "songRequest" },
-      { title: "Taps of Love", text: "Watch short teaching videos created by students. Explore simple rhythms, music activities, breathing exercises, and creative ways to participate wherever you are.", button: "Watch teaching videos", href: "learning.html" },
+      { title: "Taps of Love", text: "Watch short teaching videos created by students. Explore simple rhythms, music activities, breathing exercises, and creative ways to participate wherever you are.", button: "Watch teaching videos", href: "media.html" },
       { title: "Patient Stories", text: "Read or share reflections, encouragement, and meaningful moments from the cancer care community.", button: "Share a story", form: "letterSubmission" },
       { title: "Hope Capsule", text: "Open a small collection of messages, music, reflections, and encouragement created for moments when someone needs hope.", button: "Open Hope Capsule", form: "hopeCapsule" },
     ],

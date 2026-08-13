@@ -10,7 +10,7 @@ into hospitals, family spaces, senior communities, schools, and global partner c
 - **Community Portal** (`community/`) — the members' area that replaced the Programs tab: accounts, videos with saved progress, letters, song/video requests, activities, and an admin dashboard (`admin/community.html`). Backed by Supabase (auth + Postgres with Row Level Security). See `supabase/PORTAL-SETUP.md`.
 - **Partner pages** (`partner.html?p=…`) — the original partner landing pages, kept intact because printed QR codes point at them; they're linked from the footer, the programs redirect stub, and inside the portal
 - **GYCO** — More Than Music: the student growth community behind the work
-- **NADO School** — Become a School: the learning philosophy behind student growth
+- **NADO School** — *excluded from the site for now* (Aug 2026); the full page is saved in `context/excluded/`
 - **NOS** — the operating system that keeps every partner page personal but connected
 
 ## Tech
@@ -30,7 +30,7 @@ python3 -m http.server 8000   # then open http://localhost:8000
 ## Tests
 ```bash
 npm install          # jsdom (test-only; node_modules is gitignored)
-npm test             # 325 site DOM tests + 168 portal DOM tests
+npm test             # 350 site DOM tests + 172 portal DOM tests
 npm run test:live    # live checks against the Supabase project (after setup)
 ```
 `supabase/rls_verification.sql` additionally verifies all 66 security rules

@@ -28,11 +28,11 @@ Site-wide settings: contact, forms, navigation, homepage images, featured press.
 | Instagram / YouTube links | `SITE.instagram`, `SITE.youtube` | Leave `""` to hide the icon |
 | Location text | `SITE.location` | Currently "Georgia, United States" |
 | A Google Form link | `SITE.forms.<key>` | Keys: `studentApplication`, `partnerInquiry`, `songRequest`, `letterSubmission`, `hopeCapsule`, `teachingVideoRequest` |
-| Navigation items / order / labels | `SITE.nav` | Array order = display order (Philosophy sits between Media and Join Us). Don't change hrefs targeted by redirects |
+| Navigation items / order / labels | `SITE.nav` | Array order = display order (Philosophy sits between Media and Contact). Don't change hrefs targeted by redirects |
 | The "Programs" CTA / Contact button | `SITE.nav` entry with `cta: true` | |
 | "You are invited" card image (One Message page) | `SITE.home.invitation` | `src` + `alt`. Overwrite `assets/images/home-invitation.jpg` or repoint `src` |
 | The one large homepage community poster | `SITE.home.poster` | Overwrite `assets/images/home-poster.png` (or repoint `src`) + update `alt`/`caption`. Replaced the old six-slide carousel |
-| The two homepage brochure previews | `SITE.home.brochures[]` | Drop real files at `assets/images/brochure-1.jpg` / `brochure-2.jpg` + update `alt`. A labeled placeholder shows until a file exists |
+| The two homepage brochure previews | `SITE.home.brochures[]` | Real brochures are in place (invitation + This Is For You, from Aaron's PDFs, Aug 2026). To swap one, overwrite its file and update `alt` |
 | The six homepage community logos / labels | `SITE.home.communities[]` | `slug` must match a key in `partners.js` (logo + link come from there); edit `label`/`line` here |
 | Featured press article | `SITE.press[]` | `title`, `publisher`, `description`, `languages`, `image`, `links[]`. **Preserve Korean text and encoded URLs exactly** |
 | Footer tagline note | `SITE.footerNote` | |
@@ -118,13 +118,13 @@ data-driven.
 
 | Page file | What it is |
 |---|---|
-| `index.html` | Homepage — 7 sections: hero (QR-visitor intro + Portal CTA on the left; brochures + community logo strip in the right rail), What We Do, Recent Work, the community poster, About GYCO, NADO School, final CTA |
-| `our-philosophy.html` | Condensed philosophy page (why we exist, NADO → WE, the three parts) |
+| `index.html` | Homepage — 6 sections: hero (QR-visitor intro + Portal CTA on the left; brochures + community logo strip in the right rail), What We Do, Recent Work, the community poster, About GYCO (with the RMH Atlanta group photo), final CTA |
+| `our-philosophy.html` | Condensed philosophy page (why we exist, NADO → WE, the two parts) |
 | `programs.html` | Programs / pathways overview |
 | `partner.html` | Renders a single partner via `?p=SLUG` |
-| `learning.html` | NADO School / learning |
+| `learning.html` | *Excluded for now* — redirect stub → homepage; full page saved in `context/excluded/` |
 | `media.html` | Media + featured press |
-| `join.html` | Get Involved |
+| `join.html` | *Excluded for now* — redirect stub → contact; full page saved in `context/excluded/` |
 | `student-community.html`, `gyco.html`, `about-gyco.html` | GYCO / community (about.html is now a redirect stub → index.html) |
 | `contact.html` | Contact |
 | `404.html` | Not-found page |

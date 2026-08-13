@@ -253,9 +253,7 @@ const Portal = (() => {
       </ul></div>
       <div class="footer__col"><h4>About</h4><ul>
         <li><a href="${esc(rootUrl("student-community.html"))}">GYCO</a></li>
-        <li><a href="${esc(rootUrl("learning.html"))}">NADO School</a></li>
         <li><a href="${esc(rootUrl("media.html"))}">Media</a></li>
-        <li><a href="${esc(rootUrl("join.html"))}">Get Involved</a></li>
       </ul></div>
       <div class="footer__col"><h4>Connect</h4><ul>
         ${SITE.instagram ? `<li><a href="${esc(SITE.instagram)}" target="_blank" rel="noopener">Instagram</a></li>` : ""}

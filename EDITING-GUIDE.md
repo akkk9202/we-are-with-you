@@ -51,7 +51,7 @@ Drop a PNG into `assets/logos/` and point `logo` at it. Already in place: `city-
 `js/config.js` → the `home:` block.
 - **"You are invited" card image** (shown on the One Message for You page): overwrite `assets/images/home-invitation.jpg` (keep the name and you're done), or change `home.invitation.src`. Update the `alt` text to describe the new image.
 - **The community poster** (homepage, "On the Wall Where We Visit"): overwrite `assets/images/home-poster.png` (keep the name and you're done), or change `home.poster.src`. Update `alt` and `caption` to describe the new image. This single image replaced the old six-slide flyer carousel.
-- **The two brochure previews** (homepage, "Take WE ARE WITH YOU With You"): drop portrait images at `assets/images/brochure-1.jpg` and `assets/images/brochure-2.jpg` — that's all. Until a file exists, a labeled "coming soon" placeholder shows automatically. Update the `alt` text in `home.brochures` when you add the real files. Visitors can click a brochure to see it full size.
+- **The two brochure previews** (homepage, "Take WE ARE WITH YOU With You"): the real brochures are in place (the wildflower invitation and the "This Is For You" overview, converted from Aaron's PDFs, Aug 2026). To swap one, overwrite `assets/images/brochure-1.jpg` or `brochure-2.jpg` with a new portrait image and update the `alt` text in `home.brochures`. Visitors can click a brochure to see it full size.
 - **The six community logos near the top**: the strip pulls each logo from `js/partners.js` (see 3a), so replacing a logo file updates both places. The short labels/lines under "Where You May Have Met Us" live in `home.communities`.
 
 ## 3c. Edit the featured press article (Media page)
@@ -79,8 +79,8 @@ Open `js/partners.js`. Each partner is one block:
 
 ## 6. Change text on main pages
 Main page copy lives in the HTML files themselves — each section is labeled with an HTML comment (`<!-- 5 · CIRCLE OF LOVE -->` etc.):
-- `index.html` — homepage (hero, What We Do, Recent Work, Our Communities, NADO School, About GYCO, final CTA)
-- `programs.html`, `student-community.html`, `learning.html`, `media.html`, `join.html`, `contact.html`
+- `index.html` — homepage (hero, What We Do, Recent Work, the community poster, About GYCO, final CTA)
+- `student-community.html`, `media.html`, `contact.html` (`programs.html`, `learning.html`, and `join.html` are redirect stubs — NADO School and Join Us are excluded for now, saved in `context/excluded/`)
 
 ## 7. Add photos
 1. Put photos in `assets/images/` (logos go in `assets/logos/`).
@@ -139,9 +139,9 @@ index.html                Home
 programs.html             Programs overview + NOS
 partner.html              Template — renders from js/partners.js (?p=slug)
 student-community.html    GYCO — More Than Music
-learning.html             NADO School — Become a School
+learning.html             Excluded for now — redirect stub (page saved in context/excluded/)
 media.html                Featured press + galleries
-join.html                 Four join paths
+join.html                 Excluded for now — redirect stub (page saved in context/excluded/)
 about.html                Redirect stub → index.html
 contact.html              Contact info + form links
 404.html                  Not-found page
@@ -162,7 +162,7 @@ buttons, and left-aligned section heads. Do not rename tokens in `css/style.css`
 (the Community Portal layers on them).
 
 ## 13. Run the tests
-325 automated checks cover the nav (including the Philosophy tab), community names/order, logos, the homepage poster and brochure placeholders, the GYCO performance archive (year tabs, pagination, detail view), all six partner pages, the Media press card, **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
+350 automated checks cover the nav (including the Philosophy tab), community names/order, logos, the homepage poster and brochure previews, the NADO School / Join Us exclusion (stubs + saved content), the GYCO performance archive (year tabs, pagination, detail view), all six partner pages, the Media press card, **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
 ```bash
 npm install jsdom   # once
 node test/smoke.test.js

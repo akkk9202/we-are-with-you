@@ -18,7 +18,9 @@ Google. The homepage now orients that visitor in its first three sections:
 
 Then What We Do · Recent Work · the one large community poster
 (`SITE.home.poster`, "On the Wall Where We Visit") · About GYCO (the parent
-org, deliberately **before**) · NADO School · final CTA. **7 sections, tested.**
+org, closing the page) · final CTA. **6 sections, tested.** (NADO School was
+excluded Aug 2026 — saved in `context/excluded/`; the About GYCO photo slot now
+holds the RMH Atlanta group photo.)
 The six-slide flyer carousel and its spring engine were removed entirely.
 
 The GYCO page gained **Our Work Through the Years** — a data-driven
@@ -27,7 +29,8 @@ renderer): year tabs, 6-per-page pagination, and an in-place detail view
 (description, gallery, video/article links, focus-managed). Cards are
 photo-led; sample entries are explicitly named "Placeholder".
 
-**Philosophy** is now a top-level nav tab (between Media and Join Us). The
+**Philosophy** is now a top-level nav tab (between Media and Contact — the
+NADO School and Join Us tabs are excluded for now, see `context/excluded/`). The
 philosophy page gained "The Visit Ends. The Connection Doesn't." — the
 continuity idea in plain words. With 8 nav items, the hamburger drawer now
 starts at 1200px (content breakpoints stay at 960px).

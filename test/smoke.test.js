@@ -28,9 +28,11 @@ function loadPage(file, url) {
 }
 
 /* All public pages (portal + admin excluded — they have their own tests). */
-const PUBLIC_PAGES = ['index.html', 'student-community.html', 'learning.html', 'media.html',
-  'one-message-for-you.html', 'hope-capsule.html', 'join.html', 'contact.html',
+const PUBLIC_PAGES = ['index.html', 'student-community.html', 'media.html',
+  'one-message-for-you.html', 'hope-capsule.html', 'contact.html',
   'our-philosophy.html', 'partner.html', '404.html'];
+/* learning.html (NADO School) and join.html (Join Us) are excluded for now —
+   both are redirect stubs; the full pages live in context/excluded/. */
 
 /* ── 1. HOMEPAGE ── */
 console.log('\n[index.html]');
@@ -43,14 +45,16 @@ console.log('\n[index.html]');
   ok(!brand.textContent.includes('GYCO'), 'nav brand contains no GYCO co-branding');
 
   const navLabels = [...d.querySelectorAll('.nav__links > li > a')].map(a => a.textContent.replace('▾', '').trim());
-  ok(navLabels.includes('GYCO') && navLabels.includes('NADO School'), 'nav has GYCO and NADO School');
+  ok(navLabels.includes('GYCO'), 'nav has GYCO');
+  ok(!navLabels.includes('NADO School') && !navLabels.includes('Join Us'),
+     'nav has no NADO School or Join Us tab (excluded for now — see context/excluded/)');
   ok(navLabels[0] === 'We Are With You', 'first nav tab is "We Are With You"');
   ok(navLabels.includes('Community Portal') && !navLabels.includes('Programs'),
      'nav: Community Portal replaces the Programs tab');
   ok(navLabels.includes('Philosophy'), 'nav has a visible Philosophy tab');
   ok(navLabels.indexOf('Media') < navLabels.indexOf('Philosophy') &&
-     navLabels.indexOf('Philosophy') < navLabels.indexOf('Join Us'),
-     'Philosophy sits between Media and Join Us');
+     navLabels.indexOf('Philosophy') < navLabels.indexOf('Contact'),
+     'Philosophy sits between Media and Contact');
   {
     const phil = [...d.querySelectorAll('.nav__links > li > a')].find(a => a.textContent.trim() === 'Philosophy');
     ok(phil && phil.getAttribute('href') === 'our-philosophy.html', 'Philosophy tab → our-philosophy.html');
@@ -70,8 +74,10 @@ console.log('\n[index.html]');
      'hero lede: students + music/learning/service');
   ok(d.body.textContent.includes('501(c)(3)') && d.body.textContent.includes('founded in 2022'),
      'hero + About GYCO carry real facts (501(c)(3), founded 2022)');
-  ok(d.body.textContent.includes('Jueon (Aaron) Kim') && d.body.textContent.includes('Yeoeun (Kate) Kim'),
-     'homepage intro credits the two student founders');
+  ok(d.body.textContent.includes('suggested by two students, Jueon (Aaron) Kim and Yeoeun (Kate) Kim'),
+     'homepage intro credits Aaron and Kate with suggesting WAWY (not founding)');
+  ok(d.body.textContent.includes('first student-led initiative'),
+     'homepage frames WAWY as GYCO\'s first student-led initiative');
   ok(d.body.textContent.includes('scanned a QR code from one of our materials'),
      'hero explains why a QR-code visitor is here');
   ok(d.body.textContent.includes('not meant to end when a performance or visit is over'),
@@ -168,39 +174,47 @@ console.log('\n[index.html]');
     ok(!/SITE\.home\.carousel|carousel:/.test(fs.readFileSync(path.join(ROOT, 'js/config.js'), 'utf8')), 'js/config.js no longer defines carousel data');
   }
 
-  /* NADO section */
-  ok(d.body.textContent.includes('Learn something. Make it your own. Teach it forward.'), 'NADO School lead line present');
-  const stepLine = d.querySelector('.step-line');
-  ok(stepLine && ['Learn', 'Own', 'Offer', 'Progress'].every(w => stepLine.textContent.includes(w)), 'inline steps: Learn → Own → Offer → Progress');
+  /* NADO School excluded for now — no homepage section, no mention */
+  ok(!d.body.textContent.includes('NADO School'),
+     'homepage has no NADO School section or mention (excluded for now)');
+  ok(!d.querySelector('a[href="learning.html"]') && !d.querySelector('a[href="join.html"]'),
+     'homepage links to neither learning.html nor join.html');
 
   /* about GYCO — real history + photo placeholder */
   ok(d.body.textContent.includes('Friends of Refugees') && d.body.textContent.includes('100 care packages'),
      'About GYCO cites real service history');
-  const ph = d.querySelector('.photo-placeholder');
-  ok(ph && ph.textContent.includes('Photo to add') && ph.textContent.length > 60, 'photo placeholder describes exactly what image is needed');
+  {
+    const aboutFig = [...d.querySelectorAll('.photo-figure img')].find(i => i.getAttribute('src').includes('about-gyco-group'));
+    ok(aboutFig && fs.existsSync(path.join(ROOT, aboutFig.getAttribute('src'))),
+       'About GYCO photo (RMH Atlanta group) exists on disk');
+    ok((aboutFig.getAttribute('alt') || '').length > 15, 'About GYCO photo has descriptive alt text');
+    ok(!d.querySelector('.photo-placeholder'), 'homepage has no photo placeholders left');
+  }
 
   /* final CTA */
   ok(d.body.textContent.includes('Even Here. Even Now.'), 'final CTA uses the primary brand line');
   const ctas = [...d.querySelectorAll('.section--dark .btn')].map(b => [b.textContent.trim(), b.getAttribute('href')]);
-  ok(ctas.some(([t, h]) => t === 'Get involved' && h === 'join.html') && ctas.some(([t, h]) => t === 'Contact us' && h === 'contact.html'),
-     'final CTA: Get involved + Contact us');
+  ok(ctas.some(([t, h]) => t === 'Contact us' && h === 'contact.html'),
+     'final CTA: Contact us (Get involved removed with Join Us)');
 
   /* structure discipline */
   const secs = [...d.querySelectorAll('main > section')];
-  ok(secs.length === 7, `homepage has exactly 7 sections (found ${secs.length})`);
+  ok(secs.length === 6, `homepage has exactly 6 sections (found ${secs.length})`);
   ok(d.querySelectorAll('.eyebrow').length === 0, 'homepage has zero eyebrow labels');
   ok(!d.querySelector('.cards'), 'homepage has no card grids');
   ok(!d.querySelector('main svg'), 'homepage has no diagram SVGs (photos carry the page)');
   {
-    /* GYCO (the parent organization) is introduced before NADO School */
+    /* GYCO (the parent organization) closes the page before the final CTA */
     const idxOf = (t) => secs.findIndex(s => (s.querySelector('h2') || {}).textContent === t);
-    ok(idxOf('About GYCO') >= 0 && idxOf('NADO School') >= 0 && idxOf('About GYCO') < idxOf('NADO School'),
-       'About GYCO section comes before NADO School at the bottom of the homepage');
+    ok(idxOf('About GYCO') >= 0 && idxOf('About GYCO') === secs.length - 2,
+       'About GYCO is the last content section before the final CTA');
   }
 
   /* footer */
   const footAbout = [...d.querySelectorAll('.footer__col')].find(c => c.querySelector('h4').textContent === 'About');
-  ok(footAbout && footAbout.textContent.includes('GYCO') && footAbout.textContent.includes('NADO School'), 'footer About column present');
+  ok(footAbout && footAbout.textContent.includes('GYCO') && footAbout.textContent.includes('Media'), 'footer About column present');
+  ok(!footAbout.textContent.includes('NADO School') && !footAbout.textContent.includes('Get Involved'),
+     'footer About column has no NADO School or Get Involved link (excluded for now)');
   ok(!footAbout.textContent.includes('Platform'), 'footer no longer says "Platform"');
   const footComms = [...d.querySelectorAll('.footer__col')].find(c => c.querySelector('h4').textContent === 'Communities');
   ok(footComms && footComms.textContent.includes('The America Wheat Mission (Milal)'), 'footer Communities column shows Milal name');
@@ -318,8 +332,10 @@ console.log('\n[student-community.html]');
   ok(d.querySelector('h1').textContent.trim() === 'GYCO', 'hero h1 is simply GYCO');
   ok(d.body.textContent.includes('founded in 2022') && d.body.textContent.includes('April 2023') &&
      d.body.textContent.includes('501(c)(3)'), 'About states real facts (founded 2022, 501(c)(3) April 2023)');
-  ok(d.body.textContent.includes('Jueon (Aaron) Kim') && d.body.textContent.includes('Yeoeun (Kate) Kim'),
-     'About GYCO names the two student founders');
+  ok(!d.body.textContent.includes('Jueon') && !d.body.textContent.includes('Yeoeun'),
+     'About GYCO does not name individual founders');
+  ok(d.body.textContent.includes('two students and an educator'),
+     'About GYCO credits two students and an educator, unnamed');
   ok(d.body.textContent.includes('more than 70 performances'), 'About cites the 70+ performances figure');
   ok(d.body.textContent.includes('Learn Well. Share Well.'), 'the Learn Well. Share Well. idea is present');
 
@@ -488,29 +504,33 @@ console.log('\n[archive mechanism]');
      'detail → Back returns to the same year');
 }
 
-/* ── 5. NADO SCHOOL PAGE ── */
-console.log('\n[learning.html]');
+/* ── 5. NADO SCHOOL + JOIN US — EXCLUDED FOR NOW ── */
+console.log('\n[learning.html + join.html — excluded]');
 {
-  const dom = loadPage('learning.html', 'https://x.test/learning.html');
-  const d = dom.window.document;
-  ok(d.title.startsWith('NADO School'), 'title leads with NADO School');
-  ok(d.querySelector('h1').textContent.trim() === 'NADO School', 'hero h1 is simply NADO School');
-  ok(d.body.textContent.includes('Learn something. Make it your own. Teach it forward.'), 'kicker: the one summary line');
-  ok(!!d.querySelector('#loop') && !!d.querySelector('#programs') && !!d.querySelector('#passport'),
-     '#loop, #programs, #passport anchors preserved (redirect stubs + old URLs land)');
-  const steps = [...d.querySelectorAll('#loop .step h3')].map(h => h.textContent.trim());
-  ok(JSON.stringify(steps) === JSON.stringify(['Learn', 'Own', 'Offer', 'Progress']), 'four steps: Learn / Own / Offer / Progress — told once');
-  ok(d.body.textContent.includes('나도'), 'Korean 나도 explanation kept');
-  ok(d.querySelectorAll('.say-grid p').length === 4, 'four "I will…, too" lines kept');
-  const bb = [...d.querySelectorAll('.index-item')].find(r => r.textContent.includes('Beat & Breeze'));
-  ok(bb && bb.querySelector('[data-form="teachingVideoRequest"]'), 'Beat & Breeze row wired to the teaching-video form key');
-  ok(d.body.textContent.includes('NADO Passport'), 'NADO Passport mentioned honestly (in development), not sold as a product');
-  ok(!d.querySelector('.circle-figure') && !d.querySelector('.passport-panel'), 'diagram SVGs removed — one real photo instead');
-  const photo = d.querySelector('#programs .photo-figure img');
-  ok(photo && fs.existsSync(path.join(ROOT, photo.getAttribute('src'))), 'NADO page photo exists on disk');
-  ok(d.querySelectorAll('.eyebrow').length === 0, 'NADO page has zero eyebrow labels');
-  const secs = [...d.querySelectorAll('main > section')];
-  ok(secs.length === 5, `NADO page stays compact: 5 sections (found ${secs.length})`);
+  /* Both pages are redirect stubs; the full pages are preserved in
+     context/excluded/ (see RESTORE.md there to bring them back). */
+  const learning = fs.readFileSync(path.join(ROOT, 'learning.html'), 'utf8');
+  ok(learning.includes('http-equiv="refresh"') && learning.includes('index.html'),
+     'learning.html is a redirect stub → homepage (NADO School excluded for now)');
+  ok(learning.includes('noindex'), 'learning stub is noindex');
+  const join = fs.readFileSync(path.join(ROOT, 'join.html'), 'utf8');
+  ok(join.includes('http-equiv="refresh"') && join.includes('contact.html'),
+     'join.html is a redirect stub → contact (Join Us excluded for now)');
+  ok(join.includes('noindex'), 'join stub is noindex');
+  for (const f of ['context/excluded/learning-nado-school.html', 'context/excluded/join-us.html',
+                   'context/excluded/homepage-nado-section.html', 'context/excluded/fragments.html',
+                   'context/excluded/RESTORE.md']) {
+    ok(fs.existsSync(path.join(ROOT, f)), `excluded content preserved: ${f}`);
+  }
+  ok(fs.readFileSync(path.join(ROOT, 'context/excluded/learning-nado-school.html'), 'utf8').includes('NADO School'),
+     'saved NADO School page still carries its content');
+  /* No public page or engine still links to the excluded pages. */
+  const live = [...PUBLIC_PAGES, 'js/config.js', 'js/site.js', 'js/partners.js', 'js/portal/portal-core.js'];
+  for (const f of live) {
+    const src = fs.readFileSync(path.join(ROOT, f), 'utf8');
+    ok(!src.includes('learning.html') && !/href="join\.html"|join\.html"\)/.test(src),
+       `${f} does not link to excluded pages`);
+  }
 }
 
 /* ── 6. MEDIA PAGE ── */
@@ -589,9 +609,12 @@ console.log('\n[our-philosophy.html]');
   ok(d.querySelector('.page-hero h1').textContent.trim() === 'Our Philosophy', 'philosophy page hero');
   ok(d.querySelector('.nado-we-figure svg'), 'NADO + NADO = WE figure kept (told once)');
   ok(d.body.textContent.includes('나도'), 'NADO explained from the Korean');
-  for (const part of ['NADO School', 'GYCO', 'WE ARE WITH YOU']) {
-    ok(d.body.textContent.includes(part), `three parts named: ${part}`);
+  for (const part of ['GYCO', 'WE ARE WITH YOU']) {
+    ok(d.body.textContent.includes(part), `two parts named: ${part}`);
   }
+  ok(!d.body.textContent.includes('NADO School'),
+     'philosophy keeps the NADO idea but no NADO School program mention (excluded for now)');
+  ok(d.body.textContent.includes('Two Parts, One Practice'), 'parts section reframed as two parts');
   ok([...d.querySelectorAll('.flow')].some(f => f.querySelectorAll('.flow__item').length === 8), 'the concrete 8-step encouragement flow kept');
   ok(!d.body.textContent.includes('One Shared Template'), 'platform-model language gone');
   ok(!d.body.textContent.includes('consistency defines'), 'design-system language gone');
@@ -626,11 +649,9 @@ console.log('\n[word budgets]');
     ['index.html', 640],              // raised Aug 2026: QR-visitor intro + brochure/poster sections
     ['student-community.html', 1150], // raised Aug 2026: About/Programs expanded copy stays in the
                                       // HTML for SEO but is collapsed behind Read More by default
-    ['learning.html', 420],
     ['media.html', 420],
     ['hope-capsule.html', 300],
     ['one-message-for-you.html', 260],
-    ['join.html', 320],
     ['contact.html', 350],
     ['our-philosophy.html', 900],     // raised Aug 2026: continuity section
   ]) {
@@ -692,6 +713,9 @@ console.log('\n[redirect stubs & slugs]');
     'voices-of-love.html': 'partner.html?p=cancer-care',
     'we-are-with-you.html': 'programs.html',
     'winds-of-love.html': 'media.html',
+    /* excluded for now — full pages saved in context/excluded/ */
+    'learning.html': 'index.html',
+    'join.html': 'contact.html',
   };
   for (const [file, target] of Object.entries(stubs)) {
     let html = '';

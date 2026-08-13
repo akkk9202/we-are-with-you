@@ -113,9 +113,7 @@ const logoChip = (p, extra = '') => `
       <div class="footer__col"><h4>About</h4><ul>
         <li><a href="our-philosophy.html">Our Philosophy</a></li>
         <li><a href="student-community.html">GYCO</a></li>
-        <li><a href="learning.html">NADO School</a></li>
         <li><a href="media.html">Media</a></li>
-        <li><a href="join.html">Get Involved</a></li>
       </ul></div>
       <div class="footer__col"><h4>Connect</h4><ul>${connect}</ul></div>
     </div>
