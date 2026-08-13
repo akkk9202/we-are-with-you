@@ -82,7 +82,7 @@ Main page copy lives in the HTML files themselves — each section is labeled wi
 - `index.html` — homepage (hero, What We Do, Recent Work, the community poster, About GYCO, final CTA)
 - `student-community.html`, `media.html`, `contact.html` (`programs.html`, `learning.html`, and `join.html` are redirect stubs — NADO School and Join Us are excluded for now, saved in `context/excluded/`)
 
-**Updating the "Our Impact — 2023 to Present" numbers** (GYCO page, inside the About GYCO section of `student-community.html`): each figure is one small block — the number lives in a `<span class="impact__num">` (e.g. `70+`), the label in `<span class="impact__label">`, and the sentence below it in the `<dd>` line. Change the text between the tags and save; nothing else needs to move. The `0+` on "WAWY Messages Shared" is a live counter to update the same way as messages accumulate.
+**Updating the "Our Impact — 2023 to Present" numbers** (GYCO page, inside the About GYCO section of `student-community.html`): each figure is one small block — the number lives in a `<span class="impact__num">` (e.g. `70+`), the label in `<span class="impact__label">`, and the sentence below it in the `<dd>` line. Change the text between the tags and save; nothing else needs to move. The count on "WAWY Messages Shared" (currently `200+`) is a live counter to update the same way as messages accumulate.
 
 ## 7. Add photos
 1. Put photos in `assets/images/` (logos go in `assets/logos/`).

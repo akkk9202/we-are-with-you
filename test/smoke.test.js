@@ -384,8 +384,8 @@ console.log('\n[student-community.html]');
   const impactItems = [...impact.querySelectorAll('.impact__item')];
   ok(impactItems.length === 8, `Impact lists exactly 8 figures (found ${impactItems.length})`);
   const nums = impactItems.map(i => (i.querySelector('.impact__num') || {}).textContent || '');
-  ok(JSON.stringify(nums.slice(0, 6)) === JSON.stringify(['70+', '4,000+', '100', '44', '4', '0+']),
-     'Impact numbers: 70+ / 4,000+ / 100 / 44 / 4 / 0+');
+  ok(JSON.stringify(nums.slice(0, 6)) === JSON.stringify(['70+', '4,000+', '100', '44', '4', '200+']),
+     'Impact numbers: 70+ / 4,000+ / 100 / 44 / 4 / 200+');
   const labels = impactItems.map(i => i.querySelector('.impact__label').textContent);
   ok(labels[0] === 'Performances' && labels[1] === 'People Reached' && labels[5] === 'WAWY Messages Shared',
      'Impact labels name what each figure counts');
