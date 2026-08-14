@@ -42,8 +42,12 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="requests">
   <div class="container">
+    <div class="section-head">
+      <h2>Make a Request</h2>
+      <p>For anyone who would like something from GYCO — a performance, a lesson, a letter, or a partnership.</p>
+    </div>
     <div class="index-list">
       <div class="index-item">
         <span class="index-item__title">Join GYCO</span>
@@ -79,6 +83,57 @@
   </div>
 </section>
 
+<section class="section section--mist" id="support">
+  <div class="container">
+    <div class="section-head">
+      <h2>Support the Work</h2>
+      <p>There are many ways to be part of what GYCO students are building. Whether you contribute resources, share your skills, connect us with a community, or help make a student project possible, your support helps us reach more people.</p>
+    </div>
+    <div class="cards cards--3">
+      <div class="card">
+        <h3>Support a Student Project</h3>
+        <p>Help students carry out performances, educational projects, care packages, community activities, research, and other service initiatives.</p>
+        <a class="btn btn--ink btn--sm" data-form="supportProject" data-mailto-subject="Supporting a student project" href="contact.html">Support a project</a>
+      </div>
+      <div class="card">
+        <h3>Donate Materials</h3>
+        <p>Community projects often need books, school supplies, instruments and music materials, art supplies, care-package items, and printing resources.</p>
+        <a class="btn btn--ink btn--sm" data-form="materialsDonation" data-mailto-subject="Donating materials" href="contact.html">Ask what we need</a>
+      </div>
+      <div class="card">
+        <h3>Sponsor a Program or Event</h3>
+        <p>Individuals, organizations, and businesses can help make performances, workshops, outreach events, educational resources, and community projects possible.</p>
+        <a class="btn btn--ink btn--sm" data-form="sponsorInquiry" data-mailto-subject="Sponsorship inquiry" href="contact.html">Sponsorship inquiry</a>
+      </div>
+      <div class="card">
+        <h3>Share Your Skills</h3>
+        <p>Musicians, educators, healthcare professionals, researchers, and creatives can support students through interviews, workshops, mentorship, project feedback, or collaboration.</p>
+        <a class="btn btn--ink btn--sm" data-form="skillShare" data-mailto-subject="Sharing my skills with GYCO" href="contact.html">Collaborate with us</a>
+      </div>
+      <div class="card">
+        <h3>Connect Us With a Community</h3>
+        <p>If you know a hospital, senior community, school, disability organization, family support organization, or nonprofit that could benefit from working with GYCO, introduce us.</p>
+        <a class="btn btn--ink btn--sm" data-form="communityConnection" data-mailto-subject="Connecting GYCO with a community" href="contact.html">Make a connection</a>
+      </div>
+      <div class="card">
+        <h3>Spread the Word</h3>
+        <p>Share our projects, follow our work, and help more students and community organizations discover the program.</p>
+        <div class="support-links">
+          <a class="btn btn--ink btn--sm" id="support-instagram" hidden target="_blank" rel="noopener">Instagram</a>
+          <a class="btn btn--ink btn--sm" id="support-youtube" hidden target="_blank" rel="noopener">YouTube</a>
+        </div>
+      </div>
+    </div>
+    <div class="support-callout">
+      <div>
+        <h3>Have another idea?</h3>
+        <p>If you have another way you would like to support, collaborate with, or contribute to GYCO, we would love to hear from you.</p>
+      </div>
+      <a class="btn btn--ink btn--sm" data-form="generalSupport" data-mailto-subject="Supporting GYCO" href="contact.html">Contact GYCO</a>
+    </div>
+  </div>
+</section>
+
 <section class="section section--dark cta-band">
   <div class="container">
     <h2>Even Here. Even Now. WE ARE WITH YOU.</h2>
@@ -99,6 +154,11 @@
     const yt = document.getElementById('contact-youtube');
     if (SITE.youtube) { yt.hidden = false; yt.querySelector('a').href = safeUrl(SITE.youtube); }
     document.getElementById('contact-location').textContent = SITE.location;
+    // "Spread the Word" buttons share the same config values
+    const sIg = document.getElementById('support-instagram');
+    if (sIg && SITE.instagram) { sIg.hidden = false; sIg.href = safeUrl(SITE.instagram); }
+    const sYt = document.getElementById('support-youtube');
+    if (sYt && SITE.youtube) { sYt.hidden = false; sYt.href = safeUrl(SITE.youtube); }
   })();
 </script>
 </body>

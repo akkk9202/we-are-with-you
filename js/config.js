@@ -27,6 +27,17 @@ const SITE = {
     letterSubmission:    "https://docs.google.com/forms/d/e/1FAIpQLScPFE6ckE10oraG-N0bj6d8ShcoQQRCPrkA5wtFsHS6L1wkow/viewform?usp=header",
     hopeCapsule:         "REPLACE_ME_GOOGLE_FORM_URL",
     teachingVideoRequest:"REPLACE_ME_GOOGLE_FORM_URL",
+
+    // "Support the Work" (contact page). While a key is still
+    // REPLACE_ME, its button falls back to a mailto: link with a
+    // prefilled subject (data-mailto-subject in the HTML) — paste a
+    // Google Form URL here and the button switches automatically.
+    supportProject:      "REPLACE_ME_GOOGLE_FORM_URL",
+    materialsDonation:   "REPLACE_ME_GOOGLE_FORM_URL",
+    sponsorInquiry:      "REPLACE_ME_GOOGLE_FORM_URL",
+    skillShare:          "REPLACE_ME_GOOGLE_FORM_URL",
+    communityConnection: "REPLACE_ME_GOOGLE_FORM_URL",
+    generalSupport:      "REPLACE_ME_GOOGLE_FORM_URL",
   },
 
   // ── Navigation (order matters) ───────────────────────────

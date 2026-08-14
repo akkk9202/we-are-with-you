@@ -38,7 +38,9 @@ Site-wide settings: contact, forms, navigation, homepage images, featured press.
 | Footer tagline note | `SITE.footerNote` | |
 
 - **`data-form="<key>"`** anywhere in the HTML routes through `SITE.forms`. A button whose key is
-  still `REPLACE_ME_GOOGLE_FORM_URL` safely routes to the contact page instead of a dead link.
+  still `REPLACE_ME_GOOGLE_FORM_URL` safely routes to the contact page instead of a dead link —
+  unless the button also carries `data-mailto-subject="..."` (the Support the Work cards), in
+  which case it falls back to a live `mailto:` link with that subject until the form URL is pasted.
 - The tagline **"Even Here. Even Now. We Are With You."** lives in `SITE.tagline`.
 
 ---
@@ -126,7 +128,7 @@ data-driven.
 | `media.html` | Media + featured press |
 | `join.html` | *Excluded for now* — redirect stub → contact; full page saved in `context/excluded/` |
 | `student-community.html`, `gyco.html`, `about-gyco.html` | GYCO / community (about.html is now a redirect stub → index.html) |
-| `contact.html` | Contact |
+| `contact.html` | Contact — Make a Request (six request rows) + Support the Work (six ways-to-help cards + "Have another idea?" callout) |
 | `404.html` | Not-found page |
 | `voices-of-love.html`, `taps-of-love.html`, `we-are-with-you.html`, `beat-and-breeze.html`, `winds-of-love.html` | **Redirect stubs** — forward retired URLs to current pages. Don't delete; don't change their internal targets |
 

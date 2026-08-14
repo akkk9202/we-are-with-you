@@ -30,7 +30,9 @@ forms: {
 ```
 Every button on the site tagged `data-form="..."` picks up the link automatically. Until a real link is pasted, those buttons safely route to the Contact page instead of going nowhere.
 
-The six forms the site expects (field lists are in your planning doc): Student Application, Partner Inquiry, Song Request, Letter Submission, Hope Capsule, Teaching Video Request.
+The six request forms the site expects (field lists are in your planning doc): Student Application, Partner Inquiry, Song Request, Letter Submission, Hope Capsule, Teaching Video Request.
+
+The contact page's **Support the Work** cards have six more keys — `supportProject`, `materialsDonation`, `sponsorInquiry`, `skillShare`, `communityConnection`, `generalSupport`. These behave slightly differently: while a key is still `REPLACE_ME`, its button is a working `mailto:` link to `SITE.email` with a prefilled subject (never a disabled "coming soon" button), because email is a fine way to handle these today. Paste a Google Form URL into the key and the button switches to the form automatically.
 
 ## 3. Rename or reorder pathways
 Open `js/partners.js`. Every partner block has:
@@ -164,7 +166,7 @@ buttons, and left-aligned section heads. Do not rename tokens in `css/style.css`
 (the Community Portal layers on them).
 
 ## 13. Run the tests
-387 automated checks cover the nav (including the Philosophy tab), community names/order, logos, the homepage poster and brochure previews, the NADO School / Join Us exclusion (stubs + saved content), the GYCO performance archive (year tabs, pagination, detail view), all six partner pages, the Media press card, **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
+415 automated checks cover the nav (including the Philosophy tab), community names/order, logos, the homepage poster and brochure previews, the NADO School / Join Us exclusion (stubs + saved content), the GYCO performance archive (year tabs, pagination, detail view), all six partner pages, the Media press card, the contact page's request rows and "Support the Work" cards (mailto fallbacks included), **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
 ```bash
 npm install jsdom   # once
 node test/smoke.test.js

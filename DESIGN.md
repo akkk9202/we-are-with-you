@@ -1,4 +1,33 @@
-# WE ARE WITH YOU — design system (v8, Aug 2026)
+# WE ARE WITH YOU — design system (v9, Aug 2026)
+
+## What v9 added (contact: Support the Work)
+
+The contact page is now one page with two clearly separated halves —
+**ask GYCO for something** vs. **help GYCO** — without ever using those
+phrases as headings:
+
+- **Make a Request** (`#requests`, white band) — the six existing request
+  rows, unchanged, now under their own section head so the group reads as
+  "things you can ask for."
+- **Support the Work** (`#support`, mist band) — six quiet `.card` tiles in
+  the existing `.cards--3` grid (3/2/1 columns; hairline borders, no icons,
+  no new card style): Support a Student Project · Donate Materials · Sponsor
+  a Program or Event · Share Your Skills · Connect Us With a Community ·
+  Spread the Word (Instagram/YouTube buttons from config, hidden until set).
+  Deliberately not a fundraising pitch — the intro frames many ways to help
+  beyond money. Below the grid, a full-width **"Have another idea?"**
+  callout (`.support-callout`, hairline top border) closes the page before
+  the CTA band.
+- **Mailto fallback** — support buttons carry `data-form` keys (config.js)
+  plus `data-mailto-subject`. While a key is `REPLACE_ME`, the button is a
+  live `mailto:` link with a prefilled subject, never a disabled
+  "coming soon" state; pasting a Google Form URL flips it to the form.
+  Request-row buttons keep the original disabled-with-note behavior.
+
+The surface distinction (white directory rows vs. mist card grid) is what
+separates the two halves — no extra eyebrows, icons, or dividers.
+
+---
 
 ## What v8 added (the QR-visitor revisions)
 

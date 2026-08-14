@@ -327,6 +327,100 @@ console.log('\n[form wiring]');
   }
 }
 
+/* ── 3c2. SUPPORT THE WORK (contact page, added Aug 2026) ── */
+console.log('\n[support the work]');
+{
+  // Bundle + the page's inline script in one eval scope (SITE/safeUrl are
+  // lexical there, not on window) — same pattern as the YouTube wiring test.
+  const html = fs.readFileSync(path.join(ROOT, 'contact.html'), 'utf8');
+  const dom = new JSDOM(html, { url: 'https://x.test/contact.html', runScripts: 'outside-only' });
+  const w = dom.window, d = w.document;
+  w.IntersectionObserver = class { observe() {} unobserve() {} disconnect() {} };
+  const bundle = ['js/config.js', 'js/partners.js', 'js/site.js']
+    .map(js => fs.readFileSync(path.join(ROOT, js), 'utf8')).join('\n;\n');
+  const inline = [...d.querySelectorAll('script:not([src])')].map(s => s.textContent).join(';\n');
+
+  /* Page flow: hero → info band → requests (white) → support (mist) → CTA band. */
+  const sections = [...d.querySelectorAll('main > section')].map(s => s.className || s.id);
+  ok(sections.length === 5, `contact page has five bands (found ${sections.length})`);
+  ok(d.querySelector('#requests') && d.querySelector('#support'), 'requests and support sections have stable anchors');
+  const bandIds = [...d.querySelectorAll('main > section')].map(s => s.id);
+  ok(bandIds.indexOf('support') === bandIds.indexOf('requests') + 1,
+     'Support the Work sits directly below the request rows');
+  ok(d.querySelector('#support').classList.contains('section--mist'),
+     'support section uses the mist band — visually distinct from the white request rows');
+  ok(d.querySelector('#requests .section-head h2').textContent.trim() === 'Make a Request' &&
+     d.querySelector('#support .section-head h2').textContent.trim() === 'Support the Work',
+     'the two halves are headed "Make a Request" / "Support the Work"');
+  ok(/be part of what GYCO students are building/.test(d.querySelector('#support .section-head p').textContent),
+     'support intro frames help beyond donating money');
+
+  /* Six quiet cards, exact titles, request rows untouched. */
+  const titles = [...d.querySelectorAll('#support .cards .card h3')].map(h => h.textContent.trim());
+  ok(JSON.stringify(titles) === JSON.stringify(['Support a Student Project', 'Donate Materials',
+    'Sponsor a Program or Event', 'Share Your Skills', 'Connect Us With a Community', 'Spread the Word']),
+    'six support cards in order');
+  ok(d.querySelectorAll('#requests .index-item').length === 6, 'the six request rows are unchanged');
+  ok(d.querySelectorAll('#support .index-item').length === 0 && d.querySelectorAll('#requests .card').length === 0,
+     'requests stay directory rows; support stays cards — the two groups read differently');
+
+  /* Wire everything, then check the mailto fallback. */
+  w.eval(bundle + '\n;\n' + inline);
+  for (const [key, subject] of [
+    ['supportProject', 'Supporting a student project'],
+    ['materialsDonation', 'Donating materials'],
+    ['sponsorInquiry', 'Sponsorship inquiry'],
+    ['skillShare', 'Sharing my skills with GYCO'],
+    ['communityConnection', 'Connecting GYCO with a community'],
+    ['generalSupport', 'Supporting GYCO'],
+  ]) {
+    const a = d.querySelector(`[data-form="${key}"]`);
+    ok(a && a.getAttribute('href') === 'mailto:gyco23@gmail.com?subject=' + encodeURIComponent(subject),
+       `${key}: no form yet → live mailto with subject "${subject}"`);
+    ok(a && !a.classList.contains('btn--disabled') && !a.hasAttribute('aria-disabled') &&
+       !(a.nextElementSibling && a.nextElementSibling.classList.contains('form-soon')),
+       `${key}: never shows as disabled/coming-soon (email fallback works today)`);
+  }
+
+  /* Request buttons keep the old behavior: no mailto fallback, still coming-soon. */
+  const pi = d.querySelector('[data-form="partnerInquiry"]');
+  ok(pi && pi.getAttribute('aria-disabled') === 'true' && !pi.hasAttribute('href'),
+     'request rows without a form still show the subtle coming-soon state (no silent mailto swap)');
+
+  /* Paste a real Google Form URL into config later → button switches over.
+     (SITE is lexical inside the eval scope, so the flip runs in a second
+     load whose eval string ends by rewiring the button.) */
+  {
+    const dom2 = new JSDOM(html, { url: 'https://x.test/contact.html', runScripts: 'outside-only' });
+    dom2.window.IntersectionObserver = class { observe() {} unobserve() {} disconnect() {} };
+    dom2.window.eval(bundle + '\n;\n' + inline + `
+      ;SITE.forms.supportProject = 'https://docs.google.com/forms/d/e/TESTSWITCH/viewform';
+      const btn = document.querySelector('[data-form="supportProject"]');
+      btn.removeAttribute('href'); wireFormButton(btn);`);
+    const sw = dom2.window.document.querySelector('[data-form="supportProject"]');
+    ok(sw.getAttribute('href').includes('TESTSWITCH') && sw.target === '_blank' && sw.rel === 'noopener',
+       'pasting a form URL into config.js flips a support button from mailto to the form');
+  }
+
+  /* Spread the Word: real social links only, from config, via safeUrl. */
+  const ig = d.querySelector('#support-instagram'), yt = d.querySelector('#support-youtube');
+  ok(ig && !ig.hidden && ig.href === 'https://instagram.com/gyco_opus' &&
+     ig.target === '_blank' && ig.rel === 'noopener', 'Spread the Word: Instagram button live (new tab, noopener)');
+  ok(yt && !yt.hidden && yt.href === 'https://youtube.com/@gyco_wawy' &&
+     yt.target === '_blank' && yt.rel === 'noopener', 'Spread the Word: YouTube button live (new tab, noopener)');
+
+  /* Closing callout. */
+  const co = d.querySelector('#support .support-callout');
+  ok(co && co.querySelector('h3').textContent.trim() === 'Have another idea?',
+     'support section closes with the "Have another idea?" callout');
+  ok(co && co.querySelector('[data-form="generalSupport"]').textContent.trim() === 'Contact GYCO',
+     'callout button says Contact GYCO and reaches the inbox');
+
+  /* No invented URLs anywhere on the page. */
+  const hrefs = [...d.querySelectorAll('a[href]')].map(a => a.getAttribute('href'));
+  ok(hrefs.every(h => !/REPLACE_ME|example\.com|forms\.gle\/x+/i.test(h)), 'no fake or placeholder URLs in the rendered page');
+}
+
 /* ── 3d. HOPE CAPSULE ── */
 console.log('\n[hope-capsule.html]');
 {
@@ -760,7 +854,8 @@ console.log('\n[word budgets]');
     ['media.html', 420],
     ['hope-capsule.html', 300],
     ['one-message-for-you.html', 260],
-    ['contact.html', 350],
+    ['contact.html', 500],            // raised Aug 2026: "Support the Work"
+                                      // section (six ways to help + callout)
     ['our-philosophy.html', 900],     // raised Aug 2026: continuity section
   ]) {
     const n = visibleWords(file);

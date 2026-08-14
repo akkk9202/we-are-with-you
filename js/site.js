@@ -137,6 +137,13 @@ function wireFormButton(el) {
     el.target = '_blank'; el.rel = 'noopener';
     return;
   }
+  // No form yet — if the button names an email subject, fall back to a
+  // working mailto: link so the option is never a dead end. Paste the
+  // real form URL into SITE.forms later and the button switches over.
+  if (el.dataset.mailtoSubject && SITE.email && !SITE.email.startsWith('REPLACE_ME')) {
+    el.setAttribute('href', 'mailto:' + SITE.email + '?subject=' + encodeURIComponent(el.dataset.mailtoSubject));
+    return;
+  }
   el.removeAttribute('href');
   el.classList.add('btn--disabled');
   el.setAttribute('aria-disabled', 'true');
