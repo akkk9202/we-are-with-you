@@ -297,33 +297,32 @@ console.log('\n[one-message-for-you.html]');
 /* ── 3c. FORM WIRING (config.js → data-form buttons) ── */
 console.log('\n[form wiring]');
 {
-  const dom = loadPage('contact.html', 'https://x.test/contact.html');
+  /* The request rows left the contact page (Aug 2026 — it's now the support
+     page), so wiring is asserted where the request buttons actually live. */
+  const dom = loadPage('student-community.html', 'https://x.test/student-community.html');
   const d = dom.window.document;
-  const byKey = k => d.querySelector(`[data-form="${k}"]`);
-  for (const [key, frag] of [
-    ['studentApplication', '1FAIpQLSfsiV5lgetCfyIkVz79'],
-    ['songRequest', '1FAIpQLSfIU7OKX5MHNmsAZHqbc'],
-    ['letterSubmission', '1FAIpQLScPFE6ckE10oraG'],
-  ]) {
-    const a = byKey(key);
-    ok(a && a.getAttribute('href').includes(frag), `${key} button links to its Google Form`);
-    ok(a && a.target === '_blank' && a.rel === 'noopener', `${key} opens in a new tab with noopener`);
-  }
-  for (const key of ['partnerInquiry', 'hopeCapsule', 'teachingVideoRequest']) {
-    const a = byKey(key);
-    ok(a && !a.hasAttribute('href') && a.getAttribute('aria-disabled') === 'true' && a.classList.contains('btn--disabled'), `${key} form in progress → button disabled`);
-    ok(a && a.nextElementSibling && a.nextElementSibling.classList.contains('form-soon') && /Coming soon/.test(a.nextElementSibling.textContent), `${key} shows a "coming soon" note`);
-  }
-  ok(d.querySelector('.page-hero h1').textContent.trim() === 'How Can We Help?', 'contact hero: How Can We Help?');
-  ok(d.querySelectorAll('.index-item').length === 6, 'contact page: six request rows');
+  const join = d.querySelector('[data-form="studentApplication"]');
+  ok(join && join.getAttribute('href').includes('1FAIpQLSfsiV5lgetCfyIkVz79'),
+     'GYCO page Join button links to the student application Google Form');
+  ok(join && join.target === '_blank' && join.rel === 'noopener', 'studentApplication opens in a new tab with noopener');
   {
-    // partner pages re-wire dynamically rendered cards the same way
+    // partner pages wire dynamically rendered cards the same way
     const pdom = loadPage('partner.html', 'https://x.test/partner.html?p=senior-living');
     const pd = pdom.window.document;
     const hc = pd.querySelector('#partner-root [data-form="hopeCapsule"]');
     ok(hc && hc.getAttribute('aria-disabled') === 'true' && hc.nextElementSibling.classList.contains('form-soon'), 'partner page Hope Capsule button disabled with note (form in progress)');
     const ls = pd.querySelector('#partner-root [data-form="letterSubmission"]');
     ok(ls && ls.getAttribute('href').includes('1FAIpQLScPFE6ckE10oraG') && ls.target === '_blank', 'partner page letter button still live');
+    const sr = pd.querySelector('#partner-root [data-form="songRequest"]');
+    ok(sr && sr.getAttribute('href').includes('1FAIpQLSfIU7OKX5MHNmsAZHqbc') && sr.target === '_blank', 'partner page song request button still live');
+  }
+  {
+    // contact page: the six request buttons are gone, nothing dangles
+    const cd = loadPage('contact.html', 'https://x.test/contact.html').window.document;
+    ok(cd.querySelectorAll('.index-item').length === 0, 'contact page carries no request rows anymore');
+    ok(['studentApplication', 'songRequest', 'letterSubmission', 'teachingVideoRequest', 'hopeCapsule', 'partnerInquiry']
+       .every(k => !cd.querySelector(`[data-form="${k}"]`)), 'no request form buttons remain on the contact page');
+    ok(cd.querySelector('.page-hero h1').textContent.trim() === 'How Can We Help?', 'contact hero: How Can We Help?');
   }
 }
 
@@ -340,29 +339,23 @@ console.log('\n[support the work]');
     .map(js => fs.readFileSync(path.join(ROOT, js), 'utf8')).join('\n;\n');
   const inline = [...d.querySelectorAll('script:not([src])')].map(s => s.textContent).join(';\n');
 
-  /* Page flow: hero → info band → requests (white) → support (mist) → CTA band. */
-  const sections = [...d.querySelectorAll('main > section')].map(s => s.className || s.id);
-  ok(sections.length === 5, `contact page has five bands (found ${sections.length})`);
-  ok(d.querySelector('#requests') && d.querySelector('#support'), 'requests and support sections have stable anchors');
-  const bandIds = [...d.querySelectorAll('main > section')].map(s => s.id);
-  ok(bandIds.indexOf('support') === bandIds.indexOf('requests') + 1,
-     'Support the Work sits directly below the request rows');
+  /* Page flow: hero → info band → support (mist) → CTA band. */
+  const sections = [...d.querySelectorAll('main > section')];
+  ok(sections.length === 4, `contact page has four bands (found ${sections.length})`);
+  ok(sections.findIndex(s => s.id === 'support') === 2,
+     'Support the Work sits directly below the info band');
   ok(d.querySelector('#support').classList.contains('section--mist'),
-     'support section uses the mist band — visually distinct from the white request rows');
-  ok(d.querySelector('#requests .section-head h2').textContent.trim() === 'Make a Request' &&
-     d.querySelector('#support .section-head h2').textContent.trim() === 'Support the Work',
-     'the two halves are headed "Make a Request" / "Support the Work"');
+     'support section uses the mist band');
+  ok(d.querySelector('#support .section-head h2').textContent.trim() === 'Support the Work',
+     'the section is headed "Support the Work"');
   ok(/be part of what GYCO students are building/.test(d.querySelector('#support .section-head p').textContent),
      'support intro frames help beyond donating money');
 
-  /* Six quiet cards, exact titles, request rows untouched. */
+  /* Six quiet cards, exact titles. */
   const titles = [...d.querySelectorAll('#support .cards .card h3')].map(h => h.textContent.trim());
   ok(JSON.stringify(titles) === JSON.stringify(['Support a Student Project', 'Donate Materials',
     'Sponsor a Program or Event', 'Share Your Skills', 'Connect Us With a Community', 'Spread the Word']),
     'six support cards in order');
-  ok(d.querySelectorAll('#requests .index-item').length === 6, 'the six request rows are unchanged');
-  ok(d.querySelectorAll('#support .index-item').length === 0 && d.querySelectorAll('#requests .card').length === 0,
-     'requests stay directory rows; support stays cards — the two groups read differently');
 
   /* Wire everything, then check the mailto fallback. */
   w.eval(bundle + '\n;\n' + inline);
@@ -381,11 +374,6 @@ console.log('\n[support the work]');
        !(a.nextElementSibling && a.nextElementSibling.classList.contains('form-soon')),
        `${key}: never shows as disabled/coming-soon (email fallback works today)`);
   }
-
-  /* Request buttons keep the old behavior: no mailto fallback, still coming-soon. */
-  const pi = d.querySelector('[data-form="partnerInquiry"]');
-  ok(pi && pi.getAttribute('aria-disabled') === 'true' && !pi.hasAttribute('href'),
-     'request rows without a form still show the subtle coming-soon state (no silent mailto swap)');
 
   /* Paste a real Google Form URL into config later → button switches over.
      (SITE is lexical inside the eval scope, so the flip runs in a second
@@ -854,8 +842,8 @@ console.log('\n[word budgets]');
     ['media.html', 420],
     ['hope-capsule.html', 300],
     ['one-message-for-you.html', 260],
-    ['contact.html', 500],            // raised Aug 2026: "Support the Work"
-                                      // section (six ways to help + callout)
+    ['contact.html', 350],            // Aug 2026: request rows moved off; the
+                                      // page is now "Support the Work" + callout
     ['our-philosophy.html', 900],     // raised Aug 2026: continuity section
   ]) {
     const n = visibleWords(file);

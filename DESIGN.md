@@ -2,13 +2,11 @@
 
 ## What v9 added (contact: Support the Work)
 
-The contact page is now one page with two clearly separated halves —
-**ask GYCO for something** vs. **help GYCO** — without ever using those
-phrases as headings:
+The contact page is now the **support page**: hero → info band →
+Support the Work → CTA band (4 bands). The old six request rows were
+removed from this page (Aug 14) — those buttons live on the GYCO page,
+the partner pages, and the One Message / Hope Capsule pages.
 
-- **Make a Request** (`#requests`, white band) — the six existing request
-  rows, unchanged, now under their own section head so the group reads as
-  "things you can ask for."
 - **Support the Work** (`#support`, mist band) — six quiet `.card` tiles in
   the existing `.cards--3` grid (3/2/1 columns; hairline borders, no icons,
   no new card style): Support a Student Project · Donate Materials · Sponsor
@@ -22,10 +20,10 @@ phrases as headings:
   plus `data-mailto-subject`. While a key is `REPLACE_ME`, the button is a
   live `mailto:` link with a prefilled subject, never a disabled
   "coming soon" state; pasting a Google Form URL flips it to the form.
-  Request-row buttons keep the original disabled-with-note behavior.
+  Request buttons elsewhere keep the original disabled-with-note behavior.
 
-The surface distinction (white directory rows vs. mist card grid) is what
-separates the two halves — no extra eyebrows, icons, or dividers.
+No extra eyebrows, icons, or dividers — the mist band and hairline cards
+carry the section.
 
 ---
 
