@@ -89,19 +89,9 @@
 <section class="section" id="community">
   <div class="container">
     <div class="section-head">
-      <h2>Supporters &amp; Partners</h2>
-      <p>Schools, hospitals, businesses, and community organizations can participate, partner, or support our work.</p>
+      <h2>Community Partners</h2>
+      <p>Hospitals, senior communities, and organizations that collaborate with WAWY to bring our programs to the people they serve.</p>
     </div>
-    <h3 class="community-label">Community Supporters</h3>
-    <p class="community-line">Schools, businesses, and community organizations that support WAWY through participation and community engagement.</p>
-    <div class="logo-row" id="supporter-logos">
-      <figure class="photo-placeholder">
-        <small>Supporter logos</small>
-        <p>Logos of supporting schools, businesses, and community organizations appear here — add each one to SITE.community.supporters in js/config.js (name + logo file in assets/logos/).</p>
-      </figure>
-    </div>
-    <h3 class="community-label">Community Partners</h3>
-    <p class="community-line">Hospitals, senior communities, and organizations that collaborate with WAWY to bring our programs to the people they serve.</p>
     <div class="logo-row" id="partner-logos"></div>
   </div>
 </section>
@@ -154,14 +144,6 @@
     if (sIg && SITE.instagram) { sIg.hidden = false; sIg.href = safeUrl(SITE.instagram); }
     const sYt = document.getElementById('support-youtube');
     if (sYt && SITE.youtube) { sYt.hidden = false; sYt.href = safeUrl(SITE.youtube); }
-    // Community supporters (config-driven; the placeholder shows while empty)
-    const sup = (SITE.community && SITE.community.supporters) || [];
-    if (sup.length) {
-      document.getElementById('supporter-logos').innerHTML = sup.map(s => {
-        const chip = logoChip({ logo: s.logo, logoAlt: s.alt || s.name + ' logo', name: s.name });
-        return s.url ? `<a href="${safeUrl(s.url)}" target="_blank" rel="noopener" title="${s.name}">${chip}</a>` : chip;
-      }).join('');
-    }
     // Community partners — the six community logos from js/partners.js
     document.getElementById('partner-logos').innerHTML = pathwayList().map(p =>
       `<a href="partner.html?p=${p.slug}" title="${p.name}">${logoChip(p)}</a>`).join('');

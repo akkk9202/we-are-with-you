@@ -339,14 +339,14 @@ console.log('\n[support the work]');
     .map(js => fs.readFileSync(path.join(ROOT, js), 'utf8')).join('\n;\n');
   const inline = [...d.querySelectorAll('script:not([src])')].map(s => s.textContent).join(';\n');
 
-  /* Page flow: hero → info band → support (mist) → supporters & partners
+  /* Page flow: hero → info band → support (mist) → community partners
      (white) → give (mist) → CTA band. */
   const sections = [...d.querySelectorAll('main > section')];
   ok(sections.length === 6, `contact page has six bands (found ${sections.length})`);
   ok(sections.findIndex(s => s.id === 'support') === 2 &&
      sections.findIndex(s => s.id === 'community') === 3 &&
      sections.findIndex(s => s.id === 'give') === 4,
-     'band order: support → supporters & partners → give');
+     'band order: support → community partners → give');
   ok(d.querySelector('#support').classList.contains('section--mist'),
      'support section uses the mist band');
   ok(d.querySelector('#support .section-head h2').textContent.trim() === 'Support the Work',
@@ -400,15 +400,11 @@ console.log('\n[support the work]');
   ok(yt && !yt.hidden && yt.href === 'https://youtube.com/@gyco_wawy' &&
      yt.target === '_blank' && yt.rel === 'noopener', 'Spread the Word: YouTube button live (new tab, noopener)');
 
-  /* Supporters & Partners (config + partners.js driven, wired by the eval). */
-  ok(d.querySelector('#community .section-head h2').textContent.trim() === 'Supporters & Partners',
-     'community section headed "Supporters & Partners"');
-  const labels = [...d.querySelectorAll('#community .community-label')].map(h => h.textContent.trim());
-  ok(JSON.stringify(labels) === JSON.stringify(['Community Supporters', 'Community Partners']),
-     'supporters and partners sub-blocks in order');
-  const ph = d.querySelector('#supporter-logos .photo-placeholder p');
-  ok(ph && ph.textContent.length >= 60 && /SITE\.community\.supporters/.test(ph.textContent),
-     'supporter row shows the labeled placeholder while the config list is empty');
+  /* Community Partners (rendered from partners.js by the eval). */
+  ok(d.querySelector('#community .section-head h2').textContent.trim() === 'Community Partners',
+     'community section headed "Community Partners"');
+  ok(!d.querySelector('#supporter-logos') && !/Community Supporters/.test(d.body.textContent),
+     'no Community Supporters block (removed — none exist yet)');
   const chips = [...d.querySelectorAll('#partner-logos a')];
   ok(chips.length === 6 && chips.every(a => /^partner\.html\?p=/.test(a.getAttribute('href'))),
      'partner row renders all six community logos, each linking to its partner page');
@@ -875,8 +871,8 @@ console.log('\n[word budgets]');
     ['media.html', 420],
     ['hope-capsule.html', 300],
     ['one-message-for-you.html', 260],
-    ['contact.html', 440],            // Aug 2026: the support page — Support the
-                                      // Work cards + Supporters & Partners +
+    ['contact.html', 380],            // Aug 2026: the support page — Support the
+                                      // Work cards + Community Partners +
                                       // Give to WAWY + callout
     ['our-philosophy.html', 900],     // raised Aug 2026: continuity section
   ]) {

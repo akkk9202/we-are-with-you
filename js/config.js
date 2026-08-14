@@ -50,16 +50,6 @@ const SITE = {
     memo:  "WAWY",                    // memo donors should include
   },
 
-  // ── Community supporters (contact page logo row) ─────────
-  // Schools, businesses, and organizations that support WAWY.
-  // Add entries like:
-  //   { name: "Some School", logo: "assets/logos/some-school.png", url: "https://..." }
-  // (url is optional; a missing logo file shows a clean monogram.)
-  // The explanatory placeholder shows while this list is empty.
-  community: {
-    supporters: [],
-  },
-
   // ── Navigation (order matters) ───────────────────────────
   // The old "Programs" tab is now the Community Portal (community/).
   // Its dropdown lists the six portal community pages. The legacy

@@ -25,11 +25,10 @@ the partner pages, and the One Message / Hope Capsule pages.
 No extra eyebrows, icons, or dividers — the mist band and hairline cards
 carry the section.
 
-Below it (Aug 14): **Supporters & Partners** (`#community`, white band) — two
-h3 sub-blocks: Community Supporters (config-driven `.logo-row` of `.logo-chip`s
-from `SITE.community.supporters`; a labeled placeholder shows while the list is
-empty) and Community Partners (the six community logos rendered from
-partners.js, each chip linking to its partner page). Then **Give to WAWY**
+Below it (Aug 14): **Community Partners** (`#community`, white band) — a
+`.logo-row` of the six community `.logo-chip`s rendered from partners.js, each
+linking to its partner page. (A Community Supporters block existed briefly the
+same day and was removed — no supporters to show yet.) Then **Give to WAWY**
 (`#give`, tight mist band) — a white hairline `.give-panel` with the
 config-driven Zelle address + memo (`SITE.donation`) and a receipt-request
 button (`forms.donationReceipt`, mailto fallback to the donation inbox). The

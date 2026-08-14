@@ -128,7 +128,7 @@ data-driven.
 | `media.html` | Media + featured press |
 | `join.html` | *Excluded for now* — redirect stub → contact; full page saved in `context/excluded/` |
 | `student-community.html`, `gyco.html`, `about-gyco.html` | GYCO / community (about.html is now a redirect stub → index.html) |
-| `contact.html` | Contact — info band + Support the Work (six ways-to-help cards) + Supporters & Partners logo rows (`SITE.community.supporters` / partners.js) + Give to WAWY (`SITE.donation`) + "Have another idea?" callout. Request buttons live on the GYCO/partner/OMFY/Hope Capsule pages |
+| `contact.html` | Contact — info band + Support the Work (six ways-to-help cards) + Community Partners logo row (auto from partners.js) + Give to WAWY (`SITE.donation`) + "Have another idea?" callout. Request buttons live on the GYCO/partner/OMFY/Hope Capsule pages |
 | `404.html` | Not-found page |
 | `voices-of-love.html`, `taps-of-love.html`, `we-are-with-you.html`, `beat-and-breeze.html`, `winds-of-love.html` | **Redirect stubs** — forward retired URLs to current pages. Don't delete; don't change their internal targets |
 
