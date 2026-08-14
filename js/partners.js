@@ -143,11 +143,11 @@ const PARTNERS = {
   "schools-global": {
     order: 6,
     name: "Schools & Global Communities",
-    // TEMPORARY logo (per Aaron, Aug 2026): the HYCS — Harvester Yeshua
-    // Christian School Inc. — logo stands in until a dedicated Schools &
-    // Global logo exists. Overwrite assets/logos/schools-global.png to swap.
+    // Generic globe mark (Aug 14 2026) — replaced the temporary HYCS school
+    // logo so no single partner school stands for the whole community.
+    // Overwrite assets/logos/schools-global.png anytime to swap.
     logo: "assets/logos/schools-global.png",
-    logoAlt: "Harvester Yeshua Christian School Inc. (HYCS) logo",
+    logoAlt: "Globe mark for Schools & Global Communities",
     audience: "For Students & Communities",
     cardText: "English, music, and learning materials shared with partner schools like CLCL and HYCS.",
     heroTitle: "WE ARE WITH YOU for Schools & Global Communities",

@@ -698,8 +698,10 @@ console.log('\n[schools-global partners]');
   ok(psrc.includes('CLCL (Chisomo Leadership Centre Limited)') &&
      psrc.includes('HYCS (Harvester Yeshua Christian School Inc.)'),
      'Schools & Global names its partner schools: CLCL and HYCS');
-  ok(psrc.includes('Harvester Yeshua Christian School Inc. (HYCS) logo'),
-     'schools-global logo alt names HYCS (temporary logo)');
+  ok(psrc.includes('Globe mark for Schools & Global Communities'),
+     'schools-global logo alt is the generic globe mark');
+  ok(!psrc.includes('(HYCS) logo'),
+     'no single school\'s logo stands for Schools & Global anymore');
   const csrc = fs.readFileSync(path.join(ROOT, 'js/config.js'), 'utf8');
   ok(csrc.includes('CLCL, HYCS, and partner schools'),
      'homepage strip line mentions CLCL and HYCS');
