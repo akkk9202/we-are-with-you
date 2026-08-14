@@ -34,6 +34,11 @@ The six request forms the site expects (field lists are in your planning doc): S
 
 The contact page's **Support the Work** cards have six more keys — `supportProject`, `materialsDonation`, `sponsorInquiry`, `skillShare`, `communityConnection`, `generalSupport`. These behave slightly differently: while a key is still `REPLACE_ME`, its button is a working `mailto:` link to `SITE.email` with a prefilled subject (never a disabled "coming soon" button), because email is a fine way to handle these today. Paste a Google Form URL into the key and the button switches to the form automatically.
 
+The contact page also has a **Give to WAWY** band and a **Supporters & Partners** band, both edited from `js/config.js`:
+
+- `SITE.donation` — the Zelle address and memo shown to donors. The "Request a donation receipt" button uses `forms.donationReceipt`; while that key is `REPLACE_ME` it emails the donation inbox instead.
+- `SITE.community.supporters` — add `{ name, logo, url }` entries (logo files in `assets/logos/`) and the supporter logo row replaces its placeholder automatically. The Community Partners row needs no editing — it renders the six community logos from `js/partners.js`.
+
 ## 3. Rename or reorder pathways
 Open `js/partners.js`. Every partner block has:
 ```js
@@ -166,7 +171,7 @@ buttons, and left-aligned section heads. Do not rename tokens in `css/style.css`
 (the Community Portal layers on them).
 
 ## 13. Run the tests
-404 automated checks cover the nav (including the Philosophy tab), community names/order, logos, the homepage poster and brochure previews, the NADO School / Join Us exclusion (stubs + saved content), the GYCO performance archive (year tabs, pagination, detail view), all six partner pages, the Media press card, the contact page's "Support the Work" cards (mailto fallbacks included), **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
+414 automated checks cover the nav (including the Philosophy tab), community names/order, logos, the homepage poster and brochure previews, the NADO School / Join Us exclusion (stubs + saved content), the GYCO performance archive (year tabs, pagination, detail view), all six partner pages, the Media press card, the contact page's "Support the Work" cards (mailto fallbacks included), **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
 ```bash
 npm install jsdom   # once
 node test/smoke.test.js

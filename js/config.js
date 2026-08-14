@@ -38,6 +38,26 @@ const SITE = {
     skillShare:          "REPLACE_ME_GOOGLE_FORM_URL",
     communityConnection: "REPLACE_ME_GOOGLE_FORM_URL",
     generalSupport:      "REPLACE_ME_GOOGLE_FORM_URL",
+
+    // "Give to WAWY" receipt request (contact page). While REPLACE_ME,
+    // the button emails the donation inbox (SITE.donation.zelle) instead.
+    donationReceipt:     "REPLACE_ME_GOOGLE_FORM_URL",
+  },
+
+  // ── Giving (contact page "Give to WAWY") ─────────────────
+  donation: {
+    zelle: "gycodonation@gmail.com",  // Zelle address shown to donors
+    memo:  "WAWY",                    // memo donors should include
+  },
+
+  // ── Community supporters (contact page logo row) ─────────
+  // Schools, businesses, and organizations that support WAWY.
+  // Add entries like:
+  //   { name: "Some School", logo: "assets/logos/some-school.png", url: "https://..." }
+  // (url is optional; a missing logo file shows a clean monogram.)
+  // The explanatory placeholder shows while this list is empty.
+  community: {
+    supporters: [],
   },
 
   // ── Navigation (order matters) ───────────────────────────

@@ -339,11 +339,14 @@ console.log('\n[support the work]');
     .map(js => fs.readFileSync(path.join(ROOT, js), 'utf8')).join('\n;\n');
   const inline = [...d.querySelectorAll('script:not([src])')].map(s => s.textContent).join(';\n');
 
-  /* Page flow: hero → info band → support (mist) → CTA band. */
+  /* Page flow: hero → info band → support (mist) → supporters & partners
+     (white) → give (mist) → CTA band. */
   const sections = [...d.querySelectorAll('main > section')];
-  ok(sections.length === 4, `contact page has four bands (found ${sections.length})`);
-  ok(sections.findIndex(s => s.id === 'support') === 2,
-     'Support the Work sits directly below the info band');
+  ok(sections.length === 6, `contact page has six bands (found ${sections.length})`);
+  ok(sections.findIndex(s => s.id === 'support') === 2 &&
+     sections.findIndex(s => s.id === 'community') === 3 &&
+     sections.findIndex(s => s.id === 'give') === 4,
+     'band order: support → supporters & partners → give');
   ok(d.querySelector('#support').classList.contains('section--mist'),
      'support section uses the mist band');
   ok(d.querySelector('#support .section-head h2').textContent.trim() === 'Support the Work',
@@ -397,10 +400,38 @@ console.log('\n[support the work]');
   ok(yt && !yt.hidden && yt.href === 'https://youtube.com/@gyco_wawy' &&
      yt.target === '_blank' && yt.rel === 'noopener', 'Spread the Word: YouTube button live (new tab, noopener)');
 
-  /* Closing callout. */
-  const co = d.querySelector('#support .support-callout');
+  /* Supporters & Partners (config + partners.js driven, wired by the eval). */
+  ok(d.querySelector('#community .section-head h2').textContent.trim() === 'Supporters & Partners',
+     'community section headed "Supporters & Partners"');
+  const labels = [...d.querySelectorAll('#community .community-label')].map(h => h.textContent.trim());
+  ok(JSON.stringify(labels) === JSON.stringify(['Community Supporters', 'Community Partners']),
+     'supporters and partners sub-blocks in order');
+  const ph = d.querySelector('#supporter-logos .photo-placeholder p');
+  ok(ph && ph.textContent.length >= 60 && /SITE\.community\.supporters/.test(ph.textContent),
+     'supporter row shows the labeled placeholder while the config list is empty');
+  const chips = [...d.querySelectorAll('#partner-logos a')];
+  ok(chips.length === 6 && chips.every(a => /^partner\.html\?p=/.test(a.getAttribute('href'))),
+     'partner row renders all six community logos, each linking to its partner page');
+  ok(chips.some(a => a.querySelector('img') && a.querySelector('img').getAttribute('src') === 'assets/logos/schools-global.png'),
+     'partner row includes the Schools & Global globe mark');
+
+  /* Give to WAWY (config-driven Zelle line + receipt fallback). */
+  const za = d.querySelector('#give-zelle-address'), zm = d.querySelector('#give-zelle-memo');
+  ok(za && za.textContent === 'gycodonation@gmail.com' && zm && zm.textContent === 'WAWY',
+     'Give to WAWY: Zelle address and memo come from SITE.donation');
+  const rb = d.querySelector('#give [data-form="donationReceipt"]');
+  ok(rb && rb.getAttribute('href') === 'mailto:gycodonation@gmail.com?subject=' + encodeURIComponent('Donation receipt request'),
+     'receipt button: no form yet → mailto to the DONATION inbox, not the general one');
+  ok(rb && !rb.classList.contains('btn--disabled') &&
+     !(rb.nextElementSibling && rb.nextElementSibling.classList.contains('form-soon')),
+     'receipt button never shows as disabled/coming-soon');
+  ok(/Donation receipts are available/.test(d.querySelector('#give .give-receipt').textContent),
+     'give panel says receipts are available');
+
+  /* Closing callout — now closes the give band, last light element on the page. */
+  const co = d.querySelector('#give .support-callout');
   ok(co && co.querySelector('h3').textContent.trim() === 'Have another idea?',
-     'support section closes with the "Have another idea?" callout');
+     'the "Have another idea?" callout closes the page before the CTA band');
   ok(co && co.querySelector('[data-form="generalSupport"]').textContent.trim() === 'Contact GYCO',
      'callout button says Contact GYCO and reaches the inbox');
 
@@ -844,8 +875,9 @@ console.log('\n[word budgets]');
     ['media.html', 420],
     ['hope-capsule.html', 300],
     ['one-message-for-you.html', 260],
-    ['contact.html', 350],            // Aug 2026: request rows moved off; the
-                                      // page is now "Support the Work" + callout
+    ['contact.html', 440],            // Aug 2026: the support page — Support the
+                                      // Work cards + Supporters & Partners +
+                                      // Give to WAWY + callout
     ['our-philosophy.html', 900],     // raised Aug 2026: continuity section
   ]) {
     const n = visibleWords(file);
