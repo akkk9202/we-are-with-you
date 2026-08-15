@@ -27,7 +27,8 @@ Site-wide settings: contact, forms, navigation, homepage images, featured press.
 | Official email | `SITE.email` | `REPLACE_ME@example.com` → renders as "Email coming soon" fallback |
 | Instagram / YouTube links | `SITE.instagram`, `SITE.youtube` | Leave `""` to hide the icon |
 | Location text | `SITE.location` | Currently "Georgia, United States" |
-| A Google Form link | `SITE.forms.<key>` | Keys: `studentApplication`, `partnerInquiry`, `songRequest`, `letterSubmission`, `hopeCapsule`, `teachingVideoRequest` |
+| A Google Form link | `SITE.forms.<key>` | Keys: `studentApplication`, `partnerInquiry`, `songRequest`, `letterSubmission`, `hopeCapsule`, `teachingVideoRequest` — plus the support keys (`supportProject`, …, `donationReceipt`) and the fundraising keys `cardSponsorship`, `videoRequest` |
+| Support Us suggested contributions / video inbox | `SITE.fundraising` | `cardSuggested` / `videoSuggested` (full sentence; `""` hides the line) · `videoInbox` (`""` = `SITE.email`) |
 | Navigation items / order / labels | `SITE.nav` | Array order = display order (Philosophy sits between Media and Contact). Don't change hrefs targeted by redirects |
 | The "Programs" CTA / Contact button | `SITE.nav` entry with `cta: true` | |
 | "You are invited" card image (One Message page) | `SITE.home.invitation` | `src` + `alt`. Overwrite `assets/images/home-invitation.jpg` or repoint `src` |
@@ -108,7 +109,8 @@ alongside them as history is collected. The renderer is `js/archive-ui.js`
 
 Builds the nav + footer, and renders the homepage poster / brochures / community logo strip and each
 partner page from the data files. Also home to the safety helpers (e.g. `safeUrl()` for config-supplied links, the `?p=` slug
-lookup). **Touching this is high-risk** — re-run the full regression gate *and*
+lookup) and the `REL` prefix that lets pages one folder down (fundraising/) reuse the same engine
+with correct `../` links. **Touching this is high-risk** — re-run the full regression gate *and*
 `directives/security_check_before_deploy.md` afterward. Most tasks never need to edit it.
 
 ---
@@ -128,7 +130,9 @@ data-driven.
 | `media.html` | Media + featured press |
 | `join.html` | *Excluded for now* — redirect stub → contact; full page saved in `context/excluded/` |
 | `student-community.html`, `gyco.html`, `about-gyco.html` | GYCO / community (about.html is now a redirect stub → index.html) |
-| `contact.html` | Contact — info band + Support the Work (six ways-to-help cards) + Community Partners logo row (auto from partners.js) + Give to WAWY (`SITE.donation`) + "Have another idea?" callout. Request buttons live on the GYCO/partner/OMFY/Hope Capsule pages |
+| `contact.html` | Contact — info band + Support the Work (six ways-to-help cards + "Have another idea?" callout + pointer to Support Us) + Community Partners logo row (auto from partners.js). Request buttons live on the GYCO/partner/OMFY/Hope Capsule pages; Give to WAWY moved to `fundraising/` |
+| `fundraising/index.html` | Support Us — "Share the Care in Your Own Way": WAWY Card Sponsorships (`forms.cardSponsorship`; card images = `SITE.home.brochures`) + Personalized Videos (occasion tiles → the request form) + Give to WAWY (`SITE.donation` Zelle panel + `forms.donationReceipt`). Suggested-contribution lines appear once `SITE.fundraising.cardSuggested`/`videoSuggested` are set |
+| `fundraising/video-request.html` | Personalized-video request form — built-in form emails the request (`SITE.fundraising.videoInbox`, else `SITE.email`); flips to a Google Form when `forms.videoRequest` is pasted. Privacy: videos are delivered privately, never auto-posted |
 | `404.html` | Not-found page |
 | `voices-of-love.html`, `taps-of-love.html`, `we-are-with-you.html`, `beat-and-breeze.html`, `winds-of-love.html` | **Redirect stubs** — forward retired URLs to current pages. Don't delete; don't change their internal targets |
 

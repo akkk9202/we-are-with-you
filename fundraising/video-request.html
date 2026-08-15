@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Request a Personalized Video | WE ARE WITH YOU</title>
+  <meta name="description" content="Request a personalized WAWY video for someone you care about — made by WAWY students, delivered privately to you." />
+  <meta property="og:title" content="Request a Personalized Video — WE ARE WITH YOU" />
+  <meta property="og:description" content="A message made for someone special." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://akkk9202.github.io/we-are-with-you/fundraising/video-request.html" />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav"></div>
+
+<main id="main">
+
+<section class="page-hero">
+  <div class="container">
+    <h1>Request a Personalized Video</h1>
+    <p class="page-hero__sub">Tell us about the person and the moment — WAWY students will take it from there. Your request supports WAWY's student-led programs.</p>
+  </div>
+</section>
+
+<section class="section section--mist">
+  <div class="container">
+    <p class="form-back"><a href="index.html">← All ways to support WAWY</a></p>
+
+    <!-- Shown instead of the built-in form once a Google Form URL is
+         pasted into SITE.forms.videoRequest (js/config.js). -->
+    <div class="request-form request-form--live" id="form-live" hidden>
+      <h2>The request form is ready</h2>
+      <p>We collect video requests through a short form — it takes about five minutes.</p>
+      <a class="btn btn--gold" data-form="videoRequest" data-mailto-subject="Personalized video request" href="../contact.html">Open the request form</a>
+    </div>
+
+    <form class="request-form" id="video-request-form" novalidate="">
+      <noscript><p class="form-note">This page works best with JavaScript on. Without it, please email us your request instead — our address is on the <a href="../contact.html">contact page</a>.</p></noscript>
+
+      <fieldset>
+        <legend>Your Information</legend>
+        <div class="form-row form-row--2">
+          <p class="form-field">
+            <label for="vr-name">Your name</label>
+            <input id="vr-name" name="name" type="text" autocomplete="name" required maxlength="80" />
+          </p>
+          <p class="form-field">
+            <label for="vr-email">Your email</label>
+            <input id="vr-email" name="email" type="email" autocomplete="email" required maxlength="120" />
+          </p>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>About the Recipient</legend>
+        <div class="form-row form-row--2">
+          <p class="form-field">
+            <label for="vr-recipient">Recipient's first name</label>
+            <input id="vr-recipient" name="recipient" type="text" required maxlength="60" />
+          </p>
+          <p class="form-field">
+            <label for="vr-pronunciation">Pronunciation of their name <span class="form-optional">(optional)</span></label>
+            <input id="vr-pronunciation" name="pronunciation" type="text" maxlength="80" placeholder="e.g. Shawn, not Seen" />
+          </p>
+        </div>
+        <p class="form-field">
+          <label for="vr-occasion">Occasion</label>
+          <select id="vr-occasion" name="occasion" required>
+            <option value="" selected disabled>Choose an occasion…</option>
+            <option>Birthday</option>
+            <option>Congratulations</option>
+            <option>Get Well Soon</option>
+            <option>Thank You</option>
+            <option>Encouragement</option>
+            <option>Holiday</option>
+            <option>Other</option>
+          </select>
+        </p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Video Details</legend>
+        <p class="form-field">
+          <label for="vr-say">What would you like us to say?</label>
+          <textarea id="vr-say" name="say" rows="4" required maxlength="400"></textarea>
+          <span class="char-count" data-count-for="vr-say" aria-live="polite"></span>
+        </p>
+        <p class="form-field">
+          <label for="vr-about">Anything you would like us to know about the recipient? <span class="form-optional">(optional)</span></label>
+          <textarea id="vr-about" name="about" rows="3" maxlength="400"></textarea>
+          <span class="char-count" data-count-for="vr-about" aria-live="polite"></span>
+        </p>
+        <div class="form-row form-row--2">
+          <p class="form-field">
+            <label for="vr-song">Preferred song <span class="form-optional">(optional)</span></label>
+            <input id="vr-song" name="song" type="text" maxlength="120" />
+          </p>
+          <p class="form-field">
+            <label for="vr-date">Requested date</label>
+            <input id="vr-date" name="date" type="date" required />
+            <span class="form-hint">When should the video be ready?</span>
+          </p>
+        </div>
+        <p class="form-field">
+          <label for="vr-notes">Additional notes <span class="form-optional">(optional)</span></label>
+          <textarea id="vr-notes" name="notes" rows="2" maxlength="200"></textarea>
+          <span class="char-count" data-count-for="vr-notes" aria-live="polite"></span>
+        </p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Privacy</legend>
+        <p class="form-check">
+          <input id="vr-privacy" name="privacy" type="checkbox" required />
+          <label for="vr-privacy">I understand that the information I provide will be used by WAWY students and organizers to prepare this requested video.</label>
+        </p>
+        <p class="form-privacy">Your video is delivered privately to you. We do not post personalized videos to our website, YouTube, Instagram, or social media — if we would ever like to share one publicly, we will ask for your permission first, separately.</p>
+      </fieldset>
+
+      <div class="form-actions">
+        <button class="btn btn--gold" type="submit">Send my request</button>
+        <p class="form-note">Sending opens your email app with the request written out for you — nothing is sent until you press Send there.</p>
+      </div>
+
+      <div class="form-after" id="form-after" hidden>
+        <p>If your email app didn't open, you can copy the request and paste it into an email to <strong id="form-after-address"></strong>.</p>
+        <button class="btn btn--ink btn--sm" type="button" id="copy-request">Copy my request</button>
+        <textarea id="copy-fallback" class="copy-fallback" rows="8" readonly hidden aria-label="Your composed request — copy this text"></textarea>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="section section--dark cta-band">
+  <div class="container">
+    <h2>Even Here. Even Now. WE ARE WITH YOU.</h2>
+  </div>
+</section>
+
+</main>
+<div id="site-footer"></div>
+<script src="../js/config.js"></script>
+<script src="../js/partners.js"></script>
+<script src="../js/i18n.js"></script>
+<script src="../js/site.js"></script>
+<script>
+  (function () {
+    const form = document.getElementById('video-request-form');
+
+    // ── Google Form flip ──────────────────────────────────
+    // Once SITE.forms.videoRequest holds a real URL, the built-in
+    // form steps aside for it (same config-flip as everywhere else).
+    const liveUrl = SITE.forms && SITE.forms.videoRequest;
+    if (liveUrl && !liveUrl.startsWith('REPLACE_ME')) {
+      document.getElementById('form-live').hidden = false;
+      form.hidden = true;
+    }
+
+    // ── Occasion preselect (?occasion=… from the fundraising page) ──
+    // Whitelist only — the query value is matched against known keys
+    // and never written into the page.
+    const OCCASIONS = {
+      'birthday': 'Birthday', 'congratulations': 'Congratulations',
+      'get-well': 'Get Well Soon', 'thank-you': 'Thank You',
+      'encouragement': 'Encouragement', 'holiday': 'Holiday',
+      'thinking-of-you': 'Other', 'custom': 'Other',
+    };
+    const wanted = OCCASIONS[new URLSearchParams(location.search).get('occasion')];
+    if (wanted) document.getElementById('vr-occasion').value = wanted;
+
+    // ── Requested date can't be in the past ───────────────
+    const dateEl = document.getElementById('vr-date');
+    const today = new Date();
+    dateEl.min = [today.getFullYear(),
+      String(today.getMonth() + 1).padStart(2, '0'),
+      String(today.getDate()).padStart(2, '0')].join('-');
+
+    // ── Character counters ────────────────────────────────
+    document.querySelectorAll('.char-count[data-count-for]').forEach(c => {
+      const field = document.getElementById(c.dataset.countFor);
+      const update = () => { c.textContent = field.value.length + ' / ' + field.maxLength; };
+      field.addEventListener('input', update); update();
+    });
+
+    // ── Compose the request as a plain-text email ─────────
+    const inbox = () =>
+      (SITE.fundraising && SITE.fundraising.videoInbox) || SITE.email;
+    const v = (id) => document.getElementById(id).value.trim();
+    const line = (label, val) => label + ': ' + (val || '—');
+    const composeBody = () => [
+      'PERSONALIZED VIDEO REQUEST',
+      '',
+      line('From', v('vr-name') + ' (' + v('vr-email') + ')'),
+      '',
+      line('Recipient', v('vr-recipient')),
+      line('Pronunciation', v('vr-pronunciation')),
+      line('Occasion', v('vr-occasion')),
+      line('Requested date', v('vr-date')),
+      '',
+      'What to say:',
+      v('vr-say'),
+      '',
+      'About the recipient:',
+      v('vr-about') || '—',
+      '',
+      line('Preferred song', v('vr-song')),
+      '',
+      'Notes:',
+      v('vr-notes') || '—',
+      '',
+      'Privacy: I understand that the information I provide will be used by',
+      'WAWY students and organizers to prepare this requested video.',
+    ].join('\n');
+    const composeSubject = () =>
+      'Personalized video request — ' + v('vr-occasion') + ' for ' + v('vr-recipient');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      location.href = 'mailto:' + inbox() +
+        '?subject=' + encodeURIComponent(composeSubject()) +
+        '&body=' + encodeURIComponent(composeBody());
+      document.getElementById('form-after-address').textContent = inbox();
+      document.getElementById('form-after').hidden = false;
+    });
+
+    // ── "Copy my request" backup for visitors without a mail app ──
+    document.getElementById('copy-request').addEventListener('click', () => {
+      const text = 'To: ' + inbox() + '\nSubject: ' + composeSubject() +
+        '\n\n' + composeBody();
+      const btn = document.getElementById('copy-request');
+      const done = () => { btn.textContent = 'Copied — paste it into an email'; };
+      const fallback = () => {
+        const t = document.getElementById('copy-fallback');
+        t.value = text; t.hidden = false; t.focus(); t.select();
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+    });
+  })();
+</script>
+</body>
+</html>

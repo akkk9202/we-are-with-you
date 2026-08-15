@@ -83,6 +83,14 @@
         </div>
       </div>
     </div>
+    <p class="give-more">Looking to give? Donations, WAWY Card Sponsorships, and personalized videos all live on our <a href="fundraising/index.html">Support Us page</a>.</p>
+    <div class="support-callout">
+      <div>
+        <h3>Have another idea?</h3>
+        <p>If you have another way you would like to support, collaborate with, or contribute to GYCO, we would love to hear from you.</p>
+      </div>
+      <a class="btn btn--ink btn--sm" data-form="generalSupport" data-mailto-subject="Supporting GYCO" href="contact.html">Contact GYCO</a>
+    </div>
   </div>
 </section>
 
@@ -93,29 +101,6 @@
       <p>Hospitals, senior communities, and organizations that collaborate with WAWY to bring our programs to the people they serve.</p>
     </div>
     <div class="logo-row" id="partner-logos"></div>
-  </div>
-</section>
-
-<section class="section section--mist section--tight" id="give">
-  <div class="container">
-    <div class="section-head">
-      <h2>Give to WAWY</h2>
-      <p>Your donation directly supports WAWY projects, including care kits, educational videos, and community-based programs.</p>
-    </div>
-    <div class="give-panel">
-      <p class="give-zelle"><span class="give-label">Zelle</span><strong id="give-zelle-address"></strong><span class="give-memo"> · Memo: <strong id="give-zelle-memo"></strong></span></p>
-      <div class="give-receipt">
-        <span>Donation receipts are available.</span>
-        <a class="btn btn--ink btn--sm" data-form="donationReceipt" data-mailto-subject="Donation receipt request" href="contact.html">Request a donation receipt</a>
-      </div>
-    </div>
-    <div class="support-callout">
-      <div>
-        <h3>Have another idea?</h3>
-        <p>If you have another way you would like to support, collaborate with, or contribute to GYCO, we would love to hear from you.</p>
-      </div>
-      <a class="btn btn--ink btn--sm" data-form="generalSupport" data-mailto-subject="Supporting GYCO" href="contact.html">Contact GYCO</a>
-    </div>
   </div>
 </section>
 
@@ -147,17 +132,7 @@
     // Community partners — the six community logos from js/partners.js
     document.getElementById('partner-logos').innerHTML = pathwayList().map(p =>
       `<a href="partner.html?p=${p.slug}" title="${p.name}">${logoChip(p)}</a>`).join('');
-    // Give to WAWY (config-driven). While the receipt form is still a
-    // placeholder, point its mailto fallback at the donation inbox.
-    if (SITE.donation) {
-      document.getElementById('give-zelle-address').textContent = SITE.donation.zelle;
-      document.getElementById('give-zelle-memo').textContent = SITE.donation.memo;
-      const rb = document.querySelector('[data-form="donationReceipt"]');
-      const href = rb && rb.getAttribute('href');
-      if (href && href.startsWith('mailto:')) {
-        rb.setAttribute('href', 'mailto:' + SITE.donation.zelle + '?subject=' + encodeURIComponent(rb.dataset.mailtoSubject));
-      }
-    }
+    // Give to WAWY now lives on the Fundraising page (fundraising/).
   })();
 </script>
 </body>

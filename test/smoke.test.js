@@ -30,7 +30,8 @@ function loadPage(file, url) {
 /* All public pages (portal + admin excluded — they have their own tests). */
 const PUBLIC_PAGES = ['index.html', 'student-community.html', 'media.html',
   'one-message-for-you.html', 'hope-capsule.html', 'contact.html',
-  'our-philosophy.html', 'partner.html', '404.html'];
+  'our-philosophy.html', 'partner.html', '404.html',
+  'fundraising/index.html', 'fundraising/video-request.html'];
 /* learning.html (NADO School) and join.html (Join Us) are excluded for now —
    both are redirect stubs; the full pages live in context/excluded/. */
 
@@ -340,13 +341,14 @@ console.log('\n[support the work]');
   const inline = [...d.querySelectorAll('script:not([src])')].map(s => s.textContent).join(';\n');
 
   /* Page flow: hero → info band → support (mist) → community partners
-     (white) → give (mist) → CTA band. */
+     (white) → CTA band. Give to WAWY moved to the Support Us page (Aug 15). */
   const sections = [...d.querySelectorAll('main > section')];
-  ok(sections.length === 6, `contact page has six bands (found ${sections.length})`);
+  ok(sections.length === 5, `contact page has five bands (found ${sections.length})`);
   ok(sections.findIndex(s => s.id === 'support') === 2 &&
-     sections.findIndex(s => s.id === 'community') === 3 &&
-     sections.findIndex(s => s.id === 'give') === 4,
-     'band order: support → community partners → give');
+     sections.findIndex(s => s.id === 'community') === 3,
+     'band order: support → community partners');
+  ok(!d.getElementById('give') && ![...d.querySelectorAll('h2')].some(h => /Give to WAWY/.test(h.textContent)),
+     'no Give to WAWY band here anymore — it lives on the Support Us page');
   ok(d.querySelector('#support').classList.contains('section--mist'),
      'support section uses the mist band');
   ok(d.querySelector('#support .section-head h2').textContent.trim() === 'Support the Work',
@@ -411,23 +413,14 @@ console.log('\n[support the work]');
   ok(chips.some(a => a.querySelector('img') && a.querySelector('img').getAttribute('src') === 'assets/logos/schools-global.png'),
      'partner row includes the Schools & Global globe mark');
 
-  /* Give to WAWY (config-driven Zelle line + receipt fallback). */
-  const za = d.querySelector('#give-zelle-address'), zm = d.querySelector('#give-zelle-memo');
-  ok(za && za.textContent === 'gycodonation@gmail.com' && zm && zm.textContent === 'WAWY',
-     'Give to WAWY: Zelle address and memo come from SITE.donation');
-  const rb = d.querySelector('#give [data-form="donationReceipt"]');
-  ok(rb && rb.getAttribute('href') === 'mailto:gycodonation@gmail.com?subject=' + encodeURIComponent('Donation receipt request'),
-     'receipt button: no form yet → mailto to the DONATION inbox, not the general one');
-  ok(rb && !rb.classList.contains('btn--disabled') &&
-     !(rb.nextElementSibling && rb.nextElementSibling.classList.contains('form-soon')),
-     'receipt button never shows as disabled/coming-soon');
-  ok(/Donation receipts are available/.test(d.querySelector('#give .give-receipt').textContent),
-     'give panel says receipts are available');
-
-  /* Closing callout — now closes the give band, last light element on the page. */
-  const co = d.querySelector('#give .support-callout');
+  /* Pointer to the Support Us page + closing callout end the support band. */
+  const more = d.querySelector('#support .give-more a');
+  ok(more && more.getAttribute('href') === 'fundraising/index.html' &&
+     /Support Us page/.test(d.querySelector('#support .give-more').textContent),
+     'support band points donors to the Support Us page');
+  const co = d.querySelector('#support .support-callout');
   ok(co && co.querySelector('h3').textContent.trim() === 'Have another idea?',
-     'the "Have another idea?" callout closes the page before the CTA band');
+     'the "Have another idea?" callout closes the support band');
   ok(co && co.querySelector('[data-form="generalSupport"]').textContent.trim() === 'Contact GYCO',
      'callout button says Contact GYCO and reaches the inbox');
 
@@ -875,6 +868,8 @@ console.log('\n[word budgets]');
                                       // Work cards + Community Partners +
                                       // Give to WAWY + callout
     ['our-philosophy.html', 900],     // raised Aug 2026: continuity section
+    ['fundraising/index.html', 320],  // Aug 2026: cards + personalized videos
+    ['fundraising/video-request.html', 320], // form labels/hints + privacy note
   ]) {
     const n = visibleWords(file);
     ok(n <= cap, `${file} stays compact: ${n} words (budget ${cap})`);
@@ -946,6 +941,251 @@ console.log('\n[redirect stubs & slugs]');
   const partnersSrc = fs.readFileSync(path.join(ROOT, 'js/partners.js'), 'utf8');
   for (const slug of ['cancer-care', 'ronald-mcdonald-house', 'nicu', 'senior-living', 'disability', 'schools-global']) {
     ok(partnersSrc.includes(`"${slug}"`), `partner slug "${slug}" unchanged (QR codes safe)`);
+  }
+}
+
+/* ── 12. FUNDRAISING — cards + personalized videos (v10, Aug 2026) ── */
+/* Pages in fundraising/ load site.js as "../js/site.js", so nav, footer,
+   and config-driven images must all be REL-prefixed. Their inline
+   scripts reference SITE lexically, so they run inside the same eval
+   as the bundle (same trap as the contact/YouTube blocks). `setup`
+   is injected AFTER config.js but BEFORE site.js, to simulate values
+   pasted into the config (form URLs flip at wireForms time). */
+function loadSub(file, url, setup = '') {
+  const html = fs.readFileSync(path.join(ROOT, file), 'utf8');
+  const dom = new JSDOM(html, { url, runScripts: 'outside-only' });
+  const w = dom.window;
+  w.IntersectionObserver = class {
+    constructor(cb) { this.cb = cb; }
+    observe() {} unobserve() {} disconnect() {}
+  };
+  const inline = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]).join('\n;\n');
+  const read = (f) => fs.readFileSync(path.join(ROOT, f), 'utf8');
+  w.eval([read('js/config.js'), read('js/partners.js'), setup,
+          read('js/site.js'), inline].join('\n;\n'));
+  return dom;
+}
+
+console.log('\n[fundraising/index.html]');
+{
+  const dom = loadSub('fundraising/index.html', 'https://x.test/fundraising/index.html');
+  const d = dom.window.document;
+  const text = d.body.textContent;
+
+  /* nav + footer from one folder down: every internal link REL-prefixed */
+  ok(d.querySelector('.nav__logo').getAttribute('href') === '../index.html',
+     'nav brand links up to ../index.html');
+  const fundTab = [...d.querySelectorAll('.nav__links > li > a')].find(a => a.textContent.trim() === 'Support Us');
+  ok(fundTab && fundTab.getAttribute('href') === '../fundraising/index.html' && fundTab.classList.contains('active'),
+     '"Support Us" nav tab exists, is REL-prefixed, and is active here');
+  const contactTab = [...d.querySelectorAll('.nav__links a')].find(a => a.textContent.trim() === 'Contact');
+  ok(contactTab && contactTab.getAttribute('href') === '../contact.html', 'Contact tab → ../contact.html');
+  ok([...d.querySelectorAll('.nav__dropdown a')].every(a => a.getAttribute('href').startsWith('../community/')),
+     'portal dropdown links climb out of the subfolder');
+  ok([...d.querySelectorAll('.footer a[href*="partner.html"]')].every(a => a.getAttribute('href').startsWith('../partner.html?p=')),
+     'footer partner links are REL-prefixed');
+
+  /* hero — the required "both ways" introduction near the beginning */
+  ok(d.querySelector('h1').textContent.trim() === 'Share the Care in Your Own Way',
+     'hero h1 is "Share the Care in Your Own Way"');
+  const ways = [...d.querySelectorAll('.ways .card')];
+  ok(ways.length === 2, 'two ways-to-participate tiles (side by side / stacked via .cards--2)');
+  ok(ways[0].querySelector('h3').textContent === 'WAWY Cards' &&
+     ways[0].textContent.includes('Share encouragement through thoughtfully designed cards.'),
+     'WAWY Cards tile carries its exact line');
+  const exploreBtn = ways[0].querySelector('a.btn');
+  ok(exploreBtn.textContent.trim() === 'Explore Card Sponsorships' && exploreBtn.getAttribute('href') === '#cards',
+     '"Explore Card Sponsorships" button → #cards');
+  ok(ways[1].querySelector('h3').textContent === 'Personalized Videos' &&
+     ways[1].textContent.includes('Let WAWY students create a special message for someone in your life.'),
+     'Personalized Videos tile carries its exact line');
+  const reqBtn = ways[1].querySelector('a.btn');
+  ok(reqBtn.textContent.trim() === 'Request a Video' && reqBtn.getAttribute('href') === 'video-request.html',
+     '"Request a Video" button → video-request.html');
+
+  /* card sponsorships */
+  const cards = d.getElementById('cards');
+  ok(cards && cards.querySelector('h2').textContent === 'WAWY Card Sponsorships',
+     '#cards section: "WAWY Card Sponsorships"');
+  const sponsor = cards.querySelector('[data-form="cardSponsorship"]');
+  ok(sponsor && sponsor.getAttribute('href').startsWith('mailto:gyco23@gmail.com?subject='),
+     'sponsor button falls back to a live mailto while the form key is a placeholder');
+  const broch = [...cards.querySelectorAll('.brochure img')];
+  ok(broch.length === 2 && broch.every(i => i.getAttribute('src').startsWith('../assets/images/brochure-')),
+     'printed-card duo renders from config with ../ asset paths');
+
+  /* personalized videos */
+  const vids = d.getElementById('videos');
+  ok(vids.querySelector('.eyebrow').textContent.trim() === 'Personalized Video Sponsorship',
+     'videos eyebrow reads "Personalized Video Sponsorship" (fundraising framing, no price)');
+  ok(vids.querySelector('h2').textContent.trim() === 'A Message Made for Someone Special',
+     'videos h2: "A Message Made for Someone Special"');
+  ok(vids.textContent.includes('Request a personalized WAWY video for someone you care about.'),
+     'videos subheading present verbatim');
+  ok(vids.textContent.includes('WAWY students can create a short personalized video for birthdays, celebrations, encouragement, gratitude, and other meaningful moments.') &&
+     vids.textContent.includes("Your request helps us share something personal with someone you care about while supporting WAWY's broader mission."),
+     'both body sentences present verbatim');
+  ok(vids.textContent.includes('Support WAWY while creating a meaningful message for someone special.'),
+     'the support-WAWY line leads into the CTA');
+
+  const chips = [...vids.querySelectorAll('.occasion')];
+  ok(JSON.stringify(chips.map(c => c.textContent.trim())) === JSON.stringify([
+    'Happy Birthday', 'Congratulations', 'Get Well Soon', 'Thinking of You',
+    'Thank You', 'Holiday Greeting', 'Encouragement', 'Custom Message']),
+     'the eight occasion options, in order');
+  ok(chips.every(c => c.querySelector('svg')), 'every occasion chip has its warm line icon');
+  ok(chips.every(c => /^video-request\.html\?occasion=[a-z-]+$/.test(c.getAttribute('href'))),
+     'every chip preselects the form via a clean ?occasion= key');
+  /* every chip key must be understood by the form's whitelist */
+  const formSrc = fs.readFileSync(path.join(ROOT, 'fundraising/video-request.html'), 'utf8');
+  const chipKeys = chips.map(c => c.getAttribute('href').split('=')[1]);
+  ok(chipKeys.every(k => formSrc.includes(`'${k}':`)),
+     'every chip occasion key is in the form page\'s whitelist');
+
+  const cta = vids.querySelector('.fund-cta a.btn');
+  ok(cta.textContent.trim() === 'Request a Personalized Video' && cta.getAttribute('href') === 'video-request.html',
+     '"Request a Personalized Video" CTA → the request form page');
+  ok(vids.textContent.includes('delivered privately'), 'private-delivery note on the page');
+
+  /* fundraising framing — no ecommerce/Cameo phrasing anywhere */
+  ok(!/buy|price|\$|per video|add to cart|order now|shop/i.test(text),
+     'no commercial phrasing: no "buy", no prices, no cart');
+  /* suggested-contribution slots exist but stay hidden until priced */
+  ok([...d.querySelectorAll('.fund-suggested')].length === 2 &&
+     [...d.querySelectorAll('.fund-suggested')].every(el => el.hidden),
+     'suggested-contribution slots exist for later, hidden while unset');
+  /* …and flip on when a value is written into config */
+  const dom2 = loadSub('fundraising/index.html', 'https://x.test/fundraising/index.html',
+    'SITE.fundraising.videoSuggested = "Suggested contribution: $25";');
+  const sugg = [...dom2.window.document.querySelectorAll('[data-fund-suggested="videoSuggested"]')][0];
+  ok(!sugg.hidden && sugg.textContent === 'Suggested contribution: $25',
+     'writing SITE.fundraising.videoSuggested reveals the line (UI ready for pricing later)');
+
+  /* Give to WAWY band (moved here from contact, Aug 15) + slogan */
+  const give = d.getElementById('give');
+  ok(give && give.classList.contains('section--mist') &&
+     give.querySelector('h2').textContent.trim() === 'Give to WAWY',
+     'Give to WAWY band lives here now (mist, before the CTA band)');
+  const za = d.getElementById('give-zelle-address'), zm = d.getElementById('give-zelle-memo');
+  ok(za && za.textContent === 'gycodonation@gmail.com' && zm && zm.textContent === 'WAWY',
+     'Zelle address and memo come from SITE.donation');
+  const rb = give.querySelector('[data-form="donationReceipt"]');
+  ok(rb && rb.getAttribute('href') === 'mailto:gycodonation@gmail.com?subject=' + encodeURIComponent('Donation receipt request'),
+     'receipt button: no form yet → mailto to the DONATION inbox, not the general one');
+  ok(rb && !rb.classList.contains('btn--disabled') &&
+     !(rb.nextElementSibling && rb.nextElementSibling.classList.contains('form-soon')),
+     'receipt button never shows as disabled/coming-soon');
+  ok(/Donation receipts are available/.test(give.querySelector('.give-receipt').textContent),
+     'give panel says receipts are available');
+  ok(d.querySelector('.cta-band h2').textContent.includes('WE ARE WITH YOU'), 'CTA band slogan present');
+
+  /* discovery: nav config + contact page both reach the new page */
+  ok(SITEsrc().includes('"Support Us"'), 'config nav includes the Support Us tab');
+  const contactSrc = fs.readFileSync(path.join(ROOT, 'contact.html'), 'utf8');
+  ok(contactSrc.includes('fundraising/index.html'), 'contact support band links to the Support Us page');
+
+  function SITEsrc() { return fs.readFileSync(path.join(ROOT, 'js/config.js'), 'utf8'); }
+}
+
+console.log('\n[fundraising/video-request.html]');
+{
+  const URLBASE = 'https://x.test/fundraising/video-request.html';
+  const dom = loadSub('fundraising/video-request.html', URLBASE);
+  const d = dom.window.document;
+
+  /* nav still active on the section; back link climbs correctly */
+  const fundTab = [...d.querySelectorAll('.nav__links > li > a')].find(a => a.textContent.trim() === 'Support Us');
+  ok(fundTab && fundTab.classList.contains('active'), 'Support Us tab stays active on the form page');
+  ok(d.querySelector('.form-back a').getAttribute('href') === 'index.html', 'back link → the Fundraising page');
+
+  /* the exact fields the brief asks for, with sane character limits */
+  const req = (id) => d.getElementById(id).hasAttribute('required');
+  const max = (id) => d.getElementById(id).getAttribute('maxlength');
+  ok(req('vr-name') && max('vr-name') === '80', 'Your name: required, capped');
+  ok(req('vr-email') && d.getElementById('vr-email').type === 'email', 'Your email: required, type=email');
+  ok(req('vr-recipient') && max('vr-recipient') === '60', "Recipient's first name: required, capped");
+  ok(!req('vr-pronunciation'), 'pronunciation is optional');
+  ok(!req('vr-song') && max('vr-song') === '120', 'preferred song is optional');
+  ok(!req('vr-about') && !req('vr-notes'), 'about-recipient and notes are optional');
+  ok(req('vr-say') && max('vr-say') === '400', '"What would you like us to say?" required, 400 chars');
+  ok(max('vr-about') === '400' && max('vr-notes') === '200', 'textareas capped so requests stay manageable');
+  ok(d.getElementById('vr-date').type === 'date' && req('vr-date') &&
+     /^\d{4}-\d{2}-\d{2}$/.test(d.getElementById('vr-date').min),
+     'requested date: date input, required, min = today');
+  const opts = [...d.querySelectorAll('#vr-occasion option')].map(o => o.textContent.trim());
+  ok(JSON.stringify(opts.slice(1)) === JSON.stringify(
+    ['Birthday', 'Congratulations', 'Get Well Soon', 'Thank You', 'Encouragement', 'Holiday', 'Other']),
+     'occasion dropdown: the exact seven options');
+  ok(req('vr-occasion'), 'occasion is required');
+  const counters = [...d.querySelectorAll('.char-count')];
+  ok(counters.length === 3 && counters.every(c => /^0 \/ \d+$/.test(c.textContent)),
+     'live character counters on all three textareas');
+
+  /* privacy — the exact consent sentence, required; no auto-publishing */
+  const chk = d.getElementById('vr-privacy');
+  ok(chk && chk.type === 'checkbox' && chk.hasAttribute('required'), 'privacy checkbox is required');
+  ok(d.querySelector('label[for="vr-privacy"]').textContent.trim() ===
+     'I understand that the information I provide will be used by WAWY students and organizers to prepare this requested video.',
+     'privacy checkbox carries the exact consent sentence');
+  const priv = d.querySelector('.form-privacy').textContent;
+  ok(priv.includes('delivered privately') && priv.includes('YouTube') && priv.includes('Instagram') &&
+     priv.includes('social media') && priv.includes('permission first'),
+     'privacy note: private delivery, no site/YouTube/Instagram/social posting, separate permission');
+
+  /* occasion preselect is whitelist-only */
+  const pre = loadSub('fundraising/video-request.html', URLBASE + '?occasion=get-well');
+  ok(pre.window.document.getElementById('vr-occasion').value === 'Get Well Soon',
+     '?occasion=get-well preselects Get Well Soon');
+  const evil = loadSub('fundraising/video-request.html', URLBASE + '?occasion=%3Cscript%3E');
+  ok(evil.window.document.getElementById('vr-occasion').value === '' &&
+     !evil.window.document.body.innerHTML.includes('%3Cscript%3E'),
+     'unknown occasion values are ignored, never reflected');
+
+  /* the built-in form emails the request — prove the composed text */
+  {
+    const dom3 = loadSub('fundraising/video-request.html', URLBASE);
+    const d3 = dom3.window.document;
+    const set = (id, val) => { d3.getElementById(id).value = val; };
+    set('vr-name', 'Jane Doe'); set('vr-email', 'jane@example.com');
+    set('vr-recipient', 'Sean'); set('vr-pronunciation', 'Shawn');
+    d3.getElementById('vr-occasion').value = 'Birthday';
+    set('vr-say', 'Happy 80th birthday, Grandpa!');
+    set('vr-date', '2027-01-15');
+    d3.getElementById('copy-request').click(); // jsdom has no clipboard → textarea fallback
+    const composed = d3.getElementById('copy-fallback').value;
+    ok(!d3.getElementById('copy-fallback').hidden && composed.startsWith('To: gyco23@gmail.com'),
+       'copy fallback composes the request to the WAWY inbox');
+    ok(composed.includes('Subject: Personalized video request — Birthday for Sean'),
+       'composed subject names the occasion and recipient');
+    ok(composed.includes('Pronunciation: Shawn') && composed.includes('Happy 80th birthday, Grandpa!') &&
+       composed.includes('Requested date: 2027-01-15') && composed.includes('Preferred song: —'),
+       'composed body carries every field (with — for blanks)');
+    ok(composed.includes('I understand that the information I provide'),
+       'composed body restates the privacy consent');
+  }
+  /* …and the inbox can be re-pointed from config */
+  {
+    const dom4 = loadSub('fundraising/video-request.html', URLBASE,
+      'SITE.fundraising.videoInbox = "videos@example.org";');
+    const d4 = dom4.window.document;
+    d4.getElementById('copy-request').click();
+    ok(d4.getElementById('copy-fallback').value.startsWith('To: videos@example.org'),
+       'SITE.fundraising.videoInbox re-points where requests go');
+  }
+
+  /* config flip: paste a Google Form URL and the built-in form steps aside */
+  ok(!d.getElementById('video-request-form').hidden && d.getElementById('form-live').hidden,
+     'while forms.videoRequest is a placeholder, the built-in form is shown');
+  {
+    const dom5 = loadSub('fundraising/video-request.html', URLBASE,
+      'SITE.forms.videoRequest = "https://docs.google.com/forms/d/e/TEST/viewform";');
+    const d5 = dom5.window.document;
+    ok(d5.getElementById('video-request-form').hidden && !d5.getElementById('form-live').hidden,
+       'pasting a form URL flips the page to the Google Form panel');
+    const live = d5.querySelector('#form-live a[data-form="videoRequest"]');
+    ok(live.getAttribute('href') === 'https://docs.google.com/forms/d/e/TEST/viewform' &&
+       live.target === '_blank' && live.rel === 'noopener',
+       'the live button opens the pasted form in a new tab (noopener)');
   }
 }
 

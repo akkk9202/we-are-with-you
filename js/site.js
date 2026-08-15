@@ -22,6 +22,21 @@ const ringMark = (size) => `
 const safeUrl = (u) =>
   /^(https?:|mailto:|\/|#|[\w.-]+\.html)/i.test((u || '').trim()) ? u : '#';
 
+/* Root prefix for pages that live one folder down (e.g. fundraising/).
+   Derived from how the page loaded this very file: a page that says
+   <script src="../js/site.js"> is one level below the site root, so
+   every internal link and asset path gets "../" in front. Root pages
+   (src="js/site.js") get "" and behave exactly as before. */
+const REL = (() => {
+  const s = document.querySelector('script[src$="js/site.js"]');
+  const src = s ? s.getAttribute('src') : 'js/site.js';
+  return src.slice(0, src.lastIndexOf('js/site.js'));
+})();
+
+/* Prefix an internal root-relative href/src with REL. Absolute URLs,
+   mailto:, and in-page anchors pass through untouched. */
+const rel = (u) => /^(https?:|mailto:|\/|#)/i.test(u || '') ? u : REL + (u || '');
+
 /* All pathways from js/partners.js, sorted by their `order` field. */
 const pathwayList = () => (typeof PARTNERS === 'undefined') ? [] :
   Object.entries(PARTNERS)
@@ -41,7 +56,7 @@ const monogram = (name) => name
    to a clean monogram automatically so cards never look broken. */
 const logoChip = (p, extra = '') => `
   <span class="logo-chip ${extra}">
-    <img src="${p.logo}" alt="${p.logoAlt || p.name + ' logo'}" loading="lazy"
+    <img src="${rel(p.logo)}" alt="${p.logoAlt || p.name + ' logo'}" loading="lazy"
          onerror="this.parentElement.classList.add('logo-chip--missing');this.remove();">
     <span class="logo-chip__fallback" aria-hidden="true">${monogram(p.name)}</span>
   </span>`;
@@ -50,29 +65,37 @@ const logoChip = (p, extra = '') => `
 (function buildNav() {
   const mount = document.getElementById('site-nav');
   if (!mount || typeof SITE === 'undefined') return;
-  const current = (location.pathname.split('/').pop() || 'index.html') + location.search;
+  /* Current page, expressed relative to the site root (so a page in
+     fundraising/ knows it is "fundraising/…", not just its filename). */
+  const depth = (REL.match(/\.\.\//g) || []).length;
+  const segs = location.pathname.split('/');
+  const file = segs.pop() || 'index.html';
+  const dirs = segs.filter(Boolean);
+  const current = (depth ? dirs.slice(-depth).join('/') + '/' : '') + file + location.search;
 
   const links = SITE.nav.map(item => {
-    const isActive = current.startsWith(item.href.split('?')[0]) &&
+    const base = item.href.split('?')[0];
+    const isActive = (current.startsWith(base) ||
+        (base.endsWith('/index.html') && current.startsWith(base.slice(0, -'index.html'.length)))) &&
       (item.href !== 'index.html' || current.startsWith('index.html'));
     if (item.dropdown) {
       const items = item.dropdown === 'partners'
         ? pathwayList().map(p => ({ label: p.name, href: `partner.html?p=${p.slug}` }))
         : item.dropdown;
       const dd = items.map(d =>
-        `<li><a href="${d.href}">${d.label}</a></li>`).join('');
+        `<li><a href="${rel(d.href)}">${d.label}</a></li>`).join('');
       return `<li>
-        <a href="${item.href}" class="${isActive ? 'active' : ''}" aria-haspopup="true">${item.label} <span class="nav__caret">▾</span></a>
+        <a href="${rel(item.href)}" class="${isActive ? 'active' : ''}" aria-haspopup="true">${item.label} <span class="nav__caret">▾</span></a>
         <ul class="nav__dropdown">${dd}</ul>
       </li>`;
     }
     const cls = [item.cta ? 'btn btn--gold btn--sm nav__cta' : '', isActive && !item.cta ? 'active' : ''].join(' ').trim();
-    return `<li><a href="${item.href}" ${cls ? `class="${cls}"` : ''}>${item.label}</a></li>`;
+    return `<li><a href="${rel(item.href)}" ${cls ? `class="${cls}"` : ''}>${item.label}</a></li>`;
   }).join('');
 
   mount.outerHTML = `
   <nav class="nav" aria-label="Main navigation">
-    <a href="index.html" class="nav__logo">${ringMark(22)} ${SITE.name}</a>
+    <a href="${rel('index.html')}" class="nav__logo">${ringMark(22)} ${SITE.name}</a>
     <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -96,11 +119,11 @@ const logoChip = (p, extra = '') => `
   const mount = document.getElementById('site-footer');
   if (!mount || typeof SITE === 'undefined') return;
   const partnerLinks = pathwayList()
-    .map(p => `<li><a href="partner.html?p=${p.slug}">${p.name}</a></li>`).join('');
+    .map(p => `<li><a href="${rel(`partner.html?p=${p.slug}`)}">${p.name}</a></li>`).join('');
   const connect = [
     SITE.instagram ? `<li><a href="${safeUrl(SITE.instagram)}" target="_blank" rel="noopener">Instagram</a></li>` : '',
     SITE.youtube ? `<li><a href="${safeUrl(SITE.youtube)}" target="_blank" rel="noopener">YouTube</a></li>` : '',
-    `<li><a href="contact.html">Email us</a></li>`,
+    `<li><a href="${rel('contact.html')}">Email us</a></li>`,
   ].join('');
 
   mount.outerHTML = `
@@ -112,9 +135,9 @@ const logoChip = (p, extra = '') => `
       </div>
       <div class="footer__col"><h4>Communities</h4><ul>${partnerLinks}</ul></div>
       <div class="footer__col"><h4>About</h4><ul>
-        <li><a href="our-philosophy.html">Our Philosophy</a></li>
-        <li><a href="student-community.html">GYCO</a></li>
-        <li><a href="media.html">Media</a></li>
+        <li><a href="${rel('our-philosophy.html')}">Our Philosophy</a></li>
+        <li><a href="${rel('student-community.html')}">GYCO</a></li>
+        <li><a href="${rel('media.html')}">Media</a></li>
       </ul></div>
       <div class="footer__col"><h4>Connect</h4><ul>${connect}</ul></div>
     </div>
@@ -172,7 +195,7 @@ function wireFormButton(el) {
   const m = document.querySelector('[data-home-invitation]');
   if (!m || typeof SITE === 'undefined' || !SITE.home) return;
   const im = SITE.home.invitation;
-  m.innerHTML = `<img src="${im.src}" alt="${im.alt}">`;
+  m.innerHTML = `<img src="${rel(im.src)}" alt="${im.alt}">`;
 })();
 
 /* ── HOMEPAGE COMMUNITY POSTER ── */
@@ -184,7 +207,7 @@ function wireFormButton(el) {
   const p = SITE.home.poster;
   m.innerHTML = `
     <figure class="photo-figure photo-figure--poster">
-      <img src="${p.src}" alt="${p.alt}">
+      <img src="${rel(p.src)}" alt="${p.alt}">
       ${p.caption ? `<figcaption>${p.caption}</figcaption>` : ''}
     </figure>`;
 })();
@@ -200,9 +223,9 @@ function wireFormButton(el) {
   if (!m || typeof SITE === 'undefined' || !SITE.home || !SITE.home.brochures) return;
   m.classList.add('brochure-duo');
   m.innerHTML = SITE.home.brochures.map((b, i) => `
-    <a class="brochure" href="${b.src}" target="_blank" rel="noopener"
+    <a class="brochure" href="${rel(b.src)}" target="_blank" rel="noopener"
        aria-label="View full size: ${b.alt}">
-      <img src="${b.src}" alt="${b.alt}" loading="lazy"
+      <img src="${rel(b.src)}" alt="${b.alt}" loading="lazy"
            onerror="this.parentElement.classList.add('brochure--missing');this.parentElement.removeAttribute('href');this.parentElement.removeAttribute('target');this.remove();">
       <span class="brochure__fallback">
         <small>Brochure ${i + 1} — coming soon</small>
@@ -225,7 +248,7 @@ function wireFormButton(el) {
     const p = PARTNERS[c.slug];
     if (!p) return '';
     return `
-    <a class="logo-strip__item" href="partner.html?p=${c.slug}">
+    <a class="logo-strip__item" href="${rel(`partner.html?p=${c.slug}`)}">
       ${logoChip(p)}
       <span class="logo-strip__text">
         <span class="logo-strip__name">${c.label}</span>

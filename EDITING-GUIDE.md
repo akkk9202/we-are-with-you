@@ -34,10 +34,34 @@ The six request forms the site expects (field lists are in your planning doc): S
 
 The contact page's **Support the Work** cards have six more keys — `supportProject`, `materialsDonation`, `sponsorInquiry`, `skillShare`, `communityConnection`, `generalSupport`. These behave slightly differently: while a key is still `REPLACE_ME`, its button is a working `mailto:` link to `SITE.email` with a prefilled subject (never a disabled "coming soon" button), because email is a fine way to handle these today. Paste a Google Form URL into the key and the button switches to the form automatically.
 
-The contact page also has a **Give to WAWY** band and a **Community Partners** band:
+The contact page also has a **Community Partners** band — it needs no editing; it renders the six community logos from `js/partners.js` automatically. (The **Give to WAWY** band moved to the Support Us page, Aug 15 2026.)
 
-- `SITE.donation` (js/config.js) — the Zelle address and memo shown to donors. The "Request a donation receipt" button uses `forms.donationReceipt`; while that key is `REPLACE_ME` it emails the donation inbox instead.
-- The Community Partners row needs no editing — it renders the six community logos from `js/partners.js` automatically.
+## 2a. The Support Us page (fundraising/)
+
+**"Share the Care in Your Own Way"** offers two ways to give — WAWY Card Sponsorships and
+Personalized Videos — and closes with the **Give to WAWY** band (moved here from the contact page):
+
+- `SITE.donation` (js/config.js) — the Zelle address and memo shown to donors. The "Request a
+  donation receipt" button uses `forms.donationReceipt`; while that key is `REPLACE_ME` it emails
+  the donation inbox instead.
+
+- `forms.cardSponsorship` — the "Sponsor WAWY Cards" button. While `REPLACE_ME` it is a working
+  `mailto:` (subject "WAWY Card Sponsorship"); paste a Google Form URL and it switches over.
+- `forms.videoRequest` — video requests. While `REPLACE_ME`, `fundraising/video-request.html`
+  shows its own **built-in form**: the visitor fills it in, presses "Send my request", and their
+  email app opens with the whole request written out (there is also a copy-to-clipboard backup).
+  Paste a Google Form URL into the key and the page swaps to a button that opens your form.
+- `SITE.fundraising` (js/config.js):
+  - `cardSuggested` / `videoSuggested` — suggested-contribution lines. The page is ready for
+    pricing but shows nothing until you write a full sentence here
+    (e.g. `"Suggested contribution: $25"`); it then appears above each button automatically.
+  - `videoInbox` — where built-in-form video requests are emailed while the Google Form key is
+    still a placeholder. Leave `""` to use `SITE.email`.
+- The two card images in the sponsorship section are the same printed brochures as the homepage
+  (`SITE.home.brochures`) — replace those files once and every page updates.
+- The occasion tiles (Happy Birthday, Get Well Soon, …) each pre-select the matching occasion on
+  the request form. Requested videos are **delivered privately to the requester** — the privacy
+  wording on the form promises no public posting without separate permission; don't weaken it.
 
 ## 3. Rename or reorder pathways
 Open `js/partners.js`. Every partner block has:
@@ -153,6 +177,8 @@ media.html                Featured press + galleries
 join.html                 Excluded for now — redirect stub (page saved in context/excluded/)
 about.html                Redirect stub → index.html
 contact.html              Contact info + form links
+fundraising/index.html    Support Us — WAWY Card Sponsorships + Personalized Videos + Give to WAWY
+fundraising/video-request.html  Personalized-video request form (built-in, emails the request)
 404.html                  Not-found page
 css/style.css             All styling (tokens at top)
 assets/images/            Photos: outreach galleries, flyers, invitation card
@@ -171,7 +197,7 @@ buttons, and left-aligned section heads. Do not rename tokens in `css/style.css`
 (the Community Portal layers on them).
 
 ## 13. Run the tests
-412 automated checks cover the nav (including the Philosophy tab), community names/order, logos, the homepage poster and brochure previews, the NADO School / Join Us exclusion (stubs + saved content), the GYCO performance archive (year tabs, pagination, detail view), all six partner pages, the Media press card, the contact page's "Support the Work" cards (mailto fallbacks included), **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
+479 automated checks cover the nav (including the Philosophy and Support Us tabs), community names/order, logos, the homepage poster and brochure previews, the NADO School / Join Us exclusion (stubs + saved content), the GYCO performance archive (year tabs, pagination, detail view), all six partner pages, the Media press card, the contact page's "Support the Work" cards (mailto fallbacks included), the Support Us page and its video-request form (Give to WAWY panel, exact copy, occasion whitelist, privacy consent, composed email, Google-Form flips), **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
 ```bash
 npm install jsdom   # once
 node test/smoke.test.js

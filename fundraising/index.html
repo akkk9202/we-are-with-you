@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support Us | WE ARE WITH YOU</title>
+  <meta name="description" content="Two ways to support WAWY — sponsor student-designed cards, or request a personalized video made for someone you care about." />
+  <meta property="og:title" content="Support Us — WE ARE WITH YOU" />
+  <meta property="og:description" content="Share the care in your own way." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://akkk9202.github.io/we-are-with-you/fundraising/" />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-nav"></div>
+
+<main id="main">
+
+<!-- 1 · HERO — the required "both ways" introduction opens the page -->
+<section class="page-hero">
+  <div class="container">
+    <h1>Share the Care in Your Own Way</h1>
+    <p class="page-hero__sub">Everything here supports WAWY's student-led programs — and each option shares a little encouragement with someone who needs it.</p>
+  </div>
+</section>
+
+<!-- 2 · THE TWO WAYS (side by side on desktop, stacked on mobile) -->
+<section class="section section--tight" id="ways">
+  <div class="container">
+    <div class="cards cards--2 ways">
+      <div class="card">
+        <h3>WAWY Cards</h3>
+        <p>Share encouragement through thoughtfully designed cards.</p>
+        <a class="btn btn--ink btn--sm" href="#cards">Explore Card Sponsorships</a>
+      </div>
+      <div class="card">
+        <h3>Personalized Videos</h3>
+        <p>Let WAWY students create a special message for someone in your life.</p>
+        <a class="btn btn--ink btn--sm" href="video-request.html">Request a Video</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · WAWY CARD SPONSORSHIPS -->
+<section class="section section--mist" id="cards">
+  <div class="container">
+    <div class="section-head">
+      <h2>WAWY Card Sponsorships</h2>
+      <p>Students design every WAWY card — and hand them out during visits, tuck them into care kits, and leave them where a kind word might be found.</p>
+    </div>
+    <div class="two-col" style="align-items:center;">
+      <div class="two-col__text">
+        <p>Each card carries a short message and a QR code that leads to messages, music, and helpful resources. A card sponsorship helps students design, print, and share more of them with the communities we visit.</p>
+        <p class="fund-suggested" data-fund-suggested="cardSuggested" hidden></p>
+        <p style="margin-top:var(--space-sm);"><a class="btn btn--ink btn--sm" data-form="cardSponsorship" data-mailto-subject="WAWY Card Sponsorship" href="../contact.html">Sponsor WAWY Cards</a></p>
+      </div>
+      <!-- The two printed cards, rendered from SITE.home.brochures (config.js) -->
+      <div data-brochures></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · PERSONALIZED VIDEOS -->
+<section class="section" id="videos">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Personalized Video Sponsorship</p>
+      <h2>A Message Made for Someone Special</h2>
+      <p>Request a personalized WAWY video for someone you care about.</p>
+    </div>
+    <div class="measure">
+      <p>WAWY students can create a short personalized video for birthdays, celebrations, encouragement, gratitude, and other meaningful moments.</p>
+      <p>Your request helps us share something personal with someone you care about while supporting WAWY's broader mission.</p>
+    </div>
+
+    <ul class="occasions" aria-label="Video examples">
+      <li><a class="occasion" href="video-request.html?occasion=birthday">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 20h14M6 20v-6.5c0-1 .8-1.8 1.8-1.8h8.4c1 0 1.8.8 1.8 1.8V20M6 15.5c1.2 1 2.3 1 3.5 0s2.3-1 3.5 0 2.3 1 3.5 0" stroke="#13233A" stroke-width="1.6" stroke-linecap="round"/><path d="M12 11.5V8.8" stroke="#13233A" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="6.4" r="1.5" fill="#C4A24E"/></svg>
+        <span>Happy Birthday</span></a></li>
+      <li><a class="occasion" href="video-request.html?occasion=congratulations">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.5v3M12 17.5v3M3.5 12h3M17.5 12h3M6 6l2.1 2.1M18 6l-2.1 2.1M6 18l2.1-2.1M18 18l-2.1-2.1" stroke="#13233A" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="12" r="2.2" fill="#C4A24E"/></svg>
+        <span>Congratulations</span></a></li>
+      <li><a class="occasion" href="video-request.html?occasion=get-well">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20v-8M12 14c0-2.5-2-4.5-4.5-4.5C7.5 12 9.5 14 12 14ZM12 12c0-2.5 2-4.5 4.5-4.5C16.5 10 14.5 12 12 12Z" stroke="#13233A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="5.5" r="1.8" fill="#C4A24E"/></svg>
+        <span>Get Well Soon</span></a></li>
+      <li><a class="occasion" href="video-request.html?occasion=thinking-of-you">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 19.2s-6.5-3.9-6.5-8.4A3.6 3.6 0 0 1 12 8.5a3.6 3.6 0 0 1 6.5 2.3c0 4.5-6.5 8.4-6.5 8.4Z" stroke="#13233A" stroke-width="1.6" stroke-linejoin="round"/><circle cx="18.6" cy="5.2" r="1.4" fill="#C4A24E"/></svg>
+        <span>Thinking of You</span></a></li>
+      <li><a class="occasion" href="video-request.html?occasion=thank-you">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 7.5h15v10h-15v-10ZM4.5 8l7.5 5.5L19.5 8" stroke="#13233A" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="13.4" r="1.5" fill="#C4A24E"/></svg>
+        <span>Thank You</span></a></li>
+      <li><a class="occasion" href="video-request.html?occasion=holiday">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v16M12 4l-2 2M12 4l2 2M12 20l-2-2M12 20l2-2M5.1 8l13.8 8M5.1 8l-.7 2.7M5.1 8l2.7-.7M18.9 16l.7-2.7M18.9 16l-2.7.7M5.1 16l13.8-8M5.1 16l2.7.7M5.1 16l-.7-2.7M18.9 8l-2.7-.7M18.9 8l.7 2.7" stroke="#13233A" stroke-width="1.3" stroke-linecap="round"/><circle cx="12" cy="12" r="1.6" fill="#C4A24E"/></svg>
+        <span>Holiday Greeting</span></a></li>
+      <li><a class="occasion" href="video-request.html?occasion=encouragement">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 17.5h16M7.2 13.8a4.8 4.8 0 0 1 9.6 0M12 6.2v1.6M5.6 8.9l1.2 1.1M18.4 8.9l-1.2 1.1" stroke="#13233A" stroke-width="1.6" stroke-linecap="round"/><path d="M9.4 17.5a2.6 2.6 0 0 1 5.2 0" fill="#C4A24E"/></svg>
+        <span>Encouragement</span></a></li>
+      <li><a class="occasion" href="video-request.html?occasion=custom">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14.5 5.5l4 4L8 20H4v-4L14.5 5.5Z" stroke="#13233A" stroke-width="1.6" stroke-linejoin="round"/><path d="M12.5 7.5l4 4" stroke="#13233A" stroke-width="1.6"/><circle cx="19.3" cy="18.8" r="1.4" fill="#C4A24E"/></svg>
+        <span>Custom Message</span></a></li>
+    </ul>
+
+    <div class="fund-cta">
+      <p>Support WAWY while creating a meaningful message for someone special.</p>
+      <p class="fund-suggested" data-fund-suggested="videoSuggested" hidden></p>
+      <a class="btn btn--gold" href="video-request.html">Request a Personalized Video</a>
+      <p class="fund-note">Personalized videos are delivered privately to you — never posted publicly.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · GIVE TO WAWY (moved here from the contact page, Aug 2026) -->
+<section class="section section--mist section--tight" id="give">
+  <div class="container">
+    <div class="section-head">
+      <h2>Give to WAWY</h2>
+      <p>Your donation directly supports WAWY projects, including care kits, educational videos, and community-based programs.</p>
+    </div>
+    <div class="give-panel">
+      <p class="give-zelle"><span class="give-label">Zelle</span><strong id="give-zelle-address"></strong><span class="give-memo"> · Memo: <strong id="give-zelle-memo"></strong></span></p>
+      <div class="give-receipt">
+        <span>Donation receipts are available.</span>
+        <a class="btn btn--ink btn--sm" data-form="donationReceipt" data-mailto-subject="Donation receipt request" href="../contact.html">Request a donation receipt</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · CTA BAND -->
+<section class="section section--dark cta-band">
+  <div class="container">
+    <h2>Even Here. Even Now. WE ARE WITH YOU.</h2>
+  </div>
+</section>
+
+</main>
+<div id="site-footer"></div>
+<script src="../js/config.js"></script>
+<script src="../js/partners.js"></script>
+<script src="../js/i18n.js"></script>
+<script src="../js/site.js"></script>
+<script>
+  // Suggested-contribution lines (config-driven; hidden until a value
+  // is written into SITE.fundraising in js/config.js).
+  (function () {
+    document.querySelectorAll('[data-fund-suggested]').forEach(el => {
+      const v = SITE.fundraising && SITE.fundraising[el.dataset.fundSuggested];
+      if (v) { el.textContent = v; el.hidden = false; }
+    });
+    // Give to WAWY (config-driven). While the receipt form is still a
+    // placeholder, point its mailto fallback at the donation inbox.
+    if (SITE.donation) {
+      document.getElementById('give-zelle-address').textContent = SITE.donation.zelle;
+      document.getElementById('give-zelle-memo').textContent = SITE.donation.memo;
+      const rb = document.querySelector('[data-form="donationReceipt"]');
+      const href = rb && rb.getAttribute('href');
+      if (href && href.startsWith('mailto:')) {
+        rb.setAttribute('href', 'mailto:' + SITE.donation.zelle + '?subject=' + encodeURIComponent(rb.dataset.mailtoSubject));
+      }
+    }
+  })();
+</script>
+</body>
+</html>

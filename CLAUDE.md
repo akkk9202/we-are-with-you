@@ -23,6 +23,12 @@ Live URL: `https://akkk9202.github.io/we-are-with-you/`
 ```
 *.html                     One file per page (index, partner, learning, media, …)
                            plus redirect stubs (programs.html → community/, voices-of-love.html → partner.html?p=cancer-care, …)
+fundraising/               The "Support Us" page: index.html ("Share the Care in Your Own Way" —
+                           WAWY Card Sponsorships + personalized videos + the Give to WAWY band,
+                           moved here from contact) and video-request.html (built-in request form
+                           that emails the request; flips to a Google Form via
+                           SITE.forms.videoRequest). Pages here load ../js/site.js — the REL
+                           prefix in site.js keeps nav/footer/asset links correct one level down.
 community/*.html           Community Portal pages (intro, auth, the five-option hub at home.html,
                            its destinations with-you / melody-box / bloom-bank / hope-capsule,
                            the All Communities chooser, 6 community pages, letters, requests,
@@ -46,7 +52,7 @@ supabase/setup.sql         The five migrations concatenated for one-paste setup.
 supabase/rls_verification.sql  66 security checks; runs in a transaction and ROLLS BACK.
 supabase/PORTAL-SETUP.md   The 3-step Supabase setup + admin how-to.
 assets/images, assets/logos  Photos and partner logos.
-test/smoke.test.js         412 jsdom DOM tests for the public site (incl. redesign guardrails).
+test/smoke.test.js         479 jsdom DOM tests for the public site (incl. redesign guardrails).
 test/preview.js            Zero-dependency local preview server (npm run preview): offline sample data.
 test/portal.test.js        172 jsdom DOM tests for the portal (stubbed Supabase).
 test/portal-live-check.js  Live anonymous-visitor checks against the real project.
@@ -104,7 +110,7 @@ To run the tests you need `jsdom` (`node_modules/` is gitignored):
 
 ```bash
 npm install                      # jsdom only; node_modules is gitignored
-npm test                         # expect "412 passed" + "172 passed"
+npm test                         # expect "479 passed" + "172 passed"
 node --check js/site.js          # syntax check (same for js/portal/*.js)
 rm -rf node_modules              # optional cleanup
 ```

@@ -39,15 +39,34 @@ const SITE = {
     communityConnection: "REPLACE_ME_GOOGLE_FORM_URL",
     generalSupport:      "REPLACE_ME_GOOGLE_FORM_URL",
 
-    // "Give to WAWY" receipt request (contact page). While REPLACE_ME,
+    // "Give to WAWY" receipt request (Support Us page). While REPLACE_ME,
     // the button emails the donation inbox (SITE.donation.zelle) instead.
     donationReceipt:     "REPLACE_ME_GOOGLE_FORM_URL",
+
+    // Support Us page (fundraising/). While REPLACE_ME, the card-
+    // sponsorship button falls back to a mailto:, and the video-request
+    // page shows its own built-in form (which emails the request).
+    // Paste Google Form URLs here and both switch over automatically.
+    cardSponsorship:     "REPLACE_ME_GOOGLE_FORM_URL",
+    videoRequest:        "REPLACE_ME_GOOGLE_FORM_URL",
   },
 
-  // ── Giving (contact page "Give to WAWY") ─────────────────
+  // ── Giving (Support Us page "Give to WAWY") ──────────────
   donation: {
     zelle: "gycodonation@gmail.com",  // Zelle address shown to donors
     memo:  "WAWY",                    // memo donors should include
+  },
+
+  // ── Support Us page (fundraising/) ───────────────────────
+  fundraising: {
+    // Optional suggested-contribution lines. Leave "" to hide. When a
+    // number is decided, write the full sentence you want shown, e.g.
+    // "Suggested contribution: $25 — every gift supports WAWY programs."
+    cardSuggested:  "",
+    videoSuggested: "",
+    // Inbox for personalized-video requests while forms.videoRequest is
+    // still a placeholder. Leave "" to use SITE.email.
+    videoInbox: "",
   },
 
   // ── Navigation (order matters) ───────────────────────────
@@ -69,6 +88,7 @@ const SITE = {
     { label: "GYCO", href: "student-community.html" },
     { label: "Media", label_ko: "미디어", href: "media.html" },
     { label: "Philosophy", label_ko: "철학", href: "our-philosophy.html" },
+    { label: "Support Us", label_ko: "후원하기", href: "fundraising/index.html" },
     { label: "Contact", label_ko: "문의하기", href: "contact.html", cta: true },
   ],
 

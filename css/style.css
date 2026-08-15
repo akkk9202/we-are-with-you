@@ -1,5 +1,5 @@
 /* ============================================================
-   WE ARE WITH YOU — Global Stylesheet v9 (contact: Support the Work)
+   WE ARE WITH YOU — Global Stylesheet v10 (fundraising: cards + videos)
    Design tokens live at the top. Change colors/fonts here once
    and the whole site updates. See EDITING-GUIDE.md.
    ============================================================ */
@@ -884,7 +884,8 @@ body.nav-solid .nav { background: var(--ink); }
   .support-callout { flex-direction: column; align-items: flex-start; }
 }
 
-/* Contact: Community Partners logo row + Give to WAWY (v9, Aug 14) */
+/* Contact: Community Partners logo row (v9, Aug 14). The .give-* styles
+   below now serve the Give to WAWY band on fundraising/ (moved Aug 15). */
 .logo-row { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
 .logo-row .logo-chip { width: auto; min-width: 150px; }
 .give-panel {
@@ -901,3 +902,100 @@ body.nav-solid .nav { background: var(--ink); }
 .give-memo { color: var(--muted); }
 .give-receipt { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-sm); }
 .give-receipt > span { font-size: 0.92rem; color: var(--muted); }
+.give-more { font-size: 0.92rem; color: var(--muted); margin-top: var(--space-sm); max-width: none; }
+
+/* ============================================================
+   v10 COMPONENTS — Fundraising (fundraising/, Aug 2026):
+   "Share the Care in Your Own Way". Two quiet ways-to-give tiles,
+   the card-sponsorship band reusing the printed-brochure duo, an
+   occasion chip grid for personalized videos (warm line icons —
+   deliberately NOT product tiles), and the video request form.
+   ============================================================ */
+
+/* Occasion chips — simple selectable options, not an ecommerce grid */
+.occasions {
+  list-style: none; padding: 0; margin: var(--space-md) 0 0;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-sm);
+}
+.occasion {
+  display: flex; flex-direction: column; align-items: center; gap: 0.55rem;
+  padding: 1.1rem 0.8rem; text-align: center;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--white); color: var(--ink);
+  font-size: 0.92rem; font-weight: 500;
+  transition: border-color 0.18s, transform 0.18s;
+}
+.occasion:hover { border-color: rgba(19,35,58,0.32); transform: translateY(-2px); }
+.occasion:active { transform: scale(0.98); }
+.occasion svg { width: 34px; height: 34px; }
+@media (max-width: 960px) { .occasions { grid-template-columns: repeat(2, 1fr); } }
+
+/* Closing CTA under the occasion chips */
+.fund-cta { text-align: center; margin-top: var(--space-lg); }
+.fund-cta > p:first-child { font-size: 1.08rem; max-width: 46ch; margin-inline: auto; }
+.fund-cta .btn { margin-top: var(--space-sm); }
+.fund-note { font-size: 0.88rem; color: var(--muted); margin-top: 0.8rem; max-width: none; }
+
+/* Config-driven suggested-contribution line (hidden until set) */
+.fund-suggested {
+  font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--blue); margin-top: 0.6rem;
+}
+
+/* ── Video request form (fundraising/video-request.html) ── */
+.form-back { margin-bottom: var(--space-md); font-size: 0.92rem; }
+.form-back a { color: var(--muted); }
+.form-back a:hover { color: var(--ink); }
+
+.request-form {
+  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: var(--space-md);
+  max-width: 760px;
+}
+.request-form fieldset { border: 0; padding: 0; margin: 0 0 var(--space-md); }
+.request-form legend {
+  font-family: 'Fraunces', serif; font-size: 1.22rem; font-weight: 500;
+  padding: 0; margin-bottom: 0.9rem;
+}
+.form-row--2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--space-sm); }
+.form-field { margin-bottom: 0.9rem; max-width: none; }
+.form-field label { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 0.35rem; }
+.form-optional { font-weight: 400; color: var(--muted); }
+.request-form input[type="text"],
+.request-form input[type="email"],
+.request-form input[type="date"],
+.request-form select,
+.request-form textarea {
+  width: 100%; padding: 0.62rem 0.75rem;
+  font: inherit; font-size: 0.95rem; color: var(--ink);
+  background: var(--white); border: 1px solid var(--line); border-radius: 8px;
+}
+.request-form textarea { resize: vertical; }
+.request-form input:focus, .request-form select:focus, .request-form textarea:focus {
+  outline: 2px solid var(--gold); outline-offset: 1px; border-color: transparent;
+}
+.form-hint { display: block; font-size: 0.8rem; color: var(--muted); margin-top: 0.3rem; }
+.char-count { display: block; font-size: 0.78rem; color: var(--muted); text-align: right; margin-top: 0.25rem; }
+.form-check { display: flex; gap: 0.6rem; align-items: flex-start; max-width: none; }
+.form-check input { width: 1.05rem; height: 1.05rem; margin-top: 0.2rem; flex-shrink: 0; accent-color: var(--gold); }
+.form-check label { font-size: 0.95rem; }
+.form-privacy {
+  font-size: 0.88rem; color: var(--muted); max-width: none;
+  border-left: 2px solid var(--gold); padding-left: 0.9rem; margin-top: 0.9rem;
+}
+.form-actions { display: flex; align-items: center; gap: var(--space-sm); flex-wrap: wrap; }
+.form-note { font-size: 0.85rem; color: var(--muted); max-width: 44ch; }
+.form-after { border-top: 1px solid var(--line); margin-top: var(--space-md); padding-top: var(--space-md); }
+.form-after p { font-size: 0.92rem; color: var(--muted); max-width: none; margin-bottom: 0.8rem; }
+.copy-fallback { width: 100%; margin-top: 0.8rem; font-size: 0.85rem; }
+.request-form--live h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.request-form--live p { color: var(--muted); margin-bottom: var(--space-sm); }
+/* When the "Have another idea?"-style callout stands alone in a band
+   (fundraising give band), drop the divider it uses under cards. */
+.support-callout:only-child { border-top: 0; margin-top: 0; padding-top: 0; }
+
+@media (max-width: 640px) {
+  .occasions { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+  .form-row--2 { grid-template-columns: 1fr; }
+  .request-form { padding: var(--space-sm) var(--space-sm) var(--space-md); }
+}

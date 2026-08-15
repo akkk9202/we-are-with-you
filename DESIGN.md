@@ -28,12 +28,12 @@ carry the section.
 Below it (Aug 14): **Community Partners** (`#community`, white band) — a
 `.logo-row` of the six community `.logo-chip`s rendered from partners.js, each
 linking to its partner page. (A Community Supporters block existed briefly the
-same day and was removed — no supporters to show yet.) Then **Give to WAWY**
-(`#give`, tight mist band) — a white hairline `.give-panel` with the
-config-driven Zelle address + memo (`SITE.donation`) and a receipt-request
-button (`forms.donationReceipt`, mailto fallback to the donation inbox). The
-"Have another idea?" callout closes this band. Page rhythm:
-dark · dark · mist · white · mist · dark.
+same day and was removed — no supporters to show yet.) The "Have another
+idea?" callout closes the support band. Page rhythm:
+dark · dark · mist · white · dark. (**Give to WAWY** — the white hairline
+`.give-panel` with the config-driven Zelle address + memo and the
+receipt-request button — moved to the Support Us page `fundraising/`
+on Aug 15 2026.)
 
 ---
 
@@ -154,6 +154,7 @@ shapes, no scroll-hiding animations.
 - Everything else: 150–200ms color/border transitions. No staggered reveals,
   no content hidden before scroll. `prefers-reduced-motion` gets static paths.
   (The flyer carousel and its spring engine were removed in v8.)
+  Occasion chips lift 2px on hover — the one small exception, matching card hovers.
 
 ## Copy rules (enforced by the guardrail tests)
 - Specific beats inspirational: name the partner, the activity, the year.
@@ -172,3 +173,21 @@ logo directory with an understated "Your community" status; My Activity is a
 dated feed with quiet underline tabs; empty states are compact, never giant
 dashed boxes; the five poster illustrations stay small where they identify an
 action, and decorative clip art (flowers, smiley) is gone. Do not rename tokens.
+
+## Support Us components (v10, Aug 2026 — fundraising/)
+- `.occasions` / `.occasion` — the personalized-video occasion options: quiet
+  hairline chips with 34px line icons (ink strokes, one gold accent — same
+  language as the ring mark). Deliberately NOT product tiles: no images, no
+  prices, no cart. 4-col → 2-col ≤960px.
+- `.fund-cta` — centered close of the videos section; `.fund-suggested` is the
+  config-driven suggested-contribution line (small caps, blue), hidden until
+  `SITE.fundraising.*Suggested` is set.
+- `.request-form` — the one real form on the public site: white hairline panel,
+  Fraunces legends, 8px-radius fields, gold focus ring (`accent-color` gold on
+  the consent checkbox), `.form-privacy` note with a 2px gold left rule.
+  Two-column rows collapse ≤640px.
+- Card sponsorships reuse `.brochure-duo` — the printed cards ARE the imagery.
+- The page closes with the relocated **Give to WAWY** `.give-panel` band
+  (`#give`, tight mist) before the CTA band.
+- Pages in `fundraising/` load the same engine via `../js/site.js`; the `REL`
+  prefix keeps every generated link/asset path correct one level down.
