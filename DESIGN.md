@@ -55,7 +55,9 @@ Google. The homepage now orients that visitor in its first three sections:
 
 Then What We Do · Recent Work · the one large community poster
 (`SITE.home.poster`, "On the Wall Where We Visit") · About GYCO (the parent
-org, closing the page) · final CTA. **6 sections, tested.** (NADO School was
+org) · the `#support-wawy` teaser (white band, Aaron's copy, gold CTA →
+`fundraising/index.html`, closing the page) · final CTA. **7 sections,
+tested.** (NADO School was
 excluded Aug 2026 — saved in `context/excluded/`; the About GYCO photo slot now
 holds the RMH Atlanta group photo.)
 The six-slide flyer carousel and its spring engine were removed entirely.

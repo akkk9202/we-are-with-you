@@ -205,9 +205,28 @@ console.log('\n[index.html]');
   ok(ctas.some(([t, h]) => t === 'Contact us' && h === 'contact.html'),
      'final CTA: Contact us (Get involved removed with Join Us)');
 
+  /* support teaser — points to the Support Us page (Aaron's copy, Aug 2026) */
+  {
+    const teaser = d.querySelector('#support-wawy');
+    ok(!!teaser, 'homepage carries the #support-wawy teaser band');
+    ok((teaser.querySelector('h2') || {}).textContent === 'Looking to Support W.A.W.Y?',
+       'teaser heading: Looking to Support W.A.W.Y?');
+    ok(teaser.textContent.includes('Your support helps us continue student-led community programs, performances, and outreach.'),
+       'teaser body sentence 1 verbatim');
+    ok(teaser.textContent.includes('As a small expression of our gratitude, we may send supporters a W.A.W.Y message card or a short musical thank-you video created by our students.'),
+       'teaser gratitude sentence verbatim (card / musical thank-you video)');
+    const tBtn = teaser.querySelector('.btn');
+    ok(tBtn && tBtn.textContent.trim() === 'Visit our Support Us page' &&
+       tBtn.getAttribute('href') === 'fundraising/index.html',
+       'teaser CTA: Visit our Support Us page → fundraising/index.html');
+    ok(!teaser.classList.contains('section--mist') && !teaser.classList.contains('section--dark'),
+       'teaser band is white — breaks the two mist bands before the dark CTA');
+    ok(!/\$|price|buy|purchase|cart/i.test(teaser.textContent), 'teaser has no commercial phrasing');
+  }
+
   /* structure discipline */
   const secs = [...d.querySelectorAll('main > section')];
-  ok(secs.length === 6, `homepage has exactly 6 sections (found ${secs.length})`);
+  ok(secs.length === 7, `homepage has exactly 7 sections (found ${secs.length})`);
   ok(d.querySelectorAll('.eyebrow').length === 0, 'homepage has zero eyebrow labels');
   ok(!d.querySelector('.cards'), 'homepage has no card grids');
   ok(!d.querySelector('main svg'), 'homepage has no diagram SVGs (photos carry the page)');
@@ -218,10 +237,12 @@ console.log('\n[index.html]');
        'On the Wall Where We Visit comes right after the hero/brochures, above What We Do');
   }
   {
-    /* GYCO (the parent organization) closes the page before the final CTA */
+    /* GYCO (the parent organization), then the support teaser, close the page */
     const idxOf = (t) => secs.findIndex(s => (s.querySelector('h2') || {}).textContent === t);
-    ok(idxOf('About GYCO') >= 0 && idxOf('About GYCO') === secs.length - 2,
-       'About GYCO is the last content section before the final CTA');
+    ok(idxOf('About GYCO') >= 0 && idxOf('About GYCO') === secs.length - 3,
+       'About GYCO sits just above the support teaser');
+    ok(secs[secs.length - 2].id === 'support-wawy',
+       'the support teaser is the last content section before the final CTA');
   }
 
   /* footer */

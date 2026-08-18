@@ -122,7 +122,7 @@ data-driven.
 
 | Page file | What it is |
 |---|---|
-| `index.html` | Homepage — 6 sections: hero (QR-visitor intro + Portal CTA on the left; brochures + community logo strip in the right rail), What We Do, Recent Work, the community poster, About GYCO (with the RMH Atlanta group photo), final CTA |
+| `index.html` | Homepage — 7 sections: hero (QR-visitor intro + Portal CTA on the left; brochures + community logo strip in the right rail), What We Do, Recent Work, the community poster, About GYCO (with the RMH Atlanta group photo), the `#support-wawy` Support Us teaser, final CTA |
 | `our-philosophy.html` | Condensed philosophy page (why we exist, NADO → WE, the two parts) |
 | `programs.html` | Programs / pathways overview |
 | `partner.html` | Renders a single partner via `?p=SLUG` |
