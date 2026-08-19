@@ -782,13 +782,20 @@ console.log('\n[media.html]');
   ok(count('media-teaching-') === 3, 'Student teaching gallery has 3 real photos');
   ok(count('media-wawy-cityofhope-') === 3, 'City of Hope gallery has 3 real photos');
   ok(count('media-wawy-rmh-') === 7, 'Ronald McDonald House gallery has 7 real photos');
+  ok(count('media-joynus-') === 5, 'Joynus Daycare gallery has 5 real photos');
+  ok(count('media-rehearsal-') === 3, 'Performances & Rehearsals gallery gained the 3 rehearsal photos');
 
   const mainSections = [...d.querySelectorAll('main > section')];
   ok(mainSections[0].classList.contains('page-hero'), 'page hero is the first section');
   const recentSec = mainSections[1];
-  ok(recentSec.querySelector('.eyebrow')?.textContent.trim() === 'Most recent', 'archive keeps its one navigational label: "Most recent"');
-  ok(recentSec.querySelectorAll('img[src*="media-wawy-"]').length === 10, 'Most recent section holds all 10 WAWY photos');
-  ok(d.querySelectorAll('.eyebrow').length === 1, 'media page has exactly one eyebrow (the archive date label)');
+  ok(recentSec.querySelector('.eyebrow')?.textContent.trim() === 'Most recent', 'newest event carries the "Most recent" label');
+  ok(recentSec.querySelector('h2').textContent.includes('Joynus'), 'most recent event: Invited Performance at Joynus Daycare (July 3, 2026)');
+  ok(recentSec.querySelectorAll('img[src*="media-joynus-"]').length === 5, 'Most recent section holds all 5 Joynus performance photos');
+  const demoted = mainSections[3];
+  ok(demoted.querySelector('.eyebrow')?.textContent.trim() === 'Summer 2026' &&
+     demoted.querySelectorAll('img[src*="media-wawy-"]').length === 10,
+     'previous most-recent (CoH + RMH, 10 photos) demoted to the archive with a season label, below the press band');
+  ok(d.querySelectorAll('.eyebrow').length === 2, 'media page has exactly two eyebrows (both archive date labels)');
   ok(galleryImgs.every(i => i.alt && i.alt.length > 10), 'every gallery photo has descriptive alt text');
   ok(galleryImgs.every(i => i.getAttribute('loading') === 'lazy'), 'gallery photos lazy-load');
   for (const img of galleryImgs) {
@@ -940,9 +947,12 @@ console.log('\n[redesign guardrails]');
     ok(hits.length === 0, `banned phrase absent: "${phrase}"${hits.length ? ' — found in ' + hits.join(', ') : ''}`);
   }
 
-  /* Eyebrow budget: at most 1 per public page (media's archive label). */
+  /* Eyebrow budget: at most 1 per public page — except media.html, whose
+     event archive carries one navigational date label per event section
+     ("Most recent" + season labels; sanctioned by DESIGN.md v7). */
   for (const f of PUBLIC_PAGES) {
     const n = (fs.readFileSync(path.join(ROOT, f), 'utf8').match(/class="eyebrow/g) || []).length;
+    if (f === 'media.html') { ok(n >= 1 && n <= 6, `${f}: archive date labels only, within reason (found ${n})`); continue; }
     ok(n <= 1, `${f}: at most one eyebrow label (found ${n})`);
   }
 
