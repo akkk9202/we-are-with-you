@@ -301,6 +301,10 @@ em { font-style: italic; }
 /* ── CONTACT DETAILS ── */
 .contact-detail { display: flex; gap: var(--space-sm); align-items: baseline; padding: 0.6rem 0; border-bottom: 1px solid var(--line-d); font-size: 0.98rem; }
 .contact-detail__label { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); min-width: 90px; }
+/* Detail links must read as links, not plain text (Aug 19 2026): gold
+   underline + a small ↗ on external links. */
+.contact-detail a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--gold); text-decoration-thickness: 1px; }
+.contact-detail a[target="_blank"]::after { content: "↗"; display: inline-block; margin-left: 0.3em; font-size: 0.85em; color: var(--gold); }
 .contact-detail a:hover { color: var(--gold-2); }
 
 /* ── INDEX LIST (directory rows — menu-like content, not cards) ── */

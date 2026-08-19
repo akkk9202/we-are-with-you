@@ -31,8 +31,11 @@
     <div>
       <h4 style="color:var(--gold);margin-bottom:1rem;">Our information</h4>
       <div class="contact-detail"><span class="contact-detail__label">Email</span><a data-email href="contact.html">Email coming soon</a></div>
-      <div class="contact-detail" id="contact-instagram" hidden><span class="contact-detail__label">Instagram</span><a target="_blank" rel="noopener">Instagram</a></div>
-      <div class="contact-detail" id="contact-youtube" hidden><span class="contact-detail__label">YouTube</span><a target="_blank" rel="noopener">YouTube</a></div>
+      <!-- Link text shows the real @handle (derived from the config URL by
+           the inline script below) so the link reads as a live link, not a
+           repeated label. Baked defaults match js/config.js. -->
+      <div class="contact-detail" id="contact-instagram" hidden><span class="contact-detail__label">Instagram</span><a target="_blank" rel="noopener">@gyco_opus</a></div>
+      <div class="contact-detail" id="contact-youtube" hidden><span class="contact-detail__label">YouTube</span><a target="_blank" rel="noopener">@gyco_wawy</a></div>
       <div class="contact-detail"><span class="contact-detail__label">Location</span><span id="contact-location">Georgia, United States</span></div>
     </div>
     <div>
@@ -117,19 +120,41 @@
 <script src="js/i18n.js"></script>
 <script src="js/site.js"></script>
 <script>
-  // Show social rows only when real links exist in config.js
+  // Show social rows only when real links exist in config.js.
+  // The link text is the @handle from the URL (e.g. @gyco_opus), so the
+  // row reads "INSTAGRAM  @gyco_opus" instead of "INSTAGRAM  Instagram".
   (function () {
+    const handleText = (url) => {
+      try {
+        const u = new URL(url);
+        const seg = u.pathname.split('/').filter(Boolean)[0] || '';
+        if (seg && !['channel', 'c', 'user'].includes(seg)) {
+          return seg.startsWith('@') ? seg : '@' + seg;
+        }
+        return u.hostname.replace(/^www\./, '') + u.pathname.replace(/\/+$/, '');
+      } catch (e) { return url.replace(/^https?:\/\//, ''); }
+    };
     const ig = document.getElementById('contact-instagram');
-    if (SITE.instagram) { ig.hidden = false; ig.querySelector('a').href = safeUrl(SITE.instagram); }
+    if (SITE.instagram) {
+      ig.hidden = false;
+      const a = ig.querySelector('a');
+      a.href = safeUrl(SITE.instagram);
+      a.textContent = handleText(SITE.instagram);
+    }
     const yt = document.getElementById('contact-youtube');
-    if (SITE.youtube) { yt.hidden = false; yt.querySelector('a').href = safeUrl(SITE.youtube); }
+    if (SITE.youtube) {
+      yt.hidden = false;
+      const a = yt.querySelector('a');
+      a.href = safeUrl(SITE.youtube);
+      a.textContent = handleText(SITE.youtube);
+    }
     document.getElementById('contact-location').textContent = SITE.location;
     // "Spread the Word" buttons share the same config values
     const sIg = document.getElementById('support-instagram');
     if (sIg && SITE.instagram) { sIg.hidden = false; sIg.href = safeUrl(SITE.instagram); }
     const sYt = document.getElementById('support-youtube');
     if (sYt && SITE.youtube) { sYt.hidden = false; sYt.href = safeUrl(SITE.youtube); }
-    // Community partners — the six community logos from js/partners.js
+    // Community partners — the five community logos from js/partners.js
     document.getElementById('partner-logos').innerHTML = pathwayList().map(p =>
       `<a href="partner.html?p=${p.slug}" title="${p.name}">${logoChip(p)}</a>`).join('');
     // Give to WAWY now lives on the Fundraising page (fundraising/).

@@ -818,6 +818,16 @@ console.log('\n[YouTube wiring]');
   ok(a && a.getAttribute('href') === 'https://youtube.com/@gyco_wawy' &&
      a.target === '_blank' && a.rel === 'noopener',
      'contact YouTube row links @gyco_wawy (new tab, noopener, via safeUrl)');
+  ok(a && a.textContent === '@gyco_wawy',
+     'YouTube row link text is the @handle, not the word "YouTube" (reads as a live link)');
+  const igRow = d.querySelector('#contact-instagram'), igA = igRow && igRow.querySelector('a');
+  ok(igRow && !igRow.hidden && igA && igA.textContent === '@gyco_opus' &&
+     igA.getAttribute('href') === 'https://instagram.com/gyco_opus',
+     'Instagram row shows @gyco_opus as the link text (derived from the config URL)');
+  const cssSrc = fs.readFileSync(path.join(ROOT, 'css/style.css'), 'utf8');
+  ok(/\.contact-detail a \{[^}]*text-decoration: underline/.test(cssSrc) &&
+     /\.contact-detail a\[target="_blank"\]::after \{[^}]*↗/.test(cssSrc),
+     'contact detail links carry underline + external ↗ affordance in CSS');
   ok(/SITE\.youtube/.test(fs.readFileSync(path.join(ROOT, 'js/site.js'), 'utf8')) &&
      /safeUrl\(SITE\.youtube\)/.test(fs.readFileSync(path.join(ROOT, 'js/site.js'), 'utf8')),
      'js/site.js renders the footer YouTube link through safeUrl');

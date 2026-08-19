@@ -30,7 +30,7 @@ python3 -m http.server 8000   # then open http://localhost:8000
 ## Tests
 ```bash
 npm install          # jsdom (test-only; node_modules is gitignored)
-npm test             # 503 site DOM tests + 173 portal DOM tests
+npm test             # 506 site DOM tests + 173 portal DOM tests
 npm run test:live    # live checks against the Supabase project (after setup)
 ```
 `supabase/rls_verification.sql` additionally verifies all 66 security rules

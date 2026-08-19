@@ -18,7 +18,7 @@ email: "REPLACE_ME@example.com",
 instagram: "",   // paste full URL, or leave "" to hide everywhere
 youtube: "",     // paste full URL, or leave "" to hide everywhere
 ```
-Instagram/YouTube buttons and footer links **appear automatically** once a URL is filled in, and stay hidden while empty. No dead links.
+Instagram/YouTube buttons and footer links **appear automatically** once a URL is filled in, and stay hidden while empty. No dead links. On the contact page's info band the link text is the **@handle taken from the URL** (e.g. `@gyco_opus`) with an underline and a small ↗ — change the URL in config and the handle updates itself.
 
 ## 2. Connect the Google Forms
 Create each form in Google Forms, click **Send → link icon → copy**, then paste into `js/config.js`:
@@ -199,7 +199,7 @@ buttons, and left-aligned section heads. Do not rename tokens in `css/style.css`
 (the Community Portal layers on them).
 
 ## 13. Run the tests
-517 automated checks cover the nav (including the Philosophy and Support Us tabs), community names/order, logos, the homepage poster and brochure previews, the NADO School / Join Us exclusion (stubs + saved content), the GYCO performance archive (year tabs, pagination, detail view), all five partner pages, the Media press card, the contact page's "Support the Work" cards (mailto fallbacks included), the Support Us page and its video-request form (Give to WAWY panel, exact copy, occasion whitelist, privacy consent, composed email, Google-Form flips), **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
+506 automated checks cover the nav (including the Philosophy and Support Us tabs), community names/order, logos, the homepage poster and brochure previews, the NADO School / Join Us exclusion (stubs + saved content), the GYCO performance archive (year tabs, pagination, detail view), all five partner pages, the Media press card, the contact page's "Support the Work" cards (mailto fallbacks included), the Support Us page and its video-request form (Give to WAWY panel, exact copy, occasion whitelist, privacy consent, composed email, Google-Form flips), **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
 ```bash
 npm install jsdom   # once
 node test/smoke.test.js
