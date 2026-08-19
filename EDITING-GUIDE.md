@@ -41,9 +41,11 @@ The contact page also has a **Community Partners** band — it needs no editing;
 **"Share the Care in Your Own Way"** offers two ways to give — WAWY Card Sponsorships and
 Personalized Videos — and closes with the **Give to WAWY** band (moved here from the contact page):
 
-- `SITE.donation` (js/config.js) — the Zelle address and memo shown to donors. The "Request a
-  donation receipt" button uses `forms.donationReceipt`; while that key is `REPLACE_ME` it emails
-  the donation inbox instead.
+- `SITE.donation` (js/config.js) — the Zelle address and memo shown to donors. The same values
+  are also baked directly into `fundraising/index.html` (the `.give-zelle` line) so the panel is
+  complete even without JavaScript — if you change one, change both (a test checks the baked
+  copy). The "Request a donation receipt" button uses `forms.donationReceipt`; while that key is
+  `REPLACE_ME` it emails the donation inbox instead.
 
 - `forms.cardSponsorship` — the "Sponsor WAWY Cards" button. While `REPLACE_ME` it is a working
   `mailto:` (subject "WAWY Card Sponsorship"); paste a Google Form URL and it switches over.
@@ -197,7 +199,7 @@ buttons, and left-aligned section heads. Do not rename tokens in `css/style.css`
 (the Community Portal layers on them).
 
 ## 13. Run the tests
-487 automated checks cover the nav (including the Philosophy and Support Us tabs), community names/order, logos, the homepage poster and brochure previews, the NADO School / Join Us exclusion (stubs + saved content), the GYCO performance archive (year tabs, pagination, detail view), all six partner pages, the Media press card, the contact page's "Support the Work" cards (mailto fallbacks included), the Support Us page and its video-request form (Give to WAWY panel, exact copy, occasion whitelist, privacy consent, composed email, Google-Form flips), **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
+489 automated checks cover the nav (including the Philosophy and Support Us tabs), community names/order, logos, the homepage poster and brochure previews, the NADO School / Join Us exclusion (stubs + saved content), the GYCO performance archive (year tabs, pagination, detail view), all six partner pages, the Media press card, the contact page's "Support the Work" cards (mailto fallbacks included), the Support Us page and its video-request form (Give to WAWY panel, exact copy, occasion whitelist, privacy consent, composed email, Google-Form flips), **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
 ```bash
 npm install jsdom   # once
 node test/smoke.test.js

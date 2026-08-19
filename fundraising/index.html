@@ -23,7 +23,7 @@
 <section class="page-hero">
   <div class="container">
     <h1>Share the Care in Your Own Way</h1>
-    <p class="page-hero__sub">Everything here supports WAWY's student-led programs — and each option shares a little encouragement with someone who needs it.</p>
+    <p class="page-hero__sub">Your support helps sustain WAWY's student-led programs — and each option shares a little encouragement with someone who needs it.</p>
   </div>
 </section>
 
@@ -121,7 +121,10 @@
       <p>Your donation directly supports WAWY projects, including care kits, educational videos, and community-based programs.</p>
     </div>
     <div class="give-panel">
-      <p class="give-zelle"><span class="give-label">Zelle</span><strong id="give-zelle-address"></strong><span class="give-memo"> · Memo: <strong id="give-zelle-memo"></strong></span></p>
+      <!-- Zelle address + memo are baked in so the line is always complete
+           (no-JS readers, previews). The inline script below re-applies
+           SITE.donation from js/config.js — keep both in sync. -->
+      <p class="give-zelle"><span class="give-label">Zelle</span><strong id="give-zelle-address">gycodonation@gmail.com</strong><span class="give-memo"> · Memo: <strong id="give-zelle-memo">WAWY</strong></span></p>
       <div class="give-receipt">
         <span>Donation receipts are available.</span>
         <a class="btn btn--ink btn--sm" data-form="donationReceipt" data-mailto-subject="Donation receipt request" href="../contact.html">Request a donation receipt</a>
@@ -151,8 +154,10 @@
       const v = SITE.fundraising && SITE.fundraising[el.dataset.fundSuggested];
       if (v) { el.textContent = v; el.hidden = false; }
     });
-    // Give to WAWY (config-driven). While the receipt form is still a
-    // placeholder, point its mailto fallback at the donation inbox.
+    // Give to WAWY. The Zelle address/memo are baked into the HTML above;
+    // this re-applies SITE.donation so js/config.js stays the editing
+    // surface (keep the baked values in sync). While the receipt form is
+    // still a placeholder, point its mailto fallback at the donation inbox.
     if (SITE.donation) {
       document.getElementById('give-zelle-address').textContent = SITE.donation.zelle;
       document.getElementById('give-zelle-memo').textContent = SITE.donation.memo;

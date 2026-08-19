@@ -52,7 +52,7 @@ supabase/setup.sql         The five migrations concatenated for one-paste setup.
 supabase/rls_verification.sql  66 security checks; runs in a transaction and ROLLS BACK.
 supabase/PORTAL-SETUP.md   The 3-step Supabase setup + admin how-to.
 assets/images, assets/logos  Photos and partner logos.
-test/smoke.test.js         487 jsdom DOM tests for the public site (incl. redesign guardrails).
+test/smoke.test.js         489 jsdom DOM tests for the public site (incl. redesign guardrails).
 test/preview.js            Zero-dependency local preview server (npm run preview): offline sample data.
 test/portal.test.js        172 jsdom DOM tests for the portal (stubbed Supabase).
 test/portal-live-check.js  Live anonymous-visitor checks against the real project.
@@ -110,7 +110,7 @@ To run the tests you need `jsdom` (`node_modules/` is gitignored):
 
 ```bash
 npm install                      # jsdom only; node_modules is gitignored
-npm test                         # expect "487 passed" + "172 passed"
+npm test                         # expect "489 passed" + "172 passed"
 node --check js/site.js          # syntax check (same for js/portal/*.js)
 rm -rf node_modules              # optional cleanup
 ```

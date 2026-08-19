@@ -55,6 +55,9 @@ const SITE = {
   donation: {
     zelle: "gycodonation@gmail.com",  // Zelle address shown to donors
     memo:  "WAWY",                    // memo donors should include
+    // NOTE: these are also baked into fundraising/index.html (the
+    // .give-zelle line) so the page is complete without JavaScript.
+    // If you change them here, change them there too.
   },
 
   // ── Support Us page (fundraising/) ───────────────────────

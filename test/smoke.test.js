@@ -1009,6 +1009,9 @@ console.log('\n[fundraising/index.html]');
   /* hero — the required "both ways" introduction near the beginning */
   ok(d.querySelector('h1').textContent.trim() === 'Share the Care in Your Own Way',
      'hero h1 is "Share the Care in Your Own Way"');
+  ok(d.querySelector('.page-hero__sub').textContent.trim() ===
+     'Your support helps sustain WAWY\'s student-led programs — and each option shares a little encouragement with someone who needs it.',
+     'hero sub: "Your support helps sustain…" (Aug 19 director wording — not "Everything here supports")');
   const ways = [...d.querySelectorAll('.ways .card')];
   ok(ways.length === 2, 'two ways-to-participate tiles (side by side / stacked via .cards--2)');
   ok(ways[0].querySelector('h3').textContent === 'WAWY Cards' &&
@@ -1090,6 +1093,10 @@ console.log('\n[fundraising/index.html]');
   const za = d.getElementById('give-zelle-address'), zm = d.getElementById('give-zelle-memo');
   ok(za && za.textContent === 'gycodonation@gmail.com' && zm && zm.textContent === 'WAWY',
      'Zelle address and memo come from SITE.donation');
+  const rawFund = fs.readFileSync(path.join(ROOT, 'fundraising/index.html'), 'utf8');
+  ok(/id="give-zelle-address">gycodonation@gmail\.com</.test(rawFund) &&
+     /id="give-zelle-memo">WAWY</.test(rawFund),
+     'Zelle address + memo are baked into the raw HTML — the line is complete even without JS (Aug 19)');
   const rb = give.querySelector('[data-form="donationReceipt"]');
   ok(rb && rb.getAttribute('href') === 'mailto:gycodonation@gmail.com?subject=' + encodeURIComponent('Donation receipt request'),
      'receipt button: no form yet → mailto to the DONATION inbox, not the general one');

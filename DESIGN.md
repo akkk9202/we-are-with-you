@@ -190,6 +190,8 @@ action, and decorative clip art (flowers, smiley) is gone. Do not rename tokens.
   Two-column rows collapse ≤640px.
 - Card sponsorships reuse `.brochure-duo` — the printed cards ARE the imagery.
 - The page closes with the relocated **Give to WAWY** `.give-panel` band
-  (`#give`, tight mist) before the CTA band.
+  (`#give`, tight mist) before the CTA band. The Zelle address + memo are
+  baked into the HTML (complete without JS; Aug 19 2026) with `SITE.donation`
+  re-applied on load.
 - Pages in `fundraising/` load the same engine via `../js/site.js`; the `REL`
   prefix keeps every generated link/asset path correct one level down.
