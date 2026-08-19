@@ -14,13 +14,14 @@ Project: `https://umnlnmjzsbhlxqldmubj.supabase.co`
 3. Paste into the SQL Editor and click **Run**.
 
 That's everything: 10 tables, all Row Level Security policies, triggers,
-admin dashboard functions, and seed data (the six communities, three starter
+admin dashboard functions, and seed data (the five communities, three starter
 activities, a welcome post, and the admin allow-list). The script is
 **idempotent** — running it twice is harmless.
 
-> The same SQL also exists as 6 ordered files in `supabase/migrations/`
+> The same SQL also exists as ordered files in `supabase/migrations/`
 > if you ever adopt the Supabase CLI. `setup.sql` is just those files
-> concatenated.
+> concatenated (later one-off migrations like 007/008 are folded into
+> the seed or listed below).
 
 ### Already ran setup before August 2026? Apply migration 006
 
@@ -30,6 +31,16 @@ Run once. It adds the two event types used by the five-option portal hub
 (`portal_home_viewed`, `portal_option_selected`). Without it the hub still
 works, but those engagement events are rejected by the database. Re-running
 the full `setup.sql` works too — it is idempotent and now includes 006.
+
+### Database still lists Northside NICU? Apply migration 008
+
+Northside NICU was removed from the site and portal on Aug 19 2026 (no
+active partnership). Fresh installs no longer seed it, but an existing
+database keeps its row until you paste
+`supabase/migrations/008_remove_nicu.sql` into the SQL Editor and Run once
+(idempotent). It deletes the community and renumbers the remaining five;
+any member who had NICU as their primary community keeps their account and
+simply picks a new community in Profile.
 
 ## Step 2 — Tell Supabase Auth where the site lives
 
@@ -74,8 +85,8 @@ from the app, and users can never change their own role.)
 
 ## Verifying it works
 
-- `node test/smoke.test.js` — 201 site DOM tests (needs `npm i jsdom --no-save`)
-- `node test/portal.test.js` — 96 portal DOM tests (stubbed Supabase)
+- `node test/smoke.test.js` — 503 site DOM tests (needs `npm i jsdom --no-save`)
+- `node test/portal.test.js` — 173 portal DOM tests (stubbed Supabase)
 - `node test/portal-live-check.js` — live checks against the real project
   (run after Steps 1–2; uses only the public publishable key)
 - `supabase/rls_verification.sql` — 66 security/behavior checks that run in a

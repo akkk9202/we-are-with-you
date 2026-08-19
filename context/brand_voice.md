@@ -21,7 +21,7 @@ line should feel like it was written by a caring person to another person in a h
 4. **Invitational.** Prefer "you are invited," "when you're ready," "you may" over commands.
 5. **Honest.** Don't promise what isn't live yet. If a form isn't ready, say "email us and we'll take
    it from there" (this pattern already exists on the contact page).
-6. **Quiet where it matters.** NICU and end-of-life-adjacent copy is intentionally softer and
+6. **Quiet where it matters.** Hospital and end-of-life-adjacent copy is intentionally softer and
    stiller than the rest of the site. Match the room.
 
 ## Do / Don't

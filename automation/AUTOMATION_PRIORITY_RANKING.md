@@ -20,7 +20,7 @@ priority  ≈  (impact × frequency) ÷ risk-if-done-wrong
 
 ### What raises risk on this repo (the load-bearing invariants)
 
-- **Partner slugs** (`cancer-care`, `ronald-mcdonald-house`, `nicu`, `senior-living`, `disability`, `schools-global`) are printed on physical QR codes and live in old URLs — **never rename a slug**, change the `name` field.
+- **Partner slugs** (`cancer-care`, `ronald-mcdonald-house`, `senior-living`, `disability`, `schools-global`) are printed on physical QR codes and live in old URLs — **never rename a slug**, change the `name` field.
 - **Redirect stubs** must never be deleted: `voices-of-love.html`, `taps-of-love.html`, `gyco.html`, `we-are-with-you.html`, `beat-and-breeze.html`, `winds-of-love.html`, `about-gyco.html`.
 - **Forms** route via `SITE.forms` keys (`studentApplication`, `partnerInquiry`, `songRequest`, `letterSubmission`, `hopeCapsule`, `teachingVideoRequest`) and `data-form="key"`; a `REPLACE_ME` key safely falls back to the contact page.
 - **`REPLACE_ME` / `TODO`** are safe fallbacks by design — never invent real values.

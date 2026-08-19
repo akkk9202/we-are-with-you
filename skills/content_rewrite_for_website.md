@@ -10,7 +10,7 @@ lands gently for a vulnerable audience, and drops cleanly into the data-driven c
    - Partner page copy → `js/partners.js` (`heroTitle`, `heroText`, `about`, `cards[].text`, `closing`).
    - Global copy (tagline, footer note, press item) → `js/config.js` (`SITE`).
    - Page-specific static prose → the relevant `*.html`.
-3. Note which community the copy serves and match its register (NICU/quiet vs. schools/upbeat).
+3. Note which community the copy serves and match its register (hospital/quiet vs. schools/upbeat).
 
 ## Voice rules (summary — full version in brand_voice.md)
 
@@ -23,7 +23,7 @@ lands gently for a vulnerable audience, and drops cleanly into the data-driven c
 ## Hard constraints
 
 - **Don't change public partner names** ("City of Hope Atlanta (CTCA)", "The America Wheat Mission
-  (Milal)", "Northside Intensive Care Unit (NICU)", …) unless that's the explicit task.
+  (Milal)", "Wheat Mission Atlanta (Milal)", …) unless that's the explicit task.
 - **Never touch partner slugs** — they're QR-code / URL keys.
 - **Preserve Korean text** (e.g., 나도) and any encoded URLs exactly.
 - Keep the canonical tagline intact: **"Even Here. Even Now. We Are With You."**

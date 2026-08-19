@@ -57,8 +57,7 @@ the homepage and the Programs page — all rendered automatically.
 |---|---|---|
 | `cancer-care` | City of Hope Atlanta (CTCA) | 1 |
 | `ronald-mcdonald-house` | Ronald McDonald House | 2 |
-| `nicu` | Northside Intensive Care Unit (NICU) | 3 |
-| `senior-living` | Senior Living | 4 |
+| `senior-living` | Senior Living | 3 |
 | `disability` | Wheat Mission Atlanta (Milal) | 5 |
 | `schools-global` | Schools & Global Communities | 6 |
 

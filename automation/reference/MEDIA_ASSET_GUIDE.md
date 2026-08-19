@@ -28,7 +28,6 @@
 | `assets/images/home-carousel-3.jpg` | Homepage carousel frame 3 |
 | `assets/logos/city-of-hope-atlanta.png` | `cancer-care` logo |
 | `assets/logos/ronald-mcdonald-house.png` | `ronald-mcdonald-house` logo |
-| `assets/logos/northside-nicu.png` | `nicu` logo |
 | `assets/logos/milal.png` | `disability` logo |
 | `assets/logos/nado-school.png` | NADO School logo |
 | `assets/logos/gyco.png` | GYCO logo |

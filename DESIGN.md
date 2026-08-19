@@ -26,7 +26,7 @@ No extra eyebrows, icons, or dividers — the mist band and hairline cards
 carry the section.
 
 Below it (Aug 14): **Community Partners** (`#community`, white band) — a
-`.logo-row` of the six community `.logo-chip`s rendered from partners.js, each
+`.logo-row` of the five community `.logo-chip`s rendered from partners.js, each
 linking to its partner page. (A Community Supporters block existed briefly the
 same day and was removed — no supporters to show yet.) The "Have another
 idea?" callout closes the support band. Page rhythm:
@@ -49,7 +49,7 @@ Google. The homepage now orients that visitor in its first three sections:
    Right rail (`.home-hero__aside`, "Take WE ARE WITH YOU With You"): two
    portrait brochure previews (`.brochure`, 17:22 flyer proportions,
    `SITE.home.brochures`; missing file → labeled placeholder, link disarmed)
-   with the six communities directly beneath as a single-column `.logo-strip`,
+   with the five communities directly beneath as a single-column `.logo-strip`,
    each linking to its partner page. Stacks under the text below 960px.
    Still a public homepage, never a login page.
 

@@ -5,7 +5,7 @@ Everything you'll need to change regularly lives in **two files**:
 | File | What it controls |
 |---|---|
 | `js/config.js` | Email, Instagram, YouTube, location, all 6 Google Form links, the nav menu, footer text |
-| `js/partners.js` | All pathway content: names, **order**, **logos**, card text, and every partner page (City of Hope Atlanta, RMH (Ronald McDonald House in Atlanta), Northside NICU, Senior Living, Wheat Mission Atlanta (Milal), Schools & Global — CLCL + HYCS) |
+| `js/partners.js` | All pathway content: names, **order**, **logos**, card text, and every partner page (City of Hope Atlanta, RMH (Ronald McDonald House in Atlanta), Senior Living, Wheat Mission Atlanta (Milal), Schools & Global — CLCL + HYCS) |
 
 If you only ever open those two files, you can run 90% of the site.
 
@@ -34,7 +34,7 @@ The six request forms the site expects (field lists are in your planning doc): S
 
 The contact page's **Support the Work** cards have six more keys — `supportProject`, `materialsDonation`, `sponsorInquiry`, `skillShare`, `communityConnection`, `generalSupport`. These behave slightly differently: while a key is still `REPLACE_ME`, its button is a working `mailto:` link to `SITE.email` with a prefilled subject (never a disabled "coming soon" button), because email is a fine way to handle these today. Paste a Google Form URL into the key and the button switches to the form automatically.
 
-The contact page also has a **Community Partners** band — it needs no editing; it renders the six community logos from `js/partners.js` automatically. (The **Give to WAWY** band moved to the Support Us page, Aug 15 2026.)
+The contact page also has a **Community Partners** band — it needs no editing; it renders the five community logos from `js/partners.js` automatically. (The **Give to WAWY** band moved to the Support Us page, Aug 15 2026.)
 
 ## 2a. The Support Us page (fundraising/)
 
@@ -71,21 +71,21 @@ Open `js/partners.js`. Every partner block has:
 order: 1,                       // position everywhere (nav, cards, footer)
 name: "City of Hope Atlanta (CTCA)",   // the visible name everywhere
 ```
-Change `name` or `order` in ONE place — the nav dropdown, homepage cards, Programs page cards, footer links, and the partner page all update together. Slugs (`cancer-care`, `nicu`, `disability`) are intentionally unchanged so old links and printed QR codes keep working.
+Change `name` or `order` in ONE place — the nav dropdown, homepage cards, Programs page cards, footer links, and the partner page all update together. Slugs (`cancer-care`, `disability`) are intentionally unchanged so old links and printed QR codes keep working.
 
 ## 3a. Replace pathway logos
 Each partner block has a `logo` + `logoAlt` field:
 ```js
 logo: "assets/logos/city-of-hope-atlanta.png",
 ```
-Drop a PNG into `assets/logos/` and point `logo` at it. Already in place: `city-of-hope-atlanta.png`, `ronald-mcdonald-house.png`, `northside-nicu.png`, `senior-living.png`, `milal.png` (the real “Wheat Mission in Atlanta” stamp, Aug 2026), and `schools-global.png` (TEMPORARY: the HYCS — Harvester Yeshua Christian School Inc. — logo stands in until a dedicated Schools & Global logo exists; overwrite to swap). Plus `gyco.png` and `nado-school.png` used on their pages. If a file ever goes missing, cards automatically show a clean monogram fallback (nothing breaks).
+Drop a PNG into `assets/logos/` and point `logo` at it. Already in place: `city-of-hope-atlanta.png`, `ronald-mcdonald-house.png`, `senior-living.png`, `milal.png` (the real “Wheat Mission in Atlanta” stamp, Aug 2026), and `schools-global.png` (TEMPORARY: the HYCS — Harvester Yeshua Christian School Inc. — logo stands in until a dedicated Schools & Global logo exists; overwrite to swap). Plus `gyco.png` and `nado-school.png` used on their pages. If a file ever goes missing, cards automatically show a clean monogram fallback (nothing breaks).
 
 ## 3b. Replace the homepage images
 `js/config.js` → the `home:` block.
 - **"You are invited" card image** (shown on the One Message for You page): overwrite `assets/images/home-invitation.jpg` (keep the name and you're done), or change `home.invitation.src`. Update the `alt` text to describe the new image.
 - **The community poster** (homepage, "On the Wall Where We Visit"): the revised “One Message For You” poster is in place (Aaron's 수정본 PDF, Aug 13 2026). To swap: overwrite `assets/images/home-poster.png` (keep the name and you're done), or change `home.poster.src`. Update `alt` and `caption` to describe the new image. This single image replaced the old six-slide flyer carousel.
 - **The two brochure previews** (homepage, "Take WE ARE WITH YOU With You"): the real brochures are in place (front: “One Message For You”, back: “This Is For You · Even Here, Even Now” with Support WAWY/Zelle info — from Aaron's revised PDFs, Aug 13 2026). To swap one, overwrite `assets/images/brochure-1.jpg` or `brochure-2.jpg` with a new portrait image and update the `alt` text in `home.brochures`. Visitors can click a brochure to see it full size.
-- **The six community logos near the top**: the strip pulls each logo from `js/partners.js` (see 3a), so replacing a logo file updates both places. The short labels/lines under "Where You May Have Met Us" live in `home.communities`.
+- **The five community logos near the top**: the strip pulls each logo from `js/partners.js` (see 3a), so replacing a logo file updates both places. The short labels/lines under "Where You May Have Met Us" live in `home.communities`.
 
 ## 3c. Edit the featured press article (Media page)
 `js/config.js` → the `press:` array — title, publisher, description, the English/Korean links, and the article image (`assets/images/press-newswave25.jpg`; a styled placeholder shows until the file exists). Add a second object to the array to feature another article.
@@ -199,7 +199,7 @@ buttons, and left-aligned section heads. Do not rename tokens in `css/style.css`
 (the Community Portal layers on them).
 
 ## 13. Run the tests
-489 automated checks cover the nav (including the Philosophy and Support Us tabs), community names/order, logos, the homepage poster and brochure previews, the NADO School / Join Us exclusion (stubs + saved content), the GYCO performance archive (year tabs, pagination, detail view), all six partner pages, the Media press card, the contact page's "Support the Work" cards (mailto fallbacks included), the Support Us page and its video-request form (Give to WAWY panel, exact copy, occasion whitelist, privacy consent, composed email, Google-Form flips), **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
+517 automated checks cover the nav (including the Philosophy and Support Us tabs), community names/order, logos, the homepage poster and brochure previews, the NADO School / Join Us exclusion (stubs + saved content), the GYCO performance archive (year tabs, pagination, detail view), all five partner pages, the Media press card, the contact page's "Support the Work" cards (mailto fallbacks included), the Support Us page and its video-request form (Give to WAWY panel, exact copy, occasion whitelist, privacy consent, composed email, Google-Form flips), **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
 ```bash
 npm install jsdom   # once
 node test/smoke.test.js

@@ -4,7 +4,7 @@
 -- Idempotent: existing rows are left alone (on conflict do nothing).
 -- ============================================================
 
--- ── the six communities (stable slugs — these are load-bearing) ──
+-- ── the five communities (stable slugs — these are load-bearing) ──
 insert into public.communities (name, slug, description, image_url, display_order) values
   ('City of Hope Atlanta', 'city-of-hope',
    'Music, messages, stories, and encouragement for patients, families, caregivers, survivors, and healthcare staff at City of Hope Atlanta (formerly CTCA).',
@@ -12,18 +12,15 @@ insert into public.communities (name, slug, description, image_url, display_orde
   ('RMH (Ronald McDonald House in Atlanta)', 'ronald-mcdonald-house',
    'Hope and meaningful moments for families staying close to hospitalized children — letters, cheerful music, and simple activities to share together.',
    'assets/logos/ronald-mcdonald-house.png', 2),
-  ('Northside NICU', 'northside-nicu',
-   'Gentle music, letters, and encouragement for babies, parents, families, and care teams in the Northside neonatal intensive care community.',
-   'assets/logos/northside-nicu.png', 3),
   ('Senior Living', 'senior-living',
    'Familiar songs, memories, stories, and intergenerational connection for residents, families, staff, and volunteers in senior communities.',
-   'assets/logos/senior-living.png', 4),
+   'assets/logos/senior-living.png', 3),
   ('Schools & Global', 'schools-global',
    'Learning, music, stories, and encouragement for students, teachers, and partner schools — locally and around the world.',
-   'assets/logos/schools-global.png', 5),
+   'assets/logos/schools-global.png', 4),
   ('Wheat Mission Atlanta (Milal)', 'milal',
    'Inclusive music, participation, and encouragement with Wheat Mission Atlanta (Milal), serving people with disabilities and their families.',
-   'assets/logos/milal.png', 6)
+   'assets/logos/milal.png', 5)
 on conflict (slug) do nothing;
 
 -- ── admin allow-list ────────────────────────────────────────
@@ -53,7 +50,7 @@ insert into public.activity_definitions (name, slug, description, activity_type,
    '{"fields":[{"key":"song","label":"The song","type":"text"},{"key":"memory","label":"Your memory","type":"textarea"}],"reflection":"Every memory has value. Every story deserves to be heard."}')
 on conflict (slug) do nothing;
 
--- attach every starter activity to all six communities
+-- attach every starter activity to all communities
 insert into public.activity_communities (activity_id, community_id)
 select a.id, c.id
 from public.activity_definitions a

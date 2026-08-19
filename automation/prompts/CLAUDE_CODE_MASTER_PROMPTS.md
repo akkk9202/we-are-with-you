@@ -6,7 +6,7 @@
 - Static site on GitHub Pages, **no backend / no build / no database / no auth**. Live: `https://akkk9202.github.io/we-are-with-you/`
 - Audience includes hospital patients and grieving families — **tone matters**.
 - Content lives in data files, not HTML: `js/content/pages/`, `js/content/global.js` (the `SITE` object), `js/content/media-assets.js`, `js/content/theme-options.js` + `css/theme.css`, `js/partners.js` (the `PARTNERS` object). The renderer `js/site.js` is rarely edited. Base tokens in `css/style.css`.
-- **Never rename partner slugs** (`cancer-care`, `ronald-mcdonald-house`, `nicu`, `senior-living`, `disability`, `schools-global`) — they are on printed QR codes. Change the visible `name` instead.
+- **Never rename partner slugs** (`cancer-care`, `ronald-mcdonald-house`, `senior-living`, `disability`, `schools-global`) — they are on printed QR codes. Change the visible `name` instead.
 - **Never delete redirect stubs**: `voices-of-love.html`, `taps-of-love.html`, `gyco.html`, `we-are-with-you.html`, `beat-and-breeze.html`, `winds-of-love.html`, `about-gyco.html`.
 - Forms are `data-form="<key>"` attributes resolved through `SITE.forms`. Keys: `studentApplication`, `partnerInquiry`, `songRequest`, `letterSubmission`, `hopeCapsule`, `teachingVideoRequest`. `REPLACE_ME` / `TODO` are **intentional safe fallbacks** that route to the contact page — never fill them with invented URLs.
 - Preserve Korean text and encoded URLs exactly.

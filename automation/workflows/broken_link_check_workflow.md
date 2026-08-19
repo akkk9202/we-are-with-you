@@ -12,7 +12,7 @@ Purpose: Systematically verify that every link on **WE ARE WITH YOU** resolves �
 - `automation/reference/form-keys.md` and `automation/reference/slugs.md`.
 
 ## Steps
-1. **Internal page links.** For every `href` / nav item, confirm the target `.html` file exists in the repo root and (for partner pages) the `?p=<slug>` slug is one of: `cancer-care`, `ronald-mcdonald-house`, `nicu`, `senior-living`, `disability`, `schools-global`.
+1. **Internal page links.** For every `href` / nav item, confirm the target `.html` file exists in the repo root and (for partner pages) the `?p=<slug>` slug is one of: `cancer-care`, `ronald-mcdonald-house`, `senior-living`, `disability`, `schools-global`.
 2. **Redirect stubs → live anchors.** Confirm each stub still exists AND its target anchor is still present on the destination page:
    - `voices-of-love.html` → `partner.html?p=cancer-care` (and similar)
    - Also verify: `taps-of-love.html`, `gyco.html`, `we-are-with-you.html`, `beat-and-breeze.html`, `winds-of-love.html`, `about-gyco.html`.

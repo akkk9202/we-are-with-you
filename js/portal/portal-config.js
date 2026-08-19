@@ -15,11 +15,12 @@ const PORTAL_CONFIG = {
 
   slogan: "Even Here, Even Now, WE ARE WITH YOU.",
 
-  /* ── The six portal communities (slug order = display order) ── */
+  /* ── The five portal communities (slug order = display order) ──
+     (a sixth community was removed Aug 19 2026 — no active partnership;
+      saved under context/excluded/, restore steps in RESTORE.md) */
   communities: [
     { slug: "city-of-hope",          name: "City of Hope Atlanta" },
     { slug: "ronald-mcdonald-house", name: "RMH (Ronald McDonald House in Atlanta)" },
-    { slug: "northside-nicu",        name: "Northside NICU" },
     { slug: "senior-living",         name: "Senior Living" },
     { slug: "schools-global",        name: "Schools & Global" },
     { slug: "milal",                 name: "Wheat Mission Atlanta (Milal)" },
@@ -29,7 +30,6 @@ const PORTAL_CONFIG = {
   legacyPartnerMap: {
     "cancer-care": "city-of-hope",
     "ronald-mcdonald-house": "ronald-mcdonald-house",
-    "nicu": "northside-nicu",
     "senior-living": "senior-living",
     "disability": "milal",
     "schools-global": "schools-global",

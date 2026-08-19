@@ -118,7 +118,7 @@ Almost all content lives in data files, not in HTML. `js/site.js` reads them and
 
 These raise the risk of *any* change and are why the procedures exist:
 
-1. **Partner slugs are printed on physical QR codes and live in old URLs. NEVER rename a slug.** Change the visible `name` field instead. The six slugs: `cancer-care`, `ronald-mcdonald-house`, `nicu`, `senior-living`, `disability`, `schools-global`.
+1. **Partner slugs are printed on physical QR codes and live in old URLs. NEVER rename a slug.** Change the visible `name` field instead. The five slugs: `cancer-care`, `ronald-mcdonald-house`, `senior-living`, `disability`, `schools-global`.
 2. **Redirect stubs must never be deleted** (nor the anchors they target): `voices-of-love.html`, `taps-of-love.html`, `gyco.html`, `we-are-with-you.html`, `beat-and-breeze.html`, `winds-of-love.html`, `about-gyco.html`.
 3. **Google Forms are outbound links** via `SITE.forms` keys: `studentApplication`, `partnerInquiry`, `songRequest`, `letterSubmission`, `hopeCapsule`, `teachingVideoRequest`. Any element with `data-form="key"` routes through these; a key left at `REPLACE_ME` safely routes to the contact page.
 4. **`REPLACE_ME` / `TODO` render as safe fallbacks by design.** Do not invent real values.

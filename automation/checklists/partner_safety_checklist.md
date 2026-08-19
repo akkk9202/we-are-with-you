@@ -5,7 +5,7 @@ When to run: Before/after any change to `js/partners.js` or partner-related page
 
 ## Slugs and URLs (load-bearing)
 - [ ] Never rename a slug — printed QR codes depend on them. Change the visible `name` field instead.
-- [ ] Slugs remain exactly: cancer-care, ronald-mcdonald-house, nicu, senior-living, disability, schools-global.
+- [ ] Slugs remain exactly: cancer-care, ronald-mcdonald-house, senior-living, disability, schools-global.
 - [ ] Partner still reachable via `partner.html?p=SLUG`.
 - [ ] Redirect stubs for that partner intact (e.g. voices-of-love.html → cancer-care).
 

@@ -2,7 +2,7 @@
 
 - **Never `git push`, open a PR, or merge** unless the maintainer explicitly asks. Committing is
   also opt-in. (`../../directives/github_workflow.md`)
-- **Never rename a partner slug.** `cancer-care`, `ronald-mcdonald-house`, `nicu`, `senior-living`,
+- **Never rename a partner slug.** `cancer-care`, `ronald-mcdonald-house`, `senior-living`,
   `disability`, `schools-global` are printed on physical QR codes and linked from old URLs. Change
   the visible `name` field instead. (`../reference/slugs.md`)
 - **Never delete redirect stubs** — `voices-of-love.html`, `taps-of-love.html`, `gyco.html`,

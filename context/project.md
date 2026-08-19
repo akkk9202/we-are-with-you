@@ -4,7 +4,7 @@
 
 **WE ARE WITH YOU** is the public website for the **Greater Youth Collaborative Opus (GYCO)**, a
 student-led nonprofit initiative. Students learn, create, serve, and lead — using music as the first
-tool — and carry that into real communities: hospitals, family-support housing, NICUs, senior living,
+tool — and carry that into real communities: hospitals, family-support housing, senior living,
 disability communities, and partner schools.
 
 The website's job is to **invite and connect**, not to transact. Its primary calls to action are
@@ -14,7 +14,7 @@ intake happens through external Google Forms linked from the site.
 ## Audience
 
 The people landing on these pages are often in hard moments: cancer patients and their caregivers,
-parents in a NICU, families staying near a children's hospital, seniors and their families, people in
+families staying near a children's hospital, seniors and their families, people in
 the disability community, and students/teachers. **Design and copy must be calm, warm, and never
 clinical, salesy, or performative.**
 
@@ -23,7 +23,7 @@ clinical, salesy, or performative.**
 - **Home** (`index.html`) — mission, "why we exist," pathways overview, partner carousel.
 - **Programs** (`programs.html`) — all partner pathways as cards.
 - **Partner pages** (`partner.html?p=SLUG`) — one template, data-driven from `js/partners.js`.
-  Current slugs (do not rename): `cancer-care`, `ronald-mcdonald-house`, `nicu`, `senior-living`,
+  Current slugs (do not rename): `cancer-care`, `ronald-mcdonald-house`, `senior-living`,
   `disability`, `schools-global`.
 - **GYCO** (`student-community.html`) — the student growth community.
 - **NADO School** (`learning.html`) — the learning philosophy ("Nado / 나도" = "me too").

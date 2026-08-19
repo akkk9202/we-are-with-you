@@ -26,21 +26,12 @@
         "is_active": true
       },
       {
-        "id": "c3",
-        "name": "Northside NICU",
-        "slug": "northside-nicu",
-        "description": "Gentle encouragement for the smallest fighters.",
-        "image_url": "assets/logos/northside-nicu.png",
-        "display_order": 3,
-        "is_active": true
-      },
-      {
         "id": "c4",
         "name": "Senior Living",
         "slug": "senior-living",
         "description": "Songs and memories with our seniors.",
         "image_url": "assets/logos/senior-living.png",
-        "display_order": 4,
+        "display_order": 3,
         "is_active": true
       },
       {
@@ -49,7 +40,7 @@
         "slug": "schools-global",
         "description": "Learning and friendship across the world.",
         "image_url": "",
-        "display_order": 5,
+        "display_order": 4,
         "is_active": true
       },
       {
@@ -58,7 +49,7 @@
         "slug": "milal",
         "description": "Every ability, every voice, together.",
         "image_url": "assets/logos/milal.png",
-        "display_order": 6,
+        "display_order": 5,
         "is_active": true
       }
     ],
@@ -155,7 +146,7 @@
         "is_published": true,
         "content_communities": [
           {
-            "community_id": "c3"
+            "community_id": "c2"
           }
         ]
       },

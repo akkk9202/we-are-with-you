@@ -14,7 +14,7 @@ Purpose: Edit a partner / pathway page in `js/partners.js` safely — without ev
 
 ## The load-bearing rule (do not violate)
 - Each partner entry in the `PARTNERS` object is keyed by a **slug**. Printed QR codes and old URLs point at these slugs. The slugs are:
-  `cancer-care`, `ronald-mcdonald-house`, `nicu`, `senior-living`, `disability`, `schools-global`.
+  `cancer-care`, `ronald-mcdonald-house`, `senior-living`, `disability`, `schools-global`.
 - **NEVER rename a slug key.** To change the visible label, edit the entry's **`name`** field instead. The slug stays; the name changes.
 
 ## Steps (UNDERSTAND → LOCATE → EDIT → VERIFY → SHOW → STOP)

@@ -10,7 +10,7 @@ When to run: Right after a deploy has published to GitHub Pages.
 - [ ] Footer renders correctly.
 
 ## Partner pages
-- [ ] Each partner renders via `partner.html?p=SLUG` for: cancer-care, ronald-mcdonald-house, nicu, senior-living, disability, schools-global.
+- [ ] Each partner renders via `partner.html?p=SLUG` for: cancer-care, ronald-mcdonald-house, senior-living, disability, schools-global.
 - [ ] Partner names, copy, and logos display correctly.
 
 ## Redirect stubs forward correctly

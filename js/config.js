@@ -83,7 +83,6 @@ const SITE = {
       { label: "Portal Home",           href: "community/home.html" },
       { label: "City of Hope Atlanta",  href: "community/city-of-hope.html" },
       { label: "RMH (Ronald McDonald House in Atlanta)", href: "community/ronald-mcdonald-house.html" },
-      { label: "Northside NICU",        href: "community/northside-nicu.html" },
       { label: "Senior Living",         href: "community/senior-living.html" },
       { label: "Schools & Global",      href: "community/schools-global.html" },
       { label: "Wheat Mission Atlanta (Milal)", href: "community/milal.html" },
@@ -139,7 +138,6 @@ const SITE = {
     communities: [
       { slug: "cancer-care",           label: "City of Hope Atlanta",  line: "Cancer care community" },
       { slug: "ronald-mcdonald-house", label: "RMH (Ronald McDonald House in Atlanta)", line: "Families and children" },
-      { slug: "nicu",                  label: "Northside NICU",        line: "Babies and families" },
       { slug: "senior-living",         label: "Senior Living",         line: "Older adult communities" },
       { slug: "schools-global",        label: "Schools & Global",      line: "CLCL, HYCS, and partner schools" },
       { slug: "disability",            label: "Wheat Mission Atlanta (Milal)", line: "People with disabilities and their families" },

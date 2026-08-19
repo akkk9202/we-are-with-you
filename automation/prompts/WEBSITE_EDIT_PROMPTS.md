@@ -65,7 +65,7 @@ Run smoke tests (80/0), show the diff, no commit.
 
 ```
 Edit the <slug> partner in js/partners.js. Slug MUST stay "<slug>" (it's printed on QR codes).
-Valid slugs: cancer-care, ronald-mcdonald-house, nicu, senior-living, disability, schools-global.
+Valid slugs: cancer-care, ronald-mcdonald-house, senior-living, disability, schools-global.
 
 Change:
 - name/display: "<old>" -> "<new>"      (this is the visible label; safe to change)
@@ -108,6 +108,6 @@ items. Smoke tests 80/0, show diff, no commit.
 |---|---|
 | "Change the about text." | "In js/content/pages/index.js change the mission paragraph FROM '<old>' TO '<new>'." |
 | "Add the new form." | "Set SITE.forms.songRequest in js/content/global.js to <URL>; leave the data-form keys untouched." |
-| "Rename NICU to Newborn Care." | "Change the `name` of the `nicu` partner to 'Newborn Care' in js/partners.js — keep the slug `nicu`." |
+| "Rename Senior Living." | "Change the `name` of the `senior-living` partner in js/partners.js — keep the slug `senior-living`." |
 
 **Never** fabricate a form URL, image path, or email. If you don't have the real value, leave the safe fallback and ask.

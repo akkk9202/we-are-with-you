@@ -22,7 +22,6 @@ Change the key and every one of those breaks at once. There is no server to add 
 |---|---|---|---|
 | `cancer-care` | City of Hope Atlanta (CTCA) | 1 | `partner.html?p=cancer-care` |
 | `ronald-mcdonald-house` | Ronald McDonald House | 2 | `partner.html?p=ronald-mcdonald-house` |
-| `nicu` | Northside Intensive Care Unit (NICU) | 3 | `partner.html?p=nicu` |
 | `senior-living` | Senior Living | 4 | `partner.html?p=senior-living` |
 | `disability` | The America Wheat Mission (Milal) | 5 | `partner.html?p=disability` |
 | `schools-global` | Schools & Global Communities | 6 | `partner.html?p=schools-global` |

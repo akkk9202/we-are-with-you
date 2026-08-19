@@ -45,7 +45,7 @@
 
 ## Invariants
 
-- [ ] No partner **slug** renamed or removed (`cancer-care`, `ronald-mcdonald-house`, `nicu`, `senior-living`, `disability`, `schools-global`) — display changes done via `name` only
+- [ ] No partner **slug** renamed or removed (`cancer-care`, `ronald-mcdonald-house`, `senior-living`, `disability`, `schools-global`) — display changes done via `name` only
 - [ ] No redirect stub deleted
 
 ## Tests

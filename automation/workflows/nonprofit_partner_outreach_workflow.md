@@ -17,7 +17,7 @@ Purpose: Prepare outreach to prospective partner communities (hospitals, senior 
 - Do NOT collect, store, or expose private personal data of contacts.
 
 ## Steps
-1. **UNDERSTAND.** Which organization, what type (hospital / NICU / Ronald McDonald House / senior living / disability / school / global), and what's the ask (introduce the program, propose a visit, etc.)?
+1. **UNDERSTAND.** Which organization, what type (hospital / Ronald McDonald House / senior living / disability / school / global), and what's the ask (introduce the program, propose a visit, etc.)?
 2. **RESEARCH (light).** Confirm the org is a real, appropriate fit and note a genuine, specific reason for reaching out. No fabricated details.
 3. **DRAFT.** Use `templates/outreach_email_template.md` (or `followup_email_template.md`). Keep it short, warm, and specific. Lead with the mission and the tagline spirit ("Even Here. Even Now. We Are With You."), not a sales pitch. Make the ask clear and low-pressure.
 4. **TONE REVIEW.** Run the draft through `automation/workflows/content_quality_review_workflow.md` tone standards — respectful, never presumptuous about patients or loss.

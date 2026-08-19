@@ -17,7 +17,7 @@ raw HTML for page-specific static sections that aren't data-driven.
 
 ## 2. Rules that protect existing links and QR codes
 
-- **Never rename a partner slug.** Slugs (`cancer-care`, `nicu`, `disability`, `senior-living`,
+- **Never rename a partner slug.** Slugs (`cancer-care`, `disability`, `senior-living`,
   `ronald-mcdonald-house`, `schools-global`) are printed on physical QR codes and linked from old
   URLs. To change what's shown, edit the `name` field, not the key.
 - **Don't remove redirect stubs** (`voices-of-love.html`, `gyco.html`, `taps-of-love.html`, …). They

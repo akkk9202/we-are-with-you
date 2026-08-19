@@ -32,8 +32,8 @@ const rest = async (p, opts = {}) => {
   const comms = await rest('communities?select=slug,name,is_active&order=display_order');
   ok(comms.status === 200 && Array.isArray(comms.body), 'REST API reachable with the publishable key');
   const slugs = (comms.body || []).map((c) => c.slug);
-  ok(slugs.length === 6, `six communities seeded (found ${slugs.length})`);
-  ok(['city-of-hope', 'ronald-mcdonald-house', 'northside-nicu', 'senior-living', 'schools-global', 'milal']
+  ok(slugs.length === 5, `five communities seeded (found ${slugs.length}) — if 6, run supabase/migrations/008_remove_nicu.sql`);
+  ok(['city-of-hope', 'ronald-mcdonald-house', 'senior-living', 'schools-global', 'milal']
       .every((s) => slugs.includes(s)), 'community slugs match the portal routes');
 
   const profiles = await rest('profiles?select=id');

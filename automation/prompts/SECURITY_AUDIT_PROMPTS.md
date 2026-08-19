@@ -66,7 +66,7 @@ until I approve. Keep changes scoped; don't touch nav or copy.
 Verify availability guarantees that our security/deploy checklist depends on:
 - All redirect stubs still exist and point correctly: voices-of-love.html, taps-of-love.html,
   gyco.html, we-are-with-you.html, beat-and-breeze.html, winds-of-love.html, about-gyco.html.
-- All partner slugs still resolve: cancer-care, ronald-mcdonald-house, nicu, senior-living,
+- All partner slugs still resolve: cancer-care, ronald-mcdonald-house, senior-living,
   disability, schools-global.
 Report any missing/renamed stub or slug (these break printed QR codes). Read-only. No commit.
 ```

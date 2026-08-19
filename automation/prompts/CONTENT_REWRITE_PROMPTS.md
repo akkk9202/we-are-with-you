@@ -54,7 +54,7 @@ tagline. Show me before/after as text first; apply as minimal diff after I appro
 Rewrite the description for the <slug> partner in js/partners.js in brand voice. Slug stays "<slug>"
 (printed on QR codes) — only change the visible text fields, never the slug key.
 
-Keep it respectful and specific to that community (e.g. NICU families, seniors, disability partners,
+Keep it respectful and specific to that community (e.g. hospital families, seniors, disability partners,
 schools). No pity framing, no outcome promises. Preserve Korean text. Offer 2 options as text first;
 apply the chosen one as a minimal diff; smoke tests 80/0.
 ```
@@ -85,7 +85,7 @@ approve wording, I'll tell you exactly which js/content/pages/ key to place it i
 
 | Vague | Good |
 |---|---|
-| "Make the copy better." | "Rewrite the NICU intro in js/partners.js warmer + plainer per context/brand_voice.md; 2 text options first." |
+| "Make the copy better." | "Rewrite the Senior Living intro in js/partners.js warmer + plainer per context/brand_voice.md; 2 text options first." |
 | "Punch up the homepage." | "Tighten the index hero copy without adding claims; keep the tagline; before/after as text." |
 
 **Golden rule:** for tone-sensitive copy, deliver text options for approval **before** editing files. Never promise outcomes; never sensationalize; never alter the tagline or Korean text.

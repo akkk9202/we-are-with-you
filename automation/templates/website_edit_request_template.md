@@ -29,7 +29,7 @@
 - [ ] `js/content/theme-options.js` / `css/theme.css`  <!-- theme presets -->
 - [ ] Other: ______
 
-**Exact object / key path:** ______  <!-- e.g. PARTNERS["nicu"].heroText, SITE.press[2].title -->
+**Exact object / key path:** ______  <!-- e.g. PARTNERS["senior-living"].heroTitle, SITE.press[2].title -->
 
 ## 3. Exact text change (old → new)
 

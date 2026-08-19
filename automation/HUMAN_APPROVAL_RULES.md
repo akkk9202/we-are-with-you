@@ -29,7 +29,7 @@ This site is public and serves hospital patients and grieving families. The defa
 
 ## The special-case items (why they need sign-off)
 
-- **Partner slugs** — `cancer-care`, `ronald-mcdonald-house`, `nicu`, `senior-living`, `disability`, `schools-global` are printed on **physical QR codes** and embedded in old URLs. Renaming one breaks the real world. **Never rename a slug; change the visible `name` field instead.** This is not "ask first" so much as "don't."
+- **Partner slugs** — `cancer-care`, `ronald-mcdonald-house`, `senior-living`, `disability`, `schools-global` are printed on **physical QR codes** and embedded in old URLs. Renaming one breaks the real world. **Never rename a slug; change the visible `name` field instead.** This is not "ask first" so much as "don't."
 - **Redirect stubs** — `voices-of-love.html`, `taps-of-love.html`, `gyco.html`, `we-are-with-you.html`, `beat-and-breeze.html`, `winds-of-love.html`, `about-gyco.html` — and the anchors they target must never be deleted or altered without approval; they keep old links working.
 - **`REPLACE_ME` / `TODO`** — these render as **safe fallbacks by design** (e.g. a Form key at `REPLACE_ME` routes to the contact page). Only a human knows the real value; the AI must never guess one.
 - **Forms** — the `SITE.forms` keys (`studentApplication`, `partnerInquiry`, `songRequest`, `letterSubmission`, `hopeCapsule`, `teachingVideoRequest`) point to external Google Forms. Wiring in a real URL is a human decision.

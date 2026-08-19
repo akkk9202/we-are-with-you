@@ -14,7 +14,7 @@
 
 - The **slug** is the object key and appears in the page URL. Slugs are **printed on QR codes** and live in old links — they are permanent.
 - **Never reuse or rename an existing slug.** To change a partner's display name, edit the `name` field, not the slug.
-- Existing slugs (do NOT reuse): `cancer-care`, `ronald-mcdonald-house`, `nicu`, `senior-living`, `disability`, `schools-global`.
+- Existing slugs (do NOT reuse): `cancer-care`, `ronald-mcdonald-house`, `senior-living`, `disability`, `schools-global`.
 - A new slug must be lowercase-hyphenated, unique, and chosen to last forever.
 
 ## ⚠️ Form-key rules

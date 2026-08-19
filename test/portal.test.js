@@ -94,10 +94,9 @@ function loadPortalPage(file, url, stubState, extraFiles) {
 const COMMS = [
   { id: 'c1', name: 'City of Hope Atlanta', slug: 'city-of-hope', description: 'Hope.', image_url: 'assets/logos/city-of-hope-atlanta.png', display_order: 1, is_active: true },
   { id: 'c2', name: 'RMH (Ronald McDonald House in Atlanta)', slug: 'ronald-mcdonald-house', description: 'Families.', image_url: '', display_order: 2, is_active: true },
-  { id: 'c3', name: 'Northside NICU', slug: 'northside-nicu', description: 'Gentle.', image_url: '', display_order: 3, is_active: true },
-  { id: 'c4', name: 'Senior Living', slug: 'senior-living', description: 'Memories.', image_url: '', display_order: 4, is_active: true },
-  { id: 'c5', name: 'Schools & Global', slug: 'schools-global', description: 'Learning.', image_url: '', display_order: 5, is_active: true },
-  { id: 'c6', name: 'Wheat Mission Atlanta (Milal)', slug: 'milal', description: 'Inclusion.', image_url: '', display_order: 6, is_active: true },
+  { id: 'c4', name: 'Senior Living', slug: 'senior-living', description: 'Memories.', image_url: '', display_order: 3, is_active: true },
+  { id: 'c5', name: 'Schools & Global', slug: 'schools-global', description: 'Learning.', image_url: '', display_order: 4, is_active: true },
+  { id: 'c6', name: 'Wheat Mission Atlanta (Milal)', slug: 'milal', description: 'Inclusion.', image_url: '', display_order: 5, is_active: true },
 ];
 const PROFILE = { id: 'u1', full_name: 'Aaron Tester', email: 'a@test.org', account_type: 'student_volunteer',
   primary_community_id: 'c2', role: 'user', email_consent: true, is_disabled: false, created_at: '2026-07-01T00:00:00Z' };
@@ -147,12 +146,16 @@ const PUBLIC_LETTERS = [
 /* ── 1. STATIC STRUCTURE of every portal page ── */
 console.log('\n[portal pages · static structure]');
 {
-  const pages = fs.readdirSync(path.join(ROOT, 'community')).filter((f) => f.endsWith('.html'));
-  ok(pages.length === 26, `26 portal pages exist in community/ (found ${pages.length})`);
+  const pages = fs.readdirSync(path.join(ROOT, 'community')).filter((f) => f.endsWith('.html'))
+    .filter((f) => f !== 'northside-nicu.html'); // redirect stub, not a portal route (NICU removed Aug 19 2026)
+  ok(pages.length === 25, `25 portal pages exist in community/ (found ${pages.length})`);
+  const nicuStub = fs.readFileSync(path.join(ROOT, 'community', 'northside-nicu.html'), 'utf8');
+  ok(nicuStub.includes('http-equiv="refresh"') && nicuStub.includes('communities.html'),
+     'northside-nicu.html is a redirect stub → the Communities chooser (old links/QR codes keep working)');
   const required = ['index.html', 'login.html', 'signup.html', 'forgot-password.html', 'reset-password.html',
     'home.html', 'activity.html', 'profile.html', 'write-letter.html', 'request-letter.html',
     'request-video.html', 'request-song.html', 'content.html', 'participate.html', 'submission.html',
-    'city-of-hope.html', 'ronald-mcdonald-house.html', 'northside-nicu.html', 'senior-living.html',
+    'city-of-hope.html', 'ronald-mcdonald-house.html', 'senior-living.html',
     'schools-global.html', 'milal.html',
     'with-you.html', 'melody-box.html', 'bloom-bank.html', 'hope-capsule.html', 'communities.html'];
   ok(required.every((f) => pages.includes(f)), 'all required portal routes present');
@@ -276,7 +279,7 @@ console.log('\n[community/signup.html]');
   ok(!d.querySelector('#su-type') && !d.querySelector('#su-community'),
      'the separate account-type and community dropdowns are gone');
   const fromOpts = [...d.querySelectorAll('#su-from option')];
-  ok(fromOpts.length === 8, 'one combined "joining from" dropdown: placeholder + six communities + GYCO');
+  ok(fromOpts.length === 7, 'one combined "joining from" dropdown: placeholder + five communities + GYCO');
   ok(fromOpts[fromOpts.length - 1].value === 'gyco' && /GYCO/.test(fromOpts[fromOpts.length - 1].textContent),
      'GYCO is the final option');
   ok(d.body.textContent.includes('I am joining from'), 'label reads "I am joining from…"');
@@ -292,14 +295,14 @@ console.log('\n[community/signup.html]');
   d.querySelector('#su-email').value = 'new@member.org';
   d.querySelector('#su-password').value = 'longenough1';
   d.querySelector('#su-password2').value = 'longenough1';
-  d.querySelector('#su-from').value = 'c3';
+  d.querySelector('#su-from').value = 'c4';
   d.querySelector('input[name="agree"]').checked = true;
   d.querySelector('input[name="email_consent"]').checked = true;
   form.dispatchEvent(new dom.window.Event('submit', { bubbles: true, cancelable: true }));
   await tick(30);
   const su = dom.window.__calls.signUp;
   ok(su && su.email === 'new@member.org', 'signUp called with the email');
-  ok(su && su.options.data.account_type === 'community_member' && su.options.data.primary_community_id === 'c3',
+  ok(su && su.options.data.account_type === 'community_member' && su.options.data.primary_community_id === 'c4',
      'community choice → community_member of that community (valid schema values)');
   ok(su && su.options.data.email_consent === true, 'optional email consent captured');
   ok(su && /community\/login\.html\?verified=1$/.test(su.options.emailRedirectTo), 'email verification redirects back to portal login');
@@ -541,9 +544,9 @@ console.log('\n[community/communities.html · All Communities]');
   const d = dom.window.document;
   ok(d.querySelector('h1') && d.querySelector('h1').textContent === 'Communities', 'Communities directory renders');
   const visits = [...d.querySelectorAll('a.pcomm-row')].map((a) => a.getAttribute('href'));
-  ok(['city-of-hope.html', 'ronald-mcdonald-house.html', 'northside-nicu.html', 'senior-living.html',
+  ok(['city-of-hope.html', 'ronald-mcdonald-house.html', 'senior-living.html',
       'schools-global.html', 'milal.html'].every((h) => visits.includes(h)),
-     'all six community pages reachable from the directory');
+     'all five community pages reachable from the directory');
   ok(visits[0] === 'ronald-mcdonald-house.html', "member's own community is listed first");
   const mineRow = d.querySelector('a.pcomm-row .pcomm-row__mine');
   ok(mineRow && mineRow.textContent === 'Your community'
@@ -814,7 +817,7 @@ console.log('\n[test/preview.js · local preview server]');
      'preview is fully offline — the real Supabase project is never referenced');
   ok(FIXTURES.tables.content.every((c) => c.is_published === true), 'sample content is published-only (mirrors RLS)');
   const optionIds = ['with_you', 'melody_box', 'wish_pocket', 'bloom_bank', 'hope_capsule'];
-  ok(FIXTURES.tables.communities.length === 6 && optionIds.length === 5, 'fixtures cover six communities + five hub options');
+  ok(FIXTURES.tables.communities.length === 5 && optionIds.length === 5, 'fixtures cover five communities + five hub options');
 
   const css = await get('/css/portal.css');
   ok(css.status === 200 && css.type.startsWith('text/css'), 'stylesheets served with the right MIME type');

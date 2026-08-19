@@ -62,10 +62,10 @@ console.log('\n[index.html]');
   }
   const dd = [...d.querySelectorAll('.nav__dropdown a')].map(a => a.textContent.trim());
   ok(JSON.stringify(dd) === JSON.stringify(['Portal Home', 'City of Hope Atlanta', 'RMH (Ronald McDonald House in Atlanta)',
-     'Northside NICU', 'Senior Living', 'Schools & Global', 'Wheat Mission Atlanta (Milal)']),
-     'Community Portal dropdown: Portal Home + the six portal communities');
+     'Senior Living', 'Schools & Global', 'Wheat Mission Atlanta (Milal)']),
+     'Community Portal dropdown: Portal Home + the five portal communities');
   const ddHrefs = [...d.querySelectorAll('.nav__dropdown a')].map(a => a.getAttribute('href'));
-  ok(ddHrefs[1] === 'community/city-of-hope.html' && ddHrefs[6] === 'community/milal.html',
+  ok(ddHrefs[1] === 'community/city-of-hope.html' && ddHrefs[5] === 'community/milal.html',
      'dropdown links point into the Community Portal');
 
   /* hero — must orient a QR-code visitor with no prior context */
@@ -122,21 +122,21 @@ console.log('\n[index.html]');
        'missing brochure file → placeholder shows, dead link disarmed');
   }
 
-  /* community logo strip — merged into the brochure section, all six partners */
+  /* community logo strip — merged into the brochure section, all five partners */
   const strip = [...d.querySelectorAll('[data-community-logos] .logo-strip__item')];
   ok(!d.body.textContent.includes('Where You May Have Met Us'),
-     'strip carries no extra heading/intro — the six communities speak for themselves');
-  ok(strip.length === 6, 'logo strip shows all six communities');
+     'strip carries no extra heading/intro — the five communities speak for themselves');
+  ok(strip.length === 5, 'logo strip shows all five communities');
   const stripHrefs = strip.map(a => a.getAttribute('href'));
   ok(JSON.stringify(stripHrefs) === JSON.stringify([
-    'partner.html?p=cancer-care', 'partner.html?p=ronald-mcdonald-house', 'partner.html?p=nicu',
+    'partner.html?p=cancer-care', 'partner.html?p=ronald-mcdonald-house',
     'partner.html?p=senior-living', 'partner.html?p=schools-global', 'partner.html?p=disability',
   ]), 'every strip item links to its partner page, in the agreed order');
   const stripNames = strip.map(a => a.querySelector('.logo-strip__name').textContent.trim());
   ok(JSON.stringify(stripNames) === JSON.stringify([
-    'City of Hope Atlanta', 'RMH (Ronald McDonald House in Atlanta)', 'Northside NICU',
+    'City of Hope Atlanta', 'RMH (Ronald McDonald House in Atlanta)',
     'Senior Living', 'Schools & Global', 'Wheat Mission Atlanta (Milal)',
-  ]), 'strip names match the six major communities');
+  ]), 'strip names match the five major communities');
   ok(strip.every(a => a.querySelector('.logo-chip img')), 'every strip item has a logo (with monogram fallback)');
   ok(strip.every(a => a.querySelector('.logo-strip__line').textContent.trim().length > 0),
      'every strip item has a short identifying line');
@@ -144,7 +144,7 @@ console.log('\n[index.html]');
     const aside = d.querySelector('.home-hero .home-hero__aside');
     ok(!!aside, 'hero right column exists — no dead space beside the intro');
     ok(aside.querySelector('[data-brochures]') && aside.querySelector('[data-community-logos]'),
-       'brochures + six communities sit in the hero, beside the intro text');
+       'brochures + five communities sit in the hero, beside the intro text');
     const kids = [...aside.children];
     ok(kids.findIndex(k => k.hasAttribute('data-brochures')) < kids.findIndex(k => k.hasAttribute('data-community-logos')),
        'brochures come first, communities directly beneath');
@@ -268,17 +268,16 @@ console.log('\n[programs.html]');
   const html = fs.readFileSync(path.join(ROOT, 'programs.html'), 'utf8');
   ok(html.includes('http-equiv="refresh"') && html.includes('community/index.html'),
      'programs.html redirects into the Community Portal');
-  for (const slug of ['cancer-care', 'ronald-mcdonald-house', 'nicu', 'senior-living', 'disability', 'schools-global']) {
+  for (const slug of ['cancer-care', 'ronald-mcdonald-house', 'senior-living', 'disability', 'schools-global']) {
     ok(html.includes(`partner.html?p=${slug}`), `programs stub keeps a fallback link to partner "${slug}" (QR codes safe)`);
   }
 }
 
-/* ── 3. PARTNER PAGES (all six slugs) ── */
+/* ── 3. PARTNER PAGES (all five slugs) ── */
 console.log('\n[partner.html?p=…]');
 for (const [slug, expectName, expectLogo] of [
   ['cancer-care', 'City of Hope Atlanta (CTCA)', 'assets/logos/city-of-hope-atlanta.png'],
   ['ronald-mcdonald-house', 'RMH (Ronald McDonald House in Atlanta)', 'assets/logos/ronald-mcdonald-house.png'],
-  ['nicu', 'Northside Intensive Care Unit (NICU)', 'assets/logos/northside-nicu.png'],
   ['senior-living', 'Senior Living', 'assets/logos/senior-living.png'],
   ['disability', 'Wheat Mission Atlanta (Milal)', 'assets/logos/milal.png'],
   ['schools-global', 'Schools & Global Communities', 'assets/logos/schools-global.png'],
@@ -298,7 +297,16 @@ for (const [slug, expectName, expectLogo] of [
 {
   const dom = loadPage('partner.html', 'https://x.test/partner.html?p=bogus');
   const d = dom.window.document;
-  ok(d.querySelectorAll('#partner-root .index-item').length === 6, 'bad slug fallback lists all 6 communities');
+  ok(d.querySelectorAll('#partner-root .index-item').length === 5, 'bad slug fallback lists all 5 communities');
+}
+{
+  /* partner.html?p=nicu — the printed-QR slug for the removed NICU page —
+     must land on the same graceful chooser, never a broken page. */
+  const dom = loadPage('partner.html', 'https://x.test/partner.html?p=nicu');
+  const d = dom.window.document;
+  ok(d.querySelectorAll('#partner-root .index-item').length === 5 &&
+     !/NICU|Northside/i.test(d.body.textContent),
+     '?p=nicu (removed community, old QR codes) falls back to the community chooser with no NICU mention');
 }
 
 /* ── 3b. ONE MESSAGE FOR YOU ── */
@@ -429,8 +437,8 @@ console.log('\n[support the work]');
   ok(!d.querySelector('#supporter-logos') && !/Community Supporters/.test(d.body.textContent),
      'no Community Supporters block (removed — none exist yet)');
   const chips = [...d.querySelectorAll('#partner-logos a')];
-  ok(chips.length === 6 && chips.every(a => /^partner\.html\?p=/.test(a.getAttribute('href'))),
-     'partner row renders all six community logos, each linking to its partner page');
+  ok(chips.length === 5 && chips.every(a => /^partner\.html\?p=/.test(a.getAttribute('href'))),
+     'partner row renders all five community logos, each linking to its partner page');
   ok(chips.some(a => a.querySelector('img') && a.querySelector('img').getAttribute('src') === 'assets/logos/schools-global.png'),
      'partner row includes the Schools & Global globe mark');
 
@@ -960,8 +968,34 @@ console.log('\n[redirect stubs & slugs]');
     ok(html.includes('http-equiv="refresh"') && html.includes(target), `${file} stub intact → ${target}`);
   }
   const partnersSrc = fs.readFileSync(path.join(ROOT, 'js/partners.js'), 'utf8');
-  for (const slug of ['cancer-care', 'ronald-mcdonald-house', 'nicu', 'senior-living', 'disability', 'schools-global']) {
+  for (const slug of ['cancer-care', 'ronald-mcdonald-house', 'senior-living', 'disability', 'schools-global']) {
     ok(partnersSrc.includes(`"${slug}"`), `partner slug "${slug}" unchanged (QR codes safe)`);
+  }
+}
+
+/* ── 11b. NORTHSIDE NICU — removed (Aug 19 2026, no active partnership) ── */
+console.log('\n[northside NICU — removed]');
+{
+  /* Removed everywhere (site, portal, seed). Saved in context/excluded/ —
+     see RESTORE.md there. Old QR/links degrade gracefully (tested above). */
+  const stub = fs.readFileSync(path.join(ROOT, 'community/northside-nicu.html'), 'utf8');
+  ok(stub.includes('http-equiv="refresh"') && stub.includes('communities.html'),
+     'community/northside-nicu.html is a redirect stub → the Communities chooser');
+  ok(!fs.existsSync(path.join(ROOT, 'assets/logos/northside-nicu.png')),
+     'NICU logo removed from assets/logos/ (saved copy in context/excluded/)');
+  for (const saved of ['nicu-partner-block.js', 'northside-nicu-portal-page.html',
+                       'nicu-fragments.html', 'northside-nicu-logo.png']) {
+    ok(fs.existsSync(path.join(ROOT, 'context/excluded', saved)),
+       `removed NICU content saved (context/excluded/${saved})`);
+  }
+  for (const src of ['js/partners.js', 'js/config.js', 'js/portal/portal-config.js',
+                     'test/preview-fixtures.json', 'supabase/setup.sql']) {
+    ok(!/nicu|northside/i.test(fs.readFileSync(path.join(ROOT, src), 'utf8')),
+       `${src} carries no NICU/Northside reference`);
+  }
+  for (const file of PUBLIC_PAGES) {
+    ok(!/NICU|Northside/i.test(fs.readFileSync(path.join(ROOT, file), 'utf8')),
+       `${file} carries no NICU/Northside mention`);
   }
 }
 

@@ -35,7 +35,7 @@ If a `directive/` and anything else ever disagree, the **directive wins**.
 
 - **Never `git push`, open a PR, or merge** unless the maintainer explicitly asks. Committing is
   also opt-in. (`directives/github_workflow.md`)
-- **Never rename a partner slug.** `cancer-care`, `nicu`, `disability`, `senior-living`,
+- **Never rename a partner slug.** `cancer-care`, `disability`, `senior-living`,
   `ronald-mcdonald-house`, `schools-global` are printed on physical QR codes. Change the visible
   `name` field instead. (`js/partners.js`)
 - **Never delete redirect stubs** (`voices-of-love.html`, `taps-of-love.html`, `gyco.html`,

@@ -9,7 +9,7 @@ When to run: Before starting ANY edit to the WE ARE WITH YOU site.
 - [ ] Note the tone: audience includes hospital patients and grieving families ("Even Here. Even Now. We Are With You.").
 
 ## Confirm it touches no invariant
-- [ ] No partner slug is being renamed (cancer-care, ronald-mcdonald-house, nicu, senior-living, disability, schools-global) — change the `name` field instead.
+- [ ] No partner slug is being renamed (cancer-care, ronald-mcdonald-house, senior-living, disability, schools-global) — change the `name` field instead.
 - [ ] No redirect stub is being deleted (voices-of-love.html, taps-of-love.html, gyco.html, we-are-with-you.html, beat-and-breeze.html, winds-of-love.html, about-gyco.html).
 - [ ] No form key invented — SITE.forms keys are studentApplication, partnerInquiry, songRequest, letterSubmission, hopeCapsule, teachingVideoRequest.
 - [ ] REPLACE_ME / TODO values left as safe fallbacks — never fabricate a URL or contact value.

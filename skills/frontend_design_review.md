@@ -36,7 +36,7 @@ propose changes, apply only what's approved.
 - [ ] Fallbacks look intentional: missing logos → monogram chip; missing press image → styled `♪`.
 
 ### Tone-aware design
-- [ ] Quiet sections (NICU, closings) stay visually calm — restraint over decoration.
+- [ ] Quiet sections (hospital pages, closings) stay visually calm — restraint over decoration.
 - [ ] Nothing reads as an ad or hard sell.
 
 ## Verify

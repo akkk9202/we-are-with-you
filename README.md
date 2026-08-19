@@ -30,7 +30,7 @@ python3 -m http.server 8000   # then open http://localhost:8000
 ## Tests
 ```bash
 npm install          # jsdom (test-only; node_modules is gitignored)
-npm test             # 489 site DOM tests + 172 portal DOM tests
+npm test             # 503 site DOM tests + 173 portal DOM tests
 npm run test:live    # live checks against the Supabase project (after setup)
 ```
 `supabase/rls_verification.sql` additionally verifies all 66 security rules
@@ -49,4 +49,4 @@ This repo also includes a few plain-text guide files for AI assistants (and huma
 
 Two things to remember before publishing:
 - **Run `directives/security_check_before_deploy.md` before every deploy.**
-- **Be careful with partner slugs** (`cancer-care`, `nicu`, `disability`, …) **and the redirect stub pages** (`gyco.html`, `voices-of-love.html`, …). Renaming or deleting them can break old links and printed QR codes.
+- **Be careful with partner slugs** (`cancer-care`, `disability`, …) **and the redirect stub pages** (`gyco.html`, `voices-of-love.html`, …). Renaming or deleting them can break old links and printed QR codes.

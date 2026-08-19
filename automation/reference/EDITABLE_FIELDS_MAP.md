@@ -70,7 +70,6 @@ File: `js/partners.js`. Each entry becomes a page at `partner.html?p=SLUG` plus 
 |---|---|---|
 | `cancer-care` | City of Hope Atlanta (CTCA) | 1 |
 | `ronald-mcdonald-house` | Ronald McDonald House | 2 |
-| `nicu` | Northside Intensive Care Unit (NICU) | 3 |
 | `senior-living` | Senior Living | 4 |
 | `disability` | The America Wheat Mission (Milal) | 5 |
 | `schools-global` | Schools & Global Communities | 6 |
