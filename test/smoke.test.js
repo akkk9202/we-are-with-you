@@ -624,31 +624,46 @@ console.log('\n[student-community.html]');
   ok(d.body.textContent.includes('Our Work Through the Years'), 'archive section: Our Work Through the Years');
   const arch = d.querySelector('[data-archive]');
   ok(!!arch, 'archive mount present and hydrated');
-  ok(arch.querySelectorAll('.archive-year').length === 0,
-     'year tabs stay hidden while entries span a single year (appear automatically later)');
-  ok(arch.querySelectorAll('.archive-card').length === 6, 'page 1 shows 6 community cards');
-  ok(arch.querySelector('.archive-count').textContent.includes('Showing 1–6 of 7'), 'count line: Showing 1–6 of 7');
+  /* Sep 2026: 22 dated performance records (Nov 2023 → Aug 2026) joined the
+     seven undated community collections, so the year tabs are live. */
+  const yearTabs = [...arch.querySelectorAll('.archive-year')].map(b => b.textContent);
+  ok(JSON.stringify(yearTabs) === JSON.stringify(['2026', '2025', '2024', '2023']),
+     'year tabs span 2026 → 2023, newest first');
+  ok(arch.querySelector('.archive-year[aria-pressed="true"]').textContent === '2026', '2026 selected by default');
+  ok(arch.querySelectorAll('.archive-card').length === 6, 'page 1 shows 6 cards');
+  ok(arch.querySelector('.archive-count').textContent.includes('Showing 1–6 of 9'), 'count line: Showing 1–6 of 9 (2026)');
   ok(arch.querySelector('.archive-pager__status').textContent.trim() === 'Page 1 of 2', 'pager reads Page 1 of 2');
   const cardTitles = [...arch.querySelectorAll('.archive-card__title')].map(t => t.textContent);
-  ok(cardTitles[0] === 'City of Hope Atlanta (CTCA)', 'City of Hope leads the collections');
-  ok(cardTitles.includes('Ronald McDonald House Charities of Atlanta') && cardTitles.includes('Veterans'),
-     'community collections match the served list');
-  ok([...arch.querySelectorAll('.archive-card__date')].every(t => !/20\d\d/.test(t.textContent)),
-     'community cards show no dates at all — only the category label');
-  ok(arch.querySelectorAll('.archive-card__media img').length === 6, 'every community card leads with a real photo');
+  ok(cardTitles[0].includes('Beat & Breeze'), 'the newest record (Aug 26, 2026 Beat & Breeze session) leads');
+  ok([...arch.querySelectorAll('.archive-card__date')].every(t => /2026/.test(t.textContent)),
+     'dated records show their real dates on the card');
+  ok(arch.querySelectorAll('.archive-card__media img').length === 6, 'every card leads with a real photo');
 
   /* pagination */
   arch.querySelector('[data-page-next]').dispatchEvent(new dom.window.Event('click', { bubbles: true }));
-  ok(arch.querySelectorAll('.archive-card').length === 1, 'Next → page 2 shows the remaining collection');
-  ok(arch.querySelector('.archive-count').textContent.includes('Showing 7–7 of 7'), 'page 2 count line: Showing 7–7 of 7');
-  ok(arch.querySelector('.archive-card__title').textContent.includes('Homelessness'),
-     'the homelessness outreach collection closes the list');
+  ok(arch.querySelectorAll('.archive-card').length === 3, 'Next → page 2 shows the remaining 3 records of 2026');
+  ok(arch.querySelector('.archive-count').textContent.includes('Showing 7–9 of 9'), 'page 2 count line: Showing 7–9 of 9');
   arch.querySelector('[data-page-prev]').dispatchEvent(new dom.window.Event('click', { bubbles: true }));
   ok(arch.querySelectorAll('.archive-card').length === 6, 'Previous returns to page 1');
 
+  /* 2025: the seven undated community collections sit below that year's dated records */
+  [...arch.querySelectorAll('.archive-year')].find(b => b.textContent === '2025')
+    .dispatchEvent(new dom.window.Event('click', { bubbles: true }));
+  ok(arch.querySelector('.archive-count').textContent.includes('of 14'), '2025 holds 7 dated records + 7 community collections');
+  const titles2025 = [...arch.querySelectorAll('.archive-card__title')].map(t => t.textContent);
+  ok(titles2025.includes('City of Hope Atlanta (CTCA)') && titles2025.includes('Ronald McDonald House Charities of Atlanta'),
+     'community collections still present under 2025');
+  const cohCard = [...arch.querySelectorAll('.archive-card')].find(c => c.querySelector('.archive-card__title').textContent === 'City of Hope Atlanta (CTCA)');
+  ok(!/20\d\d/.test(cohCard.querySelector('.archive-card__date')?.textContent || ''),
+     'community collection cards still show no date — only the category label');
+  arch.querySelector('[data-page-next]').dispatchEvent(new dom.window.Event('click', { bubbles: true }));
+  ok([...arch.querySelectorAll('.archive-card__title')].some(t => t.textContent.includes('Homelessness')),
+     'the homelessness outreach collection is on page 2 of 2025');
+  arch.querySelector('[data-page-prev]').dispatchEvent(new dom.window.Event('click', { bubbles: true }));
+
   /* detail view */
-  const firstCard = arch.querySelector('.archive-card');
-  firstCard.dispatchEvent(new dom.window.Event('click', { bubbles: true }));
+  const cohCard2 = [...arch.querySelectorAll('.archive-card')].find(c => c.querySelector('.archive-card__title').textContent === 'City of Hope Atlanta (CTCA)');
+  cohCard2.dispatchEvent(new dom.window.Event('click', { bubbles: true }));
   const detail = arch.querySelector('.archive-detail');
   ok(!!detail, 'clicking a card opens the collection detail view');
   ok(detail.querySelector('h3').textContent === 'City of Hope Atlanta (CTCA)', 'detail heading matches the card');
@@ -665,7 +680,7 @@ console.log('\n[student-community.html]');
   ok(/const GYCO_ARCHIVE\s*=\s*\[/.test(archSrc), 'archive data lives in js/archive.js as a plain array');
   ok(!/Placeholder/.test(archSrc), 'no sample placeholder entries remain — the archive is real content now');
   const archImgSrcs = [...archSrc.matchAll(/src: "([^"]+)"/g)].map(m => m[1]);
-  ok(archImgSrcs.length >= 45, `archive holds a real photo library (${archImgSrcs.length} photos)`);
+  ok(archImgSrcs.length >= 100, `archive holds a real photo library (${archImgSrcs.length} photos)`);
   ok(archImgSrcs.every(s => fs.existsSync(path.join(ROOT, s))), 'every archive photo exists on disk');
   const archAlts = [...archSrc.matchAll(/alt: "([^"]+)"/g)].map(m => m[1]);
   ok(archAlts.length === archImgSrcs.length && archAlts.every(a => a.length > 15),
@@ -764,7 +779,19 @@ console.log('\n[media.html]');
   ok(d.querySelector('.page-hero h1').textContent.trim() === 'Media', 'hero h1 is simply Media');
   const card = d.querySelector('.press-card');
   ok(!!card, 'featured press card rendered');
-  ok(d.querySelectorAll('.press-card').length === 1, 'ONE bilingual card, not two separate articles');
+  ok(d.querySelectorAll('.press-card').length === 2, 'two press cards: the bilingual Newswave25 story + the Times-Herald piece (never EN/KR split into two)');
+  const th = d.querySelectorAll('.press-card')[1];
+  ok(th.textContent.includes('Youth Orchestra Strikes a Chord in the Community') && th.textContent.includes('Newnan Times-Herald'), 'Times-Herald card present');
+  ok(th.querySelectorAll('a').length === 1 && th.querySelector('a').href.startsWith('https://www.times-herald.com/news/youth-orchestra-strikes-a-chord'), 'Times-Herald: one link to the article');
+  /* letters of support */
+  const letters = d.querySelector('#letters');
+  ok(!!letters && letters.querySelector('h2').textContent === 'Letters of Support', 'Letters of Support section present');
+  const letterImgs = [...letters.querySelectorAll('.photo-figure img')];
+  ok(letterImgs.length === 3 && letterImgs.every(i => fs.existsSync(path.join(ROOT, i.getAttribute('src'))) && i.alt.length > 30),
+     'three letter scans exist on disk with descriptive alt text');
+  ok([...letters.querySelectorAll('figcaption')].every(f => /2026/.test(f.textContent) && f.querySelector('strong')),
+     'every letter is labeled with author and date');
+  ok(!!d.querySelector('#social-ctas a[href="https://youtu.be/ZMgl7hhE62Q"][target="_blank"][rel="noopener"]'), 'Follow band links the GYCO video safely');
   ok(card.textContent.includes('Music of Hope: GYCO Brings Comfort and Connection to the Community'), 'article title correct');
   ok(card.textContent.includes('Newswave25'), 'publisher shown');
   ok(!card.querySelector('.chip'), 'press card has no badge chips');
@@ -907,7 +934,7 @@ console.log('\n[word budgets]');
                                       // HTML for SEO but is collapsed behind Read More by default;
                                       // Aug 13: + the "Our Impact — 2023 to Present" stat band
                                       // and the five-milestone "Our Story" timeline
-    ['media.html', 420],
+    ['media.html', 560],              // Sep 2026: + Letters of Support captions + 2nd press card
     ['hope-capsule.html', 300],
     ['one-message-for-you.html', 260],
     ['contact.html', 380],            // Aug 2026: the support page — Support the

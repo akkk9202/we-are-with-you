@@ -153,8 +153,6 @@ const SITE = {
       publisher: "Newswave25",
       description: "Students from GYCO brought live music to hospitals and senior communities across Georgia, sharing hope, comfort, and connection through service.",
       languages: "Available in English and Korean",
-      // TODO: Replace with the article photo — add assets/images/press-newswave25.jpg
-      // (a styled placeholder shows automatically until the file exists).
       image: {
         src: "assets/images/press-newswave25.jpg",
         alt: "GYCO students bringing live music to the community — Newswave25 feature",
@@ -162,6 +160,20 @@ const SITE = {
       links: [
         { label: "Read in English", href: "https://newswave25.com/music-of-hope-gyco-brings-healing-to-the-community" },
         { label: "Read in Korean",  href: "https://newswave25.com/%EB%B3%91%EC%9B%90%EC%97%90-%EC%9A%B8%EB%A0%A4-%ED%8D%BC%EC%A7%84-%ED%9D%AC%EB%A7%9D%EC%9D%98-%EC%84%A0%EC%9C%A8-gyco-%EC%B0%BE%EC%95%84%EA%B0%80%EB%8A%94-%EC%9D%8C%EC%95%85" },
+      ],
+    },
+    {
+      label: "Local Press",
+      title: "Youth Orchestra Strikes a Chord in the Community",
+      publisher: "The Newnan Times-Herald · Will Thomas · January 9, 2026",
+      description: "A local youth orchestra is bringing music to the places it's needed most — 21 students from Coweta, Suwannee, Johns Creek, and Buford, photographed after a performance at The Claiborne Senior Living Center in Newnan.",
+      languages: "Available in English",
+      image: {
+        src: "assets/images/press-times-herald.jpg",
+        alt: "GYCO students holding their Greater Youth Collaborative Opus banners outside The Claiborne in Newnan after a holiday performance — Newnan Times-Herald",
+      },
+      links: [
+        { label: "Read the article", href: "https://www.times-herald.com/news/youth-orchestra-strikes-a-chord-in-the-community/article_fba31173-fe16-48b6-b7b2-7033d7ba4c95.html" },
       ],
     },
   ],
