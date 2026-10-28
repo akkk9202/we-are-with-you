@@ -24,7 +24,9 @@
       <section class="pintro">
         <h1>Community Portal</h1>
         <p class="pintro__lead">Watch videos, read and write letters, request songs, and take part
-          in activities — made by GYCO students for six partner communities.</p>
+          in activities, made by GYCO students for our partner communities.</p>
+        <p class="portal-public-path">Just looking around? <a href="../media.html">Explore our visits</a> or <a href="https://youtu.be/ZMgl7hhE62Q" target="_blank" rel="noopener">watch the GYCO video</a>. No account needed.</p>
+        <p class="access-note">Log in to make requests, share letters, and keep your place.</p>
         <div class="btn-row" style="justify-content:flex-start;margin-top:1.6rem;">
           <a class="btn btn--gold" href="login.html">Log in</a>
           <a class="btn btn--ink" href="signup.html">Create a free account</a>
@@ -366,7 +368,7 @@
       </ul>
       ${myComm ? `<p class="hub-mycommunity">Your community:
         <a href="${esc(myComm.slug)}.html">${esc(myComm.name)} →</a></p>` : `
-        <p class="hub-mycommunity"><a href="communities.html">Browse the six communities →</a></p>`}`;
+        <p class="hub-mycommunity"><a href="communities.html">Browse the communities →</a></p>`}`;
 
     /* Exactly one engagement event per row click, then navigate.
        Navigation waits for the insert (or 350 ms, whichever comes

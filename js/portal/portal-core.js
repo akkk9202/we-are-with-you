@@ -173,17 +173,25 @@ const Portal = (() => {
     mount.outerHTML = `
   <nav class="nav" aria-label="Main navigation">
     <a href="${esc(rootUrl("index.html"))}" class="nav__logo">${ringMark(22)} ${esc(SITE.name)}</a>
-    <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false">
+    <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="main-navigation-links">
       <span></span><span></span><span></span>
     </button>
-    <ul class="nav__links">${links}</ul>
+    <ul class="nav__links" id="main-navigation-links">${links}</ul>
   </nav>`;
     const nav = document.querySelector(".nav");
     const burger = nav.querySelector(".nav__hamburger");
     const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 50);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    burger.addEventListener("click", () => {
+    nav.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && nav.classList.contains("open")) {
+      nav.classList.remove("open");
+      burger.setAttribute("aria-expanded", "false");
+      burger.setAttribute("aria-label", "Open menu");
+      burger.focus();
+    }
+  });
+  burger.addEventListener("click", () => {
       const open = nav.classList.toggle("open");
       burger.setAttribute("aria-expanded", open);
       burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");

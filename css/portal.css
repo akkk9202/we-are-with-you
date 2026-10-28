@@ -415,3 +415,51 @@ a.pitem__link:hover { background: var(--mist); }
 @media (prefers-reduced-motion: reduce) {
   .hub-action, .pcomm-row, .hub-quick a, .pitem__link { transition: none; }
 }
+
+/* Visitor-first portal: same materials and scale as the public site.
+   These rules change presentation only; auth and data policies are unchanged. */
+#portal-nav { background:var(--paper); padding-top:78px; }
+.portal-nav { background:var(--mist); border-color:var(--line); }
+.portal-nav__brand,.portal-nav__link,.portal-nav__logout { color:var(--ink); }
+.portal-nav__link { font-size:.9rem; text-transform:none; letter-spacing:0; min-height:48px; }
+.portal-nav__link.is-active,.portal-nav__link:hover { color:var(--blue); border-bottom-color:var(--blue); }
+.portal-main { background:var(--paper); }
+.pintro { padding-block:3rem 1rem; max-width:850px; }
+.pintro h1 { font-size:clamp(2.6rem,5vw,4rem); }
+.pintro__lead { line-height:1.65; }
+.portal-public-path { margin-top:1.5rem; padding:1.1rem 1.4rem; background:var(--mist); border-left:3px solid var(--gold); }
+.portal-public-path a { text-decoration:underline; text-underline-offset:3px; }
+.pintro .access-note { color:var(--muted); font-size:.95rem; margin-top:1.5rem; }
+.pauth-card { border-radius:4px; background:var(--white); box-shadow:none; border:1px solid var(--line); padding:clamp(1.25rem,4vw,2.5rem); }
+.pinput,.pselect,.ptextarea { font-size:1rem; border-radius:3px; min-height:48px; }
+.pfield label,.pcheck { font-size:1rem; }
+.psection__more,.hub-back a { font-size:.95rem; }
+.pfilter { min-height:44px; font-size:1rem; }
+.hub-action { padding:1.3rem .6rem; gap:1.4rem; }
+.hub-action__title { font-size:1.6rem; }
+.hub-action__desc { font-size:1rem; margin-top:.3rem; }
+.hub-action__art { width:64px; }
+.hub-action__art img { max-height:64px; }
+.hub-action__go { color:var(--blue); font-size:1.4rem; }
+.hub-quick a,.pcomm-row { padding:1.1rem .4rem; min-height:60px; }
+.hub-quick__title { font-size:1.3rem; }
+.hub-quick__desc { font-size:.98rem; }
+.hub-head h1 { font-size:clamp(2.5rem,4.5vw,4rem); }
+.hub-head p { font-size:1.2rem; }
+body[data-portal-page="home"] #portal-root { display:grid; grid-template-columns:.8fr 1.2fr; gap:2rem 4rem; padding-top:4rem; align-items:start; }
+body[data-portal-page="home"] .hub-head { grid-column:1; margin:0; padding:1rem 0; }
+body[data-portal-page="home"] .hub-actions { grid-column:2; grid-row:1 / span 2; margin:0; }
+body[data-portal-page="home"] .hub-mycommunity { grid-column:1; margin-top:0; padding-top:1.5rem; border-top:1px solid var(--line); }
+.pcard__thumb { background:var(--mist); }
+.pcard__thumb-fallback { color:var(--blue); }
+.pcard__title { font-size:1.45rem; }
+.pcard__desc { font-size:1rem; }
+@media (max-width:800px) {
+  body[data-portal-page="home"] #portal-root { display:block; padding-top:2rem; }
+  body[data-portal-page="home"] .hub-head { margin-bottom:2rem; }
+  body[data-portal-page="home"] .hub-mycommunity { margin-top:2rem; }
+  .hub-quick a { flex-wrap:wrap; gap:.4rem; }
+  .hub-quick__desc { flex-basis:100%; }
+  .hub-action__art { width:48px; }
+  .hub-action { gap:1rem; }
+}

@@ -96,10 +96,10 @@ const logoChip = (p, extra = '') => `
   mount.outerHTML = `
   <nav class="nav" aria-label="Main navigation">
     <a href="${rel('index.html')}" class="nav__logo">${ringMark(22)} ${SITE.name}</a>
-    <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false">
+    <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="main-navigation-links">
       <span></span><span></span><span></span>
     </button>
-    <ul class="nav__links">${links}</ul>
+    <ul class="nav__links" id="main-navigation-links">${links}</ul>
   </nav>`;
 
   const nav = document.querySelector('.nav');
@@ -107,6 +107,14 @@ const logoChip = (p, extra = '') => `
   const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 50);
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+  nav.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && nav.classList.contains("open")) {
+      nav.classList.remove("open");
+      burger.setAttribute("aria-expanded", "false");
+      burger.setAttribute("aria-label", "Open menu");
+      burger.focus();
+    }
+  });
   burger.addEventListener('click', () => {
     const open = nav.classList.toggle('open');
     burger.setAttribute('aria-expanded', open);
