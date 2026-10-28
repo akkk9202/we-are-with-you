@@ -179,11 +179,11 @@ User explicitly authorized a substantial visual redesign, a separate Git branch,
 - Vercel project access now confirmed: `prj_x1cUGn3SLucovuPeBHJnndmCSTrS`, team `team_Pxz4AIddxLtvTl4alKzEkHgu`.
 - Verified production custom domain: https://www.we-are-with-you.org/ (bare domain redirects here).
 - Production deployment remained the baseline `dpl_Eaz4qp63rwrTypTDwChH2MDiRxA2` when inspected.
-- Preview protection is enabled (`all_except_custom_domains`). A temporary public share-link request was rejected by automatic approval review because sharing to anyone with the link had not been explicitly authorized. No share link was created. Do not bypass this; obtain approval for the specific audience/duration or use authorized private access.
+- Preview protection is enabled (`all_except_custom_domains`). An initial share-link request was blocked pending explicit authorization. Aaron subsequently approved a preview-only, anyone-with-link share URL lasting 23 hours. The link was created and browser access succeeded. Do not store the access token in the repository.
 
 ### Visual review and direction
 
-Inspected actual production homepage, Media and portal entry in a desktop browser. Observed: homepage primary action falls below long introductory copy; printed brochures dominate the first screen; inner pages repeat a large dark banner; portal entry prioritizes account creation without a clear public browsing path. Mobile live review and post-change visual review are still pending, not passed. A local preview server could not be reached by the cloud browser.
+Inspected actual production homepage, Media and portal entry in a desktop browser. Observed: homepage primary action falls below long introductory copy; printed brochures dominate the first screen; inner pages repeat a large dark banner; portal entry prioritizes account creation without a clear public browsing path. A local preview server could not be reached by the cloud browser; post-change checks used the Vercel preview instead. The initial production review was desktop-only.
 
 Selected direction: warm editorial presentation using existing Fraunces and Instrument Sans, cream surfaces, navy brand text, restrained olive and gold accents, square-corner photography, fine dividers and readable sentence-case navigation. Considered retaining the formal navy bands versus a highly decorative scrapbook approach; chose a restrained photograph-led layout to suit both community visitors and older adults.
 
@@ -202,7 +202,9 @@ Files changed: `index.html`, `css/style.css`, `css/portal.css`, `js/site.js`, `j
 - First-party JS syntax checks and `git diff --check` passed.
 - Vercel automatically created a READY preview from the new branch.
 - No production release, schema migration, auth update or policy change was performed.
-- Desktop/mobile screenshot verification, visual refinement, full keyboard interaction and signed-in live flows remain outstanding. Do not call the redesign final or production-ready until these are completed.
+- Inspected preview screenshots: homepage at native desktop, 390px and 320px iframe widths; Media at 768px; portal entry, login and Contact at 390px; Support Us at 1024px. No horizontal overflow was reported for these responsive checks. These are representative visual checks, not a full device/browser matrix.
+- Verified mobile navigation opens and Escape closes it, restoring its collapsed state. Complete keyboard/screen-reader audits and signed-in live flows remain outstanding.
+- Supabase remained INACTIVE at the latest backend inspection. No login, signup or data submissions were attempted during this visual pass. The preview is ready for design feedback, not a verified production release.
 
 ### Future Supabase plan, after visual approval
 
@@ -213,4 +215,4 @@ Files changed: `index.html`, `css/style.css`, `css/portal.css`, `js/site.js`, `j
 5. Partner-specific management roles are a new authorization feature, not currently implemented. Define permissions and test isolation before adding them.
 6. Known reliability/security findings in the initial review remain separate follow-up work, including admin route paths, relationship save transactions, video error handling and shared-letter column privacy. They have not been silently fixed during the visual redesign.
 
-Next action: gain authorized preview-browser access, review the responsive harness and real pages, resolve visual issues, and update this document with exact verified results. Keep production untouched until Aaron reviews and approves.
+Next action: Aaron reviews the visual direction using the temporary preview link. Address feedback on this branch, then resolve backend availability and complete signed-in checks before requesting any production release. Keep production untouched until Aaron explicitly approves.
