@@ -771,6 +771,86 @@ console.log('\n[schools-global partners]');
      'homepage strip line mentions CLCL and HYCS');
 }
 
+/* ── 5b. PARTNER ORGANIZATIONS + LOGO QUALITY (Nov 2026) ── */
+console.log('\n[partner organizations]');
+{
+  const png = f => { const b = fs.readFileSync(path.join(ROOT, f)); return { sig: b.slice(0, 8).toString('hex'), w: b.readUInt32BE(16), h: b.readUInt32BE(20), bytes: b.length }; };
+  const ORGS = {
+    'senior-living': [
+      ['Westhill Newnan Crossing', 'assets/logos/westhill-newnan-crossing.png'],
+      ['Grace Senior Living', 'assets/logos/grace-senior-living.png'],
+      ['MeSun Senior Living', 'assets/logos/mesun-senior-living.png'],
+    ],
+    'schools-global': [
+      ['CLCL — Chisomo Leadership Centre Limited', 'assets/logos/clcl-chisomo.png'],
+      ['HYCS — Harvester Yeshua Christian School Inc.', 'assets/logos/hycs.png'],
+    ],
+  };
+  for (const [slug, orgs] of Object.entries(ORGS)) {
+    const dom = loadPage('partner.html', `https://x.test/partner.html?p=${slug}`);
+    const d = dom.window.document;
+    const wrap = d.querySelector('#partner-root .partner-orgs');
+    ok(wrap && wrap.querySelector('h2').textContent.trim() === 'Partner organizations', `?p=${slug} shows a "Partner organizations" row`);
+    const items = [...d.querySelectorAll('#partner-root .partner-orgs__item')];
+    ok(items.length === orgs.length, `?p=${slug} lists ${orgs.length} organizations`);
+    orgs.forEach(([name, file], i) => {
+      const it = items[i];
+      const img = it && it.querySelector('img');
+      ok(it && it.querySelector('.partner-orgs__name').textContent.trim() === name, `?p=${slug} org ${i + 1} is named "${name}"`);
+      ok(img && img.getAttribute('src') === file && img.getAttribute('alt').length > 12, `?p=${slug} org ${i + 1} shows ${file} with descriptive alt`);
+      ok(img && (img.getAttribute('onerror') || '').includes('logo-chip--missing'),
+         `?p=${slug} org ${i + 1} keeps the monogram fallback if its file goes missing`);
+      ok(fs.existsSync(path.join(ROOT, file)), `${file} exists on disk`);
+    });
+    const cardsPos = d.querySelector('#partner-root .cards');
+    ok(wrap && cardsPos && (wrap.compareDocumentPosition(cardsPos) & 4), `?p=${slug} orgs row sits above the program cards`);
+  }
+  for (const slug of ['cancer-care', 'ronald-mcdonald-house', 'disability']) {
+    const d = loadPage('partner.html', `https://x.test/partner.html?p=${slug}`).window.document;
+    ok(!d.querySelector('#partner-root .partner-orgs'), `?p=${slug} has no orgs row (single-organization page)`);
+  }
+  {
+    const d = loadPage('partner.html', 'https://x.test/partner.html?p=senior-living').window.document;
+    ok(/Westhill Newnan Crossing, Grace Senior Living, and MeSun Senior Living/.test(d.querySelector('#partner-root .section-head').textContent),
+       'Senior Living about text names Westhill, Grace, and MeSun');
+    const hero = d.querySelector('.page-hero .logo-chip img');
+    ok(/Westhill.*Grace.*MeSun/.test(hero.getAttribute('alt')), 'Senior Living category logo alt names all three organizations');
+    const h = loadPage('index.html', 'https://x.test/index.html').window.document;
+    ok(/Westhill, Grace, MeSun, and more/.test(h.querySelector('[data-community-logos]').textContent),
+       'homepage strip line for Senior Living names Westhill, Grace, MeSun');
+  }
+
+  /* Upscaled: every partner logo is a real PNG with enough pixels for retina. */
+  const MIN_W = {
+    'assets/logos/westhill-newnan-crossing.png': 700, 'assets/logos/grace-senior-living.png': 900,
+    'assets/logos/mesun-senior-living.png': 900, 'assets/logos/clcl-chisomo.png': 600,
+    'assets/logos/hycs.png': 500, 'assets/logos/senior-living.png': 500,
+    'assets/logos/ronald-mcdonald-house.png': 1000,
+  };
+  for (const [f, w] of Object.entries(MIN_W)) {
+    const m = png(f);
+    ok(m.sig === '89504e470d0a1a0a' && m.w >= w, `${f} is a PNG at least ${w}px wide (is ${m.w}px)`);
+    ok(m.bytes < 400 * 1024, `${f} stays light (${Math.round(m.bytes / 1024)} KB < 400 KB)`);
+  }
+
+  /* Adoration Home Health is excluded everywhere on the site. */
+  const crypto = require('crypto');
+  const md5 = f => crypto.createHash('md5').update(fs.readFileSync(path.join(ROOT, f))).digest('hex');
+  ok(md5('assets/logos/senior-living.png') !== 'a98f9f0c375d98fd015af05376a604ac',
+     'senior-living.png is no longer the old Adoration + MeSun composite');
+  ok(!fs.readdirSync(path.join(ROOT, 'assets/logos')).some(n => /adorat/i.test(n)), 'no Adoration logo file in assets/logos/');
+  const walk = (dir, out = []) => {
+    for (const n of fs.readdirSync(path.join(ROOT, dir))) {
+      if (['node_modules', '.git', 'test'].includes(n)) continue;
+      const rel = path.join(dir, n); const st = fs.statSync(path.join(ROOT, rel));
+      if (st.isDirectory()) walk(rel, out); else if (/\.(html|js|css|md|diff|json|sql|txt|command)$/.test(n)) out.push(rel);
+    }
+    return out;
+  };
+  const hits = walk('.').filter(f => /adoration/i.test(fs.readFileSync(path.join(ROOT, f), 'utf8')));
+  ok(hits.length === 0, `no mention of Adoration in any site file${hits.length ? ' — found in: ' + hits.join(', ') : ''}`);
+}
+
 /* ── 6. MEDIA PAGE ── */
 console.log('\n[media.html]');
 {
@@ -787,8 +867,10 @@ console.log('\n[media.html]');
   const letters = d.querySelector('#letters');
   ok(!!letters && letters.querySelector('h2').textContent === 'Letters of Support', 'Letters of Support section present');
   const letterImgs = [...letters.querySelectorAll('.photo-figure img')];
-  ok(letterImgs.length === 3 && letterImgs.every(i => fs.existsSync(path.join(ROOT, i.getAttribute('src'))) && i.alt.length > 30),
-     'three letter scans exist on disk with descriptive alt text');
+  ok(letterImgs.length === 2 && letterImgs.every(i => fs.existsSync(path.join(ROOT, i.getAttribute('src'))) && i.alt.length > 30),
+     'two letter scans exist on disk with descriptive alt text');
+  ok(!/donor/i.test(letters.textContent) && !fs.readdirSync(path.join(ROOT, 'assets/images/letters')).some(n => /donor/i.test(n)),
+     'individual donor letter is removed (page and file)');
   ok([...letters.querySelectorAll('figcaption')].every(f => /2026/.test(f.textContent) && f.querySelector('strong')),
      'every letter is labeled with author and date');
   ok(!!d.querySelector('#social-ctas a[href="https://youtu.be/ZMgl7hhE62Q"][target="_blank"][rel="noopener"]'), 'Follow band links the GYCO video safely');
