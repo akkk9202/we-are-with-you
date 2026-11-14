@@ -78,7 +78,15 @@ Each partner block has a `logo` + `logoAlt` field:
 ```js
 logo: "assets/logos/city-of-hope-atlanta.png",
 ```
-Drop a PNG into `assets/logos/` and point `logo` at it. Already in place: `city-of-hope-atlanta.png`, `ronald-mcdonald-house.png`, `senior-living.png`, `milal.png` (the real “Wheat Mission in Atlanta” stamp, Aug 2026), and `schools-global.png` (TEMPORARY: the HYCS — Harvester Yeshua Christian School Inc. — logo stands in until a dedicated Schools & Global logo exists; overwrite to swap). Plus `gyco.png` and `nado-school.png` used on their pages. If a file ever goes missing, cards automatically show a clean monogram fallback (nothing breaks).
+Drop a PNG into `assets/logos/` and point `logo` at it. Already in place: `city-of-hope-atlanta.png`, `ronald-mcdonald-house.png`, `senior-living.png`, `milal.png` (the real “Wheat Mission in Atlanta” stamp, Aug 2026), and `schools-global.png` (the generic globe mark — no single school stands for the whole community). Plus `gyco.png` and `nado-school.png` used on their pages. If a file ever goes missing, cards automatically show a clean monogram fallback (nothing breaks).
+
+**Partner organizations (Nov 2026).** A partner page can list the individual organizations behind it as a "Partner organizations" logo row (one readable logo + name each). Add an `orgs` array to the partner block in `js/partners.js`:
+```js
+orgs: [
+  { name: "Grace Senior Living", logo: "assets/logos/grace-senior-living.png", logoAlt: "Grace Senior Living logo" },
+],
+```
+Current rows — Senior Living: Westhill Newnan Crossing, Grace Senior Living, MeSun Senior Living · Schools & Global: CLCL (Chisomo Leadership Centre Limited), HYCS (Harvester Yeshua Christian School Inc.). `senior-living.png` is the stacked three-logo category mark used on cards/the homepage strip/portal; RMH's `ronald-mcdonald-house.png` is the current "Ronald McDonald House Atlanta" logo. **Adding a new partner organization:** drop its logo in `assets/logos/` (transparent PNG, ≥ 900 px wide — the tests enforce a pixel floor and < 400 KB), add one `orgs` line, run `npm test`. One former Senior Living partner is intentionally excluded (see `context/excluded/RESTORE.md`).
 
 ## 3b. Replace the homepage images
 `js/config.js` → the `home:` block.
@@ -199,7 +207,7 @@ buttons, and left-aligned section heads. Do not rename tokens in `css/style.css`
 (the Community Portal layers on them).
 
 ## 13. Run the tests
-518 automated checks cover the nav (including the Philosophy and Support Us tabs), community names/order, logos, the homepage poster and brochure previews, the NADO School / Join Us exclusion (stubs + saved content), the GYCO performance archive (year tabs, pagination, detail view), all five partner pages, the Media press card, the contact page's "Support the Work" cards (mailto fallbacks included), the Support Us page and its video-request form (Give to WAWY panel, exact copy, occasion whitelist, privacy consent, composed email, Google-Form flips), **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
+577 automated checks cover the nav (including the Philosophy and Support Us tabs), community names/order, logos, the homepage poster and brochure previews, the NADO School / Join Us exclusion (stubs + saved content), the GYCO performance archive (year tabs, pagination, detail view), all five partner pages, the Media press card, the contact page's "Support the Work" cards (mailto fallbacks included), the Support Us page and its video-request form (Give to WAWY panel, exact copy, occasion whitelist, privacy consent, composed email, Google-Form flips), **redesign guardrails** (banned marketing phrases, eyebrow budgets, photo-placeholder quality), and **word budgets** — each public page has a maximum visible word count so the site stays compact. If a budget check fails after an edit, trim copy rather than raising the cap:
 ```bash
 npm install jsdom   # once
 node test/smoke.test.js

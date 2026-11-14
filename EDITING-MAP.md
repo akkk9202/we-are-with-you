@@ -72,6 +72,7 @@ edit the **`name`** field — never the key.
 | The public pathway name | `name` | Edit here — updates site-wide. **Not** the slug |
 | Partner logo | `logo` | Path under `assets/logos/…`. Missing file → clean monogram fallback |
 | Logo alt text | `logoAlt` | Accessibility |
+| Partner organizations row | `orgs: [{ name, logo, logoAlt }]` | Optional. Renders a "Partner organizations" logo row above the program cards (Senior Living + Schools & Global use it) |
 | Short card description | `cardText` | Shown on the pathway card |
 | Page hero heading / subtext | `heroTitle`, `heroText` | Top of the partner page |
 | Intro paragraph | `about` | |

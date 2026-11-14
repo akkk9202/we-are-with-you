@@ -195,3 +195,13 @@ action, and decorative clip art (flowers, smiley) is gone. Do not rename tokens.
   re-applied on load.
 - Pages in `fundraising/` load the same engine via `../js/site.js`; the `REL`
   prefix keeps every generated link/asset path correct one level down.
+
+## Partner organizations (Nov 2026 — partner pages)
+- `.partner-orgs` — optional row on a partner page (from the partner's `orgs`
+  array): small h2 "Partner organizations", then `.partner-orgs__item`s, each a
+  110px `.logo-chip` (white, hairline border, same monogram fallback) over a
+  muted one-line name. Sits between the about paragraph and the program cards.
+  Wraps, then stacks to a single column ≤640px. No links (no external URLs
+  are held), no badges, no "sponsor" language.
+- Logos are upscaled transparent PNGs (≥ 900px wide, < 400 KB); Grace keeps its
+  red banner because the banner is part of the mark.

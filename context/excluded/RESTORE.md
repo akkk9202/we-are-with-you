@@ -77,3 +77,37 @@ community/northside-nicu.html → redirect stub → communities.html).
 8. **Docs to un-edit**: CLAUDE.md, README.md, EDITING-GUIDE.md, EDITING-MAP.md,
    DESIGN.md, supabase/PORTAL-SETUP.md, context/, directives/, skills/, and the
    automation/ reference lists (six communities again).
+
+---
+
+# Excluded — a former Senior Living partner logo (Nov 13, 2026)
+
+Aaron asked to exclude one partner organization (the left half of the old combined
+`assets/logos/senior-living.png`, beside MeSun) from the site. To keep it off the public
+site entirely — this folder is served by GitHub Pages — its name is not written here, the
+logo is not stored here, and the guard test refuses its name anywhere on the site. It stays
+recoverable from git history.
+
+## What changed
+- `assets/logos/senior-living.png` → new stacked Westhill + Grace + MeSun mark.
+- `js/partners.js` senior-living `logoAlt` no longer names it; MeSun now has its own
+  `mesun-senior-living.png` (cropped from the old image and upscaled).
+- `CHANGES.diff` (a stale patch artifact) had one context line naming it — reworded.
+- `test/smoke.test.js` → "[partner organizations]" block fails if the name appears in any
+  site file or a matching file appears in `assets/logos/`.
+
+## How to restore
+1. `git show 2d7fe8b:assets/logos/senior-living.png > assets/logos/old-senior-living.png`
+   (2d7fe8b = the commit just before the exclusion), then crop the left half.
+2. Add an `orgs` entry for it in `js/partners.js` (senior-living) and delete the guard test.
+
+---
+
+# Excluded — individual donor letter on Media (Nov 13, 2026)
+
+Aaron asked to remove the individual donor's letter from Media > Letters of Support.
+Removed: its figure in `media.html` and the scan in `assets/images/letters/` (not stored
+here; this folder is public). Find the file with `git log --diff-filter=D --name-only -- assets/images/letters`,
+then `git show <commit>^:<that path> > restored.jpg` and re-add a `<figure class="photo-figure">`
+in `#letters`. Delete the guard test ("individual donor letter is removed") first.
+
