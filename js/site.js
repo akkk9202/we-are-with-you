@@ -314,6 +314,19 @@ function wireFormButton(el) {
       <a class="btn btn--ink btn--sm" ${c.form ? `data-form="${c.form}" href="contact.html"` : `href="${c.href}"`}>${c.button}</a>
     </div>`).join('');
 
+  /* Optional "Partner organizations" row — one logo + name per entry in
+     the partner's `orgs` array (js/partners.js). Omitted when there is none. */
+  const orgs = (p.orgs && p.orgs.length) ? `
+    <div class="partner-orgs">
+      <h2 class="partner-orgs__title">Partner organizations</h2>
+      <ul class="partner-orgs__list">${p.orgs.map(o => `
+        <li class="partner-orgs__item">
+          ${logoChip({ name: o.name, logo: o.logo, logoAlt: o.logoAlt }, 'partner-orgs__chip')}
+          <span class="partner-orgs__name">${o.name}</span>
+        </li>`).join('')}
+      </ul>
+    </div>` : '';
+
   root.innerHTML = `
   <section class="page-hero"><div class="container">
     ${p.logo ? logoChip(p, 'logo-chip--hero') : ''}
@@ -323,6 +336,7 @@ function wireFormButton(el) {
 
   <section class="section"><div class="container">
     <div class="section-head"><p>${p.about}</p></div>
+    ${orgs}
     <div class="cards cards--3">${cards}</div>
     <p class="caption" style="margin-top:2rem;">This page is usually reached through a QR code posted at ${p.name} — on flyers, cards, and program tables.</p>
   </div></section>

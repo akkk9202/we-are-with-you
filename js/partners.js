@@ -10,6 +10,10 @@
      logoAlt  → accessible alt text for the logo
      audience → who the page serves (card subtitle, e.g. "For Families")
      cardText → short description shown on pathway cards
+     orgs     → OPTIONAL list of the individual organizations behind the
+                pathway, each { name, logo, logoAlt }. Rendered as a
+                "Partner organizations" logo row on that partner's page.
+                Add one here when a new organization partners with GYCO.
    If a logo file is missing, a clean monogram fallback shows
    automatically — the card never breaks.
 
@@ -53,7 +57,7 @@ const PARTNERS = {
     name: "RMH (Ronald McDonald House in Atlanta)",
     // TODO: Swap in an updated logo anytime — assets/logos/ronald-mcdonald-house.png
     logo: "assets/logos/ronald-mcdonald-house.png",
-    logoAlt: "Ronald McDonald House logo",
+    logoAlt: "Ronald McDonald House Atlanta logo",
     audience: "For Families",
     cardText: "Music, letters, and simple activities for families staying close to hospitalized children.",
     heroTitle: "WE ARE WITH YOU at Ronald McDonald House in Atlanta",
@@ -73,14 +77,20 @@ const PARTNERS = {
   "senior-living": {
     order: 3,
     name: "Senior Living",
-    // Swap in an updated logo anytime — assets/logos/senior-living.png
+    // Category mark = Westhill + Grace + MeSun stacked (Nov 2026). The
+    // individual logos live in `orgs` below. Overwrite senior-living.png to swap.
     logo: "assets/logos/senior-living.png",
-    logoAlt: "Adoration Home Health and MeSun Senior Living logos",
+    logoAlt: "Westhill Newnan Crossing, Grace Senior Living, and MeSun Senior Living logos",
+    orgs: [
+      { name: "Westhill Newnan Crossing", logo: "assets/logos/westhill-newnan-crossing.png", logoAlt: "Westhill Newnan Crossing logo" },
+      { name: "Grace Senior Living", logo: "assets/logos/grace-senior-living.png", logoAlt: "Grace Senior Living logo — assisted living and memory care" },
+      { name: "MeSun Senior Living", logo: "assets/logos/mesun-senior-living.png", logoAlt: "MeSun Senior Living logo" },
+    ],
     audience: "For Older Adults",
     cardText: "Performances, familiar songs, and visits with residents and their families.",
     heroTitle: "WE ARE WITH YOU for Senior Living Communities",
     heroText: "Music, memories, stories, and intergenerational connection.",
-    about: "This page was created for residents, families, staff, and student volunteers in senior living communities. Familiar songs open conversations, memories become stories, and generations connect through music.",
+    about: "This page was created for residents, families, staff, and student volunteers in senior living communities, including Westhill Newnan Crossing, Grace Senior Living, and MeSun Senior Living. Familiar songs open conversations, memories become stories, and generations connect through music.",
     cards: [
       { title: "One Message for You", text: "One message can spark a memory. Read a message of appreciation written for you, or share one for a resident, family member, staff member, or volunteer.", button: "Read & share a message", form: "letterSubmission" },
       { title: "Familiar Songs", text: "Enjoy songs that evoke memories, offer comfort, inspire joy, and encourage conversation.", button: "Listen", href: "media.html" },
@@ -124,6 +134,10 @@ const PARTNERS = {
     // Overwrite assets/logos/schools-global.png anytime to swap.
     logo: "assets/logos/schools-global.png",
     logoAlt: "Globe mark for Schools & Global Communities",
+    orgs: [
+      { name: "CLCL — Chisomo Leadership Centre Limited", logo: "assets/logos/clcl-chisomo.png", logoAlt: "Chisomo Leadership Centre Limited (CLCL) stamp logo" },
+      { name: "HYCS — Harvester Yeshua Christian School Inc.", logo: "assets/logos/hycs.png", logoAlt: "HYCS, Harvester Yeshua Christian School, logo" },
+    ],
     audience: "For Students & Communities",
     cardText: "English, music, and learning materials shared with partner schools like CLCL and HYCS.",
     heroTitle: "WE ARE WITH YOU for Schools & Global Communities",
