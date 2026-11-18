@@ -204,4 +204,6 @@ action, and decorative clip art (flowers, smiley) is gone. Do not rename tokens.
   Wraps, then stacks to a single column ≤640px. No links (no external URLs
   are held), no badges, no "sponsor" language.
 - Logos are upscaled transparent PNGs (≥ 900px wide, < 400 KB); Grace keeps its
-  red banner because the banner is part of the mark.
+  red banner and Eben Silver Town its dark-brown banner because the banner is
+  part of the mark (white type). Low-res sources are upscaled 4× with the EDSR
+  super-resolution model, background-matted to transparency, and palette-quantized.

@@ -86,7 +86,7 @@ orgs: [
   { name: "Grace Senior Living", logo: "assets/logos/grace-senior-living.png", logoAlt: "Grace Senior Living logo" },
 ],
 ```
-Current rows — Senior Living: Westhill Newnan Crossing, Grace Senior Living, MeSun Senior Living · Schools & Global: CLCL (Chisomo Leadership Centre Limited), HYCS (Harvester Yeshua Christian School Inc.). `senior-living.png` is the stacked three-logo category mark used on cards/the homepage strip/portal; RMH's `ronald-mcdonald-house.png` is the current "Ronald McDonald House Atlanta" logo. **Adding a new partner organization:** drop its logo in `assets/logos/` (transparent PNG, ≥ 900 px wide — the tests enforce a pixel floor and < 400 KB), add one `orgs` line, run `npm test`. One former Senior Living partner is intentionally excluded (see `context/excluded/RESTORE.md`).
+Current rows — Senior Living: Westhill Newnan Crossing, Grace Senior Living, MeSun Senior Living, Cheongsol Senior Welfare Center (Ebenezer Healthcare Services), Eben Silver Town, Joynus Care · Schools & Global: CLCL (Chisomo Leadership Centre Limited), HYCS (Harvester Yeshua Christian School Inc.). Eben Silver Town keeps its dark banner on purpose (its type is white, so the banner is part of the mark). `senior-living.png` is the stacked three-logo category mark (Westhill + Grace + MeSun; the partner page row covers all six) used on cards/the homepage strip/portal; RMH's `ronald-mcdonald-house.png` is the current "Ronald McDonald House Atlanta" logo. **Adding a new partner organization:** drop its logo in `assets/logos/` (transparent PNG, ≥ 900 px wide — the tests enforce a pixel floor and < 400 KB), add one `orgs` line, run `npm test`. One former Senior Living partner is intentionally excluded (see `context/excluded/RESTORE.md`).
 
 ## 3b. Replace the homepage images
 `js/config.js` → the `home:` block.
@@ -123,7 +123,7 @@ Main page copy lives in the HTML files themselves — each section is labeled wi
 - `index.html` — homepage (hero, What We Do, Recent Work, the community poster, About GYCO, the Support Us teaser, final CTA)
 - `student-community.html`, `media.html`, `contact.html` (`programs.html`, `learning.html`, and `join.html` are redirect stubs — NADO School and Join Us are excluded for now, saved in `context/excluded/`)
 
-**Updating the "Our Impact — 2023 to Present" numbers** (GYCO page, inside the About GYCO section of `student-community.html`): each figure is one small block — the number lives in a `<span class="impact__num">` (e.g. `70+`), the label in `<span class="impact__label">`, and the sentence below it in the `<dd>` line. Change the text between the tags and save; nothing else needs to move. The count on "WAWY Messages Shared" (currently `200+`) is a live counter to update the same way as messages accumulate.
+**Updating the "Our Impact — 2023 to Present" numbers** (GYCO page, inside the About GYCO section of `student-community.html`): each figure is one small block — the number lives in a `<span class="impact__num">` (e.g. `90+`), the label in `<span class="impact__label">`, and the sentence below it in the `<dd>` line. Change the text between the tags and save; nothing else needs to move. The count on "WAWY Messages Shared" (currently `600+`) is a live counter to update the same way as messages accumulate.
 
 ## 7. Add photos
 1. Put photos in `assets/images/` (logos go in `assets/logos/`).
