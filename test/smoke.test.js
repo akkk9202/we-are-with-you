@@ -520,8 +520,8 @@ console.log('\n[student-community.html]');
   const impactItems = [...impact.querySelectorAll('.impact__item')];
   ok(impactItems.length === 8, `Impact lists exactly 8 figures (found ${impactItems.length})`);
   const nums = impactItems.map(i => (i.querySelector('.impact__num') || {}).textContent || '');
-  ok(JSON.stringify(nums.slice(0, 6)) === JSON.stringify(['90+', '4,000+', '100', '44', '4', '600+']),
-     'Impact numbers: 90+ / 4,000+ / 100 / 44 / 4 / 600+');
+  ok(JSON.stringify(nums.slice(0, 6)) === JSON.stringify(['90+', '5,000+', '100', '44', '4', '600+']),
+     'Impact numbers: 90+ / 5,000+ / 100 / 44 / 4 / 600+');
   const labels = impactItems.map(i => i.querySelector('.impact__label').textContent);
   ok(labels[0] === 'Performances' && labels[1] === 'People Reached' && labels[5] === 'WAWY Messages Shared',
      'Impact labels name what each figure counts');
@@ -780,6 +780,9 @@ console.log('\n[partner organizations]');
       ['Westhill Newnan Crossing', 'assets/logos/westhill-newnan-crossing.png'],
       ['Grace Senior Living', 'assets/logos/grace-senior-living.png'],
       ['MeSun Senior Living', 'assets/logos/mesun-senior-living.png'],
+      ['Cheongsol Senior Welfare Center (Ebenezer Healthcare Services)', 'assets/logos/cheongsol-senior-welfare-center.png'],
+      ['Eben Silver Town', 'assets/logos/eben-silver-town.png'],
+      ['Joynus Care', 'assets/logos/joynus-care.png'],
     ],
     'schools-global': [
       ['CLCL — Chisomo Leadership Centre Limited', 'assets/logos/clcl-chisomo.png'],
@@ -811,8 +814,8 @@ console.log('\n[partner organizations]');
   }
   {
     const d = loadPage('partner.html', 'https://x.test/partner.html?p=senior-living').window.document;
-    ok(/Westhill Newnan Crossing, Grace Senior Living, and MeSun Senior Living/.test(d.querySelector('#partner-root .section-head').textContent),
-       'Senior Living about text names Westhill, Grace, and MeSun');
+    ok(/Westhill Newnan Crossing, Grace Senior Living, MeSun Senior Living, Cheongsol Senior Welfare Center, Eben Silver Town, and Joynus Care/.test(d.querySelector('#partner-root .section-head').textContent),
+       'Senior Living about text names all six partner organizations');
     const hero = d.querySelector('.page-hero .logo-chip img');
     ok(/Westhill.*Grace.*MeSun/.test(hero.getAttribute('alt')), 'Senior Living category logo alt names all three organizations');
     const h = loadPage('index.html', 'https://x.test/index.html').window.document;
@@ -826,12 +829,21 @@ console.log('\n[partner organizations]');
     'assets/logos/mesun-senior-living.png': 900, 'assets/logos/clcl-chisomo.png': 600,
     'assets/logos/hycs.png': 500, 'assets/logos/senior-living.png': 500,
     'assets/logos/ronald-mcdonald-house.png': 1000,
+    'assets/logos/cheongsol-senior-welfare-center.png': 900, 'assets/logos/eben-silver-town.png': 900,
+    'assets/logos/joynus-care.png': 900,
   };
   for (const [f, w] of Object.entries(MIN_W)) {
     const m = png(f);
     ok(m.sig === '89504e470d0a1a0a' && m.w >= w, `${f} is a PNG at least ${w}px wide (is ${m.w}px)`);
     ok(m.bytes < 400 * 1024, `${f} stays light (${Math.round(m.bytes / 1024)} KB < 400 KB)`);
   }
+
+  /* Cheongsol + Joynus are transparent PNGs; Eben Silver Town keeps its dark banner on purpose
+     (its type is white, so the banner is part of the mark). */
+  const hasAlpha = f => { const b = fs.readFileSync(path.join(ROOT, f)); return b[25] === 6 || b.includes(Buffer.from('tRNS')); };
+  ok(hasAlpha('assets/logos/cheongsol-senior-welfare-center.png'), 'cheongsol logo has a transparent background');
+  ok(hasAlpha('assets/logos/joynus-care.png'), 'joynus-care logo has a transparent background');
+  ok(!hasAlpha('assets/logos/eben-silver-town.png'), 'eben-silver-town keeps its opaque banner (white type needs it)');
 
   /* Adoration Home Health is excluded everywhere on the site. */
   const crypto = require('crypto');
