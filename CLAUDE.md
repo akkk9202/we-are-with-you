@@ -52,6 +52,7 @@ supabase/setup.sql         The five migrations concatenated for one-paste setup.
 supabase/rls_verification.sql  66 security checks; runs in a transaction and ROLLS BACK.
 supabase/PORTAL-SETUP.md   The 3-step Supabase setup + admin how-to.
 assets/images, assets/logos  Photos and partner logos.
+assets/video               Homepage intro video (wawy-intro.mp4; poster in assets/images). EDITING-GUIDE 3e.
 test/smoke.test.js         577 jsdom DOM tests for the public site (incl. redesign guardrails).
 test/preview.js            Zero-dependency local preview server (npm run preview): offline sample data.
 test/portal.test.js        173 jsdom DOM tests for the portal (stubbed Supabase).

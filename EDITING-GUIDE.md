@@ -101,6 +101,21 @@ Current rows — Senior Living: Westhill Newnan Crossing, Grace Senior Living, M
 ## 3d. Add events to the GYCO performance archive
 The "Our Work Through the Years" section on the GYCO page reads from **`js/archive.js`**. The file starts with a step-by-step guide; the short version: copy one of the `{ … }` blocks, set `date` ("2026-07-29", or "2026-07-01" if you only know the month), `title`, `partner`, and `description`, and drop event photos into `assets/images/archive/` and list them under `images`. Year tabs, sorting, "Showing 1–6 of…", and pagination all update automatically. The entries there now are **samples marked "Placeholder"** — replace them with real events and delete the leftovers.
 
+## 3e. Replace the homepage intro video (and add captions)
+The hero's intro video lives in `index.html` (the `<figure class="home-video">` right under the lede). Files: **`assets/video/wawy-intro.mp4`** (H.264 + AAC, 1280×720, ~5.8 MB, 49 s, audio normalized to about −16 LUFS) and the poster still **`assets/images/wawy-intro-poster.jpg`** (1280×720). To swap the video, overwrite both files with the same names; nothing else changes. Keep it under ~8 MB (the tests enforce this) and keep the MP4 "fast start" (moov atom first) so it begins playing before it finishes downloading. It never autoplays and only the poster + metadata load up front, so QR visitors on mobile data aren't charged for the full file until they press play.
+
+Re-encode a new clip the same way the original was prepared:
+```bash
+ffmpeg -i raw.mov -vf "scale=1280:720:flags=lanczos,hqdn3d=1.2:1.2:3:3,curves=m='0/0 0.2/0.27 0.5/0.59 0.8/0.85 1/1',eq=contrast=1.06:saturation=1.12,format=yuv420p" \
+  -af "highpass=f=90,loudnorm=I=-16:TP=-2.5:LRA=9" -c:v libx264 -profile:v high -preset slow -crf 23 \
+  -maxrate 3500k -bufsize 7000k -c:a aac -b:a 128k -movflags +faststart wawy-intro.mp4
+```
+The original recording was cropped 1.25× toward the speaker (`crop=1536:864:192:216` before the scale) and brightened (shadows/mid-tones lifted, window highlights kept); the untouched original is the phone's `IMG_8519_1.MOV` and is not in the repo.
+
+**Captions.** Save a WebVTT file as `assets/video/wawy-intro.en.vtt` and add inside the `<video>` (the HTML comment above it has the exact line):
+`<track kind="captions" src="assets/video/wawy-intro.en.vtt" srclang="en" label="English" default />`
+The test suite fails if the `.vtt` exists without the `<track>` (and the reverse), so the two can't drift apart.
+
 ## 4. Edit a partner page (or add a new one)
 Open `js/partners.js`. Each partner is one block:
 ```js

@@ -176,6 +176,17 @@ dated feed with quiet underline tabs; empty states are compact, never giant
 dashed boxes; the five poster illustrations stay small where they identify an
 action, and decorative clip art (flowers, smiley) is gone. Do not rename tokens.
 
+## Homepage intro video (v11, Nov 2026)
+- `.home-video` — a `<figure>` at the top of the hero's text column (under the
+  lede, above the WAWY introduction). Native `<video controls>` — no custom
+  player chrome, no autoplay, `preload="metadata"`, `playsinline`, with a poster.
+  16:9 is reserved via `aspect-ratio` so there is no layout shift. Max 760px
+  wide; hairline border, 10px radius, no shadow. Caption in `.home-video__caption`
+  (muted, 0.85rem) — deliberately not `.caption`, which the hero's "Scan,
+  reconnect…" line owns. Stacks naturally with the hero column on phones.
+- Captions: a `<track kind="captions">` is required the moment a `.vtt` exists
+  (see EDITING-GUIDE 3e).
+
 ## Support Us components (v10, Aug 2026 — fundraising/)
 - `.occasions` / `.occasion` — the personalized-video occasion options: quiet
   hairline chips with 34px line icons (ink strokes, one gold accent — same
