@@ -96,6 +96,55 @@ console.log('\n[index.html]');
      'homepage does not feel like a login page (no forms in the hero)');
   ok(!d.querySelector('.home-hero .photo-figure'), 'hero stays text-tight — no hero photo');
 
+  /* intro video — top of the hero text column, above the WAWY introduction (Nov 2026) */
+  {
+    const fig = d.querySelector('.home-hero__text .home-video');
+    const vid = fig && fig.querySelector('video');
+    ok(!!vid, 'hero carries the intro video in a .home-video figure');
+    const kids = [...d.querySelector('.home-hero__text').children];
+    const ixLede = kids.findIndex(k => k.classList.contains('home-hero__lede'));
+    const ixFig = kids.indexOf(fig);
+    const ixIntro = kids.findIndex(k => /WE ARE WITH YOU \(WAWY\) is GYCO/.test(k.textContent));
+    ok(ixLede >= 0 && ixFig === ixLede + 1 && ixFig < ixIntro,
+       'intro video sits right under the lede and above the WAWY introduction');
+    ok(vid.hasAttribute('controls'), 'video has native controls');
+    ok(!vid.hasAttribute('autoplay') && !vid.hasAttribute('loop'), 'video never autoplays or loops (it has sound)');
+    ok(vid.getAttribute('preload') === 'metadata', 'preload="metadata" — mobile visitors only download the file when they press play');
+    ok(vid.hasAttribute('playsinline'), 'playsinline keeps iOS from forcing fullscreen');
+    ok((vid.getAttribute('aria-label') || '').length > 15, 'video has a descriptive aria-label');
+    ok(vid.getAttribute('width') === '1280' && vid.getAttribute('height') === '720', 'width/height attributes reserve 16:9 (no layout shift)');
+    const src = vid.querySelector('source');
+    ok(src && src.getAttribute('type') === 'video/mp4' && src.getAttribute('src') === 'assets/video/wawy-intro.mp4', 'source is assets/video/wawy-intro.mp4 (video/mp4)');
+    ok(vid.querySelector('a[href="assets/video/wawy-intro.mp4"]'), 'fallback text links to the MP4 for browsers that cannot play it');
+    ok(fig.querySelector('figcaption').textContent.includes('Jueon (Aaron) Kim'), 'caption names who is speaking');
+    ok(d.querySelector('.home-hero .caption').textContent.includes('Scan, reconnect'),
+       'video caption does not steal the .caption slot of the portal support line');
+
+    const mp4 = fs.readFileSync(path.join(ROOT, 'assets/video/wawy-intro.mp4'));
+    ok(mp4.length < 8 * 1024 * 1024 && mp4.length > 500 * 1024, `video stays light for mobile (${(mp4.length / 1048576).toFixed(1)} MB < 8 MB)`);
+    ok(mp4.slice(4, 8).toString() === 'ftyp', 'video is a real MP4 (ftyp box first)');
+    const boxes = []; for (let o = 0; o + 8 <= mp4.length;) { let sz = mp4.readUInt32BE(o); const t = mp4.slice(o + 4, o + 8).toString(); if (sz === 1) sz = Number(mp4.readBigUInt64BE(o + 8)); if (sz < 8) break; boxes.push(t); o += sz; }
+    ok(boxes.indexOf('moov') > -1 && boxes.indexOf('moov') < boxes.indexOf('mdat'), 'MP4 is fast-start (moov before mdat) so playback begins immediately');
+    const av = mp4.indexOf('avc1', mp4.indexOf('moov'));   // the ftyp header also lists an avc1 brand — look inside moov
+    ok(av > 0 && mp4.readUInt16BE(av + 28) === 1280 && mp4.readUInt16BE(av + 30) === 720, 'video is H.264 at 1280x720');
+    ok(mp4.includes('mp4a'), 'video has an AAC audio track');
+
+    const jpg = fs.readFileSync(path.join(ROOT, vid.getAttribute('poster')));
+    let jw = 0, jh = 0; for (let o = 2; o + 9 < jpg.length;) { if (jpg[o] !== 0xFF) break; const m = jpg[o + 1]; const L = jpg.readUInt16BE(o + 2); if (m >= 0xC0 && m <= 0xC2) { jh = jpg.readUInt16BE(o + 5); jw = jpg.readUInt16BE(o + 7); break; } o += 2 + L; }
+    ok(jpg[0] === 0xFF && jpg[1] === 0xD8 && jw === 1280 && jh === 720, 'poster is a 1280x720 JPEG');
+    ok(jpg.length < 200 * 1024, `poster stays light (${Math.round(jpg.length / 1024)} KB < 200 KB)`);
+
+    const css = fs.readFileSync(path.join(ROOT, 'css/style.css'), 'utf8');
+    ok(/\.home-video video\s*\{[^}]*aspect-ratio:\s*16\s*\/\s*9/.test(css), 'CSS reserves a 16:9 box for the player');
+    ok(/@media \(max-width: 640px\)\s*\{\s*\.home-video\s*\{[^}]*margin-inline:\s*-2\.5rem/.test(css), 'phones: the player extends into the double hero padding so it stays large');
+
+    /* captions: the track and the .vtt must appear together */
+    const vtt = fs.existsSync(path.join(ROOT, 'assets/video/wawy-intro.en.vtt'));
+    const track = vid.querySelector('track[kind="captions"]');
+    ok(vtt === !!track, vtt ? 'captions file exists, so the <track kind="captions"> must be present' : 'no captions file yet, so no dangling <track>');
+    if (track) ok(track.getAttribute('src') === 'assets/video/wawy-intro.en.vtt' && track.getAttribute('srclang') === 'en', 'captions track points at the .vtt (en)');
+  }
+
   /* brochure previews — section 2, portrait, replaceable */
   const brochures = [...d.querySelectorAll('[data-brochures] .brochure')];
   ok(d.body.textContent.includes('Take WE ARE WITH YOU With You'), 'brochure section heading present');

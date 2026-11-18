@@ -31,6 +31,23 @@
     <div class="home-hero__text">
       <h1>WE ARE WITH YOU</h1>
       <p class="home-hero__lede">Students using music, learning, and service to support their communities.</p>
+      <!-- INTRO VIDEO — plays on demand (no autoplay: it has sound, and QR visitors
+           are often on mobile data, so only metadata + the poster load up front).
+           To swap it, overwrite assets/video/wawy-intro.mp4 and
+           assets/images/wawy-intro-poster.jpg (same names, 1280x720).
+           CAPTIONS: when assets/video/wawy-intro.en.vtt exists, add inside <video>:
+           <track kind="captions" src="assets/video/wawy-intro.en.vtt" srclang="en" label="English" default />
+           (the test suite requires the track as soon as the .vtt file exists).
+           See EDITING-GUIDE.md section 3e. -->
+      <figure class="home-video">
+        <video controls preload="metadata" playsinline width="1280" height="720"
+               poster="assets/images/wawy-intro-poster.jpg"
+               aria-label="Video: an introduction to WE ARE WITH YOU">
+          <source src="assets/video/wawy-intro.mp4" type="video/mp4" />
+          <p>Your browser can&rsquo;t play this video. <a href="assets/video/wawy-intro.mp4">Download it</a> instead.</p>
+        </video>
+        <figcaption class="home-video__caption">An introduction from Jueon (Aaron) Kim, student founder. Under a minute.</figcaption>
+      </figure>
       <p>WE ARE WITH YOU (WAWY) is GYCO&rsquo;s first student-centered platform, proposed and developed by student founders Jueon (Aaron) Kim and Yeoeun (Kate) Kim. It grew from years of direct service and a simple question: <em>How can we continue supporting and connecting with people even when we cannot be there in person?</em></p>
       <p>Through performances, letters, teaching, videos, and community projects, students build connections with patients and families, older adults, individuals with disabilities, and other community partners. While much of this work begins face-to-face, the connection is not meant to end when a performance, visit, or activity is over.</p>
       <p>WAWY extends those relationships beyond the moments when students can physically be there. Through this website and QR-based connections, people who meet us at an event, receive one of our letters, or interact with one of our programs can return to watch performances, explore projects, read and send messages, request activities, access resources, and stay connected with their community.</p>

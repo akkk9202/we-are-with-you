@@ -1,5 +1,5 @@
 /* ============================================================
-   WE ARE WITH YOU — Global Stylesheet v10 (fundraising: cards + videos)
+   WE ARE WITH YOU — Global Stylesheet v11 (homepage intro video)
    Design tokens live at the top. Change colors/fonts here once
    and the whole site updates. See EDITING-GUIDE.md.
    ============================================================ */
@@ -1021,4 +1021,28 @@ body.nav-solid .nav { background: var(--ink); }
   .partner-orgs__list { flex-direction: column; }
   .partner-orgs__item { max-width: none; }
   .partner-orgs__chip { max-width: 100%; }
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   v11 COMPONENTS — homepage intro video (Nov 2026)
+   ════════════════════════════════════════════════════════════ */
+/* The player sits at the top of the hero's text column, above the
+   WAWY introduction. 16:9 is reserved up front (aspect-ratio) so the
+   page never jumps while the poster loads. Flat: hairline border,
+   10px radius, no shadow. */
+.home-video { margin: 0 0 var(--space-sm); max-width: 760px; }
+.home-video video {
+  display: block; width: 100%; height: auto; aspect-ratio: 16 / 9;
+  background: var(--ink); border: 1px solid var(--line); border-radius: 10px;
+}
+.home-video video:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.home-video__caption { margin-top: 0.5rem; font-size: 0.85rem; line-height: 1.4; color: var(--muted); }
+.home-video video p { padding: var(--space-sm); color: var(--paper); }
+.home-video video p a { color: var(--paper); text-decoration: underline; }
+/* Phones: the hero already pads 32px twice (hero + container), which would
+   squeeze the player to ~260px. Let it use 40px of that padding (24px gutter
+   remains) so the speaker is easier to see. */
+@media (max-width: 640px) {
+  .home-video { margin-inline: -2.5rem; max-width: none; }
 }
