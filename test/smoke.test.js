@@ -832,6 +832,8 @@ console.log('\n[partner organizations]');
       ['Cheongsol Senior Welfare Center (Ebenezer Healthcare Services)', 'assets/logos/cheongsol-senior-welfare-center.png'],
       ['Eben Silver Town', 'assets/logos/eben-silver-town.png'],
       ['Joynus Care', 'assets/logos/joynus-care.png'],
+      ['The Claiborne at Newnan Lakes', 'assets/logos/the-claiborne-newnan-lakes.png'],
+      ['The Reserve (An Experience Senior Living Community)', 'assets/logos/the-reserve.png'],
     ],
     'schools-global': [
       ['CLCL — Chisomo Leadership Centre Limited', 'assets/logos/clcl-chisomo.png'],
@@ -863,8 +865,8 @@ console.log('\n[partner organizations]');
   }
   {
     const d = loadPage('partner.html', 'https://x.test/partner.html?p=senior-living').window.document;
-    ok(/Westhill Newnan Crossing, Grace Senior Living, MeSun Senior Living, Cheongsol Senior Welfare Center, Eben Silver Town, and Joynus Care/.test(d.querySelector('#partner-root .section-head').textContent),
-       'Senior Living about text names all six partner organizations');
+    ok(/Westhill Newnan Crossing, Grace Senior Living, MeSun Senior Living, Cheongsol Senior Welfare Center, Eben Silver Town, Joynus Care, The Claiborne at Newnan Lakes, and The Reserve/.test(d.querySelector('#partner-root .section-head').textContent),
+       'Senior Living about text names all eight partner organizations');
     const hero = d.querySelector('.page-hero .logo-chip img');
     ok(/Westhill.*Grace.*MeSun/.test(hero.getAttribute('alt')), 'Senior Living category logo alt names all three organizations');
     const h = loadPage('index.html', 'https://x.test/index.html').window.document;
@@ -879,7 +881,8 @@ console.log('\n[partner organizations]');
     'assets/logos/hycs.png': 500, 'assets/logos/senior-living.png': 500,
     'assets/logos/ronald-mcdonald-house.png': 1000,
     'assets/logos/cheongsol-senior-welfare-center.png': 900, 'assets/logos/eben-silver-town.png': 900,
-    'assets/logos/joynus-care.png': 900,
+    'assets/logos/joynus-care.png': 900, 'assets/logos/the-claiborne-newnan-lakes.png': 900,
+    'assets/logos/the-reserve.png': 900,
   };
   for (const [f, w] of Object.entries(MIN_W)) {
     const m = png(f);
@@ -892,6 +895,8 @@ console.log('\n[partner organizations]');
   const hasAlpha = f => { const b = fs.readFileSync(path.join(ROOT, f)); return b[25] === 6 || b.includes(Buffer.from('tRNS')); };
   ok(hasAlpha('assets/logos/cheongsol-senior-welfare-center.png'), 'cheongsol logo has a transparent background');
   ok(hasAlpha('assets/logos/joynus-care.png'), 'joynus-care logo has a transparent background');
+  ok(hasAlpha('assets/logos/the-claiborne-newnan-lakes.png'), 'claiborne logo has a transparent background');
+  ok(hasAlpha('assets/logos/the-reserve.png'), 'the-reserve logo has a transparent background');
   ok(!hasAlpha('assets/logos/eben-silver-town.png'), 'eben-silver-town keeps its opaque banner (white type needs it)');
 
   /* Adoration Home Health is excluded everywhere on the site. */
